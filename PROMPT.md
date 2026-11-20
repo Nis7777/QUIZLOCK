@@ -1,6 +1,6 @@
-You are building a native iOS app, ready for the App Store, in **Swift + SwiftUI**. It is a screen-time blocker: the user picks distracting apps, iOS blocks them using Apple's Screen Time API, and the user has to **solve a puzzle** to unlock them for a set time. There are 4 puzzle games: **Chess (mate puzzles), Sudoku, Math, and Word (a Wordle-style 5-letter word game)**. Copy the UI and flow below exactly: copy, layout, spacing, colours and animations. Work autonomously. Make reasonable decisions without asking me, and stop only if something needs my Apple Developer account.
+You are building a native iOS app, ready for the App Store, in **Swift + SwiftUI**. It is a screen-time blocker: the user picks distracting apps, iOS blocks them using Apple's Screen Time API, and the user has to **solve a puzzle** to unlock them for a set time. There are 4 puzzle games: **Chess (mate puzzles), Sudoku, Math, and Word (a Wordle-style 5-letter word game)**. The screen flow and structure are **inspired by** an existing app (screenshots in `reference/`), but this app has its **own visual identity**: coral brand colour, a puzzle-padlock logo and a padlock mascot. Never copy the reference's logo, mascot, name, wordmark or exact art; follow the flow, information architecture and level of polish. Work autonomously. Make reasonable decisions without asking me, and stop only if something needs my Apple Developer account.
 
-**Visual reference:** the folder `reference/` holds 40 screenshots of the original app, named by screen. Open and study them before building each screen, and match them pixel-for-pixel where this spec doesn't say otherwise. Read `reference/README.md` for what differs. If this spec and a screenshot disagree, this spec wins.
+**Visual reference (inspiration only):** the folder `reference/` holds 40 screenshots of the app that inspired this one. Look at them to understand the flow, the layout ideas and the quality bar, then build **our own version** in our coral style. Don't reproduce their branding or artwork. Read `reference/README.md`. If this spec and a screenshot disagree, this spec wins.
 
 ## CONFIG (use these values everywhere and keep them in one `Brand.swift` file)
 
@@ -30,39 +30,39 @@ MIN_IOS             = 17.0
 - Frameworks: FamilyControls, ManagedSettings, ManagedSettingsUI, DeviceActivity, StoreKit (StoreKit 2), UserNotifications.
 - Add a **StoreKit Configuration file** (`Products.storekit`) with both non-consumables, and set it on the Run scheme so purchases work in Xcode without App Store Connect.
 - Shared code (models, persistence, game engines, `ManagedSettingsStore` helpers) goes in a `Shared/` folder compiled into every target that needs it. Persist shared state as Codable JSON in the App Group `UserDefaults(suiteName:)`.
-- Art: import every PNG from `ArtSource/` into `Assets.xcassets` using the file name as the asset name. If an image is missing, show a neutral rounded placeholder (a light grey fill with an SF Symbol). Never crash.
+- Art: import every PNG from `ArtSource/` into `Assets.xcassets` using the file name as the asset name. `AppIcon.png` may not be exactly 1024×1024: resize it to 1024×1024 with `sips`, strip any alpha, and use it as the single-size App Icon. Also put a copy in the shield extension as `shield_icon`. If an image is missing, show a neutral rounded placeholder (a light grey fill with an SF Symbol). Never crash.
 - Bundle the files in `Resources/` (`wordle_allowed.txt`, `wordle_answers.txt`, and `chess_puzzles.json`, which you'll generate in section 5) with the App target.
 - Write a `README.md` with build-and-run steps, including signing, App Group and running on a physical device. Include a "Credits" line in the app's About section: "Chess puzzles from the Lichess puzzle database (CC0)."
 
-## 1. Design system (match exactly)
+## 1. Design system (our own identity)
 
 - Colours:
-  - `brandRed` #D3251E (buttons, toggles, selected states, links)
-  - `wordmarkRed` #F7271E (the wordmark)
+  - `brand` **#FF5A36** coral (buttons, toggles, selected states, links, icons, the wordmark). Pressed/dark variant `brandDeep` #E4421F; for small text on white use `brandDeep` for contrast.
+  - **Everywhere this spec says "red" or "pink", it means `brand` (coral) or `brandTint` (peach).** The only exception is error states (wrong answers, shakes, Sudoku conflicts), which use system red #FF3B30.
   - `bg` #F6F5F8 (every screen background)
   - `card` #FFFFFF
   - `textPrimary` #18181C
   - `textSecondary` ≈ #6E6E73
   - `correctGreenBg` #D3EFDA, with a green check (#34C759 family)
   - `darkCard` #13110F (dark preview cards)
-  - `pinkTint` = brandRed at 12–15% opacity (icon tiles, "2 apps selected" pill, banner background)
+  - `brandTint` = brand at 12–15% opacity (a soft peach) (icon tiles, "2 apps selected" pill, banner background)
   - Word game tiles: `wordGreen` #6AAA64, `wordYellow` #C9B458, `wordGrey` #787C7E
   - Chess board: light squares #E7E8C8, dark squares #65884E, last-move/destination highlight #F6F669 at 60%
 - Type: SF Pro (system). Big titles are about 34–40pt **bold** with tight line spacing and centred. Section headers are about 17pt semibold in textSecondary. Rows are 17pt semibold title + 15pt textSecondary subtitle.
-- The wordmark is the app name in a heavy rounded-sans style (SF Pro Rounded Black/Heavy), in wordmarkRed. Use it left-aligned at the top of the tab screens and large and centred on the splash.
+- The wordmark is the app name in SF Pro Rounded Black, in `brand`, with the small puzzle-padlock glyph (from `AppIcon` artwork, or a SwiftUI-drawn equivalent) before it. Use it left-aligned at the top of the tab screens and large and centred on the splash.
 - Cards: white, corner radius 20–22, very soft shadow (black 4%, radius 12, y 4), 16pt inner padding, 16pt side margins.
-- Primary button: full width, height 64, corner radius 18, brandRed, white 19pt **bold** text.
+- Primary button: full width, height 64, corner radius 18, brand, white 19pt **bold** text.
 - Back button: 52pt white circle with a soft shadow and a black `chevron.left`, top left.
-- Toggles: custom pill toggle. When on, a brandRed track with a white knob. When off, a light grey track.
-- Radio rows: on the right, an empty grey ring or a filled brandRed circle with a white checkmark.
-- Page dots: inactive is a 6pt grey dot, active is a 22×6 brandRed capsule. They animate between states.
+- Toggles: custom pill toggle. When on, a brand track with a white knob. When off, a light grey track.
+- Radio rows: on the right, an empty grey ring or a filled brand circle with a white checkmark.
+- Page dots: inactive is a 6pt grey dot, active is a 22×6 brand capsule. They animate between states.
 - **Floating tab bar** (not the system TabView bar): a white capsule floating about 20pt above the bottom, with a soft shadow and 3 items:
   - **Settings**: a custom icon of two stacked toggle pills.
   - **Puzzles**: `puzzlepiece.fill`.
   - **Feedback**: two overlapping chat bubbles.
-  - The selected item gets a light grey rounded-pill background with a brandRed icon and label. Unselected items are black.
+  - The selected item gets a light grey rounded-pill background with a brand icon and label. Unselected items are black.
 - Haptics: light impact on taps, success notification haptic when a puzzle is solved, error haptic on a wrong answer or move.
-- Support a **Dark theme** ("Dark · Black & white": black background, white text, white/grey accents instead of red) chosen in Settings. Puzzle boards and tiles keep their own colours.
+- Support a **Dark theme** ("Dark · Black & coral": near-black background, white text, coral accents) chosen in Settings. Puzzle boards and tiles keep their own colours.
 
 ## 2. Onboarding flow (first launch only, in this order)
 
@@ -74,7 +74,7 @@ MIN_IOS             = 17.0
   3. **Sudoku** (darkCard, white text, `square.grid.3x3` icon): "Fill the last row" over a 9×9 board drawn in SwiftUI (cream cells, dark digits, thick box borders). The 4 empty cells in the bottom row fill in with red digits, then the row flashes green. Answer bar (dark green): "Row complete ✓".
   4. **Chess** (darkCard): "White to move. Mate in one." with an 8×8 board drawn in SwiftUI. The mating piece slides to its square, the square highlights yellow, and the answer bar reads e.g. "Rd8# · Checkmate ✓". Use the first easy mate-in-one from `chess_puzzles.json`.
 
-  Under the pager: page dots, then 3 lines of centred text: "Lock your apps." (34 bold), "Solve a puzzle to unlock." (30 bold), "Scroll less." (36 bold, brandRed). Next is the primary button "Get Started". At the bottom, 14pt textSecondary: "By continuing, you agree to our **Terms of Service** and **Privacy Policy**". The two links are brandRed and open TERMS_URL and PRIVACY_URL in an in-app Safari sheet.
+  Under the pager: page dots, then 3 lines of centred text: "Lock your apps." (34 bold), "Solve a puzzle to unlock." (30 bold), "Scroll less." (36 bold, brand). Next is the primary button "Get Started". At the bottom, 14pt textSecondary: "By continuing, you agree to our **Terms of Service** and **Privacy Policy**". The two links are brand and open TERMS_URL and PRIVACY_URL in an in-app Safari sheet.
 
 **S03 Try your first puzzle**: back button. Title "Try your first puzzle", subtitle "Pick a game. Just one quick round." Below, a 2×2 grid of tall white cards. Each card has a big red icon at the top left, a 22pt bold title at the bottom left and a grey subtitle:
   - Math: a red italic "f(x)" text icon; subtitle "Find the answer".
@@ -86,13 +86,13 @@ MIN_IOS             = 17.0
 
 **S04 Here's how it works (animated, 3 beats, auto-plays)**: back button. Title "Here's how\n{APP_NAME} works". Below it is a **phone mockup** drawn in SwiftUI: a black rounded bezel, a Dynamic Island, a status bar reading "9:41", and a home indicator.
   - Beat 1: a home screen. The background is a soft lavender-to-peach gradient and shows today's date (e.g. "Thursday, September 17", using the real date). One row has 3 app icons: a generic "social" icon labelled "Instagram" with a tiny hourglass before the label, a Photos-style icon and a Camera-style icon. These are built from SF Symbols on coloured rounded squares. **Do not use real third-party logos.** Below are 2 rows of empty translucent icon tiles and a dock with Phone (green), Messages (green) and Safari (blue). Animate a tap on the social icon.
-  - Beat 2: the phone screen turns white and shows the **shield preview**: a 72pt red circle with a white `key.fill`, "Solve a puzzle to unlock the app" (bold, centred), a red rounded "START PUZZLE" button and a small grey "NOT NOW". Animate a tap on START PUZZLE.
+  - Beat 2: the phone screen turns white and shows the **shield preview**: a 72pt brand-coral circle with a white `lock.open.fill`, "Solve a puzzle to unlock the app" (bold, centred), a red rounded "START PUZZLE" button and a small grey "NOT NOW". Animate a tap on START PUZZLE.
   - Beat 3: the phone shows a scaled-down version of the game picked in S03 (same layout as S05). Caption under the phone: "Solve the puzzle to unlock the app" (22pt medium).
 
   Then the phone mockup **zooms and fades** into the full-screen S05.
 
 **S05 Practice puzzle (full screen)**: this is the shared **puzzle screen chrome**, used again in the real unlock flow.
-- Top: a small tracked label APP_NAME_CAPS in brandRed (12pt, letter-spacing 3). Under it the game name ("Math", "Word", "Sudoku", "Chess") in 17pt, with an × at the top right.
+- Top: a small tracked label APP_NAME_CAPS in brand (12pt, letter-spacing 3). Under it the game name ("Math", "Word", "Sudoku", "Chess") in 17pt, with an × at the top right.
 - A grey caps sub-label (e.g. "ALGEBRA", "5 LETTERS · 6 TRIES", "EASY", "MATE IN 1") and a green pill with a dot reading "Your turn".
 - The game itself (section 5) fills the rest.
 - "PRACTICE" in grey tracked caps at the bottom (onboarding/practice only).
@@ -109,18 +109,18 @@ On success go to S06.
 
 **S07 Enjoy your feed.**: Title "Enjoy your feed.", subtitle "You've earned it!" A phone mockup shows a grey wireframe social feed: an "Instagram" header with heart and paper-plane icons, 2 posts made of an avatar circle, grey lines and a grey image placeholder with a `photo` icon, plus action icons and a bottom tab row. Primary button "Continue".
 
-**S08 Take control of your screen time**: a 2-step page indicator at the top (step 1 active). A soft pink arc/semicircle fills the bottom 60% of the background. Illustration built in SwiftUI: two 150pt rounded squares overlapping and tilted (−8° and +10°). The first is white with a red circle containing a white `key.fill`. The second is brandRed with a white `hourglass`. Title "Take control of\nyour screen time". Body: "Choose apps to limit distracting scrolling. Solve a puzzle to unlock them temporarily." Small print: "{APP_NAME} does not collect your Screen Time usage." Button "Continue".
+**S08 Take control of your screen time**: a 2-step page indicator at the top (step 1 active). A soft pink arc/semicircle fills the bottom 60% of the background. Illustration built in SwiftUI: two 150pt rounded squares overlapping and tilted (−8° and +10°). The first is white with a coral circle containing a white `puzzlepiece.fill`. The second is brand coral with a white `hourglass`. Title "Take control of\nyour screen time". Body: "Choose apps to limit distracting scrolling. Solve a puzzle to unlock them temporarily." Small print: "{APP_NAME} does not collect your Screen Time usage." Button "Continue".
 
-**S09 Connect to Screen Time**: step 2 active. Title "Connect {APP_NAME}\nto Screen Time". Body: "To block the apps you choose, {APP_NAME} needs Screen Time permission." Small print as on S08. A grey label "Permission preview", then a **fake iOS alert** card: "“{APP_NAME}” Would Like to Access Screen Time", then "Providing “{APP_NAME}” access to Screen Time may allow it to see your activity data, restrict content, and limit the usage of apps and websites." It has a grey "Continue" pill with a pulsing **red outline ring** and a blue "Don't Allow" pill. Under the card, image `mascot_pointing` (about 200pt tall), positioned so he points up at the Continue pill. Primary button "Continue". On tap, dim the screen, change the button to a spinner plus "Requesting Access…", and call `AuthorizationCenter.shared.requestAuthorization(for: .individual)`. Apple then shows its real system sheets. On success go to S10. On failure show an alert explaining how to enable it and offer to retry.
+**S09 Connect to Screen Time**: step 2 active. Title "Connect {APP_NAME}\nto Screen Time". Body: "To block the apps you choose, {APP_NAME} needs Screen Time permission." Small print as on S08. A grey label "Permission preview", then a **fake iOS alert** card: "“{APP_NAME}” Would Like to Access Screen Time", then "Providing “{APP_NAME}” access to Screen Time may allow it to see your activity data, restrict content, and limit the usage of apps and websites." It has a grey "Continue" pill with a pulsing **red outline ring** and a blue "Don't Allow" pill. Under the card, image `mascot_pointing` (our padlock mascot, about 200pt tall), positioned so it points up at the Continue pill. Primary button "Continue". On tap, dim the screen, change the button to a spinner plus "Requesting Access…", and call `AuthorizationCenter.shared.requestAuthorization(for: .individual)`. Apple then shows its real system sheets. On success go to S10. On failure show an alert explaining how to enable it and offer to retry.
 
 **S10 Lock your apps.**: back button. Title "Lock your apps." Subtitle: "Select the apps that distract you the most, the ones you open on autopilot." Below is a **how-to mock** drawn in SwiftUI (no screenshot): a grey rounded panel with a "Done" pill, a white row "✓ [icon] Instagram — Social", a search field containing "Instagram", and a drawn keyboard. Caption "Add apps → Search → Select → Done".
   - Empty state card: a dashed-square icon, "No locks yet", "Choose an app to get started."
   - Selected state: a white card listing each selected app with its **real icon and name via `Label(token)`**, the subtitle "Ready to lock" and a red check on the right.
-  - An outlined white button "+ Add Apps to Lock" (brandRed text) opens the system `FamilyActivityPicker`, bound to a `FamilyActivitySelection`.
+  - An outlined white button "+ Add Apps to Lock" (brand text) opens the system `FamilyActivityPicker`, bound to a `FamilyActivitySelection`.
   - Red text: "You can add apps later in Settings." (switch to "You can update this later in Settings." once apps are selected).
   - Primary "Continue".
 
-**S11 Choose your puzzle reward**: a 3-step indicator. A 100pt pink rounded square holding a red timer icon (`timer`). Title "Choose your\npuzzle reward". Subtitle "Choose how long your apps stay unlocked after you solve a puzzle." Small print: "Your first 5 app unlocks are free. After that, lifetime access is a one-time purchase. Standalone puzzle practice requires lifetime access." A pink pill reads "■ 2 apps selected", with the real count of apps + categories. Radio cards: **5 minutes**, **15 minutes** (default), **For Today**, and **Custom** in brandRed with a `plus.circle` icon. Custom opens a sheet titled "Set unlock time" with Cancel and Save pills and a wheel picker for hours (0–23) and min (0–59), styled like the iOS timer picker. Below the cards: "You can change your puzzle reward later in Settings." and a red "Change apps" link back to S10. Primary button "Turn On Locks ✓". On tap, apply the shield (section 4), request notification permission, and go to S12.
+**S11 Choose your puzzle reward**: a 3-step indicator. A 100pt pink rounded square holding a red timer icon (`timer`). Title "Choose your\npuzzle reward". Subtitle "Choose how long your apps stay unlocked after you solve a puzzle." Small print: "Your first 5 app unlocks are free. After that, lifetime access is a one-time purchase. Standalone puzzle practice requires lifetime access." A pink pill reads "■ 2 apps selected", with the real count of apps + categories. Radio cards: **5 minutes**, **15 minutes** (default), **For Today**, and **Custom** in brand with a `plus.circle` icon. Custom opens a sheet titled "Set unlock time" with Cancel and Save pills and a wheel picker for hours (0–23) and min (0–59), styled like the iOS timer picker. Below the cards: "You can change your puzzle reward later in Settings." and a red "Change apps" link back to S10. Primary button "Turn On Locks ✓". On tap, apply the shield (section 4), request notification permission, and go to S12.
 
 **S12 Paywall (once, right after onboarding)**: see section 6. Closing it lands on the dashboard with the "You're all set" banner.
 
@@ -139,7 +139,7 @@ Scrolling list on bg, top to bottom:
   - A red list icon, "Puzzles per unlock", "Solved puzzles required", trailing "1". Opens the **Puzzles per unlock** sheet.
   - Red `shuffle`, "Unlock puzzles", subtitle listing the enabled game names ("Chess, Word"), trailing "2 selected". Opens the **Unlock puzzles** sheet.
   - Footer: "Your puzzles take turns in a shuffled order."
-- Section "Appearance": two side-by-side selectable cards, each with a mini drawing of the UI. "Classic · Light & red" (selected: red border and red check) and "Dark · Black & white". Footer: "Puzzle boards keep their original colors."
+- Section "Appearance": two side-by-side selectable cards, each with a mini drawing of the UI. "Classic · Light & coral" (selected: red border and red check) and "Dark · Black & white". Footer: "Puzzle boards keep their original colors."
 - A card with a red `lock.open.fill`, "Unlock Lifetime Access", "5 of 5 free app unlocks remaining" (live count) and a red chevron. Opens the paywall. When the user has bought it, show "Lifetime Access · Active".
 - Section "Analytics": a card with "Share app analytics" and an off toggle. Body: "Help improve {APP_NAME} with anonymous analytics, including purchases, changes to your selected puzzles, and puzzle starts/completions during app unlocks. App identities, Screen Time reports, unlock times and typed answers stay on-device. Optional; turn off anytime." Only store the setting. Don't add any analytics SDK; leave a `// TODO: analytics` hook.
 - Section "Ad measurement": a card with "Share ad measurement" and an off toggle. Body: "Optionally share app opens and purchases to measure our ads. Protected apps, Screen Time activity and puzzle data are never included. Turning this off stops future events; it doesn't delete data already sent." Then a red link "Manage Apple tracking permission" that opens the app's page in Settings. Store the setting only.
@@ -168,7 +168,7 @@ Scrolling list on bg, top to bottom:
 ### Unlock puzzles (bottom sheet)
 - "N enabled", then 4 rows: game icon + name + current difficulty in grey + pill toggle.
 - Footer: "Your puzzles take turns in a shuffled order."
-- A large grey rounded button "+ More options" in brandRed text, which switches to the Puzzles tab.
+- A large grey rounded button "+ More options" in brand text, which switches to the Puzzles tab.
 - At least one game must stay enabled. Block turning off the last one and show a short hint.
 - Default enabled: all 4.
 
@@ -181,7 +181,7 @@ Scrolling list on bg, top to bottom:
   - A 115pt square cover image with radius 14 (`game_chess`, `game_sudoku`, `game_math`, `game_word`), the title (22 semibold), the description (grey) and the meta line.
   - Divider.
   - "Use for unlocks" with a pill toggle and a red "Try ›".
-  - Cards in use get a 1.5pt brandRed border.
+  - Cards in use get a 1.5pt brand border.
   - Titles, descriptions and meta lines:
     - **Chess**: "Find the checkmate." / "Mate in 1–2 · {count} puzzles"
     - **Sudoku**: "Fill the 9×9 grid." / "Endless · Unique solutions"
@@ -203,7 +203,7 @@ Scrolling list on bg, top to bottom:
   - A divider.
   - A multiline `TextEditor` with the placeholder "Tell me what happened or what you'd like to see…".
   - Save the draft to UserDefaults as the user types.
-- A full-width button "✉ Continue to email". It is grey and disabled while the text is empty and brandRed once there's text. It opens `MFMailComposeViewController`, prefilled with the subject "[{APP_NAME}] {type}", the body and the app version + iOS version, and falls back to a `mailto:` link.
+- A full-width button "✉ Continue to email". It is grey and disabled while the text is empty and brand once there's text. It opens `MFMailComposeViewController`, prefilled with the subject "[{APP_NAME}] {type}", the body and the app version + iOS version, and falls back to a `mailto:` link.
 - Note: "Your draft is saved on this device. You'll review and send from your email account, so I can reply."
 - A card "Email me directly" with SUPPORT_EMAIL in red and "Copy email address" (with a copy icon), which copies the address and shows a "Copied" toast.
 
@@ -212,9 +212,9 @@ Scrolling list on bg, top to bottom:
 - **Authorization**: `AuthorizationCenter.shared.requestAuthorization(for: .individual)`. Check the status on every launch. If authorization is revoked, show a full-screen "Reconnect Screen Time" state.
 - **Selection**: store the `FamilyActivitySelection` (Codable) in the App Group. Also keep a per-app config of `ApplicationToken` → unlock-time override and enabled flag.
 - **Locking**: a named `ManagedSettingsStore(named: .init("main"))`. Set `shield.applications` to the enabled app tokens and `shield.applicationCategories = .specific(enabledCategoryTokens)`. The master toggle off clears the shield. Per-app toggles add or remove single tokens.
-- **Shield UI** (`ShieldConfigurationExt`): white background, a red circle key icon (bundle an asset `shield_key` rendered from the SF Symbol, or use `key.fill` tinted red), title "Solve a puzzle to unlock the app", subtitle "{app name} is locked by {APP_NAME}", a brandRed primary button with the label "START PUZZLE" and the secondary label "NOT NOW". Do this for applications, categories and web domains.
+- **Shield UI** (`ShieldConfigurationExt`): white background, our puzzle-padlock icon (bundle a copy of the app-icon artwork as `shield_icon`, or use `lock.fill` tinted coral), title "Solve a puzzle to unlock the app", subtitle "{app name} is locked by {APP_NAME}", a brand primary button with the label "START PUZZLE" and the secondary label "NOT NOW". Do this for applications, categories and web domains.
 - **Shield action** (`ShieldActionExt`):
-  - Primary: write the blocked token and a timestamp to the App Group as `pendingUnlock`. Then post an immediate local notification: "Tap to start your puzzle 🔑" / "Solve {N} puzzle(s) to unlock {app}", with the userInfo deep link `quizlock://unlock`. Return `.defer`. (A shield extension can't open the host app directly; the notification is how you get there.)
+  - Primary: write the blocked token and a timestamp to the App Group as `pendingUnlock`. Then post an immediate local notification: "Tap to start your puzzle 🧩" / "Solve {N} puzzle(s) to unlock {app}", with the userInfo deep link `quizlock://unlock`. Return `.defer`. (A shield extension can't open the host app directly; the notification is how you get there.)
   - Secondary: return `.close`.
 - **Unlock flow** (main app): opening via that notification or deep link, or launching while `pendingUnlock` is set, presents the full-screen **Unlock puzzle** (the S05 chrome without "PRACTICE", plus a progress line "1 of N").
   - It picks games round-robin, in shuffled order, from the enabled games at each game's chosen difficulty.
@@ -293,8 +293,8 @@ Never call it "Wordle" anywhere in the UI or metadata; Wordle is a New York Time
   - Givens per difficulty: Quick (6×6, 2×3 boxes) ≈ 18 givens; Easy 9×9 = 40–45; Medium = 32–36; Hard = 26–30.
   - Generate off the main thread.
 - **UI:**
-  - A square board with thin 0.5pt cell lines and 2pt box lines. Givens are in bold textPrimary; the user's digits are in brandRed.
-  - Highlights: the selected cell is pink (pinkTint); its row, column and box are very light grey; every cell with the same digit is light pink.
+  - A square board with thin 0.5pt cell lines and 2pt box lines. Givens are in bold textPrimary; the user's digits are in brand.
+  - Highlights: the selected cell is pink (brandTint); its row, column and box are very light grey; every cell with the same digit is light pink.
   - **Conflicts** (a duplicate in a row, column or box) turn red immediately.
   - Below the board: a number pad 1–9 (large rounded keys; a digit's key fades out once all 9 are placed), plus Erase, a Notes toggle (pencil marks drawn as a small 3×3 sub-grid) and Hint (fills the selected or a random empty cell; max 3 per round).
   - Solved when every cell matches the solution: a cascade green flash across the board, then success. There is no fail state.
@@ -334,8 +334,8 @@ Never call it "Wordle" anywhere in the UI or metadata; Wordle is a New York Time
 - Below it, red links: "Pay standard price · {price}" (buys STD) and "Restore Purchases" (`AppStore.sync()`).
 
 **Screen B, "Your lifetime discount"**:
-- A warm cream background (#FFF3DC) with a subtle radial **starburst of light rays** drawn in SwiftUI (slowly rotating) and a red/orange × circle at the top right.
-- A gold `sparkles` icon, "Your lifetime discount" (20 semibold), then a huge "83%" (≈120pt, black weight, brandRed) and "OFF" (48pt, tracked). Compute the % from the two StoreKit prices instead of hard-coding it.
+- A warm cream background (#FFF3DC) with a subtle radial **starburst of light rays** drawn in SwiftUI (slowly rotating) and a coral × circle at the top right.
+- A gold `sparkles` icon, "Your lifetime discount" (20 semibold), then a huge "83%" (≈120pt, black weight, brand) and "OFF" (48pt, tracked). Compute the % from the two StoreKit prices instead of hard-coding it.
 - "Lifetime access for {promo price}".
 - A dashed-border ticket box: "YOUR LIFETIME OFFER" (tracked caps) and "🎟 One-time lifetime access".
 - The red text "Thank you for supporting {APP_NAME}".

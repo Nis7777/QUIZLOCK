@@ -1,6 +1,6 @@
 # QuizLock: start here
 
-`reference/` has the 40 original screenshots that Claude Code uses as the visual target.
+`reference/` has 40 screenshots of the app that inspired this one. They're for flow and structure only; our app has its own coral brand.
 
 1. Generate the 6 images listed in `ArtSource/PUT_IMAGES_HERE.md` with ChatGPT and save them into `ArtSource/` with those exact names.
    (Optional: you can build first; missing images show placeholders.)
