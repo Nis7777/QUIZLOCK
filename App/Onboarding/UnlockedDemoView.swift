@@ -33,7 +33,7 @@ struct UnlockedDemoView: View {
                         }
                         .scaleEffect(appeared ? 1 : 0.5)
                         .opacity(appeared ? 1 : 0)
-                        Text("Tap “Social” at the top left\nto return to your app.")
+                        Text("Tap the app at the top left\nto return to your app.")
                             .font(.system(size: width * 0.055, weight: .semibold))
                             .foregroundStyle(Color.textPrimary)
                             .multilineTextAlignment(.center)
