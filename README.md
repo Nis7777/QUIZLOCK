@@ -1,5 +1,7 @@
 # QuizLock: start here
 
+`reference/` has the 40 original screenshots that Claude Code uses as the visual target.
+
 1. Generate the 6 images listed in `ArtSource/PUT_IMAGES_HERE.md` with ChatGPT and save them into `ArtSource/` with those exact names.
    (Optional: you can build first; missing images show placeholders.)
 2. Open Claude Code in this folder and type:

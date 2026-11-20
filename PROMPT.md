@@ -1,5 +1,7 @@
 You are building a native iOS app, ready for the App Store, in **Swift + SwiftUI**. It is a screen-time blocker: the user picks distracting apps, iOS blocks them using Apple's Screen Time API, and the user has to **solve a puzzle** to unlock them for a set time. There are 4 puzzle games: **Chess (mate puzzles), Sudoku, Math, and Word (a Wordle-style 5-letter word game)**. Copy the UI and flow below exactly: copy, layout, spacing, colours and animations. Work autonomously. Make reasonable decisions without asking me, and stop only if something needs my Apple Developer account.
 
+**Visual reference:** the folder `reference/` holds 40 screenshots of the original app, named by screen. Open and study them before building each screen, and match them pixel-for-pixel where this spec doesn't say otherwise. Read `reference/README.md` for what differs. If this spec and a screenshot disagree, this spec wins.
+
 ## CONFIG (use these values everywhere and keep them in one `Brand.swift` file)
 
 ```
