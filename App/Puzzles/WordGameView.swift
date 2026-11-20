@@ -111,9 +111,7 @@ struct WordGameView: View {
 
     var body: some View {
         GeometryReader { geo in
-            let keyboardHeight: CGFloat = 3 * 56 + 2 * 8
-            let rows = CGFloat(vm.round.maxTries)
-            let tile = max(36, min(60, (geo.size.width - 4 * 6) / 5.6, (geo.size.height - keyboardHeight - 40 - (rows - 1) * 6) / rows))
+            let tile = Self.tileSize(in: geo.size, rows: vm.round.maxTries)
             VStack(spacing: 0) {
                 WordGrid(vm: vm, tile: tile)
                     .frame(maxWidth: .infinity)
@@ -150,6 +148,14 @@ struct WordGameView: View {
             return .ignored
         }
         .onAppear { focused = true }
+    }
+
+    private static func tileSize(in size: CGSize, rows: Int) -> CGFloat {
+        let keyboardHeight: CGFloat = 3 * 56 + 2 * 8
+        let n = CGFloat(rows)
+        let byWidth: CGFloat = (size.width - 24) / 5.6
+        let byHeight: CGFloat = (size.height - keyboardHeight - 40 - (n - 1) * 6) / n
+        return max(36, min(60, min(byWidth, byHeight)))
     }
 }
 

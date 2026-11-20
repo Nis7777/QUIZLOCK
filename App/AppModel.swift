@@ -39,6 +39,8 @@ final class AppModel {
     let rounds = RoundProvider()
     let store = Store()
     @ObservationIgnored private var sweepTimer: Timer?
+    /// Set when the user closes the unlock flow, so foregrounding doesn't immediately reopen it.
+    @ObservationIgnored private var dismissedPendingDate: Date?
 
     private init() {
         settings = SharedStore.load(AppSettings.self, .settings) ?? AppSettings()
@@ -240,12 +242,17 @@ final class AppModel {
 
     func handleDeepLink(_ url: URL) {
         guard url.scheme == Brand.urlScheme else { return }
-        if url.host == "unlock" { resumeUnlockIfNeeded() }
+        if url.host == "unlock" { resumeUnlockIfNeeded(userInitiated: true) }
     }
 
     /// Opens the unlock flow if there's a saved session or a pending unlock from the shield.
-    func resumeUnlockIfNeeded() {
+    func resumeUnlockIfNeeded(userInitiated: Bool = false) {
         guard settings.onboardingComplete, unlockSession == nil else { return }
+        if !userInitiated, let dismissed = dismissedPendingDate,
+           (SharedStore.pendingUnlock?.createdAt ?? dismissed) <= dismissed {
+            return
+        }
+        dismissedPendingDate = nil
         if let saved = SharedStore.load(UnlockSession.self, .unlockSession) {
             if let pending = SharedStore.pendingUnlock, pending.itemKey != saved.pending.itemKey {
                 startSession(for: pending)
@@ -280,7 +287,7 @@ final class AppModel {
         SharedStore.pendingUnlock = PendingUnlock(itemKey: item?.key ?? TokenKey.mock(name), appName: name)
         SharedStore.save(nil as UnlockSession?, .unlockSession)
         unlockSession = nil
-        resumeUnlockIfNeeded()
+        resumeUnlockIfNeeded(userInitiated: true)
     }
 
     private func saveSession() {
@@ -329,7 +336,9 @@ final class AppModel {
     }
 
     func closeUnlockFlow() {
-        // Progress stays saved; the pending unlock remains so the user can come back.
+        // Progress stays saved; the pending unlock remains so the user can come back
+        // (tapping the notification or the shield again reopens it).
+        if let session = unlockSession { dismissedPendingDate = session.pending.createdAt }
         unlockSession = nil
         unlockResult = nil
     }
