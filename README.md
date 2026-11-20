@@ -2,6 +2,8 @@
 
 **Get smarter before scrolling.** QuizLock blocks the apps you choose with Apple's Screen Time API. To unlock one for a while, you solve a puzzle: **Chess** (mate-in-1/2 from Lichess), **Sudoku**, **Math** or **Word** (a 5-letter word game).
 
+`reference/` has 40 screenshots of the app that inspired this one. They're for flow and structure only; our app has its own coral brand.
+
 Swift + SwiftUI, iOS 17+, iPhone only, portrait. No third-party packages.
 
 ## Project layout
