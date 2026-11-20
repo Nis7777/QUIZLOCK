@@ -38,7 +38,6 @@ struct SettingsView: View {
     @Binding var path: [SettingsRoute]
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
-    @Environment(\.openURL) private var openURL
     @State private var showPuzzlesPerUnlock = false
     @State private var showUnlockPuzzles = false
     @State private var link: URL?
@@ -54,8 +53,9 @@ struct SettingsView: View {
                 unlockRulesSection
                 appearanceSection
                 lifetimeCard
-                analyticsSection
-                adMeasurementSection
+                // No "Analytics" / "Ad measurement" sections: the app has no analytics or ads code and its
+                // App Privacy label is "Data Not Collected". If you add an SDK later, bring the sections back
+                // (see git history), call it only when the setting is on, and update the policy and label.
                 footerCard
                 if ScreenTimeService.isMock { simulatorTools }
             }
@@ -243,52 +243,6 @@ struct SettingsView: View {
         .card()
         .padding(.horizontal, 16)
         .padding(.top, 10)
-    }
-
-    // MARK: Privacy
-
-    private var analyticsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            SectionHeader(title: "Analytics")
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Text("Share app analytics").font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
-                    Spacer()
-                    PillToggle(isOn: model.settingsBinding(\.analyticsEnabled), label: "Share app analytics")
-                }
-                Text("Help improve \(Brand.appName) with anonymous analytics, including purchases, changes to your selected puzzles, and puzzle starts/completions during app unlocks. App identities, Screen Time reports, unlock times and typed answers stay on-device. Optional; turn off anytime.")
-                    .font(.system(size: 15))
-                    .foregroundStyle(palette.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .card()
-            .padding(.horizontal, 16)
-            // TODO: analytics — no SDK is included. Read `model.settings.analyticsEnabled` before sending any event.
-        }
-    }
-
-    private var adMeasurementSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            SectionHeader(title: "Ad measurement")
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Text("Share ad measurement").font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
-                    Spacer()
-                    PillToggle(isOn: model.settingsBinding(\.adMeasurementEnabled), label: "Share ad measurement")
-                }
-                Text("Optionally share app opens and purchases to measure our ads. Protected apps, Screen Time activity and puzzle data are never included. Turning this off stops future events; it doesn't delete data already sent.")
-                    .font(.system(size: 15))
-                    .foregroundStyle(palette.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                Button("Manage Apple tracking permission") {
-                    if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
-                }
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(palette.accentText)
-            }
-            .card()
-            .padding(.horizontal, 16)
-        }
     }
 
     private var footerCard: some View {

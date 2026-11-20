@@ -17,7 +17,7 @@ struct ReconnectView: View {
                 .frame(width: 110, height: 110)
                 .background(palette.tint, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
             ScreenTitle(title: "Reconnect Screen Time",
-                        subtitle: "\(Brand.appName) lost Screen Time permission, so your apps aren't locked right now.")
+                        subtitle: "\(Brand.appName) doesn't have Screen Time permission, so your apps aren't locked right now.")
             Spacer()
             PrimaryButton(title: requesting ? "Requesting Access…" : "Reconnect", isLoading: requesting) {
                 Task {
@@ -27,8 +27,13 @@ struct ReconnectView: View {
                     model.refreshFromStore()
                 }
             }
-            Button("Open Settings") {
-                if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+            HStack(spacing: 28) {
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                }
+                Button("Not Now") {
+                    withAnimation { model.reconnectSnoozed = true }
+                }
             }
             .font(.system(size: 16, weight: .semibold))
             .foregroundStyle(palette.accentText)

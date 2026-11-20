@@ -109,8 +109,8 @@ struct PickerHowToMock: View {
                 HStack(spacing: 8) {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(Color(hex: 0x0A84FF))
                     MockAppIcon.social(size: 22)
-                    Text("Instagram").font(.system(size: 14, weight: .semibold))
-                    Text("— Social").font(.system(size: 13)).foregroundStyle(Color.textSecondary)
+                    Text("Social").font(.system(size: 14, weight: .semibold))
+                    Text("— Social Networking").font(.system(size: 13)).foregroundStyle(Color.textSecondary)
                     Spacer()
                 }
                 .foregroundStyle(Color.textPrimary)
@@ -118,7 +118,7 @@ struct PickerHowToMock: View {
                 .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
                 HStack(spacing: 6) {
                     Image(systemName: "magnifyingglass")
-                    Text("Instagram")
+                    Text("Social")
                     Spacer()
                 }
                 .font(.system(size: 14))

@@ -86,12 +86,12 @@ struct LockItem: Identifiable, Hashable {
 /// Fake apps used by the Simulator mock (FamilyControls isn't available there).
 enum MockApps {
     static let all: [(name: String, symbol: String, colors: [UInt32])] = [
-        ("Instagram", "camera.circle", [0x8A3AB9, 0xE95950, 0xFCCC63]),
-        ("TikTok", "music.note", [0x111111, 0x333333]),
-        ("YouTube", "play.rectangle.fill", [0xFF3B30, 0xD70015]),
-        ("Snapchat", "bubble.left.fill", [0xFFE600, 0xF5C400]),
-        ("Reddit", "bubble.left.and.bubble.right.fill", [0xFF5700, 0xFF7A33]),
-        ("X", "xmark", [0x000000, 0x2C2C2E]),
+        ("Social", "camera.circle", [0x8A3AB9, 0xE95950, 0xFCCC63]),
+        ("Shorts", "music.note", [0x111111, 0x333333]),
+        ("Videos", "play.rectangle.fill", [0xFF3B30, 0xD70015]),
+        ("Chat", "bubble.left.fill", [0xFFE600, 0xF5C400]),
+        ("Forum", "bubble.left.and.bubble.right.fill", [0xFF5700, 0xFF7A33]),
+        ("News", "newspaper.fill", [0x000000, 0x2C2C2E]),
     ]
 
     static func info(_ name: String) -> (symbol: String, colors: [UInt32]) {

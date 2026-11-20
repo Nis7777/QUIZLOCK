@@ -40,7 +40,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             backgroundColor: .white,
             icon: Self.shieldIcon,
             title: ShieldConfiguration.Label(text: "Solve a puzzle to unlock the app", color: Self.textPrimary),
-            subtitle: ShieldConfiguration.Label(text: "\(appName) is locked by \(Brand.appName)", color: Self.textSecondary),
+            subtitle: ShieldConfiguration.Label(text: "\(appName) is locked by \(Brand.appName).\nTap START PUZZLE, then open \(Brand.appName).", color: Self.textSecondary),
             primaryButtonLabel: ShieldConfiguration.Label(text: "START PUZZLE", color: .white),
             primaryButtonBackgroundColor: Self.brand,
             secondaryButtonLabel: ShieldConfiguration.Label(text: "NOT NOW", color: Self.textSecondary)

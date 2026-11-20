@@ -94,14 +94,18 @@ final class Store {
 
     // MARK: Display helpers
 
-    var standardPrice: String { standard?.displayPrice ?? "$29.99" }
-    var promoPrice: String { promo?.displayPrice ?? "$4.99" }
+    var standardPrice: String? { standard?.displayPrice }
+    var promoPrice: String? { promo?.displayPrice }
 
-    /// Discount computed from the two StoreKit prices (not hard-coded).
-    var discountPercent: Int {
-        let std = standard.map { NSDecimalNumber(decimal: $0.price).doubleValue } ?? 29.99
-        let pro = promo.map { NSDecimalNumber(decimal: $0.price).doubleValue } ?? 4.99
-        guard std > 0 else { return 0 }
-        return Int(((1 - pro / std) * 100).rounded())
+    /// Discount computed from the two real StoreKit prices (never hard-coded). Nil until both load.
+    var discountPercent: Int? {
+        guard let std = standard, let pro = promo, std.price > 0 else { return nil }
+        let ratio = NSDecimalNumber(decimal: pro.price / std.price).doubleValue
+        return Int(((1 - ratio) * 100).rounded())
+    }
+
+    /// Loads prices again if they're missing (e.g. the paywall opened while offline).
+    func loadProductsIfNeeded() async {
+        if standard == nil || promo == nil { await loadProducts() }
     }
 }

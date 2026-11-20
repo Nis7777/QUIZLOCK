@@ -28,15 +28,14 @@ final class ShieldActionExtension: ShieldActionDelegate {
 
     private func handle(_ action: ShieldAction, pending: PendingUnlock,
                         completion: @escaping (ShieldActionResponse) -> Void) {
-        switch action {
-        case .primaryButtonPressed:
+        // Not a `switch`: newer SDKs add ShieldAction cases, which would make a switch non-exhaustive.
+        // START PUZZLE starts the unlock; every other button (NOT NOW, or anything new) closes the app.
+        if case .primaryButtonPressed = action {
             SharedStore.pendingUnlock = pending
             postNotification(appName: pending.appName) {
                 completion(.defer)
             }
-        case .secondaryButtonPressed:
-            completion(.close)
-        @unknown default:
+        } else {
             completion(.close)
         }
     }

@@ -34,6 +34,8 @@ final class AppModel {
     var paywallReason: PaywallReason?
     var practiceGame: GameID?
     var isAuthorized = true
+    /// The user chose "Not Now" on the Reconnect screen (until the next launch).
+    var reconnectSnoozed = false
 
     let screenTime = ScreenTimeService()
     let rounds = RoundProvider()
@@ -282,7 +284,7 @@ final class AppModel {
         let name: String
         switch item?.kind {
         case .mock(let n): name = n
-        default: name = "Instagram"
+        default: name = "Social"
         }
         SharedStore.pendingUnlock = PendingUnlock(itemKey: item?.key ?? TokenKey.mock(name), appName: name)
         SharedStore.save(nil as UnlockSession?, .unlockSession)

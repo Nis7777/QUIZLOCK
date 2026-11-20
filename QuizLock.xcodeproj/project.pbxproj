@@ -66,6 +66,7 @@
 		79D0C4147E6CA04103AFA5D1 /* UnlockTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC10B2B83AC089A2E580D0A /* UnlockTimeView.swift */; };
 		7A7C78FBDBB0BA82AE7CC12A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B1D4BC2599FE30394A90BA /* UserNotifications.framework */; };
 		7CFEBDE6C0C76F5A1EAD5FD4 /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658E46C34D263EE37019A801 /* DeviceActivityMonitorExtension.swift */; };
+		7E5AA55BFDF1F81DF6556A79 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A2DEFC3EBD43B669DCB6727F /* PrivacyInfo.xcprivacy */; };
 		8510DD5181AB91AC406023AA /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3CA834B2792CDD0058BCA /* PaywallView.swift */; };
 		8AE60BC1135A9D787B3F14DB /* PuzzlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E67ACCEE13BB29FF83333 /* PuzzlesView.swift */; };
 		8B4D404FF14CD20D67C0C74B /* ChessPuzzles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07056E1B594209E299DF4215 /* ChessPuzzles.swift */; };
@@ -77,6 +78,7 @@
 		9572BB44B3B4B273B15A10F5 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D27F6D5D7A283AEDF21F52 /* DeviceActivity.framework */; };
 		95C9DD1E496A53379A95172F /* UnlockPuzzlesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87429549FF98FEC4ED381A8 /* UnlockPuzzlesSheet.swift */; };
 		96591FB5CA50F6EA3264E6E1 /* LockModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CB86DFDFF16B0785820A5E /* LockModels.swift */; };
+		966D1EEA1492B82ACBB7DD66 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B3D3FD989033C1137BD7F961 /* PrivacyInfo.xcprivacy */; };
 		98D791FD3A44E7FDC2DD24EC /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B1D4BC2599FE30394A90BA /* UserNotifications.framework */; };
 		98ED015F4E730F9005F12FFA /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD92103B62EBFED5226E08F /* Brand.swift */; };
 		99C80B4888A1F4A542721DFF /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C7EE8C66D59685A1C7F15A /* MainTabView.swift */; };
@@ -116,6 +118,7 @@
 		D4E793484D654258B6233C05 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C4BB08E8A994D45B06DD49 /* ChessEngine.swift */; };
 		D75C1FC67EF5C9A92A6F7124 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C4BB08E8A994D45B06DD49 /* ChessEngine.swift */; };
 		D9357CA3AA0A07CBF7872F2D /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8AB804DD75980225C3BFAF /* SafariServices.framework */; };
+		D95372749CBB7B7DA157DFC9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 09D821904A525DAB8F908D9B /* PrivacyInfo.xcprivacy */; };
 		D9FD3021729E20F74F8ECE39 /* ChessGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330BE12417B9F9625418D2BE /* ChessGameView.swift */; };
 		DA20D93079BF333F59887FB3 /* ShieldConfigurationExt.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7B4A9644D65E14289A9752C5 /* ShieldConfigurationExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DB8577349FFC1C495E2D72FC /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B1D4BC2599FE30394A90BA /* UserNotifications.framework */; };
@@ -129,6 +132,7 @@
 		E87F558ADF6531FA57C4EEC5 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5821E11222B9806E0CD16AF /* ManagedSettings.framework */; };
 		E93CD83763071ADBFF01BA08 /* MathEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC57A15E2DAEF602A2FCB8B /* MathEngine.swift */; };
 		EC2CCCD70D3C001D219F2933 /* LockModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CB86DFDFF16B0785820A5E /* LockModels.swift */; };
+		ED57223C3744CA0C36391A8E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 427244501479857D132F1EDD /* PrivacyInfo.xcprivacy */; };
 		F0A0F755624BF6AC63ABEE60 /* FamilyControls.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1267EA12ADFA5D937A3B410F /* FamilyControls.framework */; };
 		F5A4EF83175E12B1F2E03A0A /* WordEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551DFE3A8421FE748189374 /* WordEngine.swift */; };
 		F8A96B29F3C638D76106C6A4 /* RoundProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAD72754F549C5C1EE0FA87 /* RoundProvider.swift */; };
@@ -182,6 +186,7 @@
 /* Begin PBXFileReference section */
 		00ACF879DB629027D5B9A497 /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
 		07056E1B594209E299DF4215 /* ChessPuzzles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPuzzles.swift; sourceTree = "<group>"; };
+		09D821904A525DAB8F908D9B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0B868449421EA47649272F99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C95E927A784D59BE4CFBD9D /* ReconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectView.swift; sourceTree = "<group>"; };
 		0DC57A15E2DAEF602A2FCB8B /* MathEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathEngine.swift; sourceTree = "<group>"; };
@@ -202,6 +207,7 @@
 		3C01F9B70F6341797737D6D1 /* ShieldController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldController.swift; sourceTree = "<group>"; };
 		3D660647522953A93D91629F /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		3FAD72754F549C5C1EE0FA87 /* RoundProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundProvider.swift; sourceTree = "<group>"; };
+		427244501479857D132F1EDD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		449B35824749D1DC3D8635C7 /* ShieldActionExt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldActionExt.entitlements; sourceTree = "<group>"; };
 		452CD3D6A7E120E82A880304 /* chess_puzzles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = chess_puzzles.json; sourceTree = "<group>"; };
 		4638B3298E2ED9DE2ABA6DDC /* UnlockFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockFlowView.swift; sourceTree = "<group>"; };
@@ -235,10 +241,12 @@
 		98A057EA8CD118FEB7D5BDF9 /* QuizLockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLockApp.swift; sourceTree = "<group>"; };
 		9BAC7E1137AC09D68DB54271 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		A0D27F6D5D7A283AEDF21F52 /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = System/Library/Frameworks/DeviceActivity.framework; sourceTree = SDKROOT; };
+		A2DEFC3EBD43B669DCB6727F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A5821E11222B9806E0CD16AF /* ManagedSettings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettings.framework; path = System/Library/Frameworks/ManagedSettings.framework; sourceTree = SDKROOT; };
 		A6827AD5701B598CC4EA464B /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
 		A74C326E756D1757CA32D872 /* MathEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathEngineTests.swift; sourceTree = "<group>"; };
 		A8CB86DFDFF16B0785820A5E /* LockModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockModels.swift; sourceTree = "<group>"; };
+		B3D3FD989033C1137BD7F961 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B6FEB354EE53B90ABCDEB899 /* DeviceActivityMonitorExt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeviceActivityMonitorExt.entitlements; sourceTree = "<group>"; };
 		B9FA1B4E4C156CC17331629E /* ShieldActionExt.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ShieldActionExt.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA6F172A6DF206A42D224904 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
@@ -371,6 +379,7 @@
 				F4420F683D6C4DA7EEAFDE44 /* AppModel.swift */,
 				98501522B82A15C1A49A1401 /* Assets.xcassets */,
 				161EB218835D4232AB88BEDA /* Info.plist */,
+				427244501479857D132F1EDD /* PrivacyInfo.xcprivacy */,
 				98A057EA8CD118FEB7D5BDF9 /* QuizLockApp.swift */,
 				9BAC7E1137AC09D68DB54271 /* RootView.swift */,
 			);
@@ -445,6 +454,7 @@
 				B6FEB354EE53B90ABCDEB899 /* DeviceActivityMonitorExt.entitlements */,
 				658E46C34D263EE37019A801 /* DeviceActivityMonitorExtension.swift */,
 				F44E22FBEA8387D7F2230849 /* Info.plist */,
+				B3D3FD989033C1137BD7F961 /* PrivacyInfo.xcprivacy */,
 			);
 			path = DeviceActivityMonitorExt;
 			sourceTree = "<group>";
@@ -523,6 +533,7 @@
 			isa = PBXGroup;
 			children = (
 				1E12112FFBD4A4076DE5A58D /* Info.plist */,
+				09D821904A525DAB8F908D9B /* PrivacyInfo.xcprivacy */,
 				449B35824749D1DC3D8635C7 /* ShieldActionExt.entitlements */,
 				933CD67FFA48A8B71CD179BD /* ShieldActionExtension.swift */,
 			);
@@ -534,6 +545,7 @@
 			children = (
 				0DC7EFDCF0B046B98219885F /* Assets.xcassets */,
 				0B868449421EA47649272F99 /* Info.plist */,
+				A2DEFC3EBD43B669DCB6727F /* PrivacyInfo.xcprivacy */,
 				353051336958934E855228F7 /* ShieldConfigurationExt.entitlements */,
 				A6827AD5701B598CC4EA464B /* ShieldConfigurationExtension.swift */,
 			);
@@ -611,6 +623,7 @@
 			buildConfigurationList = 5626F4DAB2DFD82D09B7F4B8 /* Build configuration list for PBXNativeTarget "DeviceActivityMonitorExt" */;
 			buildPhases = (
 				492D83406E732B2D0162054E /* Sources */,
+				493CF6CE048BA0C555A24EEC /* Resources */,
 				2FB5CEB80FE39E46FCC93D78 /* Frameworks */,
 			);
 			buildRules = (
@@ -660,6 +673,7 @@
 			buildConfigurationList = A3C0F3EE62996CF16746C908 /* Build configuration list for PBXNativeTarget "ShieldActionExt" */;
 			buildPhases = (
 				8C0B700A1372040D532D66F4 /* Sources */,
+				80878D9E43058E31E35F04A8 /* Resources */,
 				F99C42D31997248C0E9F462D /* Frameworks */,
 			);
 			buildRules = (
@@ -729,9 +743,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71BC9BE0469D02838E2D589 /* Assets.xcassets in Resources */,
+				ED57223C3744CA0C36391A8E /* PrivacyInfo.xcprivacy in Resources */,
 				3CAA46F56E6057F562B51CB0 /* chess_puzzles.json in Resources */,
 				C33917F27434B21C1141243C /* wordle_allowed.txt in Resources */,
 				A5C9856A505FECAF8FA9D157 /* wordle_answers.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		493CF6CE048BA0C555A24EEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				966D1EEA1492B82ACBB7DD66 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,6 +763,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E10ABD8C161A6260A13D5561 /* Assets.xcassets in Resources */,
+				7E5AA55BFDF1F81DF6556A79 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80878D9E43058E31E35F04A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D95372749CBB7B7DA157DFC9 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

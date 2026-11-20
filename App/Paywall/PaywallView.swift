@@ -28,6 +28,7 @@ struct PaywallView: View {
         } message: {
             Text(model.store.lastError ?? "")
         }
+        .task { await model.store.loadProductsIfNeeded() }
         .onChange(of: model.settings.hasLifetime) { _, owned in
             if owned { close() }
         }
@@ -96,9 +97,13 @@ private struct LifetimeScreen: View {
             }
             VStack(spacing: 18) {
                 PrimaryButton(title: "Continue", isLoading: model.store.isPurchasing, action: onContinue)
-                Button("Pay standard price · \(model.store.standardPrice)", action: onBuyStandard)
-                    .font(.system(size: 16))
-                    .foregroundStyle(palette.accentText)
+                if let price = model.store.standardPrice {
+                    Button("Pay standard price · \(price)", action: onBuyStandard)
+                        .font(.system(size: 16))
+                        .foregroundStyle(palette.accentText)
+                        .disabled(model.store.isPurchasing || model.store.promo == nil)
+                .opacity(model.store.promo == nil ? 0.5 : 1)
+                }
                 Button("Restore Purchases", action: onRestore)
                     .font(.system(size: 16))
                     .foregroundStyle(palette.accentText)
@@ -111,9 +116,12 @@ private struct LifetimeScreen: View {
 
     private var priceCard: some View {
         VStack(spacing: 10) {
-            Text(model.store.standardPrice)
+            Text(model.store.standardPrice ?? " ")
                 .font(.system(size: 64, weight: .bold))
                 .foregroundStyle(palette.textPrimary)
+                .overlay {
+                    if model.store.standardPrice == nil { ProgressView().controlSize(.large) }
+                }
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
             Text("Standard lifetime price").font(.system(size: 16)).foregroundStyle(palette.textSecondary)
@@ -170,7 +178,7 @@ private struct DiscountScreen: View {
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(Color.textPrimary)
                     .padding(.top, 20)
-                Text(verbatim: "\(model.store.discountPercent)%")
+                Text(verbatim: model.store.discountPercent.map { "\($0)%" } ?? " ")
                     .font(.system(size: 120, weight: .black, design: .rounded))
                     .foregroundStyle(Color.brand)
                     .minimumScaleFactor(0.5)
@@ -181,7 +189,7 @@ private struct DiscountScreen: View {
                     .tracking(10)
                     .foregroundStyle(Color.brand)
                     .offset(y: -12)
-                Text("Lifetime access for \(model.store.promoPrice)")
+                Text(model.store.promoPrice.map { "Lifetime access for \($0)" } ?? "Loading price…")
                     .font(.system(size: 21, weight: .medium))
                     .foregroundStyle(Color.textPrimary)
                     .padding(.top, 8)
@@ -203,7 +211,8 @@ private struct DiscountScreen: View {
                     .shadow(color: Color.brand.opacity(0.3), radius: 0, y: 5)
                 }
                 .buttonStyle(PressableStyle())
-                .disabled(model.store.isPurchasing)
+                .disabled(model.store.isPurchasing || model.store.promo == nil)
+                .opacity(model.store.promo == nil ? 0.5 : 1)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 16)
             }

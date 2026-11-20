@@ -68,7 +68,7 @@ struct HowItWorksView: View {
                             .scaleEffect(tapPulse && beat == 1 ? 0.88 : 1)
                         HStack(spacing: 2) {
                             Image(systemName: "hourglass").font(.system(size: width * 0.03))
-                            Text("Instagram").font(.system(size: width * 0.034))
+                            Text("Social").font(.system(size: width * 0.034))
                         }
                         .foregroundStyle(Color.black.opacity(0.8))
                     }

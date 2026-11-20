@@ -27,7 +27,7 @@ struct EnjoyFeedView: View {
         let grey = Color(hex: 0xD8D8DD)
         return VStack(alignment: .leading, spacing: width * 0.035) {
             HStack {
-                Text("Instagram").font(.system(size: width * 0.07, weight: .bold, design: .serif)).italic()
+                Text("Social").font(.system(size: width * 0.07, weight: .bold, design: .rounded))
                 Spacer()
                 Image(systemName: "heart")
                 Image(systemName: "paperplane")

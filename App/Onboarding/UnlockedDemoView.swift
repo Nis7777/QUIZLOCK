@@ -18,7 +18,7 @@ struct UnlockedDemoView: View {
                     VStack(spacing: width * 0.07) {
                         HStack(spacing: 3) {
                             Image(systemName: "arrowtriangle.left.fill").font(.system(size: width * 0.03))
-                            Text("Instagram").font(.system(size: width * 0.045, weight: .medium))
+                            Text("Social").font(.system(size: width * 0.045, weight: .medium))
                             Spacer()
                         }
                         .foregroundStyle(Color(hex: 0x0A84FF))
@@ -33,7 +33,7 @@ struct UnlockedDemoView: View {
                         }
                         .scaleEffect(appeared ? 1 : 0.5)
                         .opacity(appeared ? 1 : 0)
-                        Text("Tap Instagram at the top left\nto return to your app.")
+                        Text("Tap “Social” at the top left\nto return to your app.")
                             .font(.system(size: width * 0.055, weight: .semibold))
                             .foregroundStyle(Color.textPrimary)
                             .multilineTextAlignment(.center)

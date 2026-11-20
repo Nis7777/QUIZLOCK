@@ -65,14 +65,15 @@ struct ConnectScreenTimeView: View {
         .onAppear {
             withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) { pulse = true }
         }
-        .alert("Screen Time access needed", isPresented: $showFailure) {
-            Button("Try Again") { Task { await request() } }
+        // Respect the user's choice (guideline 5.1.1(iv)): no re-asking; they can continue without access.
+        .alert("Screen Time not connected", isPresented: $showFailure) {
+            Button("Continue Without Access") { onAuthorized() }
             Button("Open Settings") {
                 if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
             }
-            Button("Cancel", role: .cancel) {}
+            Button("Not Now", role: .cancel) {}
         } message: {
-            Text("\(Brand.appName) can't block apps without Screen Time access. Tap Continue and allow access, or enable it in Settings › Screen Time. On a child's device, a parent may need to approve.")
+            Text("\(Brand.appName) can't block apps without Screen Time access. You can continue and connect it later from the app.")
         }
     }
 
