@@ -1,0 +1,123 @@
+import SwiftUI
+import UIKit
+
+/// S09: "Connect QuizLock to Screen Time" with a permission preview, then the real request.
+struct ConnectScreenTimeView: View {
+    let onBack: () -> Void
+    let onAuthorized: () -> Void
+    @Environment(AppModel.self) private var model
+    @Environment(\.palette) private var palette
+    @Environment(\.openURL) private var openURL
+    @State private var requesting = false
+    @State private var showFailure = false
+    @State private var pulse = false
+
+    var body: some View {
+        ZStack {
+            PinkArc()
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    OnboardingHeader(onBack: onBack, steps: 2, current: 1)
+                    ScreenTitle(title: "Connect \(Brand.appName)\nto Screen Time", size: 36)
+                        .padding(.top, 10)
+                    Text("To block the apps you choose, \(Brand.appName) needs Screen Time permission.")
+                        .font(.system(size: 19))
+                        .foregroundStyle(palette.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 28)
+                        .padding(.top, 14)
+                    Text("\(Brand.appName) does not collect your Screen Time usage.")
+                        .font(.system(size: 15))
+                        .foregroundStyle(palette.textSecondary)
+                        .padding(.top, 12)
+                        .padding(.horizontal, 20)
+                    Text("Permission preview")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(palette.textSecondary)
+                        .padding(.top, 24)
+                    fakeAlert
+                        .padding(.top, 10)
+                        .padding(.horizontal, 36)
+                        .zIndex(1)
+                    AssetImage(name: "mascot_pointing", placeholderSymbol: "person.fill", contentMode: .fit)
+                        .frame(height: 200)
+                        .frame(maxWidth: 200)
+                        .clipShape(RoundedRectangle(cornerRadius: UIImage(named: "mascot_pointing") == nil ? 20 : 0))
+                        .offset(x: -20, y: -12)
+                        .accessibilityHidden(true)
+                }
+                .padding(.bottom, 100)
+            }
+            VStack {
+                Spacer()
+                PrimaryButton(title: requesting ? "Requesting Access…" : "Continue", isLoading: requesting) {
+                    Task { await request() }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 8)
+            }
+            if requesting {
+                Color.black.opacity(0.25).ignoresSafeArea().transition(.opacity).allowsHitTesting(true)
+            }
+        }
+        .screenBackground()
+        .animation(.easeInOut(duration: 0.25), value: requesting)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) { pulse = true }
+        }
+        .alert("Screen Time access needed", isPresented: $showFailure) {
+            Button("Try Again") { Task { await request() } }
+            Button("Open Settings") {
+                if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("\(Brand.appName) can't block apps without Screen Time access. Tap Continue and allow access, or enable it in Settings › Screen Time. On a child's device, a parent may need to approve.")
+        }
+    }
+
+    private var fakeAlert: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("“\(Brand.appName)” Would Like to Access Screen Time")
+                .font(.system(size: 19, weight: .semibold))
+                .foregroundStyle(Color.textPrimary)
+            Text("Providing “\(Brand.appName)” access to Screen Time may allow it to see your activity data, restrict content, and limit the usage of apps and websites.")
+                .font(.system(size: 16))
+                .foregroundStyle(Color(hex: 0x5A5A60))
+            HStack(spacing: 10) {
+                Text("Continue")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(Color.textPrimary)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .background(Color(hex: 0xD9D9DE), in: Capsule())
+                    .overlay(
+                        Capsule()
+                            .strokeBorder(Color.brandRed, lineWidth: 3)
+                            .padding(-4)
+                            .opacity(pulse ? 1 : 0.35)
+                            .scaleEffect(pulse ? 1.04 : 0.98)
+                    )
+                Text("Don't Allow")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .background(Color(hex: 0x0A84FF), in: Capsule())
+            }
+            .padding(.top, 4)
+        }
+        .padding(20)
+        .background(Color.white.opacity(0.92), in: RoundedRectangle(cornerRadius: 30, style: .continuous))
+        .shadow(color: .black.opacity(0.1), radius: 20, y: 8)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Permission preview")
+    }
+
+    private func request() async {
+        requesting = true
+        let ok = await model.requestScreenTimeAuthorization()
+        requesting = false
+        if ok { onAuthorized() } else { showFailure = true }
+    }
+}

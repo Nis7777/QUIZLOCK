@@ -1,0 +1,181 @@
+import SwiftUI
+
+/// Puzzles tab: enabled-game chips and the 4 game cards.
+struct PuzzlesTab: View {
+    @Environment(AppModel.self) private var model
+    @State private var path: [GameID] = []
+
+    var body: some View {
+        NavigationStack(path: $path) {
+            PuzzlesView(path: $path)
+                .toolbar(.hidden, for: .navigationBar)
+                .navigationDestination(for: GameID.self) { game in
+                    PuzzleDetailView(game: game)
+                        .toolbar(.hidden, for: .navigationBar)
+                        .navigationBarBackButtonHidden(true)
+                }
+        }
+    }
+}
+
+struct PuzzlesView: View {
+    @Binding var path: [GameID]
+    @Environment(AppModel.self) private var model
+    @Environment(\.palette) private var palette
+    @State private var showManage = false
+    @State private var hint: String?
+
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 14) {
+                TabHeader()
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text("Unlock puzzles").font(.system(size: 20, weight: .semibold)).foregroundStyle(palette.textPrimary)
+                    Text("\(model.settings.enabledGames.count)").font(.system(size: 18)).foregroundStyle(palette.textSecondary)
+                    Spacer()
+                    Button("Manage") { showManage = true }
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(palette.accent)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+                Text("Your puzzles take turns in a shuffled order.")
+                    .font(.system(size: 15))
+                    .foregroundStyle(palette.textSecondary)
+                    .padding(.horizontal, 20)
+                chips
+                if let hint {
+                    Text(hint).font(.system(size: 14, weight: .semibold)).foregroundStyle(palette.accent)
+                        .padding(.horizontal, 20)
+                        .transition(.opacity)
+                }
+                Text("All puzzles")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(palette.textPrimary)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 10)
+                ForEach(GameID.allCases) { game in
+                    GameCard(game: game,
+                             inUse: model.settings.isEnabled(game),
+                             onOpen: { path.append(game) },
+                             onToggle: { toggle(game, $0) },
+                             onTry: { model.tryPractice(game) })
+                }
+            }
+            .padding(.bottom, 120)
+        }
+        .screenBackground()
+        .sheet(isPresented: $showManage) {
+            UnlockPuzzlesSheet()
+                .environment(model)
+                .environment(\.palette, model.palette)
+                .presentationDetents([.medium, .large])
+                .presentationCornerRadius(28)
+        }
+    }
+
+    private var chips: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(model.settings.enabledGames) { game in
+                    Button { toggle(game, false) } label: {
+                        HStack(spacing: 8) {
+                            Text(game.displayName).font(.system(size: 16, weight: .medium))
+                            Image(systemName: "xmark").font(.system(size: 13, weight: .semibold))
+                        }
+                        .foregroundStyle(palette.textPrimary)
+                        .padding(.horizontal, 16)
+                        .frame(height: 44)
+                        .background(palette.tint, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    }
+                    .buttonStyle(PressableStyle())
+                    .accessibilityLabel("Remove \(game.displayName)")
+                    .transition(.scale.combined(with: .opacity))
+                }
+            }
+            .padding(.horizontal, 20)
+            .animation(.selectionSpring, value: model.settings.enabledGames)
+        }
+    }
+
+    private func toggle(_ game: GameID, _ on: Bool) {
+        Haptics.tap()
+        if !model.setGame(game, enabled: on) {
+            Haptics.error()
+            withAnimation { hint = "Keep at least one puzzle enabled." }
+            Task {
+                try? await Task.sleep(nanoseconds: 2_000_000_000)
+                withAnimation { hint = nil }
+            }
+        }
+    }
+}
+
+extension GameID {
+    func metaLine(chessCount: Int) -> String {
+        switch self {
+        case .chess: return "Mate in 1–2 · \(chessCount) puzzles"
+        case .sudoku: return "Endless · Unique solutions"
+        case .math: return "Endless · Type your answer"
+        case .word: return "6 tries · Real words only"
+        }
+    }
+}
+
+private struct GameCard: View {
+    let game: GameID
+    let inUse: Bool
+    let onOpen: () -> Void
+    let onToggle: (Bool) -> Void
+    let onTry: () -> Void
+    @Environment(AppModel.self) private var model
+    @Environment(\.palette) private var palette
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Button(action: onOpen) {
+                HStack(alignment: .top, spacing: 16) {
+                    AssetImage(name: game.coverAsset, placeholderSymbol: game.systemIcon)
+                        .frame(width: 115, height: 115)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(game.displayName).font(.system(size: 22, weight: .semibold)).foregroundStyle(palette.textPrimary)
+                        Text(game.tagline).font(.system(size: 16)).foregroundStyle(palette.textSecondary)
+                        Text(game.metaLine(chessCount: model.rounds.chessBank.puzzles.count))
+                            .font(.system(size: 14)).foregroundStyle(palette.textSecondary)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .padding(18)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            Divider()
+            HStack {
+                Text("Use for unlocks").font(.system(size: 16)).foregroundStyle(palette.textPrimary)
+                Spacer()
+                PillToggle(isOn: Binding(get: { inUse }, set: { onToggle($0) }), label: "Use \(game.displayName) for unlocks")
+                Button(action: onTry) {
+                    HStack(spacing: 4) {
+                        Text("Try")
+                        Image(systemName: "chevron.right").font(.system(size: 14, weight: .bold))
+                    }
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(palette.accent)
+                    .padding(.leading, 14)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 18)
+            .padding(.vertical, 14)
+        }
+        .background(palette.card, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .strokeBorder(inUse ? palette.accent : Color.clear, lineWidth: 1.5)
+        )
+        .shadow(color: .black.opacity(palette.isDark ? 0 : 0.04), radius: 12, y: 4)
+        .padding(.horizontal, 16)
+        .animation(.selectionSpring, value: inUse)
+    }
+}
