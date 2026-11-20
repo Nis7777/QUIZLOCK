@@ -16,6 +16,18 @@ struct LockAppsView: View {
                     ScreenTitle(title: "Lock your apps.",
                                 subtitle: "Select the apps that distract you the most, the ones you open on autopilot.",
                                 size: 36)
+                    if !model.profile.wasters.isEmpty {
+                        let names = model.profile.suggestedCategories
+                            .map { String(localized: String.LocalizationValue($0.label)) }
+                            .formatted(.list(type: .and))
+                        Label("Suggested from your answers: \(names)", systemImage: "sparkles")
+                            .appFont(15, .semibold)
+                            .foregroundStyle(palette.accentText)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .background(palette.tint, in: Capsule())
+                            .padding(.horizontal, 20)
+                    }
                     if model.lockItems.isEmpty {
                         PickerHowToMock()
                             .padding(.horizontal, 20)

@@ -15,6 +15,9 @@ struct AppSettings: Codable, Equatable {
     var freeUnlocksUsed = 0
     var hasLifetime = false
     var simulatorAuthorized = false
+    /// Where onboarding was left (so killing the app mid-onboarding resumes there).
+    var onboardingStep: String?
+    var ratingRequested = false
 
     init() {}
 
@@ -33,6 +36,8 @@ struct AppSettings: Codable, Equatable {
         freeUnlocksUsed = (try? c.decodeIfPresent(Int.self, forKey: .freeUnlocksUsed)) ?? d.freeUnlocksUsed
         hasLifetime = (try? c.decodeIfPresent(Bool.self, forKey: .hasLifetime)) ?? d.hasLifetime
         simulatorAuthorized = (try? c.decodeIfPresent(Bool.self, forKey: .simulatorAuthorized)) ?? d.simulatorAuthorized
+        onboardingStep = try? c.decodeIfPresent(String.self, forKey: .onboardingStep)
+        ratingRequested = (try? c.decodeIfPresent(Bool.self, forKey: .ratingRequested)) ?? d.ratingRequested
     }
 
     private static let defaults = AppSettings()

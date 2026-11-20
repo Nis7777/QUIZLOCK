@@ -23,6 +23,7 @@ final class AppModel {
 
     private(set) var settings: AppSettings
     private(set) var lock: LockState
+    private(set) var profile: UserProfile
     var phase: Phase
     var selectedTab: MainTab = .settings
 
@@ -47,6 +48,7 @@ final class AppModel {
     private init() {
         settings = SharedStore.load(AppSettings.self, .settings) ?? AppSettings()
         lock = SharedStore.lockState
+        profile = SharedStore.load(UserProfile.self, .userProfile) ?? UserProfile()
         unlockSession = nil
         phase = (SharedStore.load(AppSettings.self, .settings)?.onboardingComplete ?? false) ? .main : .splash
         store.onEntitlementChange = { [weak self] owned in
@@ -133,6 +135,21 @@ final class AppModel {
         }
     }
 
+    func updateProfile(_ change: (inout UserProfile) -> Void) {
+        var p = profile
+        change(&p)
+        guard p != profile else { return }
+        profile = p
+        SharedStore.save(profile, .userProfile)
+    }
+
+    /// Pre-fills the later setup screens from the personalised plan.
+    func applyPlan() {
+        let plan = profile
+        updateLock(applyShield: false) { $0.defaultDuration = plan.suggestedDuration }
+        updateSettings { $0.enabledGames = plan.suggestedGames }
+    }
+
     func settingsBinding<T>(_ keyPath: WritableKeyPath<AppSettings, T>) -> Binding<T> {
         Binding(get: { self.settings[keyPath: keyPath] },
                 set: { value in self.updateSettings { $0[keyPath: keyPath] = value } })
@@ -201,6 +218,7 @@ final class AppModel {
         updateSettings {
             $0.onboardingComplete = true
             $0.showAllSetBanner = true
+            $0.onboardingStep = nil
         }
         updateLock { $0.locksEnabled = true }
         paywallReason = .onboarding

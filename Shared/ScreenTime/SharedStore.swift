@@ -9,6 +9,8 @@ public enum SharedStore {
         case unlockSession = "unlockSession.v1"
         case tokenNames = "tokenNames.v1"
         case usedWordAnswers = "usedWordAnswers.v1"
+        case userProfile = "userProfile.v1"
+        case stats = "stats.v1"
     }
 
     public static var defaults: UserDefaults {
