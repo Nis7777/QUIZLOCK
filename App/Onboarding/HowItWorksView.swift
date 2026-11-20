@@ -110,11 +110,10 @@ struct HowItWorksView: View {
         VStack(spacing: width * 0.05) {
             Spacer()
             ZStack {
-                Circle().fill(Color.brandRed).frame(width: width * 0.27, height: width * 0.27)
-                Image(systemName: "key.fill")
-                    .font(.system(size: width * 0.12, weight: .bold))
+                Circle().fill(Color.brand).frame(width: width * 0.27, height: width * 0.27)
+                Image(systemName: "lock.open.fill")
+                    .font(.system(size: width * 0.11, weight: .bold))
                     .foregroundStyle(.white)
-                    .rotationEffect(.degrees(-45))
             }
             Text("Solve a puzzle to unlock the app")
                 .font(.system(size: width * 0.07, weight: .bold))
@@ -127,7 +126,7 @@ struct HowItWorksView: View {
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: width * 0.15)
-                .background(Color.brandRed, in: RoundedRectangle(cornerRadius: width * 0.04, style: .continuous))
+                .background(Color.brand, in: RoundedRectangle(cornerRadius: width * 0.04, style: .continuous))
                 .scaleEffect(tapPulse && beat == 2 ? 0.94 : 1)
                 .padding(.horizontal, width * 0.08)
             Text("NOT NOW")

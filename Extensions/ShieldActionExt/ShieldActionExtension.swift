@@ -44,7 +44,7 @@ final class ShieldActionExtension: ShieldActionDelegate {
     private func postNotification(appName: String?, then done: @escaping () -> Void) {
         let n = max(1, SharedStore.lockState.puzzlesPerUnlock)
         let content = UNMutableNotificationContent()
-        content.title = "Tap to start your puzzle 🔑"
+        content.title = "Tap to start your puzzle 🧩"
         content.body = "Solve \(n) puzzle\(n == 1 ? "" : "s") to unlock \(appName ?? "your app")"
         content.sound = .default
         content.userInfo = ["deeplink": Brand.unlockDeepLink.absoluteString]

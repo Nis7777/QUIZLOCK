@@ -76,7 +76,7 @@ struct FeedbackTab: View {
                         Image(systemName: "chevron.up.chevron.down").font(.system(size: 12, weight: .semibold))
                     }
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(palette.accent)
+                    .foregroundStyle(palette.accentText)
                 }
             }
             Divider()
@@ -103,7 +103,7 @@ struct FeedbackTab: View {
     private var directCard: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Email me directly").font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
-            Text(Brand.supportEmail).font(.system(size: 16, weight: .medium)).foregroundStyle(palette.accent)
+            Text(Brand.supportEmail).font(.system(size: 16, weight: .medium)).foregroundStyle(palette.accentText)
                 .textSelection(.enabled)
             Button {
                 UIPasteboard.general.string = Brand.supportEmail

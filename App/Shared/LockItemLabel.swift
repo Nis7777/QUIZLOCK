@@ -91,7 +91,7 @@ struct MockAppPicker: View {
                                 Spacer()
                                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
                                     .font(.system(size: 22))
-                                    .foregroundStyle(selected ? Color.brandRed : Color(hex: 0xC7C7CC))
+                                    .foregroundStyle(selected ? Color.brand : Color(hex: 0xC7C7CC))
                             }
                         }
                     }

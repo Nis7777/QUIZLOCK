@@ -35,7 +35,7 @@ struct PuzzlesView: View {
                     Spacer()
                     Button("Manage") { showManage = true }
                         .font(.system(size: 17, weight: .semibold))
-                        .foregroundStyle(palette.accent)
+                        .foregroundStyle(palette.accentText)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
@@ -45,7 +45,7 @@ struct PuzzlesView: View {
                     .padding(.horizontal, 20)
                 chips
                 if let hint {
-                    Text(hint).font(.system(size: 14, weight: .semibold)).foregroundStyle(palette.accent)
+                    Text(hint).font(.system(size: 14, weight: .semibold)).foregroundStyle(palette.accentText)
                         .padding(.horizontal, 20)
                         .transition(.opacity)
                 }
@@ -161,7 +161,7 @@ private struct GameCard: View {
                         Image(systemName: "chevron.right").font(.system(size: 14, weight: .bold))
                     }
                     .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(palette.accent)
+                    .foregroundStyle(palette.accentText)
                     .padding(.leading, 14)
                 }
                 .buttonStyle(.plain)

@@ -54,7 +54,7 @@ struct ChatBubblesIcon: View {
 
 /// A 4×4 checkerboard drawn in SwiftUI.
 struct CheckerIcon: View {
-    var color: Color = .brandRed
+    var color: Color = .brand
     var size: CGFloat = 40
 
     var body: some View {
@@ -76,11 +76,11 @@ struct CheckerIcon: View {
     }
 }
 
-/// Big red game icon used on the "Try your first puzzle" cards and sheets.
+/// Big coral game icon used on the "Try your first puzzle" cards and sheets.
 struct GameIcon: View {
     let game: GameID
     var size: CGFloat = 44
-    var color: Color = .brandRed
+    var color: Color = .brand
 
     var body: some View {
         Group {

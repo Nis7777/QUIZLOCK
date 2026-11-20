@@ -171,6 +171,11 @@ def flatten_and_resize(src, dst, size=ICON_SIZE, background=(255, 255, 255)):
 def prepare_icon(src, dst):
     """Resize to 1024×1024 and strip alpha. Falls back to macOS `sips` for unusual PNGs."""
     try:
+        w, h, rows = read_png(src)
+        if (w, h) == (ICON_SIZE, ICON_SIZE) and all(px[3] == 255 for row in rows for px in row):
+            shutil.copyfile(src, dst)
+            print(f"AppIcon: already {ICON_SIZE}×{ICON_SIZE} with no transparency, copied as-is")
+            return
         w, h = flatten_and_resize(src, dst)
         print(f"AppIcon: {w}×{h} → {ICON_SIZE}×{ICON_SIZE}, alpha removed")
         return
@@ -186,9 +191,9 @@ def prepare_icon(src, dst):
 
 
 def placeholder_icon(path, size=1024):
-    """White background, red (#E8231C) circle, white key tilted 45° (bow top-right, teeth bottom-left)."""
+    """Fallback only (used when ArtSource/AppIcon.png is missing): white background, coral circle, white key shape."""
     c = size / 2
-    red, white = (0xE8, 0x23, 0x1C), (255, 255, 255)
+    red, white = (0xFF, 0x5A, 0x36), (255, 255, 255)
     cos45 = math.cos(math.radians(45))
 
     def pixel(x, y):
@@ -218,7 +223,7 @@ def placeholder_icon(path, size=1024):
 def main():
     os.makedirs(XC, exist_ok=True)
     write_json(os.path.join(XC, "Contents.json"), {"info": INFO})
-    color_set("AccentColor", 0xD3, 0x25, 0x1E)
+    color_set("AccentColor", 0xFF, 0x5A, 0x36)
     color_set("LaunchBackground", 0xF6, 0xF5, 0xF8)
 
     icon_dir = os.path.join(XC, "AppIcon.appiconset")

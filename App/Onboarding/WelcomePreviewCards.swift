@@ -73,7 +73,7 @@ struct MathPreviewCard: View {
                 .background(solved ? Color.correctGreenBg : Color(hex: 0xF4F4F7), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                 .overlay(alignment: .leading) {
                     if !typed {
-                        Capsule().fill(Color.brandRed).frame(width: 2, height: 30).padding(.leading, 24)
+                        Capsule().fill(Color.brand).frame(width: 2, height: 30).padding(.leading, 24)
                     }
                 }
             }
@@ -206,7 +206,7 @@ struct SudokuPreviewCard: View {
                     if show {
                         Text("\(p.solution[i])")
                             .font(.system(size: cell * 0.55, weight: isBlank ? .bold : .semibold, design: .rounded))
-                            .foregroundStyle(isBlank ? Color.brandRed : Color(hex: 0x2B2622))
+                            .foregroundStyle(isBlank ? Color.brand : Color(hex: 0x2B2622))
                             .transition(.scale.combined(with: .opacity))
                     }
                 }

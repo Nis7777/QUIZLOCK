@@ -26,10 +26,10 @@ struct UnlockedDemoView: View {
                         .padding(.top, -width * 0.06)
                         Spacer()
                         ZStack {
-                            Circle().fill(Color.pinkTint).frame(width: width * 0.36, height: width * 0.36)
+                            Circle().fill(Color.brandTint).frame(width: width * 0.36, height: width * 0.36)
                             Image(systemName: "lock.open.fill")
                                 .font(.system(size: width * 0.15, weight: .semibold))
-                                .foregroundStyle(Color.brandRed)
+                                .foregroundStyle(Color.brand)
                         }
                         .scaleEffect(appeared ? 1 : 0.5)
                         .opacity(appeared ? 1 : 0)

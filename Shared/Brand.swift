@@ -21,8 +21,12 @@ public enum Brand {
 
     /// Brand colours as 0xRRGGBB. SwiftUI / UIKit wrappers live in the App target.
     public enum Hex {
-        public static let brandRed: UInt32 = 0xD3251E
-        public static let wordmarkRed: UInt32 = 0xF7271E
+        /// Coral brand colour (buttons, toggles, selected states, links, icons, the wordmark).
+        public static let brand: UInt32 = 0xFF5A36
+        /// Darker coral for pressed states and small coral text on white (better contrast).
+        public static let brandDeep: UInt32 = 0xE4421F
+        /// Error states only (wrong answers, shakes, Sudoku conflicts).
+        public static let errorRed: UInt32 = 0xFF3B30
         public static let bg: UInt32 = 0xF6F5F8
         public static let card: UInt32 = 0xFFFFFF
         public static let textPrimary: UInt32 = 0x18181C

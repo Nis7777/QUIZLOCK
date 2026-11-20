@@ -242,7 +242,7 @@ struct ChessGameView: View {
             } else if let status = vm.statusText {
                 Text(status)
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(Color.brandRed)
+                    .foregroundStyle(Color.errorRed)
                     .transition(.opacity)
             } else {
                 Text("Tap a piece, then a square. Or drag it.")

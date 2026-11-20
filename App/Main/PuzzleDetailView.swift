@@ -50,7 +50,7 @@ struct PuzzleDetailView: View {
                                     .font(.system(size: 14, weight: .bold))
                                     .rotationEffect(.degrees(showRules ? 180 : 0))
                             }
-                            .foregroundStyle(palette.accent)
+                            .foregroundStyle(palette.accentText)
                         }
                         .buttonStyle(.plain)
                         if showRules {
@@ -95,7 +95,7 @@ struct PuzzleDetailView: View {
                     Image(systemName: "chevron.right").font(.system(size: 14, weight: .bold))
                 }
                 .font(.system(size: 17, weight: .semibold))
-                .foregroundStyle(palette.accent)
+                .foregroundStyle(palette.accentText)
                 .padding(.leading, 14)
             }
             .buttonStyle(.plain)

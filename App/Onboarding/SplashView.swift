@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// S01: wordmark, tagline and a small red spinner. Holds ~1.2s, then fades into the welcome carousel.
+/// S01: wordmark, tagline and a small coral spinner. Holds ~1.2s, then fades into the welcome carousel.
 struct SplashView: View {
     let onFinish: () -> Void
     @Environment(\.palette) private var palette

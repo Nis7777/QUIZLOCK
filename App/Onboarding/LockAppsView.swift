@@ -39,7 +39,7 @@ struct LockAppsView: View {
                     .padding(.horizontal, 20)
                     Text(model.lockItems.isEmpty ? "You can add apps later in Settings." : "You can update this later in Settings.")
                         .font(.system(size: 15, weight: .medium))
-                        .foregroundStyle(palette.accent)
+                        .foregroundStyle(palette.accentText)
                 }
                 .padding(.bottom, 20)
             }

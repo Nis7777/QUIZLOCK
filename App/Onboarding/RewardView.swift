@@ -28,7 +28,7 @@ struct RewardView: View {
                         .padding(.horizontal, 24)
                     HStack(spacing: 10) {
                         RoundedRectangle(cornerRadius: 3).fill(palette.accent).frame(width: 14, height: 14)
-                        Text(model.selectedCountText).font(.system(size: 16, weight: .bold)).foregroundStyle(palette.accent)
+                        Text(model.selectedCountText).font(.system(size: 16, weight: .bold)).foregroundStyle(palette.accentText)
                     }
                     .padding(.horizontal, 18)
                     .padding(.vertical, 9)
@@ -43,7 +43,7 @@ struct RewardView: View {
                         .foregroundStyle(palette.textSecondary)
                     Button("Change apps", action: onChangeApps)
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(palette.accent)
+                        .foregroundStyle(palette.accentText)
                 }
                 .padding(.bottom, 16)
             }

@@ -10,8 +10,9 @@ extension Color {
                   opacity: opacity)
     }
 
-    static let brandRed = Color(hex: Brand.Hex.brandRed)
-    static let wordmarkRed = Color(hex: Brand.Hex.wordmarkRed)
+    static let brand = Color(hex: Brand.Hex.brand)
+    static let brandDeep = Color(hex: Brand.Hex.brandDeep)
+    static let errorRed = Color(hex: Brand.Hex.errorRed)
     static let appBg = Color(hex: Brand.Hex.bg)
     static let cardWhite = Color(hex: Brand.Hex.card)
     static let textPrimary = Color(hex: Brand.Hex.textPrimary)
@@ -20,7 +21,8 @@ extension Color {
     static let correctGreen = Color(hex: Brand.Hex.correctGreen)
     static let answerGreen = Color(hex: 0x1E7B34)
     static let darkCard = Color(hex: Brand.Hex.darkCard)
-    static let pinkTint = Color.brandRed.opacity(0.13)
+    /// Coral at ~13% opacity: a soft peach (icon tiles, pills, banner background).
+    static let brandTint = Color.brand.opacity(0.13)
     static let wordGreen = Color(hex: Brand.Hex.wordGreen)
     static let wordYellow = Color(hex: Brand.Hex.wordYellow)
     static let wordGrey = Color(hex: Brand.Hex.wordGrey)
@@ -37,12 +39,14 @@ enum AppTheme: String, Codable, CaseIterable, Identifiable {
     case classic, dark
     var id: String { rawValue }
     var title: String { self == .classic ? "Classic" : "Dark" }
-    var subtitle: String { self == .classic ? "Light & red" : "Black & white" }
+    var subtitle: String { self == .classic ? "Light & coral" : "Black & coral" }
 }
 
 /// Colours that change with the Appearance setting. Puzzle boards and tiles keep their own colours.
 struct Palette: Equatable {
     let accent: Color
+    /// Coral for small text (links, labels): the deeper coral on light backgrounds for contrast.
+    let accentText: Color
     let onAccent: Color
     let bg: Color
     let card: Color
@@ -55,14 +59,15 @@ struct Palette: Equatable {
     let isDark: Bool
 
     static let classic = Palette(
-        accent: .brandRed, onAccent: .white, bg: .appBg, card: .cardWhite,
-        textPrimary: .textPrimary, textSecondary: .textSecondary, tint: .pinkTint,
-        fieldFill: .lightGreyFill, separator: Color.black.opacity(0.08), wordmark: .wordmarkRed, isDark: false)
+        accent: .brand, accentText: .brandDeep, onAccent: .white, bg: .appBg, card: .cardWhite,
+        textPrimary: .textPrimary, textSecondary: .textSecondary, tint: .brandTint,
+        fieldFill: .lightGreyFill, separator: Color.black.opacity(0.08), wordmark: .brand, isDark: false)
 
+    /// "Dark · Black & coral": near-black background, white text, coral accents.
     static let dark = Palette(
-        accent: .white, onAccent: .black, bg: .black, card: Color(hex: 0x1C1C1E),
-        textPrimary: .white, textSecondary: Color(hex: 0x9A9AA0), tint: Color.white.opacity(0.14),
-        fieldFill: Color(hex: 0x2C2C2E), separator: Color.white.opacity(0.12), wordmark: .white, isDark: true)
+        accent: .brand, accentText: .brand, onAccent: .white, bg: Color(hex: 0x0D0D0F), card: Color(hex: 0x1C1C1E),
+        textPrimary: .white, textSecondary: Color(hex: 0x9A9AA0), tint: Color.brand.opacity(0.18),
+        fieldFill: Color(hex: 0x2C2C2E), separator: Color.white.opacity(0.12), wordmark: .brand, isDark: true)
 
     static func forTheme(_ theme: AppTheme) -> Palette { theme == .dark ? .dark : .classic }
 }

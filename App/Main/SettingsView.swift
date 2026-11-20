@@ -99,7 +99,7 @@ struct SettingsView: View {
                 withAnimation(.easeInOut(duration: 0.3)) { model.updateSettings { $0.showAllSetBanner = false } }
             }
             .font(.system(size: 16, weight: .heavy))
-            .foregroundStyle(palette.accent)
+            .foregroundStyle(palette.accentText)
         }
         .padding(18)
         .background(palette.tint, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
@@ -284,7 +284,7 @@ struct SettingsView: View {
                     if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
                 }
                 .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(palette.accent)
+                .foregroundStyle(palette.accentText)
             }
             .card()
             .padding(.horizontal, 16)
@@ -298,7 +298,7 @@ struct SettingsView: View {
                 Button("Privacy Policy") { link = Brand.privacyURL }
             }
             .font(.system(size: 15, weight: .semibold))
-            .foregroundStyle(palette.accent)
+            .foregroundStyle(palette.accentText)
             Text(Brand.credits)
                 .font(.system(size: 13))
                 .foregroundStyle(palette.textSecondary)
@@ -369,11 +369,11 @@ private struct ThemeCard: View {
 
     private var mini: some View {
         let dark = theme == .dark
-        let accent = dark ? Color.white : Color.brandRed
+        let accent = Color.brand
         return VStack(alignment: .leading, spacing: 6) {
             Text(Brand.appName)
                 .font(.system(size: 11, weight: .black, design: .rounded))
-                .foregroundStyle(dark ? Color.white : Color.wordmarkRed)
+                .foregroundStyle(Color.brand)
             ForEach(0..<2, id: \.self) { _ in
                 HStack {
                     Capsule().fill(dark ? Color.white.opacity(0.35) : Color(hex: 0xD8D8DD)).frame(width: 46, height: 6)

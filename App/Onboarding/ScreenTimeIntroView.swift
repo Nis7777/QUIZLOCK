@@ -9,7 +9,7 @@ struct ScreenTimeIntroView: View {
 
     var body: some View {
         ZStack {
-            PinkArc()
+            PeachArc()
             VStack(spacing: 0) {
                 OnboardingHeader(onBack: onBack, steps: 2, current: 0)
                 Spacer(minLength: 10)
@@ -41,7 +41,7 @@ struct ScreenTimeIntroView: View {
     private var illustration: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 34, style: .continuous)
-                .fill(Color.brandRed)
+                .fill(Color.brand)
                 .frame(width: 150, height: 150)
                 .overlay(Image(systemName: "hourglass").font(.system(size: 64, weight: .semibold)).foregroundStyle(.white))
                 .rotationEffect(.degrees(appeared ? 10 : 0))
@@ -52,9 +52,8 @@ struct ScreenTimeIntroView: View {
                 .frame(width: 150, height: 150)
                 .overlay(
                     ZStack {
-                        Circle().fill(Color.wordmarkRed).frame(width: 112, height: 112)
-                        Image(systemName: "key.fill").font(.system(size: 50, weight: .bold)).foregroundStyle(.white)
-                            .rotationEffect(.degrees(-45))
+                        Circle().fill(Color.brand).frame(width: 112, height: 112)
+                        Image(systemName: "puzzlepiece.fill").font(.system(size: 50, weight: .bold)).foregroundStyle(.white)
                     }
                 )
                 .rotationEffect(.degrees(appeared ? -8 : 0))
@@ -66,13 +65,13 @@ struct ScreenTimeIntroView: View {
     }
 }
 
-/// Soft pink arc filling the bottom ~60% of the background.
-struct PinkArc: View {
+/// Soft peach (coral-tint) arc filling the bottom ~60% of the background.
+struct PeachArc: View {
     var body: some View {
         GeometryReader { geo in
             let w = geo.size.width
             Ellipse()
-                .fill(Color.brandRed.opacity(0.07))
+                .fill(Color.brand.opacity(0.07))
                 .frame(width: w * 2.4, height: geo.size.height * 1.3)
                 .position(x: w / 2, y: geo.size.height * 0.4 + geo.size.height * 0.65)
         }

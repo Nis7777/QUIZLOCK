@@ -39,7 +39,7 @@ struct UnlockPuzzlesSheet: View {
             if let hint {
                 Text(hint)
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(palette.accent)
+                    .foregroundStyle(palette.accentText)
                     .padding(.horizontal, 22)
                     .transition(.opacity)
             }

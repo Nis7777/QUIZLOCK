@@ -31,7 +31,7 @@ struct ReconnectView: View {
                 if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
             }
             .font(.system(size: 16, weight: .semibold))
-            .foregroundStyle(palette.accent)
+            .foregroundStyle(palette.accentText)
             .padding(.bottom, 12)
         }
         .padding(.horizontal, 20)

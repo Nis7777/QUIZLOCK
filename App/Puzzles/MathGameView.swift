@@ -82,7 +82,7 @@ struct MathGameView: View {
             if let answer = vm.revealedAnswer {
                 Text("Answer: \(answer)")
                     .font(.system(size: 19, weight: .bold))
-                    .foregroundStyle(Color.brandRed)
+                    .foregroundStyle(Color.errorRed)
                     .padding(.top, 10)
                     .transition(.opacity)
             } else if vm.round.wrongCount > 0 && vm.round.status == .playing {
@@ -124,7 +124,7 @@ struct MathGameView: View {
 
     private var fieldColor: Color {
         if vm.round.status == .solved { return .correctGreenBg }
-        if vm.showWrongTint || vm.revealedAnswer != nil { return Color.brandRed.opacity(0.12) }
+        if vm.showWrongTint || vm.revealedAnswer != nil { return Color.errorRed.opacity(0.12) }
         return .white
     }
 
@@ -159,7 +159,7 @@ struct MathKeypad: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 58)
-                    .background(Color.brandRed, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .background(Color.brand, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             }
             .buttonStyle(PressableStyle())
         }

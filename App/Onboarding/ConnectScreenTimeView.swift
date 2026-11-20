@@ -14,7 +14,7 @@ struct ConnectScreenTimeView: View {
 
     var body: some View {
         ZStack {
-            PinkArc()
+            PeachArc()
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     OnboardingHeader(onBack: onBack, steps: 2, current: 1)
@@ -43,7 +43,7 @@ struct ConnectScreenTimeView: View {
                         .frame(height: 200)
                         .frame(maxWidth: 200)
                         .clipShape(RoundedRectangle(cornerRadius: UIImage(named: "mascot_pointing") == nil ? 20 : 0))
-                        .offset(x: -20, y: -12)
+                        .offset(x: 46, y: -16)
                         .accessibilityHidden(true)
                 }
                 .padding(.bottom, 100)
@@ -93,7 +93,7 @@ struct ConnectScreenTimeView: View {
                     .background(Color(hex: 0xD9D9DE), in: Capsule())
                     .overlay(
                         Capsule()
-                            .strokeBorder(Color.brandRed, lineWidth: 3)
+                            .strokeBorder(Color.brand, lineWidth: 3)
                             .padding(-4)
                             .opacity(pulse ? 1 : 0.35)
                             .scaleEffect(pulse ? 1.04 : 0.98)

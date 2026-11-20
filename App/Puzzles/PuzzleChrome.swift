@@ -17,7 +17,7 @@ struct PuzzleChrome<Content: View>: View {
                     Text(Brand.appNameCaps)
                         .font(.system(size: 12, weight: .bold))
                         .tracking(3)
-                        .foregroundStyle(palette.accent)
+                        .foregroundStyle(palette.accentText)
                     Text(game.displayName)
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(palette.textPrimary)

@@ -64,7 +64,7 @@ struct PuzzlesPerUnlockSheet: View {
     }
 }
 
-/// Centred sheet title with a red "Done" pill.
+/// Centred sheet title with a coral "Done" pill.
 struct SheetHeader: View {
     let title: String
     let onDone: () -> Void

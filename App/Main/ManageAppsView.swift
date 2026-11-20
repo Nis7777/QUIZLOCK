@@ -63,7 +63,7 @@ struct ManageAppsView: View {
                 } label: {
                     Label("Remove", systemImage: "minus.circle")
                         .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(Color(hex: 0xE5484D))
+                        .foregroundStyle(Color.errorRed)
                 }
                 .buttonStyle(.plain)
             }

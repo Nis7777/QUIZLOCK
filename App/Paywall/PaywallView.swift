@@ -89,7 +89,7 @@ private struct LifetimeScreen: View {
                         Button("Privacy Policy") { link = Brand.privacyURL }
                     }
                     .font(.system(size: 16))
-                    .foregroundStyle(palette.accent)
+                    .foregroundStyle(palette.accentText)
                     .padding(.top, 14)
                 }
                 .padding(.horizontal, 20)
@@ -98,10 +98,10 @@ private struct LifetimeScreen: View {
                 PrimaryButton(title: "Continue", isLoading: model.store.isPurchasing, action: onContinue)
                 Button("Pay standard price · \(model.store.standardPrice)", action: onBuyStandard)
                     .font(.system(size: 16))
-                    .foregroundStyle(palette.accent)
+                    .foregroundStyle(palette.accentText)
                 Button("Restore Purchases", action: onRestore)
                     .font(.system(size: 16))
-                    .foregroundStyle(palette.accent)
+                    .foregroundStyle(palette.accentText)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 8)
@@ -155,9 +155,9 @@ private struct DiscountScreen: View {
                     Button(action: onClose) {
                         Image(systemName: "xmark")
                             .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(Color(hex: 0xC2410C))
+                            .foregroundStyle(Color.brandDeep)
                             .frame(width: 52, height: 52)
-                            .background(Color(hex: 0xF97316, opacity: 0.16), in: Circle())
+                            .background(Color.brand.opacity(0.16), in: Circle())
                     }
                     .accessibilityLabel("Close")
                 }
@@ -172,14 +172,14 @@ private struct DiscountScreen: View {
                     .padding(.top, 20)
                 Text(verbatim: "\(model.store.discountPercent)%")
                     .font(.system(size: 120, weight: .black, design: .rounded))
-                    .foregroundStyle(Color.brandRed)
+                    .foregroundStyle(Color.brand)
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
                     .padding(.top, 8)
                 Text("OFF")
                     .font(.system(size: 48, weight: .black, design: .rounded))
                     .tracking(10)
-                    .foregroundStyle(Color.brandRed)
+                    .foregroundStyle(Color.brand)
                     .offset(y: -12)
                 Text("Lifetime access for \(model.store.promoPrice)")
                     .font(.system(size: 21, weight: .medium))
@@ -188,7 +188,7 @@ private struct DiscountScreen: View {
                 ticket.padding(.top, 20)
                 Text("Thank you for supporting \(Brand.appName)")
                     .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(Color.brandRed)
+                    .foregroundStyle(Color.brandDeep)
                     .padding(.top, 20)
                 Spacer()
                 Button(action: onApply) {
@@ -199,8 +199,8 @@ private struct DiscountScreen: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 64)
-                    .background(Color.brandRed, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-                    .shadow(color: Color.brandRed.opacity(0.3), radius: 0, y: 5)
+                    .background(Color.brand, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .shadow(color: Color.brand.opacity(0.3), radius: 0, y: 5)
                 }
                 .buttonStyle(PressableStyle())
                 .disabled(model.store.isPurchasing)
@@ -227,7 +227,7 @@ private struct DiscountScreen: View {
         .background(Color.white.opacity(0.55), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .strokeBorder(Color.brandRed.opacity(0.35), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
+                .strokeBorder(Color.brand.opacity(0.35), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
         )
     }
 }

@@ -29,7 +29,7 @@ Swift + SwiftUI, iOS 17+, iPhone only, portrait. No third-party packages.
    ```bash
    xcodegen generate
    ```
-2. Add your art (optional; missing images show a grey placeholder, and there's a generated placeholder icon). If the 6 images are in `~/Downloads` named `3d_AppIcon.png`, `3d_mascot_pointing.png`, `3d_game_chess.png`, `3d_game_sudoku.png`, `3d_game_math.png` and `3d_game_word.png`, this moves them into `ArtSource/` and imports them:
+2. The final 3D art is already in `ArtSource/` and imported into the asset catalogs. To replace images later with new `3d_*.png` files from `~/Downloads`, run this. It moves them into `ArtSource/` without the prefix and imports them:
    ```bash
    Scripts/import_downloads.sh
    ```

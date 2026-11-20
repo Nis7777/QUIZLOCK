@@ -116,7 +116,7 @@ struct SudokuGameView: View {
             .foregroundStyle(active ? Color.white : palette.textPrimary)
             .frame(maxWidth: .infinity)
             .frame(height: 56)
-            .background(active ? Color.brandRed : palette.card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .background(active ? Color.brand : palette.card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             .shadow(color: .black.opacity(0.04), radius: 6, y: 2)
         }
         .buttonStyle(PressableStyle())
@@ -132,7 +132,7 @@ struct SudokuGameView: View {
                 Button { vm.enter(d) } label: {
                     Text("\(d)")
                         .font(.system(size: 28, weight: .semibold, design: .rounded))
-                        .foregroundStyle(Color.brandRed)
+                        .foregroundStyle(Color.brand)
                         .frame(maxWidth: .infinity)
                         .frame(height: 54)
                         .background(palette.card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
@@ -186,7 +186,7 @@ private struct SudokuCell: View {
             if value != 0 {
                 Text("\(value)")
                     .font(.system(size: size * 0.56, weight: round.isGiven(index) ? .bold : .semibold, design: .rounded))
-                    .foregroundStyle(isConflict ? Color(hex: 0xE5292F) : (round.isGiven(index) ? Color.textPrimary : Color.brandRed))
+                    .foregroundStyle(isConflict ? Color.errorRed : (round.isGiven(index) ? Color.textPrimary : Color.brand))
             } else if round.notes[index] != 0 {
                 notesGrid(layout: layout)
             }
@@ -207,9 +207,9 @@ private struct SudokuCell: View {
         let round = vm.round
         let layout = round.layout
         guard let s = vm.selected else { return .white }
-        if s == index { return Color.brandRed.opacity(0.2) }
+        if s == index { return Color.brand.opacity(0.2) }
         let selValue = round.cells[s]
-        if selValue != 0 && round.cells[index] == selValue { return Color.brandRed.opacity(0.09) }
+        if selValue != 0 && round.cells[index] == selValue { return Color.brand.opacity(0.09) }
         if layout.row(s) == layout.row(index) || layout.col(s) == layout.col(index) || layout.box(s) == layout.box(index) {
             return Color(hex: 0xF1F1F4)
         }

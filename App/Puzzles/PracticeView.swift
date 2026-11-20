@@ -41,7 +41,7 @@ struct PracticeView: View {
             }
             Button("Done") { dismiss() }
                 .font(.system(size: 17, weight: .semibold))
-                .foregroundStyle(palette.accent)
+                .foregroundStyle(palette.accentText)
         }
         .card(padding: 24)
         .padding(.horizontal, 8)
