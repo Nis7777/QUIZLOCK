@@ -16,7 +16,8 @@ Swift + SwiftUI, iOS 17+, iPhone only, portrait. No third-party packages.
 | `Extensions/` | `ShieldConfigurationExt` (block screen), `ShieldActionExt` (START PUZZLE / NOT NOW), `DeviceActivityMonitorExt` (re-locks when an unlock ends) |
 | `Resources/` | `wordle_allowed.txt`, `wordle_answers.txt`, `chess_puzzles.json` (bundled with the app) |
 | `Tests/` | Unit tests for the 4 engines |
-| `Scripts/` | `build_chess_puzzles.py`, `import_art.py`, `test_engines_linux.sh` |
+| `docs/` | Terms and Privacy pages, served by GitHub Pages |
+| `Scripts/` | `build_chess_puzzles.py`, `import_art.py`, `import_downloads.sh`, `test_engines_linux.sh` |
 | `Products.storekit` | Local StoreKit config with both lifetime products (set on the Run scheme) |
 
 ## Build and run
@@ -28,7 +29,11 @@ Swift + SwiftUI, iOS 17+, iPhone only, portrait. No third-party packages.
    ```bash
    xcodegen generate
    ```
-2. Optional: add your art to `ArtSource/` (see `ArtSource/PUT_IMAGES_HERE.md`), then import it into the asset catalog. Missing images show a grey placeholder. Until you add `AppIcon.png`, the app uses a generated placeholder icon.
+2. Add your art (optional; missing images show a grey placeholder, and there's a generated placeholder icon). If the 6 images are in `~/Downloads` named `3d_AppIcon.png`, `3d_mascot_pointing.png`, `3d_game_chess.png`, `3d_game_sudoku.png`, `3d_game_math.png` and `3d_game_word.png`, this moves them into `ArtSource/` and imports them:
+   ```bash
+   Scripts/import_downloads.sh
+   ```
+   If they're already in `ArtSource/` under their plain names, run just the import. It resizes `AppIcon` to 1024×1024, removes transparency, and copies it into the block-screen extension as `shield_icon`:
    ```bash
    python3 Scripts/import_art.py
    ```

@@ -8,8 +8,8 @@ public enum Brand {
     public static let bundleID = "com.dinismagina.quizlock"
     public static let appGroup = "group.com.dinismagina.quizlock"
     public static let supportEmail = "nismagina@gmail.com"
-    public static let termsURL = URL(string: "https://example.com/terms")!
-    public static let privacyURL = URL(string: "https://example.com/privacy")!
+    public static let termsURL = URL(string: "https://nis7777.github.io/lockfeeddupe/terms.html")!
+    public static let privacyURL = URL(string: "https://nis7777.github.io/lockfeeddupe/privacy.html")!
     public static let iapLifetimeStandard = "com.dinismagina.quizlock.lifetime"       // $29.99 non-consumable
     public static let iapLifetimePromo = "com.dinismagina.quizlock.lifetime.discount" // $4.99 non-consumable
     public static let freeUnlocks = 5

@@ -120,6 +120,7 @@
 		DA20D93079BF333F59887FB3 /* ShieldConfigurationExt.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7B4A9644D65E14289A9752C5 /* ShieldConfigurationExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DB8577349FFC1C495E2D72FC /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B1D4BC2599FE30394A90BA /* UserNotifications.framework */; };
 		DD33B7A51E8140C70566274E /* MathEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC57A15E2DAEF602A2FCB8B /* MathEngine.swift */; };
+		E10ABD8C161A6260A13D5561 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DC7EFDCF0B046B98219885F /* Assets.xcassets */; };
 		E26827F7479D82F922A00B38 /* ChessPuzzles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07056E1B594209E299DF4215 /* ChessPuzzles.swift */; };
 		E2EC478DF51AE8BB2C8482A7 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC7E1137AC09D68DB54271 /* RootView.swift */; };
 		E4F06DC2794C375769148CEF /* FamilyControls.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1267EA12ADFA5D937A3B410F /* FamilyControls.framework */; };
@@ -184,6 +185,7 @@
 		0B868449421EA47649272F99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C95E927A784D59BE4CFBD9D /* ReconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectView.swift; sourceTree = "<group>"; };
 		0DC57A15E2DAEF602A2FCB8B /* MathEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathEngine.swift; sourceTree = "<group>"; };
+		0DC7EFDCF0B046B98219885F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1267EA12ADFA5D937A3B410F /* FamilyControls.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FamilyControls.framework; path = System/Library/Frameworks/FamilyControls.framework; sourceTree = SDKROOT; };
 		161EB218835D4232AB88BEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		167018FBA1D94767D3FE3D2E /* PuzzleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleDetailView.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 		EDCE79A075043BA74DCF4775 /* ShieldConfigurationExt */ = {
 			isa = PBXGroup;
 			children = (
+				0DC7EFDCF0B046B98219885F /* Assets.xcassets */,
 				0B868449421EA47649272F99 /* Info.plist */,
 				353051336958934E855228F7 /* ShieldConfigurationExt.entitlements */,
 				A6827AD5701B598CC4EA464B /* ShieldConfigurationExtension.swift */,
@@ -640,6 +643,7 @@
 			buildConfigurationList = DB7697FFF04E1D63490CC662 /* Build configuration list for PBXNativeTarget "ShieldConfigurationExt" */;
 			buildPhases = (
 				F907321794413AD2B4076333 /* Sources */,
+				5D12C32BE7DE3F2C9E418BD9 /* Resources */,
 				F821FD6CB10F43F69C8FD8FF /* Frameworks */,
 			);
 			buildRules = (
@@ -728,6 +732,14 @@
 				3CAA46F56E6057F562B51CB0 /* chess_puzzles.json in Resources */,
 				C33917F27434B21C1141243C /* wordle_allowed.txt in Resources */,
 				A5C9856A505FECAF8FA9D157 /* wordle_answers.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D12C32BE7DE3F2C9E418BD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E10ABD8C161A6260A13D5561 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -47,9 +47,9 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         )
     }
 
-    /// A red circle with a white key. Uses the `shield_key` asset if one is bundled.
+    /// The app-icon artwork (`shield_icon`, added by Scripts/import_art.py), or a drawn fallback.
     private static let keyIcon: UIImage? = {
-        if let asset = UIImage(named: "shield_key") { return asset }
+        if let asset = UIImage(named: "shield_icon") { return asset }
         let size = CGSize(width: 144, height: 144)
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { _ in
