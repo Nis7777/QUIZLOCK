@@ -90,12 +90,22 @@ public struct ChessRound: PuzzleRound, Equatable {
     public let playerColor: PieceColor
 
     public init(puzzle: ChessPuzzle, difficulty: Difficulty) throws {
+        self.init(puzzle: puzzle, start: try puzzle.startPosition(), difficulty: difficulty)
+    }
+
+    init(puzzle: ChessPuzzle, start: Position, difficulty: Difficulty) {
         self.puzzle = puzzle
         self.difficulty = difficulty
-        let start = try puzzle.startPosition()
         self.position = start
         self.playerColor = start.sideToMove
         self.lastMove = Move(uci: puzzle.opponentFirstMove)
+    }
+
+    /// The built-in back-rank mate; never fails.
+    public static func fallback(difficulty: Difficulty) -> ChessRound {
+        let puzzle = ChessPuzzleBank.fallback
+        return (try? ChessRound(puzzle: puzzle, difficulty: difficulty))
+            ?? ChessRound(puzzle: puzzle, start: (try? Position(fen: puzzle.fen)) ?? .start, difficulty: difficulty)
     }
 
     /// Position before the opponent's first move (for the opening animation).
@@ -184,7 +194,6 @@ public struct ChessGame: PuzzleGame {
         for _ in 0..<10 {
             if let p = pool.randomElement(), let round = try? ChessRound(puzzle: p, difficulty: difficulty) { return round }
         }
-        // swiftlint:disable:next force_try
-        return try! ChessRound(puzzle: ChessPuzzleBank.fallback, difficulty: difficulty)
+        return ChessRound.fallback(difficulty: difficulty)
     }
 }

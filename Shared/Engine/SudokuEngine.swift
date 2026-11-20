@@ -134,9 +134,11 @@ public enum SudokuGenerator {
             }
             let result = SudokuPuzzle(layout: layout, puzzle: puzzle, solution: solution)
             if range.contains(givens) { return result }
-            if bestAttempt == nil || givens < bestAttempt!.givensCount { bestAttempt = result }
+            if let best = bestAttempt, best.givensCount <= givens { continue }
+            bestAttempt = result
         }
-        return bestAttempt!
+        // Unreachable in practice (40 attempts); fall back to a nearly solved grid rather than crash.
+        return bestAttempt ?? nearlySolved(blanks: 4, using: &rng)
     }
 
     /// A valid 9×9 puzzle with only `blanks` empty cells, all in the bottom row (onboarding).

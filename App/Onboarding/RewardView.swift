@@ -14,7 +14,7 @@ struct RewardView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 14) {
                     Image(systemName: "timer")
-                        .font(.system(size: 44, weight: .semibold))
+                        .appFont(44, .semibold)
                         .foregroundStyle(palette.accent)
                         .frame(width: 100, height: 100)
                         .background(palette.tint, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
@@ -22,13 +22,13 @@ struct RewardView: View {
                     ScreenTitle(title: "Choose your\npuzzle reward",
                                 subtitle: "Choose how long your apps stay unlocked after you solve a puzzle.", size: 38)
                     Text("Your first \(Brand.freeUnlocks) app unlocks are free. After that, lifetime access is a one-time purchase. Standalone puzzle practice requires lifetime access.")
-                        .font(.system(size: 15))
+                        .appFont(15)
                         .foregroundStyle(palette.textSecondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 24)
                     HStack(spacing: 10) {
                         RoundedRectangle(cornerRadius: 3).fill(palette.accent).frame(width: 14, height: 14)
-                        Text(model.selectedCountText).font(.system(size: 16, weight: .bold)).foregroundStyle(palette.accentText)
+                        Text(model.selectedCountText).appFont(16, .bold).foregroundStyle(palette.accentText)
                     }
                     .padding(.horizontal, 18)
                     .padding(.vertical, 9)
@@ -39,10 +39,11 @@ struct RewardView: View {
                     .padding(.horizontal, 20)
                     .padding(.top, 4)
                     Text("You can change your puzzle reward later in Settings.")
-                        .font(.system(size: 15))
+                        .appFont(15)
                         .foregroundStyle(palette.textSecondary)
                     Button("Change apps", action: onChangeApps)
-                        .font(.system(size: 16, weight: .bold))
+                        .tapTarget()
+                        .appFont(16, .bold)
                         .foregroundStyle(palette.accentText)
                 }
                 .padding(.bottom, 16)

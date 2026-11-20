@@ -2,7 +2,7 @@ import Observation
 import SwiftUI
 
 enum OnboardingStep: Int, CaseIterable {
-    case splash, welcome, pickGame, howItWorks, practice, unlocked, enjoyFeed, screenTimeIntro, connect, lockApps, reward
+    case splash, welcome, pickGame, howItWorks, practice, unlocked, enjoyFeed, screenTimeIntro, connect, lockApps, reward, notifications
 }
 
 @Observable
@@ -30,6 +30,7 @@ final class OnboardingModel {
         case .connect: previous = .screenTimeIntro
         case .lockApps: previous = .connect
         case .reward: previous = .lockApps
+        case .notifications: previous = .reward
         }
         Haptics.tap()
         forward = false
@@ -41,6 +42,7 @@ final class OnboardingModel {
 struct OnboardingFlowView: View {
     @Environment(AppModel.self) private var model
     @State private var flow = OnboardingModel()
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -71,8 +73,15 @@ struct OnboardingFlowView: View {
                     LockAppsView(onBack: { flow.back() }) { flow.go(.reward) }
                 case .reward:
                     RewardView(onBack: { flow.back() }, onChangeApps: { flow.back() }) {
-                        model.finishOnboarding(turnOnLocks: true)
-                        model.requestNotificationPermission()
+                        model.turnOnLocksFromOnboarding()
+                        flow.go(.notifications)
+                    }
+                case .notifications:
+                    NotificationsExplainerView(onBack: { flow.back() }) {
+                        Task {
+                            await model.requestNotificationPermission()
+                            model.finishOnboarding()
+                        }
                     }
                 }
             }
@@ -86,6 +95,7 @@ struct OnboardingFlowView: View {
     }
 
     private var transition: AnyTransition {
+        if reduceMotion { return .opacity }
         switch (flow.step, flow.forward) {
         case (.welcome, true): return .opacity
         // The phone mockup zooms and fades into the full-screen practice puzzle.

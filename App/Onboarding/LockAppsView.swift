@@ -28,7 +28,7 @@ struct LockAppsView: View {
                         showPicker = true
                     } label: {
                         Label("Add Apps to Lock", systemImage: "plus")
-                            .font(.system(size: 18, weight: .semibold))
+                            .appFont(18, .semibold)
                             .foregroundStyle(palette.accent)
                             .frame(maxWidth: .infinity)
                             .frame(height: 58)
@@ -38,7 +38,7 @@ struct LockAppsView: View {
                     .buttonStyle(PressableStyle())
                     .padding(.horizontal, 20)
                     Text(model.lockItems.isEmpty ? "You can add apps later in Settings." : "You can update this later in Settings.")
-                        .font(.system(size: 15, weight: .medium))
+                        .appFont(15, .medium)
                         .foregroundStyle(palette.accentText)
                 }
                 .padding(.bottom, 20)
@@ -54,10 +54,10 @@ struct LockAppsView: View {
     private var emptyCard: some View {
         VStack(spacing: 8) {
             Image(systemName: "square.dashed")
-                .font(.system(size: 34, weight: .light))
+                .appFont(34, .light)
                 .foregroundStyle(palette.textSecondary)
-            Text("No locks yet").font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
-            Text("Choose an app to get started.").font(.system(size: 15)).foregroundStyle(palette.textSecondary)
+            Text("No locks yet").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
+            Text("Choose an app to get started.").appFont(15).foregroundStyle(palette.textSecondary)
         }
         .frame(maxWidth: .infinity)
         .card(padding: 22)
@@ -72,13 +72,13 @@ struct LockAppsView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         LockItemLabel(item: item)
                         Text("Ready to lock")
-                            .font(.system(size: 14))
+                            .appFont(14)
                             .foregroundStyle(palette.textSecondary)
                             .padding(.leading, 46)
                     }
                     Spacer()
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 24))
+                        .appFont(24)
                         .foregroundStyle(palette.accent)
                 }
                 .padding(.vertical, 10)
@@ -100,7 +100,7 @@ struct PickerHowToMock: View {
                 HStack {
                     Spacer()
                     Text("Done")
-                        .font(.system(size: 13, weight: .semibold))
+                        .appFont(13, .semibold)
                         .foregroundStyle(.white)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 5)
@@ -109,8 +109,8 @@ struct PickerHowToMock: View {
                 HStack(spacing: 8) {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(Color(hex: 0x0A84FF))
                     MockAppIcon.social(size: 22)
-                    Text("Social").font(.system(size: 14, weight: .semibold))
-                    Text("— Social Networking").font(.system(size: 13)).foregroundStyle(Color.textSecondary)
+                    Text("Social").appFont(14, .semibold)
+                    Text("— Social Networking").appFont(13).foregroundStyle(Color.textSecondary)
                     Spacer()
                 }
                 .foregroundStyle(Color.textPrimary)
@@ -121,7 +121,7 @@ struct PickerHowToMock: View {
                     Text("Social")
                     Spacer()
                 }
-                .font(.system(size: 14))
+                .appFont(14)
                 .foregroundStyle(Color.textSecondary)
                 .padding(8)
                 .background(Color(hex: 0xE3E3E8), in: RoundedRectangle(cornerRadius: 9))
@@ -130,7 +130,7 @@ struct PickerHowToMock: View {
             .padding(12)
             .background(Color(hex: 0xF0F0F4), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
             Text("Add apps → Search → Select → Done")
-                .font(.system(size: 14, weight: .medium))
+                .appFont(14, .medium)
                 .foregroundStyle(palette.textSecondary)
         }
         .accessibilityElement(children: .ignore)
@@ -143,7 +143,7 @@ struct PickerHowToMock: View {
                 HStack(spacing: 4) {
                     ForEach(Array(row), id: \.self) { ch in
                         Text(String(ch))
-                            .font(.system(size: 10, weight: .medium))
+                            .appFont(10, .medium)
                             .foregroundStyle(Color.textPrimary)
                             .frame(maxWidth: 24)
                             .frame(height: 22)

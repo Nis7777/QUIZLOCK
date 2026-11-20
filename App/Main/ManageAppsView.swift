@@ -14,14 +14,14 @@ struct ManageAppsView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 14) {
                     Text("Choose your apps and how long each stays unlocked after a puzzle.")
-                        .font(.system(size: 16))
+                        .appFont(16)
                         .foregroundStyle(palette.textSecondary)
                         .padding(.horizontal, 20)
                         .padding(.top, 6)
                     PrimaryButton(title: "Add Apps", systemImage: "plus") { showPicker = true }
                         .padding(.horizontal, 16)
                     Button { path.append(.unlockTime) } label: {
-                        InfoRow(icon: AnyView(Image(systemName: "timer").font(.system(size: 22)).foregroundStyle(palette.accent)),
+                        InfoRow(icon: AnyView(Image(systemName: "timer").appFont(22).foregroundStyle(palette.accent)),
                                 title: "Default unlock time", subtitle: model.lock.defaultDuration.label)
                     }
                     .buttonStyle(.plain)
@@ -29,12 +29,12 @@ struct ManageAppsView: View {
                     .padding(.horizontal, 16)
 
                     Text("Your apps · \(model.lockItems.count)")
-                        .font(.system(size: 19, weight: .semibold))
+                        .appFont(19, .semibold)
                         .foregroundStyle(palette.textSecondary)
                         .padding(.horizontal, 22)
                         .padding(.top, 8)
                     Text("Apps use the default time unless you choose a different one below.")
-                        .font(.system(size: 15))
+                        .appFont(15)
                         .foregroundStyle(palette.textSecondary)
                         .padding(.horizontal, 22)
 
@@ -62,7 +62,7 @@ struct ManageAppsView: View {
                     model.remove(item)
                 } label: {
                     Label("Remove", systemImage: "minus.circle")
-                        .font(.system(size: 16, weight: .medium))
+                        .appFont(16, .medium)
                         .foregroundStyle(Color.errorRed)
                 }
                 .buttonStyle(.plain)
@@ -71,13 +71,13 @@ struct ManageAppsView: View {
             Divider()
             Button { path.append(.appUnlockTime(item.key)) } label: {
                 HStack {
-                    Text("Unlock time").font(.system(size: 16)).foregroundStyle(palette.textPrimary)
+                    Text("Unlock time").appFont(16).foregroundStyle(palette.textPrimary)
                     Spacer()
                     Text(override.map(\.label) ?? "Default · \(model.lock.defaultDuration.label)")
-                        .font(.system(size: 15))
+                        .appFont(15)
                         .foregroundStyle(palette.textSecondary)
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 14, weight: .semibold))
+                        .appFont(14, .semibold)
                         .foregroundStyle(Color(hex: 0xA0A0A6))
                 }
                 .padding(.vertical, 14)

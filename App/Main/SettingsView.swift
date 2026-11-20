@@ -1,3 +1,4 @@
+import MessageUI
 import SwiftUI
 import UIKit
 
@@ -41,6 +42,9 @@ struct SettingsView: View {
     @State private var showPuzzlesPerUnlock = false
     @State private var showUnlockPuzzles = false
     @State private var link: URL?
+    @State private var showMail = false
+    @State private var restoreMessage: String?
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -52,7 +56,9 @@ struct SettingsView: View {
                 appLocksSection
                 unlockRulesSection
                 appearanceSection
+                if model.notificationsDenied { notificationsOffCard }
                 lifetimeCard
+                supportSection
                 // No "Analytics" / "Ad measurement" sections: the app has no analytics or ads code and its
                 // App Privacy label is "Data Not Collected". If you add an SDK later, bring the sections back
                 // (see git history), call it only when the setting is on, and update the policy and label.
@@ -77,6 +83,100 @@ struct SettingsView: View {
                 .presentationCornerRadius(28)
         }
         .safariSheet($link)
+        .sheet(isPresented: $showMail) {
+            MailComposer(recipient: Brand.supportEmail, subject: "[\(Brand.appName)] Support",
+                         body: "\n\n—\n\(Brand.appName) \(appVersion) · iOS \(UIDevice.current.systemVersion)") { showMail = false }
+                .ignoresSafeArea()
+        }
+        .alert("Restore Purchases", isPresented: Binding(get: { restoreMessage != nil }, set: { if !$0 { restoreMessage = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(restoreMessage ?? "")
+        }
+    }
+
+    // MARK: Notifications off
+
+    private var notificationsOffCard: some View {
+        HStack(alignment: .top, spacing: 14) {
+            Image(systemName: "bell.slash.fill")
+                .appFont(20)
+                .foregroundStyle(palette.accent)
+                .frame(width: 34)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Notifications are off").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
+                Text("Turn them on in Settings so START PUZZLE can take you straight to your puzzle. Without them, open \(Brand.appName) after tapping START PUZZLE.")
+                    .appFont(15)
+                    .foregroundStyle(palette.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                }
+                .appFont(15, .semibold)
+                .foregroundStyle(palette.accentText)
+                .tapTarget()
+            }
+        }
+        .card()
+        .padding(.horizontal, 16)
+    }
+
+    // MARK: Support
+
+    private var supportSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            SectionHeader(title: "Support")
+            VStack(spacing: 0) {
+                Button { restore() } label: {
+                    InfoRow(icon: AnyView(Image(systemName: "arrow.clockwise.circle").appFont(22).foregroundStyle(palette.accent)),
+                            title: "Restore Purchases", subtitle: "Already bought lifetime access?")
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.plain)
+                Divider().padding(.leading, 44)
+                Button { contactSupport() } label: {
+                    InfoRow(icon: AnyView(Image(systemName: "envelope").appFont(20).foregroundStyle(palette.accent)),
+                            title: "Contact support", subtitle: Brand.supportEmail)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.plain)
+                Divider().padding(.leading, 44)
+                Button {
+                    if let url = Brand.reviewURL { openURL(url) }
+                } label: {
+                    InfoRow(icon: AnyView(Image(systemName: "star").appFont(20).foregroundStyle(palette.accent)),
+                            title: "Rate \(Brand.appName)", subtitle: "It really helps")
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 16)
+            .background(palette.card, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .shadow(color: .black.opacity(palette.isDark ? 0 : 0.04), radius: 12, y: 4)
+            .padding(.horizontal, 16)
+        }
+    }
+
+    private func restore() {
+        Task {
+            await model.store.restore()
+            restoreMessage = model.settings.hasLifetime
+                ? "Lifetime access is active. Thank you!"
+                : "No previous purchase was found for this Apple ID."
+        }
+    }
+
+    private func contactSupport() {
+        if MFMailComposeViewController.canSendMail() {
+            showMail = true
+        } else {
+            var components = URLComponents()
+            components.scheme = "mailto"
+            components.path = Brand.supportEmail
+            components.queryItems = [URLQueryItem(name: "subject", value: "[\(Brand.appName)] Support")]
+            if let url = components.url { openURL(url) }
+        }
     }
 
     // MARK: Banner
@@ -87,9 +187,9 @@ struct SettingsView: View {
                 .frame(width: 50, height: 50)
                 .background(palette.tint, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             VStack(alignment: .leading, spacing: 4) {
-                Text("You're all set").font(.system(size: 19, weight: .heavy)).foregroundStyle(palette.textPrimary)
+                Text("You're all set").appFont(19, .heavy).foregroundStyle(palette.textPrimary)
                 Text("Use these switches anytime to pause or resume a lock.")
-                    .font(.system(size: 16))
+                    .appFont(16)
                     .foregroundStyle(palette.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -98,8 +198,9 @@ struct SettingsView: View {
                 Haptics.tap()
                 withAnimation(.easeInOut(duration: 0.3)) { model.updateSettings { $0.showAllSetBanner = false } }
             }
-            .font(.system(size: 16, weight: .heavy))
+            .appFont(16, .heavy)
             .foregroundStyle(palette.accentText)
+            .tapTarget()
         }
         .padding(18)
         .background(palette.tint, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
@@ -114,13 +215,13 @@ struct SettingsView: View {
             SectionHeader(title: "App locks")
             HStack(spacing: 14) {
                 Image(systemName: "lock.fill")
-                    .font(.system(size: 22))
+                    .appFont(22)
                     .foregroundStyle(palette.accent)
                     .frame(width: 34)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Enable locks").font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
+                    Text("Enable locks").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
                     Text(model.lock.locksEnabled ? "All apps protected" : "Locks paused")
-                        .font(.system(size: 15)).foregroundStyle(palette.textSecondary)
+                        .appFont(15).foregroundStyle(palette.textSecondary)
                 }
                 Spacer()
                 PillToggle(isOn: model.lockBinding(\.locksEnabled), label: "Enable locks")
@@ -146,7 +247,7 @@ struct SettingsView: View {
             }
 
             Button { path.append(.manageApps) } label: {
-                InfoRow(icon: AnyView(Image(systemName: "slider.horizontal.3").font(.system(size: 20)).foregroundStyle(palette.accent)),
+                InfoRow(icon: AnyView(Image(systemName: "slider.horizontal.3").appFont(20).foregroundStyle(palette.accent)),
                         title: "Manage Apps to Lock", subtitle: "Add, remove, and set unlock times")
             }
             .buttonStyle(.plain)
@@ -162,21 +263,21 @@ struct SettingsView: View {
             SectionHeader(title: "Unlock rules")
             VStack(spacing: 0) {
                 Button { path.append(.unlockTime) } label: {
-                    InfoRow(icon: AnyView(Image(systemName: "timer").font(.system(size: 22)).foregroundStyle(palette.accent)),
+                    InfoRow(icon: AnyView(Image(systemName: "timer").appFont(22).foregroundStyle(palette.accent)),
                             title: "Unlock time", subtitle: "Default time for each app", value: model.lock.defaultDuration.label)
                         .padding(.vertical, 14)
                 }
                 .buttonStyle(.plain)
                 Divider().padding(.leading, 44)
                 Button { showPuzzlesPerUnlock = true } label: {
-                    InfoRow(icon: AnyView(Image(systemName: "list.bullet.circle").font(.system(size: 22)).foregroundStyle(palette.accent)),
+                    InfoRow(icon: AnyView(Image(systemName: "list.bullet.circle").appFont(22).foregroundStyle(palette.accent)),
                             title: "Puzzles per unlock", subtitle: "Solved puzzles required", value: "\(model.lock.puzzlesPerUnlock)")
                         .padding(.vertical, 14)
                 }
                 .buttonStyle(.plain)
                 Divider().padding(.leading, 44)
                 Button { showUnlockPuzzles = true } label: {
-                    InfoRow(icon: AnyView(Image(systemName: "shuffle").font(.system(size: 20)).foregroundStyle(palette.accent)),
+                    InfoRow(icon: AnyView(Image(systemName: "shuffle").appFont(20).foregroundStyle(palette.accent)),
                             title: "Unlock puzzles", subtitle: model.enabledGamesText,
                             value: "\(model.settings.enabledGames.count) selected")
                         .padding(.vertical, 14)
@@ -217,24 +318,24 @@ struct SettingsView: View {
         } label: {
             HStack(spacing: 14) {
                 Image(systemName: "lock.open.fill")
-                    .font(.system(size: 22))
+                    .appFont(22)
                     .foregroundStyle(palette.accent)
                     .frame(width: 34)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(model.settings.hasLifetime ? "Lifetime Access · Active" : "Unlock Lifetime Access")
-                        .font(.system(size: 17, weight: .semibold))
+                        .appFont(17, .semibold)
                         .foregroundStyle(palette.textPrimary)
                     if !model.settings.hasLifetime {
                         Text("\(model.settings.freeUnlocksRemaining) of \(Brand.freeUnlocks) free app unlocks remaining")
-                            .font(.system(size: 15))
+                            .appFont(15)
                             .foregroundStyle(palette.textSecondary)
                     }
                 }
                 Spacer()
                 if !model.settings.hasLifetime {
-                    Image(systemName: "chevron.right").font(.system(size: 16, weight: .bold)).foregroundStyle(palette.accent)
+                    Image(systemName: "chevron.right").appFont(16, .bold).foregroundStyle(palette.accent)
                 } else {
-                    Image(systemName: "checkmark.seal.fill").font(.system(size: 20)).foregroundStyle(palette.accent)
+                    Image(systemName: "checkmark.seal.fill").appFont(20).foregroundStyle(palette.accent)
                 }
             }
             .contentShape(Rectangle())
@@ -248,16 +349,16 @@ struct SettingsView: View {
     private var footerCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 24) {
-                Button("Terms of Service") { link = Brand.termsURL }
-                Button("Privacy Policy") { link = Brand.privacyURL }
+                Button("Terms of Use") { link = Brand.termsURL }.tapTarget()
+                Button("Privacy Policy") { link = Brand.privacyURL }.tapTarget()
             }
-            .font(.system(size: 15, weight: .semibold))
+            .appFont(15, .semibold)
             .foregroundStyle(palette.accentText)
             Text(Brand.credits)
-                .font(.system(size: 13))
+                .appFont(13)
                 .foregroundStyle(palette.textSecondary)
             Text("\(Brand.appName) \(appVersion)")
-                .font(.system(size: 13))
+                .appFont(13)
                 .foregroundStyle(palette.textSecondary)
         }
         .card()
@@ -302,8 +403,8 @@ private struct ThemeCard: View {
                 mini
                 HStack {
                     VStack(alignment: .leading, spacing: 1) {
-                        Text(theme.title).font(.system(size: 16, weight: .semibold)).foregroundStyle(palette.textPrimary)
-                        Text(theme.subtitle).font(.system(size: 13)).foregroundStyle(palette.textSecondary)
+                        Text(theme.title).appFont(16, .semibold).foregroundStyle(palette.textPrimary)
+                        Text(theme.subtitle).appFont(13).foregroundStyle(palette.textSecondary)
                     }
                     Spacer()
                     RadioMark(isSelected: selected)
@@ -326,7 +427,7 @@ private struct ThemeCard: View {
         let accent = Color.brand
         return VStack(alignment: .leading, spacing: 6) {
             Text(Brand.appName)
-                .font(.system(size: 11, weight: .black, design: .rounded))
+                .appFont(11, .black, design: .rounded)
                 .foregroundStyle(Color.brand)
             ForEach(0..<2, id: \.self) { _ in
                 HStack {

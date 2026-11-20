@@ -32,15 +32,16 @@ struct PracticeView: View {
     private var solvedCard: some View {
         VStack(spacing: 16) {
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 54))
+                .appFont(54)
                 .foregroundStyle(Color.correctGreen)
-            Text("Solved!").font(.system(size: 28, weight: .bold)).foregroundStyle(palette.textPrimary)
+            Text("Solved!").appFont(28, .bold).foregroundStyle(palette.textPrimary)
             PrimaryButton(title: "Next puzzle") {
                 withAnimation { showSolved = false }
                 Task { await load() }
             }
             Button("Done") { dismiss() }
-                .font(.system(size: 17, weight: .semibold))
+                .tapTarget()
+                .appFont(17, .semibold)
                 .foregroundStyle(palette.accentText)
         }
         .card(padding: 24)

@@ -11,13 +11,13 @@ struct PuzzlesPerUnlockSheet: View {
         VStack(alignment: .leading, spacing: 16) {
             SheetHeader(title: "Puzzles per unlock") { dismiss() }
             Text("Puzzles you need to solve to unlock any app. One math answer, one word, one Sudoku grid or one chess puzzle each counts as one.")
-                .font(.system(size: 16))
+                .appFont(16)
                 .foregroundStyle(palette.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, 22)
             HStack {
                 Text("\(count) puzzle\(count == 1 ? "" : "s")")
-                    .font(.system(size: 22, weight: .bold))
+                    .appFont(22, .bold)
                     .foregroundStyle(palette.textPrimary)
                     .contentTransition(.numericText())
                 Spacer()
@@ -54,7 +54,7 @@ struct PuzzlesPerUnlockSheet: View {
     private func stepButton(_ symbol: String, enabled: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol)
-                .font(.system(size: 18, weight: .semibold))
+                .appFont(18, .semibold)
                 .foregroundStyle(enabled ? palette.textPrimary : palette.textSecondary.opacity(0.5))
                 .frame(width: 52, height: 36)
         }
@@ -72,7 +72,7 @@ struct SheetHeader: View {
 
     var body: some View {
         ZStack {
-            Text(title).font(.system(size: 19, weight: .semibold)).foregroundStyle(palette.textPrimary)
+            Text(title).appFont(19, .semibold).foregroundStyle(palette.textPrimary)
             HStack {
                 Spacer()
                 PillButton(title: "Done", action: onDone)

@@ -10,7 +10,7 @@ struct SplashView: View {
             Spacer()
             Wordmark(size: 58)
             Text(Brand.tagline)
-                .font(.system(size: 20, weight: .medium))
+                .appFont(20, .medium)
                 .foregroundStyle(palette.textSecondary)
                 .multilineTextAlignment(.center)
             ProgressView()

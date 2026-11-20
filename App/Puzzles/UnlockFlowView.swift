@@ -60,7 +60,7 @@ struct UnlockSuccessView: View {
             ZStack {
                 Circle().fill(palette.tint).frame(width: 120, height: 120)
                 Image(systemName: "lock.open.fill")
-                    .font(.system(size: 50, weight: .semibold))
+                    .appFont(50, .semibold)
                     .foregroundStyle(palette.accent)
             }
             .scaleEffect(appeared ? 1 : 0.6)

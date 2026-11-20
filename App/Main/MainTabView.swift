@@ -35,7 +35,7 @@ struct FloatingTabBar: View {
         HStack(spacing: 4) {
             item(.settings, title: "Settings") { color in AnyView(TogglePillsIcon(color: color, size: 26)) }
             item(.puzzles, title: "Puzzles") { color in
-                AnyView(Image(systemName: "puzzlepiece.fill").font(.system(size: 24)).foregroundStyle(color))
+                AnyView(Image(systemName: "puzzlepiece.fill").appFont(24).foregroundStyle(color))
             }
             item(.feedback, title: "Feedback") { color in AnyView(ChatBubblesIcon(color: color, size: 28)) }
         }
@@ -54,7 +54,7 @@ struct FloatingTabBar: View {
         } label: {
             VStack(spacing: 3) {
                 icon(color).frame(height: 28)
-                Text(title).font(.system(size: 13, weight: .semibold)).foregroundStyle(color)
+                Text(title).appFont(13, .semibold).foregroundStyle(color)
             }
             .frame(width: 104, height: 60)
             .background {
@@ -92,7 +92,7 @@ struct PushHeader<Trailing: View>: View {
     var body: some View {
         ZStack {
             Text(title)
-                .font(.system(size: 19, weight: .semibold))
+                .appFont(19, .semibold)
                 .foregroundStyle(palette.textPrimary)
                 .accessibilityAddTraits(.isHeader)
             HStack {

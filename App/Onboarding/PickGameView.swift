@@ -37,10 +37,10 @@ struct PickGameView: View {
             GameIcon(game: game, size: 46, color: palette.accent)
             Spacer()
             Text(game.displayName)
-                .font(.system(size: 22, weight: .bold))
+                .appFont(22, .bold)
                 .foregroundStyle(palette.textPrimary)
             Text(game.onboardingSubtitle)
-                .font(.system(size: 15))
+                .appFont(15)
                 .foregroundStyle(palette.textSecondary)
         }
         .padding(18)

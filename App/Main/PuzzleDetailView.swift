@@ -22,14 +22,14 @@ struct PuzzleDetailView: View {
                         .frame(maxWidth: .infinity)
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     Text(game.displayName)
-                        .font(.system(size: 34, weight: .bold))
+                        .appFont(34, .bold)
                         .foregroundStyle(palette.textPrimary)
-                    Text(game.tagline).font(.system(size: 18)).foregroundStyle(palette.textSecondary)
+                    Text(game.tagline).appFont(18).foregroundStyle(palette.textSecondary)
                     Text(game.metaLine(chessCount: model.rounds.chessBank.puzzles.count))
-                        .font(.system(size: 15)).foregroundStyle(palette.textSecondary)
+                        .appFont(15).foregroundStyle(palette.textSecondary)
 
                     Text("Difficulty")
-                        .font(.system(size: 17, weight: .semibold))
+                        .appFont(17, .semibold)
                         .foregroundStyle(palette.textSecondary)
                         .padding(.top, 8)
                     Picker("Difficulty", selection: difficultyBinding) {
@@ -45,9 +45,9 @@ struct PuzzleDetailView: View {
                             withAnimation(.selectionSpring) { showRules.toggle() }
                         } label: {
                             HStack(spacing: 6) {
-                                Text("How to play").font(.system(size: 17, weight: .semibold))
+                                Text("How to play").appFont(17, .semibold)
                                 Image(systemName: "chevron.down")
-                                    .font(.system(size: 14, weight: .bold))
+                                    .appFont(14, .bold)
                                     .rotationEffect(.degrees(showRules ? 180 : 0))
                             }
                             .foregroundStyle(palette.accentText)
@@ -58,7 +58,7 @@ struct PuzzleDetailView: View {
                                 ForEach(game.howToPlay, id: \.self) { rule in
                                     HStack(alignment: .top, spacing: 10) {
                                         Circle().fill(palette.accent).frame(width: 6, height: 6).padding(.top, 8)
-                                        Text(rule).font(.system(size: 16)).foregroundStyle(palette.textPrimary)
+                                        Text(rule).appFont(16).foregroundStyle(palette.textPrimary)
                                             .fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
@@ -84,7 +84,7 @@ struct PuzzleDetailView: View {
 
     private var bottomBar: some View {
         HStack {
-            Text("Use for unlocks").font(.system(size: 16, weight: .medium)).foregroundStyle(palette.textPrimary)
+            Text("Use for unlocks").appFont(16, .medium).foregroundStyle(palette.textPrimary)
             Spacer()
             PillToggle(isOn: Binding(get: { model.settings.isEnabled(game) },
                                      set: { on in if !model.setGame(game, enabled: on) { Haptics.error() } }),
@@ -92,11 +92,12 @@ struct PuzzleDetailView: View {
             Button { model.tryPractice(game) } label: {
                 HStack(spacing: 4) {
                     Text("Try")
-                    Image(systemName: "chevron.right").font(.system(size: 14, weight: .bold))
+                    Image(systemName: "chevron.right").appFont(14, .bold)
                 }
-                .font(.system(size: 17, weight: .semibold))
+                .appFont(17, .semibold)
                 .foregroundStyle(palette.accentText)
                 .padding(.leading, 14)
+                .tapTarget()
             }
             .buttonStyle(.plain)
         }

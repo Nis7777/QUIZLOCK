@@ -75,9 +75,7 @@ final class RoundProvider {
             return .sudoku(SudokuRound(puzzle: SudokuGenerator.nearlySolved(blanks: 4, using: &rng), difficulty: .easy))
         case .chess:
             let puzzle = chessBank.firstEasyMateInOne ?? ChessPuzzleBank.fallback
-            if let r = try? ChessRound(puzzle: puzzle, difficulty: .easy) { return .chess(r) }
-            // swiftlint:disable:next force_try
-            return .chess(try! ChessRound(puzzle: ChessPuzzleBank.fallback, difficulty: .easy))
+            return .chess((try? ChessRound(puzzle: puzzle, difficulty: .easy)) ?? ChessRound.fallback(difficulty: .easy))
         }
     }
 }

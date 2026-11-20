@@ -30,27 +30,28 @@ struct PuzzlesView: View {
             VStack(alignment: .leading, spacing: 14) {
                 TabHeader()
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
-                    Text("Unlock puzzles").font(.system(size: 20, weight: .semibold)).foregroundStyle(palette.textPrimary)
-                    Text("\(model.settings.enabledGames.count)").font(.system(size: 18)).foregroundStyle(palette.textSecondary)
+                    Text("Unlock puzzles").appFont(20, .semibold).foregroundStyle(palette.textPrimary)
+                    Text("\(model.settings.enabledGames.count)").appFont(18).foregroundStyle(palette.textSecondary)
                     Spacer()
                     Button("Manage") { showManage = true }
-                        .font(.system(size: 17, weight: .semibold))
+                        .tapTarget()
+                        .appFont(17, .semibold)
                         .foregroundStyle(palette.accentText)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
                 Text("Your puzzles take turns in a shuffled order.")
-                    .font(.system(size: 15))
+                    .appFont(15)
                     .foregroundStyle(palette.textSecondary)
                     .padding(.horizontal, 20)
                 chips
                 if let hint {
-                    Text(hint).font(.system(size: 14, weight: .semibold)).foregroundStyle(palette.accentText)
+                    Text(hint).appFont(14, .semibold).foregroundStyle(palette.accentText)
                         .padding(.horizontal, 20)
                         .transition(.opacity)
                 }
                 Text("All puzzles")
-                    .font(.system(size: 20, weight: .semibold))
+                    .appFont(20, .semibold)
                     .foregroundStyle(palette.textPrimary)
                     .padding(.horizontal, 20)
                     .padding(.top, 10)
@@ -80,8 +81,8 @@ struct PuzzlesView: View {
                 ForEach(model.settings.enabledGames) { game in
                     Button { toggle(game, false) } label: {
                         HStack(spacing: 8) {
-                            Text(game.displayName).font(.system(size: 16, weight: .medium))
-                            Image(systemName: "xmark").font(.system(size: 13, weight: .semibold))
+                            Text(game.displayName).appFont(16, .medium)
+                            Image(systemName: "xmark").appFont(13, .semibold)
                         }
                         .foregroundStyle(palette.textPrimary)
                         .padding(.horizontal, 16)
@@ -139,10 +140,10 @@ private struct GameCard: View {
                         .frame(width: 115, height: 115)
                         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(game.displayName).font(.system(size: 22, weight: .semibold)).foregroundStyle(palette.textPrimary)
-                        Text(game.tagline).font(.system(size: 16)).foregroundStyle(palette.textSecondary)
+                        Text(game.displayName).appFont(22, .semibold).foregroundStyle(palette.textPrimary)
+                        Text(game.tagline).appFont(16).foregroundStyle(palette.textSecondary)
                         Text(game.metaLine(chessCount: model.rounds.chessBank.puzzles.count))
-                            .font(.system(size: 14)).foregroundStyle(palette.textSecondary)
+                            .appFont(14).foregroundStyle(palette.textSecondary)
                     }
                     Spacer(minLength: 0)
                 }
@@ -152,17 +153,18 @@ private struct GameCard: View {
             .buttonStyle(.plain)
             Divider()
             HStack {
-                Text("Use for unlocks").font(.system(size: 16)).foregroundStyle(palette.textPrimary)
+                Text("Use for unlocks").appFont(16).foregroundStyle(palette.textPrimary)
                 Spacer()
                 PillToggle(isOn: Binding(get: { inUse }, set: { onToggle($0) }), label: "Use \(game.displayName) for unlocks")
                 Button(action: onTry) {
                     HStack(spacing: 4) {
                         Text("Try")
-                        Image(systemName: "chevron.right").font(.system(size: 14, weight: .bold))
+                        Image(systemName: "chevron.right").appFont(14, .bold)
                     }
-                    .font(.system(size: 17, weight: .semibold))
+                    .appFont(17, .semibold)
                     .foregroundStyle(palette.accentText)
                     .padding(.leading, 14)
+                    .tapTarget()
                 }
                 .buttonStyle(.plain)
             }

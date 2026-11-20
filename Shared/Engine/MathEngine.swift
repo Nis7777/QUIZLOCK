@@ -87,7 +87,7 @@ public enum MathEngine {
     }
 
     static func easyPercent<R: RandomNumberGenerator>(_ rng: inout R) -> MathQuestion {
-        let p = [10, 25, 50].randomElement(using: &rng)!
+        let p = [10, 25, 50].randomElement(using: &rng) ?? 10
         let n = Int.random(in: 1...20, using: &rng) * 20
         return MathQuestion(topic: "PERCENT", text: "What is \(p)% of \(n)?", expression: "\(p)/100*\(n)", answer: Double(p * n) / 100)
     }
@@ -109,7 +109,7 @@ public enum MathEngine {
     }
 
     static func mediumPercent<R: RandomNumberGenerator>(_ rng: inout R) -> MathQuestion {
-        let p = [5, 15, 20, 30, 40, 60, 75].randomElement(using: &rng)!
+        let p = [5, 15, 20, 30, 40, 60, 75].randomElement(using: &rng) ?? 15
         let n = Int.random(in: 1...20, using: &rng) * 20
         return MathQuestion(topic: "PERCENT", text: "What is \(p)% of \(n)?", expression: "\(p)/100*\(n)", answer: Double(p * n) / 100)
     }
@@ -184,7 +184,7 @@ public enum MathEngine {
 
     static func fractionToDecimal<R: RandomNumberGenerator>(_ rng: inout R) -> MathQuestion {
         func gcd(_ a: Int, _ b: Int) -> Int { b == 0 ? a : gcd(b, a % b) }
-        let q = [4, 5, 20, 25, 50].randomElement(using: &rng)!
+        let q = [4, 5, 20, 25, 50].randomElement(using: &rng) ?? 4
         var p = Int.random(in: 1..<q, using: &rng)
         while gcd(p, q) != 1 { p = Int.random(in: 1..<q, using: &rng) }
         return MathQuestion(topic: "FRACTIONS", text: "Write \(p)/\(q) as a decimal", expression: "\(p)/\(q)", answer: Double(p) / Double(q))

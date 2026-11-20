@@ -12,7 +12,7 @@ struct ReconnectView: View {
         VStack(spacing: 18) {
             Spacer()
             Image(systemName: "hourglass.badge.plus")
-                .font(.system(size: 54, weight: .semibold))
+                .appFont(54, .semibold)
                 .foregroundStyle(palette.accent)
                 .frame(width: 110, height: 110)
                 .background(palette.tint, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
@@ -35,7 +35,7 @@ struct ReconnectView: View {
                     withAnimation { model.reconnectSnoozed = true }
                 }
             }
-            .font(.system(size: 16, weight: .semibold))
+            .appFont(16, .semibold)
             .foregroundStyle(palette.accentText)
             .padding(.bottom, 12)
         }

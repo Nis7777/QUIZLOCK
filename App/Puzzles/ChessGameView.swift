@@ -230,23 +230,23 @@ struct ChessGameView: View {
     var body: some View {
         VStack(spacing: 16) {
             Text(vm.round.headerText)
-                .font(.system(size: 22, weight: .bold))
+                .appFont(22, .bold)
                 .foregroundStyle(palette.textPrimary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             ChessBoardView(vm: vm)
                 .aspectRatio(1, contentMode: .fit)
-                .modifier(ShakeEffect(animatableData: CGFloat(vm.shakeTrigger)))
+                .modifier(ShakeModifier(trigger: vm.shakeTrigger))
             if let answer = vm.answerText {
                 AnswerBar(text: answer, success: vm.answerIsSuccess)
                     .transition(.scale(scale: 0.9).combined(with: .opacity))
             } else if let status = vm.statusText {
                 Text(status)
-                    .font(.system(size: 16, weight: .semibold))
+                    .appFont(16, .semibold)
                     .foregroundStyle(Color.errorRed)
                     .transition(.opacity)
             } else {
                 Text("Tap a piece, then a square. Or drag it.")
-                    .font(.system(size: 15))
+                    .appFont(15)
                     .foregroundStyle(palette.textSecondary)
             }
             Spacer(minLength: 0)
@@ -265,7 +265,7 @@ struct AnswerBar: View {
 
     var body: some View {
         Text(text)
-            .font(.system(size: 18, weight: .bold))
+            .appFont(18, .bold)
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity)
             .frame(height: 50)
@@ -432,7 +432,7 @@ struct PromotionPicker: View {
         ZStack {
             Color.black.opacity(0.35).ignoresSafeArea()
             VStack(spacing: 14) {
-                Text("Promote to").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.textPrimary)
+                Text("Promote to").appFont(17, .semibold).foregroundStyle(Color.textPrimary)
                 HStack(spacing: 12) {
                     ForEach([PieceKind.queen, .rook, .bishop, .knight], id: \.self) { kind in
                         Button { onPick(kind) } label: {

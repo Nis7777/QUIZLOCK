@@ -15,11 +15,11 @@ struct PuzzleChrome<Content: View>: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(Brand.appNameCaps)
-                        .font(.system(size: 12, weight: .bold))
+                        .appFont(12, .bold)
                         .tracking(3)
                         .foregroundStyle(palette.accentText)
                     Text(game.displayName)
-                        .font(.system(size: 17, weight: .semibold))
+                        .appFont(17, .semibold)
                         .foregroundStyle(palette.textPrimary)
                 }
                 .accessibilityElement(children: .combine)
@@ -32,13 +32,13 @@ struct PuzzleChrome<Content: View>: View {
 
             HStack(alignment: .center) {
                 Text(subLabel)
-                    .font(.system(size: 13, weight: .semibold))
+                    .appFont(13, .semibold)
                     .tracking(0.6)
                     .foregroundStyle(palette.textSecondary)
                 Spacer()
                 if let progress {
                     Text(progress)
-                        .font(.system(size: 13, weight: .semibold))
+                        .appFont(13, .semibold)
                         .foregroundStyle(palette.textSecondary)
                         .accessibilityLabel("Puzzle \(progress)")
                 }
@@ -54,7 +54,7 @@ struct PuzzleChrome<Content: View>: View {
 
             if isPractice {
                 Text("PRACTICE")
-                    .font(.system(size: 13, weight: .semibold))
+                    .appFont(13, .semibold)
                     .tracking(3)
                     .foregroundStyle(palette.textSecondary)
                     .frame(maxWidth: .infinity)
@@ -70,7 +70,7 @@ struct YourTurnPill: View {
     var body: some View {
         HStack(spacing: 8) {
             Circle().fill(Color.correctGreen).frame(width: 8, height: 8)
-            Text("Your turn").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.textPrimary)
+            Text("Your turn").appFont(15, .semibold).foregroundStyle(Color.textPrimary)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)

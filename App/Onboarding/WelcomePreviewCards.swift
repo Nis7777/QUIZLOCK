@@ -13,11 +13,11 @@ private struct PreviewCardShell<Content: View>: View {
         VStack(spacing: 0) {
             HStack(spacing: 8) {
                 icon
-                Text(title).font(.system(size: 17, weight: .semibold))
+                Text(title).appFont(17, .semibold)
                 Spacer()
                 ZStack {
                     Circle().fill(Color.correctGreen)
-                    Image(systemName: "checkmark").font(.system(size: 11, weight: .heavy)).foregroundStyle(.white)
+                    Image(systemName: "checkmark").appFont(11, .heavy).foregroundStyle(.white)
                 }
                 .frame(width: 22, height: 22)
                 .scaleEffect(solved ? 1 : 0.01)
@@ -28,7 +28,7 @@ private struct PreviewCardShell<Content: View>: View {
             content()
                 .frame(maxHeight: .infinity)
             Text("Preview · Answers play automatically")
-                .font(.system(size: 13))
+                .appFont(13)
                 .foregroundStyle(dark ? Color.white.opacity(0.55) : Color.textSecondary)
         }
         .padding(20)
@@ -49,21 +49,21 @@ struct MathPreviewCard: View {
     @State private var solved = false
 
     var body: some View {
-        PreviewCardShell(icon: AnyView(Image(systemName: "function").font(.system(size: 17, weight: .semibold))),
+        PreviewCardShell(icon: AnyView(Image(systemName: "function").appFont(17, .semibold)),
                          title: "Math", dark: false, solved: solved) {
             VStack(spacing: 34) {
                 Text("If 3x + 5 = 20,\nwhat is x?")
-                    .font(.system(size: 30, weight: .bold))
+                    .appFont(30, .bold)
                     .foregroundStyle(Color.textPrimary)
                     .multilineTextAlignment(.center)
                 HStack(spacing: 10) {
                     Text(solved ? "x = 5" : (typed ? "5" : " "))
-                        .font(.system(size: 26, weight: .semibold, design: .rounded))
+                        .appFont(26, .semibold, design: .rounded)
                         .foregroundStyle(solved ? Color.answerGreen : Color.textPrimary)
                         .contentTransition(.numericText())
                     if solved {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 22))
+                            .appFont(22)
                             .foregroundStyle(Color.answerGreen)
                             .transition(.scale.combined(with: .opacity))
                     }
@@ -100,7 +100,7 @@ struct WordPreviewCard: View {
     @State private var solved = false
 
     var body: some View {
-        PreviewCardShell(icon: AnyView(Image(systemName: "textformat.abc").font(.system(size: 17, weight: .semibold))),
+        PreviewCardShell(icon: AnyView(Image(systemName: "textformat.abc").appFont(17, .semibold)),
                          title: "Word", dark: false, solved: solved) {
             GeometryReader { geo in
                 let tile = min(52, (geo.size.width - 24) / 5, (geo.size.height - 12) / 3)
@@ -156,11 +156,11 @@ struct SudokuPreviewCard: View {
     private var blanks: [Int] { (72..<81).filter { Self.puzzle.puzzle[$0] == 0 } }
 
     var body: some View {
-        PreviewCardShell(icon: AnyView(Image(systemName: "square.grid.3x3").font(.system(size: 17, weight: .semibold))),
+        PreviewCardShell(icon: AnyView(Image(systemName: "square.grid.3x3").appFont(17, .semibold)),
                          title: "Sudoku", dark: true, solved: solved) {
             VStack(spacing: 14) {
                 Text("Fill the last row")
-                    .font(.system(size: 22, weight: .bold))
+                    .appFont(22, .bold)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 10)
@@ -241,7 +241,7 @@ struct ChessPreviewCard: View {
                          title: "Chess", dark: true, solved: solved) {
             VStack(spacing: 14) {
                 Text(headerText)
-                    .font(.system(size: 20, weight: .bold))
+                    .appFont(20, .bold)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 10)

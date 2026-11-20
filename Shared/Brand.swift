@@ -8,15 +8,20 @@ public enum Brand {
     public static let bundleID = "com.dinismagina.quizlock"
     public static let appGroup = "group.com.dinismagina.quizlock"
     public static let supportEmail = "nismagina@gmail.com"
-    public static let termsURL = URL(string: "https://nis7777.github.io/lockfeeddupe/terms.html")!
-    public static let privacyURL = URL(string: "https://nis7777.github.io/lockfeeddupe/privacy.html")!
+    public static let termsURL = URL(string: "https://nis7777.github.io/lockfeeddupe/terms.html") ?? URL(fileURLWithPath: "/")
+    public static let privacyURL = URL(string: "https://nis7777.github.io/lockfeeddupe/privacy.html") ?? URL(fileURLWithPath: "/")
     public static let iapLifetimeStandard = "com.dinismagina.quizlock.lifetime"       // $29.99 non-consumable
     public static let iapLifetimePromo = "com.dinismagina.quizlock.lifetime.discount" // $4.99 non-consumable
     public static let freeUnlocks = 5
+    /// Your app's numeric Apple ID from App Store Connect (App Information → Apple ID). Used by "Rate QuizLock".
+    public static let appStoreID = "0000000000"
+    public static var reviewURL: URL? {
+        URL(string: "itms-apps://itunes.apple.com/app/id\(appStoreID)?action=write-review")
+    }
     public static let minIOS = "17.0"
 
     public static let urlScheme = "quizlock"
-    public static let unlockDeepLink = URL(string: "quizlock://unlock")!
+    public static let unlockDeepLink = URL(string: "quizlock://unlock") ?? URL(fileURLWithPath: "/")
     public static let credits = "Chess puzzles from the Lichess puzzle database (CC0)."
 
     /// Brand colours as 0xRRGGBB. SwiftUI / UIKit wrappers live in the App target.

@@ -11,7 +11,7 @@ struct UnlockPuzzlesSheet: View {
         VStack(alignment: .leading, spacing: 14) {
             SheetHeader(title: "Unlock puzzles") { dismiss() }
             Text("\(model.settings.enabledGames.count) enabled")
-                .font(.system(size: 17, weight: .semibold))
+                .appFont(17, .semibold)
                 .foregroundStyle(palette.textSecondary)
                 .padding(.horizontal, 22)
             VStack(spacing: 0) {
@@ -19,14 +19,14 @@ struct UnlockPuzzlesSheet: View {
                     if index > 0 { Divider().padding(.leading, 56) }
                     HStack(spacing: 14) {
                         Image(systemName: game.systemIcon)
-                            .font(.system(size: 20, weight: .semibold))
+                            .appFont(20, .semibold)
                             .foregroundStyle(palette.accent)
                             .frame(width: 40, height: 40)
                             .background(palette.tint, in: RoundedRectangle(cornerRadius: 11, style: .continuous))
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(game.displayName).font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
+                            Text(game.displayName).appFont(17, .semibold).foregroundStyle(palette.textPrimary)
                             Text(model.settings.difficulty(for: game).displayName)
-                                .font(.system(size: 15)).foregroundStyle(palette.textSecondary)
+                                .appFont(15).foregroundStyle(palette.textSecondary)
                         }
                         Spacer()
                         PillToggle(isOn: binding(for: game), label: game.displayName)
@@ -38,7 +38,7 @@ struct UnlockPuzzlesSheet: View {
             .padding(.horizontal, 16)
             if let hint {
                 Text(hint)
-                    .font(.system(size: 14, weight: .semibold))
+                    .appFont(14, .semibold)
                     .foregroundStyle(palette.accentText)
                     .padding(.horizontal, 22)
                     .transition(.opacity)
@@ -50,7 +50,7 @@ struct UnlockPuzzlesSheet: View {
                 model.selectedTab = .puzzles
             } label: {
                 Label("More options", systemImage: "plus")
-                    .font(.system(size: 18, weight: .semibold))
+                    .appFont(18, .semibold)
                     .foregroundStyle(palette.accent)
                     .frame(maxWidth: .infinity)
                     .frame(height: 58)

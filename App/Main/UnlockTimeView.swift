@@ -45,8 +45,8 @@ struct UnlockTimeView: View {
         } label: {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Use default").font(.system(size: 19, weight: .semibold)).foregroundStyle(palette.textPrimary)
-                    Text(model.lock.defaultDuration.label).font(.system(size: 15)).foregroundStyle(palette.textSecondary)
+                    Text("Use default").appFont(19, .semibold).foregroundStyle(palette.textPrimary)
+                    Text(model.lock.defaultDuration.label).appFont(15).foregroundStyle(palette.textSecondary)
                 }
                 Spacer()
                 RadioMark(isSelected: usingDefault)

@@ -14,6 +14,8 @@ struct QuizLockApp: App {
                 .environment(\.palette, model.palette)
                 .preferredColorScheme(model.settings.theme == .dark ? .dark : .light)
                 .tint(model.palette.accent)
+                // Dynamic Type is supported up to a size where every screen still fits.
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .onOpenURL { model.handleDeepLink($0) }
         }
     }

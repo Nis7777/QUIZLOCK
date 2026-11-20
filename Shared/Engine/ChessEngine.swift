@@ -181,8 +181,18 @@ public struct Position: Codable, Hashable, Sendable {
     }
 
     public static var start: Position {
-        // swiftlint:disable:next force_try
-        try! Position(fen: startFEN)
+        (try? Position(fen: startFEN)) ?? Position(board: [Piece?](repeating: nil, count: 64), sideToMove: .white)
+    }
+
+    /// Raw initializer (no validation).
+    init(board: [Piece?], sideToMove: PieceColor, castling: CastlingRights = CastlingRights(),
+         enPassant: Int? = nil, halfmoveClock: Int = 0, fullmoveNumber: Int = 1) {
+        self.board = board
+        self.sideToMove = sideToMove
+        self.castling = castling
+        self.enPassant = enPassant
+        self.halfmoveClock = halfmoveClock
+        self.fullmoveNumber = fullmoveNumber
     }
 
     public var fen: String {

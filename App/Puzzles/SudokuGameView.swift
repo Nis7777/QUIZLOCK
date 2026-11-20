@@ -110,8 +110,8 @@ struct SudokuGameView: View {
     private func tool(icon: String, title: String, active: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             VStack(spacing: 4) {
-                Image(systemName: icon).font(.system(size: 20, weight: .semibold))
-                Text(title).font(.system(size: 13, weight: .semibold))
+                Image(systemName: icon).appFont(20, .semibold)
+                Text(title).appFont(13, .semibold)
             }
             .foregroundStyle(active ? Color.white : palette.textPrimary)
             .frame(maxWidth: .infinity)
@@ -131,7 +131,7 @@ struct SudokuGameView: View {
                 let done = vm.round.placedCount(d) >= size
                 Button { vm.enter(d) } label: {
                     Text("\(d)")
-                        .font(.system(size: 28, weight: .semibold, design: .rounded))
+                        .appFont(28, .semibold, design: .rounded)
                         .foregroundStyle(Color.brand)
                         .frame(maxWidth: .infinity)
                         .frame(height: 54)

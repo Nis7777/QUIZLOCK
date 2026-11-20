@@ -27,21 +27,21 @@ struct FeedbackTab: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 16) {
                 Text("Feedback")
-                    .font(.system(size: 17, weight: .semibold))
+                    .appFont(17, .semibold)
                     .foregroundStyle(palette.textPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.top, 12)
                 Text("Help improve \(Brand.appName)")
-                    .font(.system(size: 34, weight: .bold))
+                    .appFont(34, .bold)
                     .foregroundStyle(palette.textPrimary)
                     .padding(.top, 6)
                 Text("Found a problem or have an idea? Send me a note.")
-                    .font(.system(size: 17))
+                    .appFont(17)
                     .foregroundStyle(palette.textSecondary)
                 formCard
                 PrimaryButton(title: "Continue to email", systemImage: "envelope", isEnabled: hasText) { sendEmail() }
                 Text("Your draft is saved on this device. You'll review and send from your email account, so I can reply.")
-                    .font(.system(size: 14))
+                    .appFont(14)
                     .foregroundStyle(palette.textSecondary)
                 directCard
             }
@@ -64,7 +64,7 @@ struct FeedbackTab: View {
     private var formCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("What's on your mind?").font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
+                Text("What's on your mind?").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
                 Spacer()
                 Menu {
                     Picker("Type", selection: $typeRaw) {
@@ -73,9 +73,9 @@ struct FeedbackTab: View {
                 } label: {
                     HStack(spacing: 4) {
                         Text(type.rawValue)
-                        Image(systemName: "chevron.up.chevron.down").font(.system(size: 12, weight: .semibold))
+                        Image(systemName: "chevron.up.chevron.down").appFont(12, .semibold)
                     }
-                    .font(.system(size: 16, weight: .semibold))
+                    .appFont(16, .semibold)
                     .foregroundStyle(palette.accentText)
                 }
             }
@@ -83,14 +83,14 @@ struct FeedbackTab: View {
             ZStack(alignment: .topLeading) {
                 if draft.isEmpty {
                     Text("Tell me what happened or what you'd like to see…")
-                        .font(.system(size: 16))
+                        .appFont(16)
                         .foregroundStyle(palette.textSecondary.opacity(0.7))
                         .padding(.top, 8)
                         .padding(.leading, 5)
                         .allowsHitTesting(false)
                 }
                 TextEditor(text: $draft)
-                    .font(.system(size: 16))
+                    .appFont(16)
                     .foregroundStyle(palette.textPrimary)
                     .scrollContentBackground(.hidden)
                     .focused($editorFocused)
@@ -102,8 +102,8 @@ struct FeedbackTab: View {
 
     private var directCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Email me directly").font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
-            Text(Brand.supportEmail).font(.system(size: 16, weight: .medium)).foregroundStyle(palette.accentText)
+            Text("Email me directly").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
+            Text(Brand.supportEmail).appFont(16, .medium).foregroundStyle(palette.accentText)
                 .textSelection(.enabled)
             Button {
                 UIPasteboard.general.string = Brand.supportEmail
@@ -115,7 +115,7 @@ struct FeedbackTab: View {
                 }
             } label: {
                 Label("Copy email address", systemImage: "doc.on.doc")
-                    .font(.system(size: 16, weight: .medium))
+                    .appFont(16, .medium)
                     .foregroundStyle(palette.textPrimary)
             }
             .buttonStyle(.plain)

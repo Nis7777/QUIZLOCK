@@ -34,13 +34,18 @@ final class Store {
         }
     }
 
+    enum LoadState { case loading, loaded, failed }
+    private(set) var loadState: LoadState = .loading
+
     func loadProducts() async {
+        loadState = .loading
         do {
             let products = try await Product.products(for: Self.productIDs)
             standard = products.first { $0.id == Brand.iapLifetimeStandard }
             promo = products.first { $0.id == Brand.iapLifetimePromo }
+            loadState = (standard != nil && promo != nil) ? .loaded : .failed
         } catch {
-            lastError = error.localizedDescription
+            loadState = .failed
         }
     }
 
@@ -106,6 +111,6 @@ final class Store {
 
     /// Loads prices again if they're missing (e.g. the paywall opened while offline).
     func loadProductsIfNeeded() async {
-        if standard == nil || promo == nil { await loadProducts() }
+        if standard == nil || promo == nil || loadState == .failed { await loadProducts() }
     }
 }

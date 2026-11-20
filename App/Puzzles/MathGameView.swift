@@ -70,7 +70,7 @@ struct MathGameView: View {
         VStack(spacing: 0) {
             Spacer(minLength: 4)
             Text(vm.round.question.text)
-                .font(.system(size: 34, weight: .bold))
+                .appFont(34, .bold)
                 .foregroundStyle(palette.textPrimary)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.6)
@@ -78,16 +78,16 @@ struct MathGameView: View {
                 .accessibilityLabel(spoken(vm.round.question.text))
             Spacer(minLength: 12)
             answerField
-                .modifier(ShakeEffect(animatableData: CGFloat(vm.shakeTrigger)))
+                .modifier(ShakeModifier(trigger: vm.shakeTrigger))
             if let answer = vm.revealedAnswer {
                 Text("Answer: \(answer)")
-                    .font(.system(size: 19, weight: .bold))
+                    .appFont(19, .bold)
                     .foregroundStyle(Color.errorRed)
                     .padding(.top, 10)
                     .transition(.opacity)
             } else if vm.round.wrongCount > 0 && vm.round.status == .playing {
                 Text("\(MathRound.maxWrong - vm.round.wrongCount) tries left")
-                    .font(.system(size: 15, weight: .medium))
+                    .appFont(15, .medium)
                     .foregroundStyle(palette.textSecondary)
                     .padding(.top, 10)
             }
@@ -102,13 +102,13 @@ struct MathGameView: View {
         let text = vm.round.input.isEmpty ? (solved ? vm.round.question.answerText : "?") : vm.round.input
         return HStack(spacing: 12) {
             Text(text)
-                .font(.system(size: 60, weight: .bold, design: .rounded))
+                .appFont(60, .bold, design: .rounded)
                 .foregroundStyle(vm.round.input.isEmpty && !solved ? Color(hex: 0xC7C7CC) : (solved ? Color.answerGreen : Color.textPrimary))
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
             if solved {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 34))
+                    .appFont(34)
                     .foregroundStyle(Color.correctGreen)
                     .transition(.scale.combined(with: .opacity))
             }
@@ -155,7 +155,7 @@ struct MathKeypad: View {
             keyButton("0")
             Button(action: onCheck) {
                 Text("Check")
-                    .font(.system(size: 19, weight: .bold))
+                    .appFont(19, .bold)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 58)
@@ -169,9 +169,9 @@ struct MathKeypad: View {
         Button { onKey(key) } label: {
             Group {
                 if key == "⌫" {
-                    Image(systemName: "delete.left").font(.system(size: 22, weight: .semibold))
+                    Image(systemName: "delete.left").appFont(22, .semibold)
                 } else {
-                    Text(key).font(.system(size: 26, weight: .semibold, design: .rounded))
+                    Text(key).appFont(26, .semibold, design: .rounded)
                 }
             }
             .foregroundStyle(palette.textPrimary)

@@ -17,13 +17,13 @@ struct ScreenTimeIntroView: View {
                 Spacer(minLength: 10)
                 ScreenTitle(title: "Take control of\nyour screen time", size: 36)
                 Text("Choose apps to limit distracting scrolling. Solve a puzzle to unlock them temporarily.")
-                    .font(.system(size: 19))
+                    .appFont(19)
                     .foregroundStyle(palette.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 28)
                     .padding(.top, 14)
                 Text("\(Brand.appName) does not collect your Screen Time usage.")
-                    .font(.system(size: 15))
+                    .appFont(15)
                     .foregroundStyle(palette.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 28)
@@ -43,7 +43,7 @@ struct ScreenTimeIntroView: View {
             RoundedRectangle(cornerRadius: 34, style: .continuous)
                 .fill(Color.brand)
                 .frame(width: 150, height: 150)
-                .overlay(Image(systemName: "hourglass").font(.system(size: 64, weight: .semibold)).foregroundStyle(.white))
+                .overlay(Image(systemName: "hourglass").appFont(64, .semibold).foregroundStyle(.white))
                 .rotationEffect(.degrees(appeared ? 10 : 0))
                 .offset(x: appeared ? 62 : 0)
                 .shadow(color: .black.opacity(0.12), radius: 18, y: 10)
@@ -53,7 +53,7 @@ struct ScreenTimeIntroView: View {
                 .overlay(
                     ZStack {
                         Circle().fill(Color.brand).frame(width: 112, height: 112)
-                        Image(systemName: "puzzlepiece.fill").font(.system(size: 50, weight: .bold)).foregroundStyle(.white)
+                        Image(systemName: "puzzlepiece.fill").appFont(50, .bold).foregroundStyle(.white)
                     }
                 )
                 .rotationEffect(.degrees(appeared ? -8 : 0))

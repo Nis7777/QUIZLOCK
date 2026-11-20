@@ -23,13 +23,13 @@ struct WelcomeView: View {
 
             VStack(spacing: 6) {
                 Text("Lock your apps.")
-                    .font(.system(size: 34, weight: .bold))
+                    .appFont(34, .bold)
                     .foregroundStyle(palette.textPrimary)
                 Text("Solve a puzzle to unlock.")
-                    .font(.system(size: 30, weight: .bold))
+                    .appFont(30, .bold)
                     .foregroundStyle(palette.textPrimary)
                 Text("Scroll less.")
-                    .font(.system(size: 36, weight: .bold))
+                    .appFont(36, .bold)
                     .foregroundStyle(palette.accent)
             }
             .minimumScaleFactor(0.7)

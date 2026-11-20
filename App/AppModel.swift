@@ -83,6 +83,7 @@ final class AppModel {
         lock = SharedStore.lockState
         isAuthorized = screenTime.isAuthorized(simulatorFlag: settings.simulatorAuthorized)
         sweepExpiredUnlocks(reapply: true)
+        Task { await refreshNotificationStatus() }
         if settings.onboardingComplete, phase == .main {
             resumeUnlockIfNeeded()
         }
@@ -173,7 +174,7 @@ final class AppModel {
             if enabled {
                 if !s.enabledGames.contains(game) {
                     s.enabledGames.append(game)
-                    s.enabledGames.sort { GameID.allCases.firstIndex(of: $0)! < GameID.allCases.firstIndex(of: $1)! }
+                    s.enabledGames.sort { (GameID.allCases.firstIndex(of: $0) ?? 0) < (GameID.allCases.firstIndex(of: $1) ?? 0) }
                 }
             } else {
                 s.enabledGames.removeAll { $0 == game }
@@ -190,20 +191,33 @@ final class AppModel {
 
     // MARK: Onboarding
 
-    func finishOnboarding(turnOnLocks: Bool) {
+    /// "Turn On Locks" (S11): applies the shield right away.
+    func turnOnLocksFromOnboarding() {
+        updateLock(applyShield: false) { $0.locksEnabled = true }
+        screenTime.apply(lock)
+    }
+
+    func finishOnboarding() {
         updateSettings {
             $0.onboardingComplete = true
             $0.showAllSetBanner = true
         }
-        if turnOnLocks {
-            updateLock { $0.locksEnabled = true }
-        }
+        updateLock { $0.locksEnabled = true }
         paywallReason = .onboarding
         withAnimation(.easeInOut(duration: 0.35)) { phase = .main }
     }
 
-    func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
+    /// True when the user declined notifications (Settings then explains how to turn them on).
+    var notificationsDenied = false
+
+    func requestNotificationPermission() async {
+        _ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
+        await refreshNotificationStatus()
+    }
+
+    func refreshNotificationStatus() async {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        notificationsDenied = settings.authorizationStatus == .denied
     }
 
     // MARK: Authorization

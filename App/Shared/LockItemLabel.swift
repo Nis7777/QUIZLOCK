@@ -27,7 +27,7 @@ struct LockItemLabel: View {
             }
         }
         .labelStyle(LockItemLabelStyle())
-        .font(.system(size: 17))
+        .appFont(17)
         .foregroundStyle(palette.textPrimary)
     }
 }
@@ -90,7 +90,7 @@ struct MockAppPicker: View {
                                 Text(app.name).foregroundStyle(palette.textPrimary)
                                 Spacer()
                                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
-                                    .font(.system(size: 22))
+                                    .appFont(22)
                                     .foregroundStyle(selected ? Color.brand : Color(hex: 0xC7C7CC))
                             }
                         }

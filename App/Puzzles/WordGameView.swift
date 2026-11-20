@@ -186,7 +186,7 @@ private struct WordGrid: View {
                          bounce: vm.bounceRow == row)
             }
         }
-        .modifier(ShakeEffect(animatableData: isCurrent ? CGFloat(vm.shakeTrigger) : 0))
+        .modifier(ShakeModifier(trigger: isCurrent ? vm.shakeTrigger : 0))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(rowAccessibility(word: word, scores: scores, row: row))
     }
@@ -213,6 +213,7 @@ struct WordTile: View {
     /// When false, an already-scored tile appears without the flip (e.g. restored progress).
     var animateReveal = true
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var angle: Double = 0
     @State private var showFace = false
     @State private var scale: CGFloat = 1
@@ -243,17 +244,22 @@ struct WordTile: View {
         .onChange(of: score) { _, newValue in
             if newValue == nil {
                 showFace = false
-            } else if animateReveal {
+            } else if animateReveal && !reduceMotion {
                 flip()
+            } else if animateReveal {
+                Task { @MainActor in
+                    try? await Task.sleep(nanoseconds: UInt64(index) * 100_000_000)
+                    withAnimation(.easeInOut(duration: 0.2)) { showFace = true }
+                }
             } else {
                 showFace = true
             }
         }
         .onChange(of: letter) { old, new in
-            if new != nil && old == nil { pop() }
+            if new != nil && old == nil && !reduceMotion { pop() }
         }
         .onChange(of: bounce) { _, isOn in
-            if isOn { jump() }
+            if isOn && !reduceMotion { jump() }
         }
     }
 
@@ -310,9 +316,9 @@ struct WordKeyboard: View {
                 HStack(spacing: spacing) { ForEach(rows[0], id: \.self) { letterKey($0, width: keyWidth) } }
                 HStack(spacing: spacing) { ForEach(rows[1], id: \.self) { letterKey($0, width: keyWidth) } }
                 HStack(spacing: spacing) {
-                    actionKey(label: Text("ENTER").font(.system(size: 13, weight: .bold)), width: keyWidth * 1.5, a11y: "Enter", action: onEnter)
+                    actionKey(label: Text("ENTER").appFont(13, .bold), width: keyWidth * 1.5, a11y: "Enter", action: onEnter)
                     ForEach(rows[2], id: \.self) { letterKey($0, width: keyWidth) }
-                    actionKey(label: Image(systemName: "delete.left").font(.system(size: 19, weight: .semibold)),
+                    actionKey(label: Image(systemName: "delete.left").appFont(19, .semibold),
                               width: keyWidth * 1.5, a11y: "Delete", action: onDelete)
                 }
             }
@@ -332,7 +338,7 @@ struct WordKeyboard: View {
         }
         return Button { onLetter(ch) } label: {
             Text(String(ch).uppercased())
-                .font(.system(size: 19, weight: .semibold))
+                .appFont(19, .semibold)
                 .foregroundStyle(state == nil ? Color.textPrimary : Color.white)
                 .frame(width: width, height: 56)
                 .background(bg, in: RoundedRectangle(cornerRadius: 6))

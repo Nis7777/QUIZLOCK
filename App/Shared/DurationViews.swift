@@ -25,10 +25,10 @@ struct DurationOptionsCard: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Custom")
-                            .font(.system(size: 19, weight: .semibold))
+                            .appFont(19, .semibold)
                             .foregroundStyle(palette.accent)
                         if let s = selection, s.isCustom {
-                            Text(s.label).font(.system(size: 15)).foregroundStyle(palette.textSecondary)
+                            Text(s.label).appFont(15).foregroundStyle(palette.textSecondary)
                         }
                     }
                     Spacer()
@@ -36,7 +36,7 @@ struct DurationOptionsCard: View {
                         RadioMark(isSelected: true)
                     } else {
                         Image(systemName: "plus.circle")
-                            .font(.system(size: 24))
+                            .appFont(24)
                             .foregroundStyle(palette.accent)
                     }
                 }
@@ -62,7 +62,7 @@ struct DurationOptionsCard: View {
         } label: {
             HStack {
                 Text(title)
-                    .font(.system(size: 19, weight: .semibold))
+                    .appFont(19, .semibold)
                     .foregroundStyle(palette.textPrimary)
                 Spacer()
                 RadioMark(isSelected: selected)
@@ -92,7 +92,7 @@ struct DurationRadioCards: View {
                     withAnimation(.selectionSpring) { onSelect(option) }
                 } label: {
                     HStack {
-                        Text(option.label).font(.system(size: 19, weight: .semibold)).foregroundStyle(palette.textPrimary)
+                        Text(option.label).appFont(19, .semibold).foregroundStyle(palette.textPrimary)
                         Spacer()
                         RadioMark(isSelected: selected)
                     }
@@ -113,13 +113,13 @@ struct DurationRadioCards: View {
             } label: {
                 HStack {
                     Text(selection.isCustom ? "Custom · \(selection.label)" : "Custom")
-                        .font(.system(size: 19, weight: .semibold))
+                        .appFont(19, .semibold)
                         .foregroundStyle(palette.accent)
                     Spacer()
                     if selection.isCustom {
                         RadioMark(isSelected: true)
                     } else {
-                        Image(systemName: "plus.circle").font(.system(size: 24)).foregroundStyle(palette.accent)
+                        Image(systemName: "plus.circle").appFont(24).foregroundStyle(palette.accent)
                     }
                 }
                 .padding(.horizontal, 22)
@@ -154,7 +154,7 @@ struct CustomDurationSheet: View {
             HStack {
                 PillButton(title: "Cancel", filled: false) { dismiss() }
                 Spacer()
-                Text("Set unlock time").font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
+                Text("Set unlock time").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
                 Spacer()
                 PillButton(title: "Save") {
                     let total = hours * 60 + minutes
@@ -192,14 +192,14 @@ struct CustomDurationSheet: View {
         HStack(spacing: 0) {
             Picker(unit, selection: selection) {
                 ForEach(range, id: \.self) { v in
-                    Text("\(v)").font(.system(size: 22)).tag(v)
+                    Text("\(v)").appFont(22).tag(v)
                 }
             }
             .pickerStyle(.wheel)
             .frame(maxWidth: .infinity)
             .clipped()
             Text(unit)
-                .font(.system(size: 19, weight: .semibold))
+                .appFont(19, .semibold)
                 .foregroundStyle(palette.textPrimary)
                 .frame(width: 64, alignment: .leading)
         }

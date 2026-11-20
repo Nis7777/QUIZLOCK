@@ -12,6 +12,7 @@ struct HowItWorksView: View {
     @State private var tapPulse = false
     @State private var zoom = false
     @State private var previewRound: AnyRound?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(spacing: 0) {
@@ -25,10 +26,10 @@ struct HowItWorksView: View {
                         screen(width: width)
                     }
                     .overlay { tapIndicator }
-                    .scaleEffect(zoom ? 1.6 : 1)
+                    .scaleEffect(zoom && !reduceMotion ? 1.6 : 1)
                     .opacity(zoom ? 0 : 1)
                     Text("Solve the puzzle to unlock the app")
-                        .font(.system(size: 22, weight: .medium))
+                        .appFont(22, .medium)
                         .foregroundStyle(palette.textPrimary)
                         .opacity(beat == 3 ? 1 : 0)
                 }

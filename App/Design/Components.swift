@@ -92,11 +92,11 @@ struct PrimaryButton: View {
                     ProgressView().tint(palette.onAccent)
                 }
                 if let systemImage, !isLoading {
-                    Image(systemName: systemImage).font(.system(size: 19, weight: .bold))
+                    Image(systemName: systemImage).appFont(19, .bold)
                 }
-                Text(title).font(.system(size: 19, weight: .bold))
+                Text(title).appFont(19, .bold)
                 if let trailingImage {
-                    Image(systemName: trailingImage).font(.system(size: 19, weight: .bold))
+                    Image(systemName: trailingImage).appFont(19, .bold)
                 }
             }
             .foregroundStyle(isEnabled ? palette.onAccent : Color.white)
@@ -129,7 +129,7 @@ struct BackButton: View {
             action()
         } label: {
             Image(systemName: "chevron.left")
-                .font(.system(size: 19, weight: .semibold))
+                .appFont(19, .semibold)
                 .foregroundStyle(palette.textPrimary)
                 .frame(width: 52, height: 52)
                 .background(palette.card, in: Circle())
@@ -147,7 +147,7 @@ struct CloseButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: "xmark")
-                .font(.system(size: 20, weight: .medium))
+                .appFont(20, .medium)
                 .foregroundStyle(palette.textPrimary)
                 .frame(width: 44, height: 44)
         }
@@ -168,7 +168,7 @@ struct PillButton: View {
             action()
         } label: {
             Text(title)
-                .font(.system(size: 16, weight: .semibold))
+                .appFont(16, .semibold)
                 .foregroundStyle(filled ? palette.onAccent : palette.textPrimary)
                 .padding(.horizontal, 18)
                 .frame(height: 38)
@@ -200,6 +200,8 @@ struct PillToggle: View {
                     .padding(4)
             }
             .frame(width: 70, height: 36)
+            .padding(.vertical, 4)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityRepresentation {
@@ -217,7 +219,7 @@ struct RadioMark: View {
             if isSelected {
                 Circle().fill(palette.accent)
                 Image(systemName: "checkmark")
-                    .font(.system(size: 13, weight: .heavy))
+                    .appFont(13, .heavy)
                     .foregroundStyle(palette.onAccent)
             } else {
                 Circle().strokeBorder(Color(hex: 0xC7C7CC), lineWidth: 2)
@@ -289,11 +291,11 @@ struct SectionHeader: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.system(size: 17, weight: .semibold))
+                .appFont(17, .semibold)
                 .foregroundStyle(palette.textSecondary)
             Spacer()
             if let trailing {
-                Text(trailing).font(.system(size: 15)).foregroundStyle(palette.textSecondary)
+                Text(trailing).appFont(15).foregroundStyle(palette.textSecondary)
             }
         }
         .padding(.horizontal, 22)
@@ -307,7 +309,7 @@ struct FooterText: View {
     @Environment(\.palette) private var palette
     var body: some View {
         Text(text)
-            .font(.system(size: 14))
+            .appFont(14)
             .foregroundStyle(palette.textSecondary)
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, 22)
@@ -343,20 +345,20 @@ struct InfoRow: View {
             if let icon { icon.frame(width: 30) }
             VStack(alignment: .leading, spacing: 3) {
                 HStack(alignment: .firstTextBaseline) {
-                    Text(title).font(.system(size: 17, weight: .semibold)).foregroundStyle(palette.textPrimary)
+                    Text(title).appFont(17, .semibold).foregroundStyle(palette.textPrimary)
                     Spacer(minLength: 8)
                     if let value {
-                        Text(value).font(.system(size: 15)).foregroundStyle(palette.textSecondary).lineLimit(1)
+                        Text(value).appFont(15).foregroundStyle(palette.textSecondary).lineLimit(1)
                     }
                 }
                 if let subtitle {
-                    Text(subtitle).font(.system(size: 15)).foregroundStyle(palette.textSecondary)
+                    Text(subtitle).appFont(15).foregroundStyle(palette.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
             if showsChevron {
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 15, weight: .semibold))
+                    .appFont(15, .semibold)
                     .foregroundStyle(Color(hex: 0xA0A0A6))
             }
         }
@@ -375,7 +377,7 @@ struct ScreenTitle: View {
     var body: some View {
         VStack(spacing: 12) {
             Text(title)
-                .font(.system(size: size, weight: .bold))
+                .appFont(size, .bold)
                 .foregroundStyle(palette.textPrimary)
                 .multilineTextAlignment(.center)
                 .lineSpacing(-4)
@@ -383,7 +385,7 @@ struct ScreenTitle: View {
                 .accessibilityAddTraits(.isHeader)
             if let subtitle {
                 Text(subtitle)
-                    .font(.system(size: 19))
+                    .appFont(19)
                     .foregroundStyle(palette.textSecondary)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
@@ -408,7 +410,7 @@ struct AssetImage: View {
             ZStack {
                 Color(hex: 0xE5E5EA)
                 Image(systemName: placeholderSymbol)
-                    .font(.system(size: 34, weight: .medium))
+                    .appFont(34, .medium)
                     .foregroundStyle(Color(hex: 0x8E8E93))
             }
         }
@@ -421,7 +423,7 @@ struct Toast: View {
     let text: String
     var body: some View {
         Text(text)
-            .font(.system(size: 16, weight: .bold))
+            .appFont(16, .bold)
             .foregroundStyle(.white)
             .padding(.horizontal, 18)
             .padding(.vertical, 12)
@@ -442,7 +444,7 @@ struct ShakeEffect: GeometryEffect {
 
 extension View {
     func shake(_ trigger: Int) -> some View {
-        modifier(ShakeEffect(animatableData: CGFloat(trigger)))
+        modifier(ShakeModifier(trigger: trigger))
     }
 }
 
@@ -478,7 +480,7 @@ struct LegalLinksText: View {
 
     var body: some View {
         Text(attributed)
-            .font(.system(size: 14))
+            .appFont(14)
             .multilineTextAlignment(.center)
             .tint(palette.accentText)
             .environment(\.openURL, OpenURLAction { url in
@@ -490,7 +492,7 @@ struct LegalLinksText: View {
     private var attributed: AttributedString {
         var s = AttributedString(prefix)
         s.foregroundColor = palette.textSecondary
-        var terms = AttributedString("Terms of Service")
+        var terms = AttributedString("Terms of Use")
         terms.foregroundColor = palette.accentText
         terms.link = Brand.termsURL
         var and = AttributedString(" and ")
