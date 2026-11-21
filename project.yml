@@ -6,6 +6,7 @@ options:
   createIntermediateGroups: true
   developmentLanguage: en
   groupSortPosition: top
+  xcodeVersion: "26.0"   # marks the project as reviewed by Xcode 26 (no 'Update to recommended settings')
 
 settings:
   base:
@@ -21,6 +22,7 @@ settings:
     SWIFT_EMIT_LOC_STRINGS: NO
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     STRING_CATALOG_GENERATE_SYMBOLS: YES
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: NO
 
 targetTemplates:
   ScreenTimeExtension:
