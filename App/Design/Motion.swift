@@ -55,59 +55,6 @@ extension View {
     }
 }
 
-// MARK: - Animated numbers
-
-/// A number that rolls with `.numericText` when it changes (years, prices, streaks, counts).
-struct AnimatedNumber: View {
-    let value: Double
-    var fractionDigits = 0
-    var suffix = ""
-
-    var body: some View {
-        Text(verbatim: formatted + suffix)
-            .contentTransition(.numericText(value: value))
-            .animation(Motion.smooth, value: value)
-    }
-
-    private var formatted: String {
-        value.formatted(.number.precision(.fractionLength(fractionDigits)))
-    }
-}
-
-/// Counts from 0 up to `target` over about a second (stepped, so `.numericText` rolls), with a heavy
-/// haptic when it lands. Reduce Motion shows the final value at once.
-struct CountUpNumber: View {
-    let target: Double
-    var fractionDigits = 0
-    var suffix = ""
-    var delay: Double = 0.2
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var value: Double = 0
-    @State private var landed = false
-
-    var body: some View {
-        AnimatedNumber(value: value, fractionDigits: fractionDigits, suffix: suffix)
-            .sensoryFeedback(.impact(weight: .heavy), trigger: landed) { _, now in now }
-            .task {
-                if reduceMotion {
-                    value = target
-                    return
-                }
-                try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-                let steps = 14
-                for i in 1...steps {
-                    let t = Double(i) / Double(steps)
-                    let eased = 1 - pow(1 - t, 3)
-                    withAnimation(Motion.smooth) { value = target * eased }
-                    try? await Task.sleep(nanoseconds: 70_000_000)
-                }
-                value = target
-                landed = true
-            }
-            .accessibilityLabel(Text(verbatim: target.formatted(.number.precision(.fractionLength(fractionDigits))) + suffix))
-    }
-}
-
 // MARK: - Shimmer
 
 /// A soft light sweep across the view every 3s (main CTAs). Off with Reduce Motion.

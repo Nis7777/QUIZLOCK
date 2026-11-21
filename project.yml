@@ -70,6 +70,9 @@ targets:
       path: App/Info.plist
       properties:
         CFBundleDisplayName: QuizLock
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations:
+          - en
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSRequiresIPhoneOS: true

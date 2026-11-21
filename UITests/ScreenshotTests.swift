@@ -24,11 +24,6 @@ final class ScreenshotTests: XCTestCase {
     }
 
     @MainActor
-    func testScreenshotsPortuguese() throws {
-        try capture(language: "pt-PT", locale: "pt_PT")
-    }
-
-    @MainActor
     private func capture(language: String, locale: String) throws {
         let folder = Self.outputFolder.appendingPathComponent(language, isDirectory: true)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -37,8 +32,8 @@ final class ScreenshotTests: XCTestCase {
             app.launchArguments = ["-demoData", "-screen", item.screen,
                                    "-AppleLanguages", "(\(language))", "-AppleLocale", locale]
             app.launch()
-            // Let animations (board slides, chart, ring) settle.
-            Thread.sleep(forTimeInterval: item.screen == "chess" ? 3.0 : 2.0)
+            // Let animations (board slides, chart, ring, counting numbers) settle.
+            Thread.sleep(forTimeInterval: ["chess", "stats", "realityCheck"].contains(item.screen) ? 3.5 : 2.0)
             let shot = XCUIScreen.main.screenshot()
             let attachment = XCTAttachment(screenshot: shot)
             attachment.name = "\(language)-\(item.file)"

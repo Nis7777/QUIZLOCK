@@ -69,13 +69,13 @@ struct MathGameView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer(minLength: 4)
-            Text(MathText.localized(vm.round.question.text))
+            Text(vm.round.question.text)
                 .appFont(34, .bold)
                 .foregroundStyle(palette.textPrimary)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.6)
                 .frame(maxWidth: .infinity)
-                .accessibilityLabel(spoken(MathText.localized(vm.round.question.text)))
+                .accessibilityLabel(spoken(vm.round.question.text))
             Spacer(minLength: 12)
             answerField
                 .modifier(ShakeModifier(trigger: vm.shakeTrigger))
@@ -134,25 +134,6 @@ struct MathGameView: View {
             .replacingOccurrences(of: MathEngine.minus, with: " minus ")
             .replacingOccurrences(of: "²", with: " squared")
             .replacingOccurrences(of: "√", with: "square root of ")
-    }
-}
-
-/// Math questions are generated in English; this translates the few word-based templates.
-enum MathText {
-    static func localized(_ text: String) -> String {
-        guard Bundle.main.preferredLocalizations.first?.hasPrefix("pt") == true else { return text }
-        var t = text
-        let swaps: [(String, String)] = [
-            ("Solve for x:", "Resolve em ordem a x:"),
-            (", what is x?", ", quanto vale x?"),
-            ("If ", "Se "),
-            ("What is ", "Quanto é "),
-            (" of ", " de "),
-            (" as a decimal", " em decimal"),
-            ("Write ", "Escreve "),
-        ]
-        for (en, pt) in swaps { t = t.replacingOccurrences(of: en, with: pt) }
-        return t
     }
 }
 

@@ -166,6 +166,7 @@ private struct PlansScreen: View {
     let onRestore: () -> Void
     let onClose: () -> Void
     @State private var plan: Plan = .yearly
+    @State private var count = CountUpState()
 
     private var store: Store { model.store }
     private var selectedProduct: Product? { plan == .yearly ? store.yearly : store.monthly }
@@ -219,6 +220,7 @@ private struct PlansScreen: View {
             .padding(.bottom, 8)
         }
         .screenBackground()
+        .countUp($count, after: 0.3)
     }
 
     private var headline: String {
@@ -249,12 +251,14 @@ private struct PlansScreen: View {
         VStack(spacing: 12) {
             PlanCard(title: String(localized: "Yearly"),
                      price: store.pricePerPeriod(store.yearly) ?? "",
+                     counting: store.countingPrice(store.yearly), count: count,
                      detail: store.showsTrial ? store.trialDays.map { String(localized: "\($0)-day free trial") } : nil,
                      badge: yearlyBadge,
                      selected: plan == .yearly) { plan = .yearly }
                 .accessibilityIdentifier("paywall.plan.yearly")
             PlanCard(title: String(localized: "Monthly"),
                      price: store.pricePerPeriod(store.monthly) ?? "",
+                     counting: store.countingPrice(store.monthly), count: count,
                      detail: nil, badge: nil,
                      selected: plan == .monthly) { plan = .monthly }
                 .accessibilityIdentifier("paywall.plan.monthly")
@@ -295,6 +299,8 @@ private struct PlansScreen: View {
 private struct PlanCard: View {
     let title: String
     let price: String
+    var counting: CountingPrice?
+    var count = CountUpState()
     let detail: String?
     let badge: String?
     let selected: Bool
@@ -326,7 +332,14 @@ private struct PlanCard: View {
                         }
                     }
                     Spacer()
-                    Text(price)
+                    Group {
+                        if let counting {
+                            CountingText(value: counting.value * count.progress, final: counting.value,
+                                         format: counting.format, landed: count.landed)
+                        } else {
+                            Text(price)
+                        }
+                    }
                         .appFont(19, .bold)
                         .foregroundStyle(palette.textPrimary)
                         .lineLimit(1)
@@ -399,6 +412,7 @@ private struct ExitOfferScreen: View {
     let onClose: () -> Void
 
     private var store: Store { model.store }
+    @State private var count = CountUpState()
 
     var body: some View {
         ZStack {
@@ -418,7 +432,9 @@ private struct ExitOfferScreen: View {
                         if let percent = store.offerDiscountPercent,
                            let offerPrice = store.pricePerPeriod(store.yearlyOffer),
                            let regular = store.pricePerPeriod(store.yearly) {
-                            Text("\(percent)% off your first year")
+                            CountingText(value: Double(percent) * count.progress, final: Double(percent),
+                                         format: { String(localized: "\(Int($0.rounded()))% off your first year") },
+                                         landed: count.landed)
                                 .appFont(34, .black, design: .rounded)
                                 .foregroundStyle(Color.brandDeep)
                                 .multilineTextAlignment(.center)
@@ -432,7 +448,14 @@ private struct ExitOfferScreen: View {
                                     .strikethrough()
                                     .foregroundStyle(Color.textSecondary)
                                     .accessibilityLabel(String(localized: "Regular price \(regular)"))
-                                Text(offerPrice)
+                                Group {
+                                    if let counting = store.countingPrice(store.yearlyOffer) {
+                                        CountingText(value: counting.value * count.progress, final: counting.value,
+                                                     format: counting.format, landed: count.landed)
+                                    } else {
+                                        Text(offerPrice)
+                                    }
+                                }
                                     .appFont(36, .bold)
                                     .foregroundStyle(Color.textPrimary)
                                     .minimumScaleFactor(0.6)
@@ -473,6 +496,7 @@ private struct ExitOfferScreen: View {
         }
         .environment(\.colorScheme, .light)
         .environment(\.palette, .classic)
+        .countUp($count, after: 0.3)
     }
 }
 

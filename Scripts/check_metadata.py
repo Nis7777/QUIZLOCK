@@ -13,7 +13,7 @@ for lang in re.split(r"^## ", text, flags=re.M)[1:]:
         field, limit, value = m.group(1), int(m.group(2)), m.group(3).strip()
         n = len(value)
         flag = "OK" if n <= limit else "TOO LONG"
-        if field.startswith(("Keywords", "Palavras")) and ", " in value:
+        if field.startswith("Keywords") and ", " in value:
             flag = "SPACE AFTER COMMA"
         ok &= flag == "OK"
         print(f"[{title}] {field}: {n}/{limit} {flag}")

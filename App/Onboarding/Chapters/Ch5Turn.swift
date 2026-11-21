@@ -27,22 +27,26 @@ struct TurnIntroView: View {
     }
 }
 
-/// 5.2 Reality check: "At this rate, you'll spend X years of your life scrolling."
+/// 5.2 Reality check: "At this rate, you'll spend X years of your life scrolling." The number counts up
+/// (CountingText) and the comparison bar grows with it on the same curve.
 struct RealityCheckView: View {
     let onContinue: () -> Void
     @Environment(AppModel.self) private var model
+    @State private var count = CountUpState()
 
     var body: some View {
         let years = model.profile.yearsOnPhone
+        let yearsAhead = 80 - 29.5
         OnboardingPage {
             VStack(spacing: 14) {
-                MascotSlot(expression: .sad, size: 190)
-                    .padding(.top, 10)
+                MascotSlot(expression: .sad, size: 170)
+                    .padding(.top, 6)
                 Text("At this rate, you'll spend")
                     .appFont(24, .bold, design: .rounded)
                     .foregroundStyle(Color.textPrimary)
                     .staggeredAppear(1)
-                CountUpNumber(target: years, fractionDigits: 1, delay: 0.5)
+                CountingText(value: years * count.progress, final: years, format: CountingText.decimal(1),
+                             landed: count.landed)
                     .appFont(76, .black, design: .rounded)
                     .foregroundStyle(Color(hex: 0xFF3B30))
                     .staggeredAppear(2)
@@ -50,11 +54,18 @@ struct RealityCheckView: View {
                     .appFont(24, .bold, design: .rounded)
                     .foregroundStyle(Color.textPrimary)
                     .staggeredAppear(3)
+                VStack(spacing: 10) {
+                    ComparisonBar(title: "Your years until 80", fraction: 1, color: Color.textSecondary.opacity(0.3))
+                    ComparisonBar(title: "Spent scrolling", fraction: min(1, years / yearsAhead) * count.progress,
+                                  color: Color(hex: 0xFF3B30))
+                }
+                .padding(.top, 8)
+                .staggeredAppear(4)
                 Text("Based on your daily scrolling time, until age 80.")
                     .appFont(14)
                     .foregroundStyle(Color.textSecondary)
-                    .padding(.top, 6)
-                    .staggeredAppear(4)
+                    .padding(.top, 4)
+                    .staggeredAppear(5)
             }
             .multilineTextAlignment(.center)
             .accessibilityElement(children: .combine)
@@ -62,25 +73,30 @@ struct RealityCheckView: View {
             ChunkyButton(title: "Continue", action: onContinue)
                 .accessibilityIdentifier("onboarding.continue")
         }
+        .countUp($count, after: CountUpState.onboardingEntrance, feedback: .impact(weight: .heavy))
     }
 }
 
-/// 5.3 "With QuizLock, you could get back Y years." (Y = 50% of X), with light confetti.
+/// 5.3 "With QuizLock, you could get back Y years." (Y = 50% of X). Counts up in coral, the bar grows in
+/// sync, and light confetti lands with the number.
 struct GetBackView: View {
     let onContinue: () -> Void
     @Environment(AppModel.self) private var model
-    @State private var celebrate = false
+    @State private var count = CountUpState()
 
     var body: some View {
+        let years = model.profile.yearsOnPhone
+        let back = model.profile.yearsBack
         OnboardingPage {
             VStack(spacing: 14) {
-                MascotSlot(expression: .celebrate, size: 200)
-                    .padding(.top, 10)
+                MascotSlot(expression: .celebrate, size: 180)
+                    .padding(.top, 6)
                 Text("With \(Brand.appName), you could get back")
                     .appFont(24, .bold, design: .rounded)
                     .foregroundStyle(Color.textPrimary)
                     .staggeredAppear(1)
-                CountUpNumber(target: model.profile.yearsBack, fractionDigits: 1, delay: 0.5)
+                CountingText(value: back * count.progress, final: back, format: CountingText.decimal(1),
+                             landed: count.landed)
                     .appFont(76, .black, design: .rounded)
                     .foregroundStyle(Color.brand)
                     .staggeredAppear(2)
@@ -88,6 +104,13 @@ struct GetBackView: View {
                     .appFont(24, .bold, design: .rounded)
                     .foregroundStyle(Color.textPrimary)
                     .staggeredAppear(3)
+                VStack(spacing: 10) {
+                    ComparisonBar(title: "Spent scrolling today", fraction: 1, color: Color.textSecondary.opacity(0.3))
+                    ComparisonBar(title: "Back with \(Brand.appName)",
+                                  fraction: (years > 0 ? min(1, back / years) : 0.5) * count.progress, color: Color.brand)
+                }
+                .padding(.top, 8)
+                .staggeredAppear(4)
             }
             .multilineTextAlignment(.center)
             .accessibilityElement(children: .combine)
@@ -95,11 +118,32 @@ struct GetBackView: View {
             ChunkyButton(title: "Continue", action: onContinue)
                 .accessibilityIdentifier("onboarding.continue")
         }
-        .confetti(celebrate, origin: UnitPoint(x: 0.5, y: 0.3))
-        .task {
-            try? await Task.sleep(nanoseconds: 1_600_000_000)
-            celebrate = true
+        .countUp($count, after: CountUpState.onboardingEntrance, feedback: .impact(weight: .heavy))
+        .confetti(count.landed, origin: UnitPoint(x: 0.5, y: 0.3), haptic: false)
+    }
+}
+
+/// A labelled horizontal bar whose width is `fraction` (animated by the caller's transaction).
+struct ComparisonBar: View {
+    let title: LocalizedStringKey
+    let fraction: Double
+    let color: Color
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(title)
+                .appFont(13, .semibold)
+                .foregroundStyle(Color.textSecondary)
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    Capsule().fill(Color.textSecondary.opacity(0.08))
+                    Capsule().fill(color).frame(width: max(0, geo.size.width * fraction))
+                }
+            }
+            .frame(height: 12)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityHidden(true)
     }
 }
 

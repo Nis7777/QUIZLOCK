@@ -115,8 +115,6 @@ Open with a transition screen: `mascot_clipboard` + "Let's set you up, {name}!" 
 
    This sets the puzzles per unlock and the difficulty.
 
-After each answer, `mascot_thinking` peeks in from the side of the screen for 0.8s with a tiny reaction bubble, e.g. "oof" after 6–8h, "same" after "Guilty", "great choice" after the puzzles. The reactions are short and varied, and never shown twice in a row.
-
 ## 5. Chapter 5: The turn (emotional payoff)
 1. **"Don't worry, {name}. That's about to change."** with `mascot_happy`.
 2. **Reality check:** "At this rate, you'll spend **X years** of your life scrolling." Use the formula from PROMPT_V2. The number counts up, `mascot_sad`.
@@ -163,4 +161,3 @@ After each answer, `mascot_thinking` peeks in from the side of the screen for 0.
 - Persist progress, so killing the app resumes at the same chapter and step.
 - No fake social proof anywhere (no invented ratings, user counts, testimonials or study claims).
 - Respect Reduce Motion (no typing animation delays; show messages instantly with fades).
-- Localize all copy to en-US and pt-PT (String Catalog). The chat tone in Portuguese should be casual and Gen-Z, using "tu".

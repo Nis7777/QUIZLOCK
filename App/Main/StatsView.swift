@@ -6,6 +6,8 @@ struct StatsView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
     @Environment(\.dismiss) private var dismiss
+    /// Every number on this screen counts up together (CountingText).
+    @State private var count = CountUpState()
 
     var body: some View {
         let stats = model.stats
@@ -29,6 +31,7 @@ struct StatsView: View {
         }
         .screenBackground()
         .onAppear { model.statsChanged() }
+        .countUp($count, after: 0.35)
     }
 
     private func streakCard(_ streak: Int) -> some View {
@@ -38,7 +41,9 @@ struct StatsView: View {
                 .foregroundStyle(LinearGradient(colors: [Color(hex: 0xFFB020), .brand], startPoint: .top, endPoint: .bottom))
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(streak)-day streak").appFont(28, .heavy, design: .rounded).foregroundStyle(palette.textPrimary)
+                CountingText(value: Double(streak) * count.progress, final: Double(streak),
+                             format: { String(localized: "\(Int($0.rounded()))-day streak") }, landed: count.landed)
+                    .appFont(28, .heavy, design: .rounded).foregroundStyle(palette.textPrimary)
                 Text("Solve a puzzle (or skip unlocks) every day to keep it going.")
                     .appFont(15)
                     .foregroundStyle(palette.textSecondary)
@@ -79,17 +84,20 @@ struct StatsView: View {
 
     private func numbers(_ stats: Stats) -> some View {
         LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
-            tile(value: "\(stats.totalUnlocksEarned)", label: "Unlocks earned", icon: "lock.open.fill")
-            tile(value: "\(stats.totalUnlocksSkipped)", label: "Unlocks skipped", icon: "hand.raised.fill")
-            tile(value: StatsStore.formatMinutes(stats.totalMinutesSaved), label: "Time saved", icon: "hourglass")
-            tile(value: StatsStore.formatMinutes(stats.minutesSavedThisWeek()), label: "Saved this week", icon: "calendar")
+            tile(value: stats.totalUnlocksEarned, format: CountingText.integer, label: "Unlocks earned", icon: "lock.open.fill")
+            tile(value: stats.totalUnlocksSkipped, format: CountingText.integer, label: "Unlocks skipped", icon: "hand.raised.fill")
+            tile(value: stats.totalMinutesSaved, format: Self.minutes, label: "Time saved", icon: "hourglass")
+            tile(value: stats.minutesSavedThisWeek(), format: Self.minutes, label: "Saved this week", icon: "calendar")
         }
     }
 
-    private func tile(value: String, label: LocalizedStringKey, icon: String) -> some View {
+    private static let minutes: (Double) -> String = { StatsStore.formatMinutes(Int($0.rounded())) }
+
+    private func tile(value: Int, format: @escaping (Double) -> String, label: LocalizedStringKey, icon: String) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Image(systemName: icon).appFont(18, .semibold).foregroundStyle(palette.accent).accessibilityHidden(true)
-            Text(value).appFont(26, .heavy, design: .rounded).foregroundStyle(palette.textPrimary)
+            CountingText(value: Double(value) * count.progress, final: Double(value), format: format, landed: count.landed)
+                .appFont(26, .heavy, design: .rounded).foregroundStyle(palette.textPrimary)
                 .minimumScaleFactor(0.6).lineLimit(1)
             Text(label).appFont(14).foregroundStyle(palette.textSecondary)
         }
@@ -107,7 +115,9 @@ struct StatsView: View {
                     Image(systemName: game.systemIcon).foregroundStyle(palette.accent).frame(width: 28).accessibilityHidden(true)
                     Text(LocalizedStringKey(game.displayName)).appFont(16).foregroundStyle(palette.textPrimary)
                     Spacer()
-                    Text("\(totals[game.rawValue] ?? 0)").appFont(17, .bold, design: .rounded).foregroundStyle(palette.textPrimary)
+                    let total = Double(totals[game.rawValue] ?? 0)
+                    CountingText(value: total * count.progress, final: total, format: CountingText.integer, landed: count.landed)
+                        .appFont(17, .bold, design: .rounded).foregroundStyle(palette.textPrimary)
                 }
                 .padding(.vertical, 10)
                 .accessibilityElement(children: .combine)

@@ -100,7 +100,6 @@ Remember the onboarding position, so killing the app mid-onboarding resumes wher
    - An evening streak reminder if no puzzle was solved today.
    - A weekly summary every Sunday ("You saved 2h 40m this week 🧩").
    - Max 1 per day, and each can be toggled in Settings.
-10. **Localization:** support **English and Portuguese (Portugal)** for all UI strings using a String Catalog. The Word game stays English-only; note that on its card in Portuguese ("Palavras em inglês").
 
 ---
 
@@ -119,7 +118,6 @@ Remember the onboarding position, so killing the app mid-onboarding resumes wher
 1. `metadata.md`:
    - App name (max 30 chars), subtitle (30), promotional text (170), description (4000) and keywords (100, comma-separated, no spaces after the commas, no competitor names).
    - Write it for "screen time blocker / app blocker / focus / brain training".
-   - Write an English and a Portuguese version.
 2. `privacy_labels.md`: what to answer in App Store Connect's App Privacy questionnaire. The expected answer is "Data Not Collected", but say what changes if the feedback email counts.
 3. `age_rating.md`: the suggested questionnaire answers.
 4. **Screenshots:**

@@ -89,7 +89,7 @@ For each subscription:
 - **Pricing and Availability:** price **Free**, all countries.
 
 ### ☐ 11. Add the store listing
-Copy from `AppStore/metadata.md`: name, subtitle, promotional text, description and keywords, in English and Portuguese. Upload the 6.9" screenshots from `AppStore/screenshots/`.
+Copy from `AppStore/metadata.md`: name, subtitle, promotional text, description and keywords (English). Upload the 6.9" screenshots from `AppStore/screenshots/`.
 
 ## PART 3: Once the Screen Time approval arrives
 

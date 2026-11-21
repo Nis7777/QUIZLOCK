@@ -267,3 +267,25 @@ enum TrialReminder {
         center.add(UNNotificationRequest(identifier: id, content: content, trigger: trigger))
     }
 }
+
+// MARK: - Counting prices
+
+/// A price as a number plus how to print any value on the way up to it ("$39.99/year").
+struct CountingPrice {
+    let value: Double
+    let format: (Double) -> String
+}
+
+extension Store {
+    /// For CountingText: the product's price and a formatter in its own currency (with "/year" etc.).
+    func countingPrice(_ product: Product?, perPeriod: Bool = true) -> CountingPrice? {
+        guard let product else { return nil }
+        let style = product.priceFormatStyle
+        let period = product.subscription?.subscriptionPeriod
+        return CountingPrice(value: NSDecimalNumber(decimal: product.price).doubleValue) { value in
+            let amount = Decimal(value).formatted(style)
+            guard perPeriod, let period else { return amount }
+            return Self.pricePerPeriod(amount, period: period)
+        }
+    }
+}

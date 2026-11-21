@@ -46,19 +46,11 @@ enum OnboardingStep: String, CaseIterable {
     }
 }
 
-/// A short reaction from Lockie peeking in from the side (question chapter).
-struct PeekReaction: Equatable {
-    let id = UUID()
-    let text: String
-}
-
 @Observable
 @MainActor
 final class OnboardingModel {
     var step: OnboardingStep = .hero
     var forward = true
-    var peek: PeekReaction?
-    @ObservationIgnored private var lastPeekText: String?
     @ObservationIgnored var reduceMotion = false
     @ObservationIgnored var onStepChange: (OnboardingStep) -> Void = { _ in }
 
@@ -84,25 +76,10 @@ final class OnboardingModel {
         guard i >= 0, i < step.index else { return }
         go(OnboardingStep.allCases[i])
     }
-
-    /// Lockie peeks in for 0.8s with a tiny reaction (never the same text twice in a row).
-    func react(_ options: [String]) {
-        let fresh = options.filter { $0 != lastPeekText }
-        guard let text = (fresh.isEmpty ? options : fresh).randomElement() else { return }
-        lastPeekText = text
-        let reaction = PeekReaction(text: text)
-        withAnimation(Motion.respecting(reduceMotion, Motion.bouncy)) { peek = reaction }
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 1_100_000_000)
-            if peek == reaction {
-                withAnimation(Motion.respecting(reduceMotion, Motion.smooth)) { peek = nil }
-            }
-        }
-    }
 }
 
-/// Holds the back button and progress bar (they don't re-render between steps), the shared Lockie,
-/// and the peek reactions. Only the content area changes, with a 40pt slide + fade.
+/// Holds the back button and progress bar (they don't re-render between steps) and the shared Lockie.
+/// Only the content area changes, with a 40pt slide + fade.
 struct OnboardingFlowView: View {
     @Environment(AppModel.self) private var model
     @State private var flow = OnboardingModel()
@@ -122,7 +99,6 @@ struct OnboardingFlowView: View {
                 if !flow.step.isFullBleed { header }
             }
             .modifier(SharedMascotOverlay())
-            peekOverlay
         }
         .environment(\.palette, .classic)
         .environment(\.colorScheme, .light)
@@ -161,33 +137,6 @@ struct OnboardingFlowView: View {
         .padding(.horizontal, 12)
         .frame(height: 52)
         .background(Color.appBg.opacity(0.001))
-    }
-
-    // MARK: Peek reactions
-
-    @ViewBuilder
-    private var peekOverlay: some View {
-        if let peek = flow.peek {
-            HStack(alignment: .center, spacing: -6) {
-                Text(LocalizedStringKey(peek.text))
-                    .appFont(15, .bold)
-                    .foregroundStyle(Color.textPrimary)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(.white, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    .shadow(color: .black.opacity(0.1), radius: 8, y: 3)
-                LockieView(expression: .thinking, size: 96, breathing: false)
-                    .rotationEffect(.degrees(-12))
-                    .offset(x: 22)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
-            .padding(.bottom, 120)
-            .transition(.move(edge: .trailing).combined(with: .opacity))
-            .allowsHitTesting(false)
-            .id(peek.id)
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text(LocalizedStringKey(peek.text)))
-        }
     }
 
     // MARK: Transitions

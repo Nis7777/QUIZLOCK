@@ -211,9 +211,11 @@ struct AboutToView: View {
 struct SettingUpView: View {
     let onDone: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var progress: Double = 0
+    @State private var count = CountUpState()
     @State private var doneSteps = 0
 
+    /// The arc and the percentage share `count.progress`, so they move together (about 3s in total).
+    private static let duration = 3.0
     private let steps = ["Analyzing your answers", "Building your plan", "Locking in your puzzles"]
 
     var body: some View {
@@ -225,11 +227,15 @@ struct SettingUpView: View {
                     .stroke(Color.brandTint, style: StrokeStyle(lineWidth: 14, lineCap: .round))
                     .rotationEffect(.degrees(180))
                 Circle()
-                    .trim(from: 0, to: 0.5 * progress)
+                    .trim(from: 0, to: 0.5 * count.progress)
                     .stroke(Color.brand, style: StrokeStyle(lineWidth: 14, lineCap: .round))
                     .rotationEffect(.degrees(180))
-                MascotSlot(expression: .calm, size: 180)
-                    .offset(y: -20)
+                MascotSlot(expression: .calm, size: 160)
+                    .offset(y: -30)
+                CountingText(value: 100 * count.progress, final: 100, format: CountingText.percent, landed: count.landed)
+                    .appFont(22, .heavy, design: .rounded)
+                    .foregroundStyle(Color.brand)
+                    .offset(y: 66)
             }
             .frame(width: 270, height: 270)
             .padding(.bottom, -100)
@@ -259,14 +265,15 @@ struct SettingUpView: View {
         }
         .frame(maxWidth: .infinity)
         .sensoryFeedback(.impact(weight: .medium), trigger: doneSteps)
+        .countUp($count, duration: Self.duration, feedback: .success)
         .task {
-            let per = reduceMotion ? 0.4 : 1.0
+            // The steps tick off while the arc fills; the screen moves on once the count has landed.
+            let ticks: [Double] = reduceMotion ? [0.2, 0.2, 0.2] : [1.0, 1.0, 1.35]
             for i in 1...steps.count {
-                withAnimation(.easeInOut(duration: per)) { progress = Double(i) / Double(steps.count) }
-                try? await Task.sleep(nanoseconds: UInt64(per * 1_000_000_000))
+                try? await Task.sleep(nanoseconds: UInt64(ticks[i - 1] * 1_000_000_000))
                 withAnimation(Motion.bouncy) { doneSteps = i }
             }
-            try? await Task.sleep(nanoseconds: 400_000_000)
+            try? await Task.sleep(nanoseconds: 500_000_000)
             onDone()
         }
     }

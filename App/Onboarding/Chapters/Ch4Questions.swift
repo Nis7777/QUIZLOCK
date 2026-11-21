@@ -69,7 +69,6 @@ struct SourceQuestion: View {
                 ChoiceCard(title: source.label, symbol: source.symbol, selected: model.profile.source == source,
                            dimmed: model.profile.source != nil) {
                     model.updateProfile { $0.source = source }
-                    flow.react(source == .friend ? ["love that", "tell them thanks!"] : ["nice", "got it", "noted ✍️"])
                     autoAdvance { flow.go(.qHours) }
                 }
                 .staggeredAppear(i + 2)
@@ -91,13 +90,6 @@ struct HoursQuestion: View {
                 ChoiceCard(title: hours.label, symbol: "clock", selected: model.profile.scrollHours == hours,
                            dimmed: model.profile.scrollHours != nil) {
                     model.updateProfile { $0.scrollHours = hours }
-                    switch hours {
-                    case .under2: flow.react(["not bad!", "nice"])
-                    case .from2to4: flow.react(["classic", "relatable"])
-                    case .from4to6: flow.react(["hmm", "we can fix that"])
-                    case .from6to8: flow.react(["oof", "yikes"])
-                    case .over8: flow.react(["oof", "ok we got work to do"])
-                    }
                     autoAdvance { flow.go(.qApps) }
                 }
                 .staggeredAppear(i + 2)
@@ -118,11 +110,7 @@ struct AppsQuestion: View {
                      onContinue: { flow.go(.qFeelings) }) {
             ForEach(Array(UserProfile.Waster.allCases.enumerated()), id: \.element) { i, waster in
                 ChoiceCard(title: waster.label, symbol: waster.symbol, selected: picked.contains(waster), multi: true) {
-                    let adding = !picked.contains(waster)
                     model.updateProfile { $0.wasters = toggled($0.wasters, waster) }
-                    if adding {
-                        flow.react(waster == .shortVideos ? ["the worst one", "classic"] : ["same", "yep", "noted"])
-                    }
                 }
                 .staggeredAppear(i + 2)
             }
@@ -142,15 +130,7 @@ struct FeelingsQuestion: View {
                      onContinue: { flow.go(.qWants) }) {
             ForEach(Array(UserProfile.Feeling.allCases.enumerated()), id: \.element) { i, feeling in
                 ChoiceCard(title: feeling.label, emoji: feeling.emoji, selected: picked.contains(feeling), multi: true) {
-                    let adding = !picked.contains(feeling)
                     model.updateProfile { $0.feelings = toggled($0.feelings, feeling) }
-                    guard adding else { return }
-                    switch feeling {
-                    case .guilty: flow.react(["same", "been there"])
-                    case .fine: flow.react(["love that for you", "lucky!"])
-                    case .wasting: flow.react(["not anymore", "we'll fix it"])
-                    default: flow.react(["same", "i get it", "felt that"])
-                    }
                 }
                 .staggeredAppear(i + 2)
             }
@@ -173,9 +153,7 @@ struct WantsQuestion: View {
                     .staggeredAppear(a * 4 + 2)
                 ForEach(Array(UserProfile.Want.allCases.filter { $0.area == area }.enumerated()), id: \.element) { i, want in
                     ChoiceCard(title: want.label, emoji: want.emoji, selected: picked.contains(want), multi: true) {
-                        let adding = !picked.contains(want)
                         model.updateProfile { $0.wants = toggled($0.wants, want) }
-                        if adding { flow.react(["good one", "yes!", "love it", "great pick"]) }
                     }
                     .staggeredAppear(a * 4 + i + 3)
                 }
@@ -202,7 +180,6 @@ struct PuzzlesQuestion: View {
     var body: some View {
         let enabled = model.settings.enabledGames
         QuestionPage(title: "Which puzzles sound fun?", continueEnabled: !enabled.isEmpty, onContinue: {
-            flow.react(["great choice", "nice mix", "your brain says thanks"])
             flow.go(.qChallenge)
         }) {
             ForEach(Array(GameID.allCases.enumerated()), id: \.element) { i, game in
@@ -228,12 +205,6 @@ struct ChallengeQuestion: View {
             ForEach(Array(UserProfile.Challenge.allCases.enumerated()), id: \.element) { i, challenge in
                 ChoiceCard(title: challenge.label, emoji: challenge.emoji, selected: current == challenge, dimmed: true) {
                     model.applyChallenge(challenge)
-                    switch challenge {
-                    case .chill: flow.react(["easy does it", "chill it is"])
-                    case .balanced: flow.react(["smart pick", "perfect balance"])
-                    case .tough: flow.react(["respect 💪", "let's go"])
-                    case .monk: flow.react(["whoa. respect", "monk mode 🧘"])
-                    }
                     autoAdvance { flow.go(.turnIntro) }
                 }
                 .staggeredAppear(i + 2)

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Coral / yellow / green / purple rounded confetti bursting up and falling with gravity (max 1.2s),
+/// Coral / yellow / green / purple rounded confetti bursting up and falling with gravity (1.2s),
 /// drawn in a Canvas (`drawingGroup`). Nothing is drawn when Reduce Motion is on.
 struct ConfettiView: View {
     var count = 70
@@ -13,7 +13,7 @@ struct ConfettiView: View {
         let angle: Double, speed: Double, spin: Double, size: Double, color: Color, round: Bool, delay: Double
     }
 
-    private static let lifetime: Double = 1.2
+    private static let duration: Double = 1.2
 
     @State private var pieces: [Piece] = {
         let colors: [Color] = [.brand, Color(hex: 0xFFC83D), Color(hex: 0x34C759), Color(hex: 0xAF52DE)]
@@ -31,7 +31,7 @@ struct ConfettiView: View {
             TimelineView(.animation) { timeline in
                 Canvas { context, size in
                     let t = timeline.date.timeIntervalSince(start)
-                    guard t < Self.lifetime + 0.1 else { return }
+                    guard t < Self.duration + 0.1 else { return }
                     let ox = origin.x * size.width, oy = origin.y * size.height
                     let gravity = 1500.0
                     for p in pieces.prefix(count) {
@@ -42,7 +42,7 @@ struct ConfettiView: View {
                         var ctx = context
                         ctx.translateBy(x: x, y: y)
                         ctx.rotate(by: .radians(lt * p.spin))
-                        ctx.opacity = max(0, min(1, (Self.lifetime - lt) / 0.3))
+                        ctx.opacity = max(0, min(1, (Self.duration - lt) / 0.3))
                         let rect = CGRect(x: -p.size / 2, y: -p.size / 2, width: p.size, height: p.size * (p.round ? 1 : 0.55))
                         let path = p.round ? Path(ellipseIn: rect) : Path(roundedRect: rect, cornerRadius: 2)
                         ctx.fill(path, with: .color(p.color))
@@ -59,10 +59,10 @@ struct ConfettiView: View {
 
 extension View {
     /// Overlays a one-shot confetti burst (+ a success haptic) while `isActive` is true.
-    func confetti(_ isActive: Bool, origin: UnitPoint = UnitPoint(x: 0.5, y: 0.35)) -> some View {
+    func confetti(_ isActive: Bool, origin: UnitPoint = UnitPoint(x: 0.5, y: 0.35), haptic: Bool = true) -> some View {
         overlay {
             if isActive { ConfettiView(origin: origin).ignoresSafeArea() }
         }
-        .sensoryFeedback(.success, trigger: isActive) { _, now in now }
+        .sensoryFeedback(.success, trigger: isActive) { _, now in haptic && now }
     }
 }

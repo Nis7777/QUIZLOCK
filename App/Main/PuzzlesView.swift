@@ -121,9 +121,7 @@ extension GameID {
         case .sudoku: return String(localized: "Endless · Unique solutions")
         case .math: return String(localized: "Endless · Type your answer")
         case .word:
-            // The Word game uses English words; say so in Portuguese.
-            let base = String(localized: "6 tries · Real words only")
-            return Bundle.main.preferredLocalizations.first?.hasPrefix("pt") == true ? base + " · Palavras em inglês" : base
+            return String(localized: "6 tries · Real words only")
         }
     }
 }

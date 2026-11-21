@@ -89,6 +89,7 @@
 		73EA0FA3F4B1638FDC560557 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B1D4BC2599FE30394A90BA /* UserNotifications.framework */; };
 		7405B69048D6DCF520F3B252 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7047D3F6F3B40BAD2AF47E /* FeedbackView.swift */; };
 		7634F663C0C61D009D8F52C6 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD92103B62EBFED5226E08F /* Brand.swift */; };
+		76D2F61CB43E1A71A1940328 /* CountingText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FBCC1EB51DC6153AE4B535 /* CountingText.swift */; };
 		79AB7FD14E4E839384A75BCE /* PuzzleChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A24B6B3CA93333F6FD734E8 /* PuzzleChrome.swift */; };
 		79D0C4147E6CA04103AFA5D1 /* UnlockTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC10B2B83AC089A2E580D0A /* UnlockTimeView.swift */; };
 		79F92722699F2E7CE7F834A0 /* Ch7Commitment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E83CCA005C78688CA2D3A8D /* Ch7Commitment.swift */; };
@@ -318,6 +319,7 @@
 		4A24B6B3CA93333F6FD734E8 /* PuzzleChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleChrome.swift; sourceTree = "<group>"; };
 		4EC01B2690BF4ACCA7438A0A /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		57C4BB08E8A994D45B06DD49 /* ChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessEngine.swift; sourceTree = "<group>"; };
+		57FBCC1EB51DC6153AE4B535 /* CountingText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingText.swift; sourceTree = "<group>"; };
 		5E83CCA005C78688CA2D3A8D /* Ch7Commitment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ch7Commitment.swift; sourceTree = "<group>"; };
 		603620FB2FC2A4B7CEFF4C89 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		61E46088D362ACE9547BF38A /* WelcomeBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeBackView.swift; sourceTree = "<group>"; };
@@ -544,6 +546,7 @@
 				1A9A2EA611A66B8D8D92BD57 /* ChunkyButton.swift */,
 				F33DB2CC93991F88E8C469D7 /* Components.swift */,
 				67CD60094F80C1855F95D99B /* Confetti.swift */,
+				57FBCC1EB51DC6153AE4B535 /* CountingText.swift */,
 				F9254E57C470E04619BF0ED9 /* Icons.swift */,
 				2D527F8AAAE4C2D97E1F54AF /* Mascot.swift */,
 				1D64DD5FE513C7C9085F5401 /* Motion.swift */,
@@ -1025,7 +1028,6 @@
 			knownRegions = (
 				Base,
 				en,
-				"pt-PT",
 			);
 			mainGroup = CD158353536E90323A7F7CE6;
 			projectDirPath = "";
@@ -1140,6 +1142,7 @@
 				BD0D31A660F2E558EBFB1744 /* CloudSync.swift in Sources */,
 				AB6393FC2F021D210DBD4DC2 /* Components.swift in Sources */,
 				EA60488277A10F4E26579858 /* Confetti.swift in Sources */,
+				76D2F61CB43E1A71A1940328 /* CountingText.swift in Sources */,
 				F86CF9AC3891A6149D54B1A9 /* DailyPuzzleView.swift in Sources */,
 				EB1A0F33EEA58FF62CB119DF /* DemoData.swift in Sources */,
 				4D284CB50C349BB6D011D353 /* DurationViews.swift in Sources */,
