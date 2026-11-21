@@ -139,7 +139,7 @@ After each answer, `mascot_thinking` peeks in from the side of the screen for 0.
    - NO fake reviews, NO fake rating numbers.
 
 ## 7. Chapter 7: Commitment (cinematic)
-1. **"Are you ready to take your time back, {name}?"** with `mascot_thinking`. At the bottom: "Hold your finger on the button to commit" and a coral circular fingerprint button (SF Symbol `touchid`).
+1. **"Are you ready to take your time back, {name}?"** with `mascot_thinking`. At the bottom: "Hold your finger on the button to commit" and a coral circular circular button with a tap icon (SF Symbol `hand.tap.fill`; never use the Touch ID / Face ID glyphs for non-biometric actions).
    - **While holding:** the screen fills with a coral circle expanding from the button (a radial reveal tied to hold progress over 1.6s), with continuous haptics ramping up and the mascot growing slightly.
    - **Release early:** it springs back.
    - **Complete:** a heavy haptic, and the whole screen becomes solid coral.

@@ -57,7 +57,7 @@ struct CommitView: View {
     }
 
     private var fingerprint: some View {
-        Image(systemName: "touchid")
+        Image(systemName: "hand.tap.fill")
             .font(.system(size: 46, weight: .semibold))
             .foregroundStyle(.white)
             .frame(width: 96, height: 96)
