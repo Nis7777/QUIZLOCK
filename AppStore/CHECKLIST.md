@@ -15,6 +15,9 @@ role in App Store Connect you can do the rest.
   - (The widget, `com.dinismagina.quizlock.Widgets`, doesn't use Family Controls.)
 - [ ] Register all 6 bundle IDs (automatic signing in Xcode usually does this).
 - [ ] Register the App Group `group.com.dinismagina.quizlock` and enable it on all 6 App IDs.
+- [ ] On the main App ID `com.dinismagina.quizlock` **only**, enable **iCloud** (Key-value storage; no container
+      needed). The app's entitlement `com.apple.developer.ubiquity-kvstore-identifier` is already in `project.yml`.
+      In Xcode, **Signing & Capabilities** on the App target should then show **iCloud → Key-value storage**.
 - [ ] In Xcode, set the Team on all 6 targets (or put the Team ID in `DEVELOPMENT_TEAM` in `project.yml`).
 
 ## 2. Agreements
@@ -32,17 +35,33 @@ role in App Store Connect you can do the rest.
 - [ ] Privacy Policy URL: https://nis7777.github.io/lockfeeddupe/privacy.html
 - [ ] Terms of Use: put https://nis7777.github.io/lockfeeddupe/terms.html in the description (already there).
 
-## 4. In-app purchases (App → Monetization → In-App Purchases)
+## 4. Subscriptions (App → Monetization → Subscriptions)
 
-| Reference name | Product ID | Type | Price |
-|---|---|---|---|
-| Lifetime Access | `com.dinismagina.quizlock.lifetime` | Non-Consumable | $29.99 |
-| Lifetime Access Discount | `com.dinismagina.quizlock.lifetime.discount` | Non-Consumable | $4.99 |
+No accounts: the subscription is tied to the Apple ID, and progress syncs through iCloud.
 
-- [ ] Add a display name and description in English and Portuguese for each.
-- [ ] Upload a **review screenshot** of the paywall for each (Screen A for the standard one, the
-      "Launch offer" screen for the discount).
-- [ ] Add both to the app version under **In-App Purchases and Subscriptions** before submitting.
+- [ ] Create the subscription group **QuizLock Pro** (group display name "QuizLock Pro" in English and Portuguese).
+- [ ] Create the 3 auto-renewable subscriptions in that group:
+
+| Reference name | Product ID | Duration | Price (USA) | Introductory offer |
+|---|---|---|---|---|
+| Pro Yearly | `com.dinismagina.quizlock.pro.yearly` | 1 Year | $39.99 | **Free trial · 1 Week · New subscribers** |
+| Pro Monthly | `com.dinismagina.quizlock.pro.monthly` | 1 Month | $9.99 | None |
+| Pro Yearly Offer | `com.dinismagina.quizlock.pro.yearly.offer` | 1 Year | $29.99 | None |
+
+- [ ] Prices: set the USA price, let Apple fill in the other countries. The app always shows the StoreKit price, and
+      computes "Save 67%" (yearly vs 12 × monthly) and "25% off" (offer vs yearly) from the real prices.
+- [ ] Display name + description for each, in English and Portuguese (e.g. "QuizLock Pro Yearly" / "Unlimited
+      unlocks, all 4 puzzle games and the daily puzzle").
+- [ ] **Review screenshot** for each: the main paywall for Yearly and Monthly, the discount screen for the Offer.
+- [ ] Only on Pro Yearly: **Introductory Offers → (+)** → **Free**, **1 Week**, **New subscribers**, all countries.
+- [ ] Subscription levels: Yearly and Yearly Offer on the same level, Monthly below them.
+- [ ] The first subscriptions must be submitted **with the app version** (step 8).
+- [ ] Local testing needs no App Store Connect: `Products.storekit` (set on the App scheme's Run action) has the
+      same 3 products, the group and the 7-day free trial. In Xcode use **Debug → StoreKit → Manage Transactions**
+      to refund, expire or reset trial eligibility.
+- [ ] Sandbox testing on a device: App Store Connect → **Users and Access → Sandbox → Test Accounts (+)**, then on the
+      iPhone **Settings → Developer → Sandbox Apple Account**. Sandbox renewals are accelerated (1 year ≈ 1 hour,
+      1 week trial ≈ 3 minutes), so the "trial ends in 2 days" reminder may be skipped there.
 
 ## 5. Privacy and age rating
 
@@ -58,12 +77,19 @@ role in App Store Connect you can do the rest.
 ## 7. TestFlight first
 
 - [ ] Add yourself as an internal tester and install the build.
-- [ ] Test on a real iPhone: onboarding, Screen Time permission, block screen, START PUZZLE → notification
-      → puzzle → unlock → automatic re-lock, both purchases (sandbox), Restore Purchases, the lock
+- [ ] Test on a real iPhone: onboarding (tap-only, paywall right after Turn On Locks, closable, discount screen
+      once), Screen Time permission, block screen, START PUZZLE → notification → puzzle → unlock → automatic
+      re-lock, the "You've used your 5 free unlocks" card after 5 unlocks, the 7-day trial, monthly and the
+      offer (sandbox), Restore Purchases, Settings → QuizLock Pro (Active · renews…, Manage subscription),
+      iCloud restore on a second device ("Welcome back!"), Settings → Data → Reset all data, the lock
       schedule, strict mode, widgets, and the Portuguese language (Settings → QuizLock → Language).
 
 ## 8. Submit
 
-- [ ] Screenshots: the 6.9" set from `AppStore/screenshots/` (run the Screenshots scheme first).
+- [ ] Screenshots: the 6.9" set from `AppStore/screenshots/` (run the Screenshots scheme first; it now also
+      captures `07-pick-puzzles`). None of them may show the old pricing.
+- [ ] Under **In-App Purchases and Subscriptions** on the version page, add all 3 subscriptions.
+- [ ] Description ends with the Terms of Use (EULA) and Privacy Policy links (already in `metadata.md`), and the
+      live pages at those URLs show the subscription terms (publish `docs/terms.html` and `docs/privacy.html`).
 - [ ] App Review notes: paste `review_notes.md`.
 - [ ] Submit for review.

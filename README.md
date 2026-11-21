@@ -15,8 +15,8 @@ Swift + SwiftUI, iOS 17+, iPhone only, portrait. No third-party packages.
 | `Shared/` | Compiled into every target. `Brand.swift` holds every brand/config value. `Engine/` holds the pure-Swift game engines; `ScreenTime/` holds models, the App Group store and the shield logic |
 | `Extensions/` | `ShieldConfigurationExt` (block screen), `ShieldActionExt` (START PUZZLE / NOT NOW), `DeviceActivityMonitorExt` (re-locks when an unlock ends, lock schedules), `ScreenTimeReportExt` (on-device "Today" screen time), `QuizLockWidgets` (Home/Lock Screen streak widgets) |
 | `Resources/` | `wordle_allowed.txt`, `wordle_answers.txt`, `chess_puzzles.json` (bundled with the app) |
-| `Tests/` | Unit tests for the 4 engines, streak stats and lock schedules |
-| `UITests/` | `ScreenshotTests`: App Store screenshots (Screenshots scheme) |
+| `Tests/` | Unit tests for the 4 engines, streak stats (incl. the iCloud merge) and lock schedules |
+| `UITests/` | `ScreenshotTests`: App Store screenshots. `OnboardingUITests`: taps a fresh install through onboarding to the closable paywall (both in the Screenshots scheme) |
 | `AppStore/` | Metadata (EN + PT), privacy labels, age rating, review notes, screenshot captions, submission checklist |
 | `docs/` | Terms and Privacy pages, served by GitHub Pages |
 | `Scripts/` | `build_chess_puzzles.py`, `import_art.py`, `import_downloads.sh`, `build_strings.py` (EN + PT String Catalog), `check_metadata.py`, `test_engines_linux.sh` |

@@ -423,7 +423,7 @@ private struct ExitOfferScreen: View {
                                 .foregroundStyle(Color.brandDeep)
                                 .multilineTextAlignment(.center)
                                 .accessibilityIdentifier("paywall.offer.title")
-                            Text("A one-time offer, just for now.")
+                            Text("This offer is only shown once.")
                                 .appFont(17)
                                 .foregroundStyle(Color.textSecondary)
                             VStack(spacing: 6) {
@@ -448,7 +448,7 @@ private struct ExitOfferScreen: View {
                                 RoundedRectangle(cornerRadius: 22, style: .continuous)
                                     .strokeBorder(Color.brand.opacity(0.4), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
                             )
-                            Text("Billed \(offerPrice), starting today. No free trial with this offer.")
+                            Text("Billed \(store.yearlyOffer?.displayPrice ?? offerPrice) today, then \(offerPrice). No free trial with this offer.")
                                 .appFont(15)
                                 .foregroundStyle(Color.textSecondary)
                                 .multilineTextAlignment(.center)

@@ -483,9 +483,9 @@ PT = {
     "Day %lld: you're billed %@, cancel anytime before": "Dia %1$lld: é-te cobrado %2$@, cancela quando quiseres antes disso",
     "Auto-renews. Cancel anytime in Settings.": "Renova automaticamente. Cancela quando quiseres nas Definições.",
     "%lld%% off your first year": "%lld%% de desconto no primeiro ano",
-    "A one-time offer, just for now.": "Uma oferta única, só agora.",
+    "This offer is only shown once.": "Esta oferta só aparece uma vez.",
     "Regular price %@": "Preço normal %@",
-    "Billed %@, starting today. No free trial with this offer.": "Cobrado %@ a partir de hoje. Esta oferta não inclui teste grátis.",
+    "Billed %@ today, then %@. No free trial with this offer.": "Cobrado %1$@ hoje, depois %2$@. Esta oferta não inclui teste grátis.",
     "Claim my discount": "Quero o desconto",
     "Your free trial ends in 2 days": "O teu teste grátis termina daqui a 2 dias",
     "You won't be charged if you cancel before then in Settings → Apple ID → Subscriptions.":

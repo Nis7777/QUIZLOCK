@@ -40,8 +40,16 @@ BUILD A BETTER HABIT
 PRIVATE BY DESIGN
 QuizLock has no accounts, no ads and no tracking. Your Screen Time data stays on your iPhone: Apple shows it to you inside the app, and QuizLock itself can't read or send it.
 
+NEW PHONE? NO PROBLEM
+Your progress syncs through your own iCloud, so your streak and stats come with you to a new iPhone. Use Restore Purchases to bring your subscription along.
+
 PRICING
-Your first 5 unlocks are free. After that, Lifetime Access is a one-time purchase: unlimited puzzle-earned unlocks and puzzle practice. No subscription.
+QuizLock is free to download and your first 5 unlocks are free. After that, unlimited unlocks and standalone puzzle practice need QuizLock Pro, an optional auto-renewable subscription:
+• QuizLock Pro Yearly: 1 year, with a 7-day free trial for new subscribers
+• QuizLock Pro Monthly: 1 month
+Prices are shown in the app before you subscribe and may vary by country.
+
+Payment is charged to your Apple ID when you confirm the purchase, or when the free trial ends. The subscription renews automatically unless you turn off auto-renew at least 24 hours before the end of the current period; renewal is charged within 24 hours before the period ends. Manage or cancel anytime in Settings → your name → Subscriptions. If you cancel during the free trial, you won't be charged.
 
 Chess puzzles from the Lichess puzzle database (CC0).
 Terms of Use: https://nis7777.github.io/lockfeeddupe/terms.html
@@ -85,8 +93,16 @@ CRIA UM HÁBITO MELHOR
 PRIVADA DE RAIZ
 Sem contas, sem anúncios e sem rastreio. Os dados do Tempo de ecrã ficam no teu iPhone: a Apple mostra-tos dentro da app e a própria QuizLock não os consegue ler nem enviar.
 
+TELEMÓVEL NOVO? SEM PROBLEMA
+O teu progresso sincroniza através do teu próprio iCloud, por isso a sequência e as estatísticas vêm contigo para um iPhone novo. Usa Restaurar compras para recuperares a tua subscrição.
+
 PREÇO
-Os primeiros 5 desbloqueios são grátis. Depois disso, o Acesso vitalício é uma compra única: desbloqueios ilimitados ganhos com puzzles e treino de puzzles. Sem subscrição.
+A QuizLock é grátis para descarregar e os primeiros 5 desbloqueios são grátis. Depois disso, desbloqueios ilimitados e o treino de puzzles requerem o QuizLock Pro, uma subscrição opcional com renovação automática:
+• QuizLock Pro Anual: 1 ano, com 7 dias de teste grátis para novos subscritores
+• QuizLock Pro Mensal: 1 mês
+Os preços são mostrados na app antes de subscreveres e podem variar consoante o país.
+
+O pagamento é cobrado na tua conta Apple quando confirmas a compra ou quando termina o teste grátis. A subscrição renova-se automaticamente, a menos que desatives a renovação automática pelo menos 24 horas antes do fim do período atual; a renovação é cobrada nas 24 horas anteriores ao fim do período. Gere ou cancela quando quiseres em Definições → o teu nome → Subscrições. Se cancelares durante o teste grátis, não pagas nada.
 
 Puzzles de xadrez da base de dados de puzzles do Lichess (CC0).
 Termos de Utilização: https://nis7777.github.io/lockfeeddupe/terms.html

@@ -631,16 +631,6 @@
         }
       }
     },
-    "A one-time offer, just for now.": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Uma oferta única, só agora."
-          }
-        }
-      }
-    },
     "A whole month of choosing yourself over the feed. Incredible.": {
       "localizations": {
         "pt-PT": {
@@ -941,12 +931,12 @@
         }
       }
     },
-    "Billed %@, starting today. No free trial with this offer.": {
+    "Billed %@ today, then %@. No free trial with this offer.": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cobrado %@ a partir de hoje. Esta oferta não inclui teste grátis."
+            "value": "Cobrado %1$@ hoje, depois %2$@. Esta oferta não inclui teste grátis."
           }
         }
       }
@@ -3907,6 +3897,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esta app"
+          }
+        }
+      }
+    },
+    "This offer is only shown once.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta oferta só aparece uma vez."
           }
         }
       }

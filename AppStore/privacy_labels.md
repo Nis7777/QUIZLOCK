@@ -10,8 +10,9 @@ Why that's accurate:
 |---|---|---|
 | Screen Time selections (opaque Apple tokens), unlock times, lock schedule | Stays on the device (App Group) | No |
 | Screen Time usage ("Today" card) | Rendered by Apple's DeviceActivityReport extension on-device; the app can't read it | No |
-| Puzzle progress, stats, streaks, onboarding answers (name, age range, goals) | Stays on the device | No |
-| Purchases | Handled by Apple (StoreKit); the app only learns whether lifetime access is owned | No |
+| Puzzle progress, stats, streaks, onboarding answers (name, age range, goals) | Stays on the device (and the user's own iCloud, below) | No |
+| Purchases (QuizLock Pro subscription) | Handled by Apple (StoreKit); the app only learns whether a subscription is active and when it renews | No |
+| Progress synced with iCloud (streaks, stats, settings, onboarding answers) | The user's own iCloud key-value storage, managed by Apple; the developer can't access it | No |
 | Notifications | Local only, scheduled on the device | No |
 | Analytics, ads, tracking SDKs | None in the app | No |
 
