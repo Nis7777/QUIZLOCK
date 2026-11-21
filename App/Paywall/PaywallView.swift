@@ -189,6 +189,14 @@ private struct PlansScreen: View {
                         .foregroundStyle(palette.textPrimary)
                         .multilineTextAlignment(.center)
                         .accessibilityIdentifier("paywall.title")
+                    if model.paywallReason == .onboarding {
+                        // The free-unlocks info lives here only (not in onboarding).
+                        Text("Your first \(Brand.freeUnlocks) app unlocks are free. After that, unlimited unlocks and puzzle practice need \(Brand.subscriptionGroupName), an optional subscription.")
+                            .appFont(15)
+                            .foregroundStyle(palette.textSecondary)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     if store.yearly != nil && store.monthly != nil {
                         plans
                     } else {

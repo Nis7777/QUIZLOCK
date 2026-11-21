@@ -8,6 +8,8 @@ import UIKit
 
 /// 6.1 "Let's lock your first apps" → Screen Time prompt → app picker → confirmation (icons pop in).
 struct ConnectScreenTimeStepView: View {
+    /// True when coming back from "Pick apps to lock": the picker opens straight away.
+    var openPicker = false
     let onContinue: () -> Void
     @Environment(AppModel.self) private var model
     @Environment(\.openURL) private var openURL
@@ -26,6 +28,11 @@ struct ConnectScreenTimeStepView: View {
         }
         .animation(Motion.smooth, value: confirmed)
         .appPicker(isPresented: $showPicker)
+        .task {
+            guard openPicker else { return }
+            try? await Task.sleep(nanoseconds: 450_000_000) // let the slide-in finish
+            await connect()
+        }
         .onChange(of: showPicker) { _, open in
             // The picker was dismissed: show what they picked.
             if !open, !model.lockItems.isEmpty { confirmed = true }

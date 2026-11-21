@@ -51,6 +51,8 @@ enum OnboardingStep: String, CaseIterable {
 final class OnboardingModel {
     var step: OnboardingStep = .hero
     var forward = true
+    /// Set by "Change apps" / "Pick apps to lock" so the app picker opens on arrival.
+    @ObservationIgnored var openPicker = false
     @ObservationIgnored var reduceMotion = false
     @ObservationIgnored var onStepChange: (OnboardingStep) -> Void = { _ in }
 
@@ -60,6 +62,7 @@ final class OnboardingModel {
     }
 
     func go(_ next: OnboardingStep) {
+        if next != .connectScreenTime { openPicker = false }
         forward = next.index >= step.index
         withAnimation(Motion.respecting(reduceMotion, Motion.smooth)) { step = next }
         onStepChange(next)
@@ -186,9 +189,12 @@ struct OnboardingFlowView: View {
         case .getBack: GetBackView(onContinue: next)
         case .projection: ProjectionView(onContinue: next)
         // 6. Permissions
-        case .connectScreenTime: ConnectScreenTimeStepView(onContinue: next)
+        case .connectScreenTime: ConnectScreenTimeStepView(openPicker: flow.openPicker, onContinue: next)
         case .reward:
-            RewardView(onChangeApps: { flow.go(.connectScreenTime) }) {
+            RewardView(onChangeApps: {
+                flow.openPicker = true
+                flow.go(.connectScreenTime)
+            }) {
                 model.turnOnLocksFromOnboarding()
                 next()
             }
