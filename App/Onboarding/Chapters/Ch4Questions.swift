@@ -31,12 +31,13 @@ struct SetupIntroView: View {
     }
 }
 
-/// Shared layout for a question: title, optional subtitle, staggered cards, optional Continue.
+/// Shared layout for a question: title, optional subtitle and staggered cards scrolling above a Continue
+/// button pinned at the bottom (inside the safe area), so no card is ever hidden behind it.
 private struct QuestionPage<Cards: View>: View {
     let title: String
     var subtitle: String?
-    /// Multi-select questions show Continue (enabled once something is picked).
-    var continueEnabled: Bool?
+    /// Continue is enabled once something is picked.
+    var continueEnabled: Bool
     var onContinue: () -> Void = {}
     @ViewBuilder var cards: () -> Cards
 
@@ -44,10 +45,8 @@ private struct QuestionPage<Cards: View>: View {
         OnboardingPage(title: title, subtitle: subtitle, centered: false) {
             VStack(spacing: 10) { cards() }
         } footer: {
-            if let continueEnabled {
-                ChunkyButton(title: "Continue", isEnabled: continueEnabled, action: onContinue)
-                    .accessibilityIdentifier("onboarding.continue")
-            }
+            ChunkyButton(title: "Continue", isEnabled: continueEnabled, action: onContinue)
+                .accessibilityIdentifier("onboarding.continue")
         }
     }
 }
@@ -64,10 +63,11 @@ struct SourceQuestion: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
-        QuestionPage(title: "Where did you hear about us?") {
+        QuestionPage(title: "Where did you hear about us?", continueEnabled: model.profile.source != nil,
+                     onContinue: { flow.go(.qHours) }) {
             ForEach(Array(UserProfile.Source.allCases.enumerated()), id: \.element) { i, source in
-                ChoiceCard(title: source.label, symbol: source.symbol, selected: model.profile.source == source,
-                           dimmed: model.profile.source != nil) {
+                ChoiceCard(title: source.label, subtitle: source.subtitle, symbol: source.symbol, logo: source.logo,
+                           selected: model.profile.source == source, dimmed: model.profile.source != nil) {
                     model.updateProfile { $0.source = source }
                     autoAdvance { flow.go(.qHours) }
                 }
@@ -85,10 +85,11 @@ struct HoursQuestion: View {
 
     var body: some View {
         QuestionPage(title: "How many hours do you spend scrolling each day?",
-                     subtitle: "Don't worry about the exact number, just a best guess.") {
+                     subtitle: "Don't worry about the exact number, just a best guess.",
+                     continueEnabled: model.profile.scrollHours != nil, onContinue: { flow.go(.qApps) }) {
             ForEach(Array(UserProfile.ScrollHours.allCases.enumerated()), id: \.element) { i, hours in
-                ChoiceCard(title: hours.label, symbol: "clock", selected: model.profile.scrollHours == hours,
-                           dimmed: model.profile.scrollHours != nil) {
+                ChoiceCard(title: hours.label, subtitle: hours.subtitle, symbol: hours.symbol,
+                           selected: model.profile.scrollHours == hours, dimmed: model.profile.scrollHours != nil) {
                     model.updateProfile { $0.scrollHours = hours }
                     autoAdvance { flow.go(.qApps) }
                 }
@@ -200,12 +201,15 @@ struct ChallengeQuestion: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
-        let current = model.profile.challenge ?? .balanced
-        QuestionPage(title: "How hard should unlocking be?") {
+        let current = model.profile.challenge
+        QuestionPage(title: "How hard should unlocking be?", continueEnabled: current != nil,
+                     onContinue: { flow.go(.turnIntro) }) {
             ForEach(Array(UserProfile.Challenge.allCases.enumerated()), id: \.element) { i, challenge in
-                ChoiceCard(title: challenge.label, emoji: challenge.emoji, selected: current == challenge, dimmed: true) {
+                ChoiceCard(title: challenge.title, subtitle: challenge.subtitle, symbol: challenge.symbol,
+                           badge: challenge == .balanced ? "Recommended" : nil,
+                           selected: current == challenge, dimmed: current != nil) {
+                    // No auto-advance here: they confirm with Continue.
                     model.applyChallenge(challenge)
-                    autoAdvance { flow.go(.turnIntro) }
                 }
                 .staggeredAppear(i + 2)
             }

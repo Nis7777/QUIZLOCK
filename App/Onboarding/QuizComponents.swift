@@ -32,13 +32,18 @@ struct QuizProgressBar: View {
     }
 }
 
-/// Answer card (single and multi select): white, radius 16, 1pt light border, emoji or SF Symbol on the
-/// left, title, and a radio on the right. Selected: 2pt coral border, peach fill, coral radio with a check
-/// (Motion.bouncy) and a selection haptic. Unselected cards dim slightly while another is selected.
+/// Answer card (single and multi select): white, radius 16, 1pt light border. On the left: a brand app icon,
+/// an SF Symbol in a coral-tinted rounded square, or an emoji. Then a bold title (with an optional coral
+/// pill such as "Recommended") over an optional grey subtitle, and the radio on the right.
+/// Selected: 2pt coral border, peach fill, coral radio with a check (Motion.bouncy) and a selection haptic.
 struct ChoiceCard: View {
     let title: String
+    var subtitle: String?
     var symbol: String?
     var emoji: String?
+    /// A BrandAppIcon name ("tiktok", "instagram"…).
+    var logo: String?
+    var badge: String?
     let selected: Bool
     var multi = false
     var dimmed = false
@@ -50,26 +55,38 @@ struct ChoiceCard: View {
             withAnimation(Motion.snappy) { action() }
         } label: {
             HStack(spacing: 14) {
-                if let emoji {
-                    Text(verbatim: emoji).appFont(24).frame(width: 32).accessibilityHidden(true)
-                } else if let symbol {
-                    Image(systemName: symbol)
-                        .appFont(20, .semibold)
-                        .foregroundStyle(Color.brand)
-                        .frame(width: 32)
-                        .accessibilityHidden(true)
+                leading
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 8) {
+                        Text(LocalizedStringKey(title))
+                            .appFont(17, .bold)
+                            .foregroundStyle(palette.textPrimary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
+                        if let badge {
+                            Text(LocalizedStringKey(badge))
+                                .appFont(11, .heavy)
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 3)
+                                .background(Color.brand, in: Capsule())
+                                .fixedSize()
+                        }
+                    }
+                    if let subtitle {
+                        Text(LocalizedStringKey(subtitle))
+                            .appFont(14)
+                            .foregroundStyle(palette.textSecondary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
+                    }
                 }
-                Text(LocalizedStringKey(title))
-                    .appFont(17, .semibold)
-                    .foregroundStyle(palette.textPrimary)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 8)
                 ChoiceRadio(selected: selected, square: multi)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 14)
             .padding(.vertical, 12)
-            .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
+            .frame(maxWidth: .infinity, minHeight: 64, alignment: .leading)
             .background(selected ? Color.brandTint : palette.card,
                         in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay(
@@ -84,6 +101,23 @@ struct ChoiceCard: View {
         .animation(Motion.snappy, value: selected)
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
         .accessibilityIdentifier("quiz.choice")
+    }
+
+    @ViewBuilder
+    private var leading: some View {
+        if let logo {
+            BrandAppIcon(name: logo, size: 40)
+                .accessibilityHidden(true)
+        } else if let symbol {
+            Image(systemName: symbol)
+                .appFont(18, .semibold)
+                .foregroundStyle(Color.brand)
+                .frame(width: 40, height: 40)
+                .background(Color.brandTint, in: RoundedRectangle(cornerRadius: 11, style: .continuous))
+                .accessibilityHidden(true)
+        } else if let emoji {
+            Text(verbatim: emoji).appFont(24).frame(width: 40).accessibilityHidden(true)
+        }
     }
 }
 

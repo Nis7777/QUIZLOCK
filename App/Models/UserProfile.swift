@@ -26,6 +26,26 @@ struct UserProfile: Codable, Equatable {
             case .other: return "ellipsis.circle"
             }
         }
+        /// Real app icon (BrandAppIcon) for the apps; Friend and Other keep their SF Symbols.
+        var logo: String? {
+            switch self {
+            case .tiktok: return "tiktok"
+            case .instagram: return "instagram"
+            case .youtube: return "youtube"
+            case .appStore: return "appstore"
+            case .friend, .other: return nil
+            }
+        }
+        var subtitle: String {
+            switch self {
+            case .tiktok: return "A video on my feed"
+            case .instagram: return "A post or a reel"
+            case .youtube: return "A video or a Short"
+            case .appStore: return "Found it while browsing"
+            case .friend: return "Someone told me about it"
+            case .other: return "Somewhere else"
+            }
+        }
     }
 
     enum ScrollHours: String, Codable, CaseIterable, Identifiable {
@@ -38,6 +58,24 @@ struct UserProfile: Codable, Equatable {
             case .from4to6: return "4–6h"
             case .from6to8: return "6–8h"
             case .over8: return "More than 8h"
+            }
+        }
+        var subtitle: String {
+            switch self {
+            case .under2: return "Pretty mindful already"
+            case .from2to4: return "About average"
+            case .from4to6: return "Most of my free time"
+            case .from6to8: return "A big part of my day"
+            case .over8: return "Basically all day"
+            }
+        }
+        var symbol: String {
+            switch self {
+            case .under2: return "sun.min.fill"
+            case .from2to4: return "clock.fill"
+            case .from4to6: return "hourglass"
+            case .from6to8: return "flame.fill"
+            case .over8: return "exclamationmark.triangle.fill"
             }
         }
         var hours: Double {
@@ -154,16 +192,32 @@ struct UserProfile: Codable, Equatable {
             switch self {
             case .chill: return "Chill: 1 easy puzzle"
             case .balanced: return "Balanced: 1 medium puzzle"
-            case .tough: return "Tough: 2 puzzles"
+            case .tough: return "Tough: 2 medium puzzles"
             case .monk: return "Monk mode: 3 hard puzzles"
             }
         }
-        var emoji: String {
+        var title: String {
             switch self {
-            case .chill: return "🌤️"
-            case .balanced: return "⚖️"
-            case .tough: return "💪"
-            case .monk: return "🧘"
+            case .chill: return "Chill"
+            case .balanced: return "Balanced"
+            case .tough: return "Tough"
+            case .monk: return "Monk mode"
+            }
+        }
+        var subtitle: String {
+            switch self {
+            case .chill: return "1 easy puzzle"
+            case .balanced: return "1 medium puzzle"
+            case .tough: return "2 medium puzzles"
+            case .monk: return "3 hard puzzles"
+            }
+        }
+        var symbol: String {
+            switch self {
+            case .chill: return "leaf.fill"
+            case .balanced: return "scale.3d"
+            case .tough: return "flame.fill"
+            case .monk: return "figure.mind.and.body"
             }
         }
         var puzzlesPerUnlock: Int {
