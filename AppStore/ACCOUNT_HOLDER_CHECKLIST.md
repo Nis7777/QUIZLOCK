@@ -1,6 +1,6 @@
 # 📱 App Store setup for the account holder
 
-*Every step needs the paid Apple Developer account login. Go in order and tick each box. Replace **[APP NAME]** with the final app name.*
+*Every step needs the paid Apple Developer account login. Go in order and tick each box.*
 
 ## PART 1: Do first (the slow approval starts here)
 
@@ -45,7 +45,7 @@ After registering each one, open it → next to **App Groups** click **Configure
 2. Submit **one request for each of the 5 IDs marked ✅** (rows 1–5; the widget doesn't need it).
 3. Paste this as the description:
 
-> [APP NAME] is a self-control app that helps people reduce compulsive scrolling. Users choose their own distracting apps using FamilyActivityPicker with individual authorization (.individual), and the app blocks them with ManagedSettings shields. To unlock an app for a short, user-chosen time, the user solves a quick puzzle (chess, Sudoku, math or word game). DeviceActivity re-applies the block when the time ends. All Screen Time data, app tokens and settings stay on the device. Nothing is sent to a server, there are no accounts and no tracking. It is for adults managing their own phone use, not for monitoring others.
+> QuizLock is a self-control app that helps people reduce compulsive scrolling. Users choose their own distracting apps using FamilyActivityPicker with individual authorization (.individual), and the app blocks them with ManagedSettings shields. To unlock an app for a short, user-chosen time, the user solves a quick puzzle (chess, Sudoku, math or word game). DeviceActivity re-applies the block when the time ends. All Screen Time data, app tokens and settings stay on the device. Nothing is sent to a server, there are no accounts and no tracking. It is for adults managing their own phone use, not for monitoring others.
 
 4. **Screenshot each form before you press submit.** Apple sends no confirmation.
 5. When the approval email arrives, check whether it says **team** (it covers future apps too) or lists specific IDs, and tell Dinis.
@@ -54,14 +54,14 @@ After registering each one, open it → next to **App Groups** click **Configure
 
 ### ☐ 7. Create the app
 1. App Store Connect → **Apps → (+) → New App**.
-2. Platform **iOS**, Name **[APP NAME]**, Primary language **English (U.S.)**.
+2. Platform **iOS**, Name **QuizLock**, Primary language **English (U.S.)**.
 3. Bundle ID `com.dinismagina.quizlock`, SKU `quizlock001`, User Access **Full Access** → **Create**.
 4. Open **App Information**, copy the **Apple ID** number, and send it to Dinis (it goes into the app's "Rate" button).
 
 ### ☐ 8. Create the subscription group
 1. In the app → **Monetization → Subscriptions → Create** a subscription group.
-2. Reference name: **[APP NAME] Pro**.
-3. Add a group localization: English (U.S.), display name **[APP NAME] Pro**.
+2. Reference name: **QuizLock Pro**.
+3. Add a group localization: English (U.S.), display name **QuizLock Pro**.
 
 ### ☐ 9. Create the 3 subscriptions inside that group
 
