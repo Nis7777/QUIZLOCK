@@ -92,6 +92,8 @@ targets:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
           - group.com.dinismagina.quizlock
+        # iCloud → Key-value storage (progress sync, no accounts). Needs iCloud enabled on the App ID.
+        com.apple.developer.ubiquity-kvstore-identifier: $(TeamIdentifierPrefix)$(CFBundleIdentifier)
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock

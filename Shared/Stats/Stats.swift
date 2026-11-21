@@ -16,6 +16,19 @@ public struct DayStats: Codable, Equatable {
 
     public var puzzlesSolved: Int { solved.values.reduce(0, +) }
 
+    /// The higher value of every counter; flags are OR-ed (see `Stats.merged(with:)`).
+    public func merged(with other: DayStats) -> DayStats {
+        var d = self
+        for (game, n) in other.solved { d.solved[game] = max(solved[game] ?? 0, n) }
+        d.unlocksEarned = max(unlocksEarned, other.unlocksEarned)
+        d.unlocksSkipped = max(unlocksSkipped, other.unlocksSkipped)
+        d.minutesSaved = max(minutesSaved, other.minutesSaved)
+        d.active = active || other.active
+        d.emergencyUsed = emergencyUsed || other.emergencyUsed
+        d.dailyPuzzleSolved = dailyPuzzleSolved || other.dailyPuzzleSolved
+        return d
+    }
+
     /// A day keeps the streak alive with ≥1 puzzle solved, or an active day with zero unlocks.
     /// An emergency unlock breaks it.
     public var keepsStreak: Bool {
@@ -42,6 +55,8 @@ public struct Stats: Codable, Equatable {
     public var quickSolveStreak: [String: Int] = [:]
     public var failStreak: [String: Int] = [:]
     public var emergencyUnlocks: [Date] = []
+    /// Longest streak ever reached (kept even after older days are pruned).
+    public var bestStreak = 0
 
     public init() {}
 
@@ -52,6 +67,7 @@ public struct Stats: Codable, Equatable {
         quickSolveStreak = (try? c.decodeIfPresent([String: Int].self, forKey: .quickSolveStreak)) ?? [:]
         failStreak = (try? c.decodeIfPresent([String: Int].self, forKey: .failStreak)) ?? [:]
         emergencyUnlocks = (try? c.decodeIfPresent([Date].self, forKey: .emergencyUnlocks)) ?? []
+        bestStreak = (try? c.decodeIfPresent(Int.self, forKey: .bestStreak)) ?? 0
     }
 
     public static let milestones = [3, 7, 30]
@@ -105,6 +121,29 @@ public struct Stats: Codable, Equatable {
         return max(0, Self.emergencyLimitPerWeek - emergencyUnlocks.filter { $0 > weekAgo }.count)
     }
 
+    /// The best streak, counting the current one.
+    public func bestStreakIncludingCurrent(now: Date = Date(), calendar: Calendar = .current) -> Int {
+        max(bestStreak, streak(now: now, calendar: calendar))
+    }
+
+    /// Combines two copies of the stats (this device + iCloud) without losing progress:
+    /// per day and per game the higher count wins and flags are OR-ed, so streaks, totals and the
+    /// daily puzzle history only ever go up. Difficulty-progression counters stay device-local.
+    public func merged(with other: Stats) -> Stats {
+        var result = self
+        for (key, theirs) in other.days {
+            result.days[key] = (days[key] ?? DayStats()).merged(with: theirs)
+        }
+        result.celebratedMilestones = Array(Set(celebratedMilestones + other.celebratedMilestones)).sorted()
+        var unlocks = emergencyUnlocks
+        for date in other.emergencyUnlocks where !unlocks.contains(where: { abs($0.timeIntervalSince(date)) < 1 }) {
+            unlocks.append(date)
+        }
+        result.emergencyUnlocks = unlocks.sorted()
+        result.bestStreak = max(bestStreak, other.bestStreak)
+        return result
+    }
+
     /// A milestone reached but not yet celebrated.
     public func pendingMilestone(now: Date = Date()) -> Int? {
         let s = streak(now: now)
@@ -136,6 +175,7 @@ public enum StatsStore {
             let keep = Set(s.days.keys.sorted().suffix(370))
             s.days = s.days.filter { keep.contains($0.key) }
         }
+        s.bestStreak = s.bestStreakIncludingCurrent()
         save(s)
         return s
     }

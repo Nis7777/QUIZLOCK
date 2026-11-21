@@ -2791,6 +2791,16 @@
         }
       }
     },
+    "Pick apps to lock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolher apps a bloquear"
+          }
+        }
+      }
+    },
     "Play": {
       "localizations": {
         "pt-PT": {
@@ -4171,6 +4181,16 @@
         }
       }
     },
+    "Welcome back!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo de volta!"
+          }
+        }
+      }
+    },
     "What eats most of your time?": {
       "localizations": {
         "pt-PT": {
@@ -4567,6 +4587,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "As tuas estatísticas"
+          }
+        }
+      }
+    },
+    "Your streak and stats are restored. Pick the apps to lock again.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A tua sequência e estatísticas foram restauradas. Escolhe novamente as apps a bloquear."
           }
         }
       }

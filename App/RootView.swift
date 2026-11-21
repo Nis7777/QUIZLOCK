@@ -14,7 +14,11 @@ struct RootView: View {
                 MainTabView()
                     .transition(.opacity)
             }
-            if model.phase == .main && !model.isAuthorized && !model.reconnectSnoozed {
+            if model.phase == .main && model.welcomeBack {
+                WelcomeBackView()
+                    .transition(.opacity)
+                    .zIndex(11)
+            } else if model.phase == .main && !model.isAuthorized && !model.reconnectSnoozed {
                 ReconnectView()
                     .transition(.opacity)
                     .zIndex(10)

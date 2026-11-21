@@ -16,6 +16,7 @@ extension AppModel {
         }
         WidgetCenter.shared.reloadAllTimelines()
         Reminders.reschedule(settings: settings, stats: stats)
+        pushStatsToCloud()
     }
 
     func milestoneCelebrated() {

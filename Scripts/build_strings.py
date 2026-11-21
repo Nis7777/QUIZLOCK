@@ -436,6 +436,12 @@ PT = {
     "Copy email address": "Copiar endereço de email",
     "Copied": "Copiado",
 
+    # iCloud restore
+    "Welcome back!": "Bem-vindo de volta!",
+    "Your streak and stats are restored. Pick the apps to lock again.":
+        "A tua sequência e estatísticas foram restauradas. Escolhe novamente as apps a bloquear.",
+    "Pick apps to lock": "Escolher apps a bloquear",
+
     # Paywall (subscriptions)
     "%@/year": "%@/ano",
     "%@/month": "%@/mês",

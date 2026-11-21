@@ -54,6 +54,11 @@ final class AppModel {
     let screenTime = ScreenTimeService()
     let rounds = RoundProvider()
     let store = Store()
+    let cloud = CloudSync()
+    /// True while values from iCloud are being applied (so they aren't pushed straight back).
+    @ObservationIgnored var applyingCloudChange = false
+    /// A new phone restored progress from iCloud: show "Welcome back!" and ask for the apps to lock again.
+    var welcomeBack = false
     @ObservationIgnored private var sweepTimer: Timer?
     /// Set when the user closes the unlock flow, so foregrounding doesn't immediately reopen it.
     @ObservationIgnored private var dismissedPendingDate: Date?
@@ -84,6 +89,8 @@ final class AppModel {
 
     func bootstrap() {
         store.start()
+        cloud.start { [weak self] in self?.mergeFromCloud() }
+        mergeFromCloud()
         refreshFromStore()
         if settings.onboardingComplete {
             phase = .main
@@ -134,8 +141,10 @@ final class AppModel {
         var s = settings
         change(&s)
         guard s != settings else { return }
+        let old = settings
         settings = s
         SharedStore.save(settings, .settings)
+        if Self.syncedSettingsChanged(old, s) { pushSettingsToCloud() }
     }
 
     func updateLock(applyShield: Bool = true, _ change: (inout LockState) -> Void) {
@@ -146,9 +155,11 @@ final class AppModel {
         l.locksEnabled = lock.locksEnabled
         l.defaultDuration = lock.defaultDuration
         l.puzzlesPerUnlock = lock.puzzlesPerUnlock
+        let old = lock
         change(&l)
         lock = l
         SharedStore.lockState = l
+        if old.defaultDuration != l.defaultDuration || old.puzzlesPerUnlock != l.puzzlesPerUnlock { pushSettingsToCloud() }
         if applyShield, settings.onboardingComplete || phase != .onboarding {
             screenTime.apply(l)
         }
@@ -160,6 +171,7 @@ final class AppModel {
         guard p != profile else { return }
         profile = p
         SharedStore.save(profile, .userProfile)
+        pushProfileToCloud()
     }
 
     /// Pre-fills the later setup screens from the personalised plan.
@@ -256,6 +268,7 @@ final class AppModel {
             $0.onboardingStep = nil
         }
         updateLock { $0.locksEnabled = true }
+        pushProfileToCloud()
         paywallReason = .onboarding
         withAnimation(.easeInOut(duration: 0.35)) { phase = .main }
     }

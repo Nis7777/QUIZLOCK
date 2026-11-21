@@ -12,6 +12,7 @@
 		01E6573199CC1897AAC68C49 /* TodayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86295B64575CD98097100D35 /* TodayCard.swift */; };
 		01E748DB6DE19D9D5F0D3B3A /* PhoneMockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC10DF16A2B9F7D97B9414F /* PhoneMockup.swift */; };
 		030D5830DE45AF27233215B1 /* ReconnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C95E927A784D59BE4CFBD9D /* ReconnectView.swift */; };
+		2A45BD546084E225900B58CF /* WelcomeBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9866334BB5F2CE42174D96D /* WelcomeBackView.swift */; };
 		035EB8F568E4AEB62A882F69 /* LockSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F00C8D4081A86B0526A57DA /* LockSchedule.swift */; };
 		0A331359F172501FD20BA918 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C4BB08E8A994D45B06DD49 /* ChessEngine.swift */; };
 		0AA521AD065E7E65B88ADD20 /* SudokuEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836FC5DF88E9796F14C8D7F9 /* SudokuEngine.swift */; };
@@ -123,6 +124,7 @@
 		A0B75C977FB2B7D0315C7008 /* FamilyControls.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1267EA12ADFA5D937A3B410F /* FamilyControls.framework */; };
 		A0EA4DBBFEA3D68CD0A1BF14 /* LockItemLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33418FB20488F32215B6E26D /* LockItemLabel.swift */; };
 		A34C60B593AD54E95D33EB84 /* Reminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE53ED6835AE5D43F1B7AEF /* Reminders.swift */; };
+		3D07356BA6B175777D6BD5F0 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C5117136E8DB5F0B323C9 /* CloudSync.swift */; };
 		A3D06E3B68A519C4F64BA0C2 /* ChessPuzzles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07056E1B594209E299DF4215 /* ChessPuzzles.swift */; };
 		A40BA9A159F83334399BBBA1 /* PuzzleGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979F8D4AB206D57E5765EAF5 /* PuzzleGame.swift */; };
 		A47DA22F503980E0046A4404 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D27F6D5D7A283AEDF21F52 /* DeviceActivity.framework */; };
@@ -280,6 +282,7 @@
 		09D821904A525DAB8F908D9B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0B868449421EA47649272F99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C95E927A784D59BE4CFBD9D /* ReconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectView.swift; sourceTree = "<group>"; };
+		A9866334BB5F2CE42174D96D /* WelcomeBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeBackView.swift; sourceTree = "<group>"; };
 		0DC57A15E2DAEF602A2FCB8B /* MathEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathEngine.swift; sourceTree = "<group>"; };
 		0DC7EFDCF0B046B98219885F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1267EA12ADFA5D937A3B410F /* FamilyControls.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FamilyControls.framework; path = System/Library/Frameworks/FamilyControls.framework; sourceTree = SDKROOT; };
@@ -304,6 +307,7 @@
 		3D660647522953A93D91629F /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		3E8D02304C8CA0D403577567 /* AppModel+Retention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppModel+Retention.swift"; sourceTree = "<group>"; };
 		3EE53ED6835AE5D43F1B7AEF /* Reminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminders.swift; sourceTree = "<group>"; };
+		051C5117136E8DB5F0B323C9 /* CloudSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSync.swift; sourceTree = "<group>"; };
 		3FAD72754F549C5C1EE0FA87 /* RoundProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundProvider.swift; sourceTree = "<group>"; };
 		427244501479857D132F1EDD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		449B35824749D1DC3D8635C7 /* ShieldActionExt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldActionExt.entitlements; sourceTree = "<group>"; };
@@ -683,6 +687,7 @@
 			children = (
 				093711BBE2071903D93DA040 /* DemoData.swift */,
 				3EE53ED6835AE5D43F1B7AEF /* Reminders.swift */,
+				051C5117136E8DB5F0B323C9 /* CloudSync.swift */,
 				3FAD72754F549C5C1EE0FA87 /* RoundProvider.swift */,
 				7E637E9A4F6375FE2CB4A04F /* ScreenTimeService.swift */,
 				3D660647522953A93D91629F /* Store.swift */,
@@ -784,6 +789,7 @@
 				8CD244A9B1A53BAFAA9C18F0 /* PuzzlesPerUnlockSheet.swift */,
 				872E67ACCEE13BB29FF83333 /* PuzzlesView.swift */,
 				0C95E927A784D59BE4CFBD9D /* ReconnectView.swift */,
+				A9866334BB5F2CE42174D96D /* WelcomeBackView.swift */,
 				603620FB2FC2A4B7CEFF4C89 /* ScheduleView.swift */,
 				2E95A637ACD1A61CF822C60F /* SettingsView.swift */,
 				70B49CE9B17DFD33685D1ABC /* StatsView.swift */,
@@ -1145,7 +1151,9 @@
 				4D384DD4D7492CC8E8C18166 /* QuizLockApp.swift in Sources */,
 				FBFE6BF677354F0C48365F8B /* QuizQuestionViews.swift in Sources */,
 				030D5830DE45AF27233215B1 /* ReconnectView.swift in Sources */,
+				2A45BD546084E225900B58CF /* WelcomeBackView.swift in Sources */,
 				A34C60B593AD54E95D33EB84 /* Reminders.swift in Sources */,
+				3D07356BA6B175777D6BD5F0 /* CloudSync.swift in Sources */,
 				4E5B70753943E0770210CDF1 /* RewardView.swift in Sources */,
 				E2EC478DF51AE8BB2C8482A7 /* RootView.swift in Sources */,
 				F8A96B29F3C638D76106C6A4 /* RoundProvider.swift in Sources */,
