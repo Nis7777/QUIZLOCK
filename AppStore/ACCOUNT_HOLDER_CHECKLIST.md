@@ -80,9 +80,9 @@ For each subscription:
 4. Only on **Pro Yearly**: **Introductory Offers → (+)**, type **Free**, duration **1 Week**, eligibility **New subscribers**, all countries.
 
 ### ☐ 10. Fill in the app information
-- **Privacy Policy URL:** https://nis7777.github.io/lockfeeddupe/privacy.html
-- **Support URL:** https://nis7777.github.io/lockfeeddupe/
-- **Terms of Use:** add the line `Terms of Use: https://nis7777.github.io/lockfeeddupe/terms.html` at the end of the description. Apple requires it for subscriptions.
+- **Privacy Policy URL:** https://nis7777.github.io/QUIZLOCK/privacy.html
+- **Support URL:** https://nis7777.github.io/QUIZLOCK/
+- **Terms of Use:** add the line `Terms of Use: https://nis7777.github.io/QUIZLOCK/terms.html` at the end of the description. Apple requires it for subscriptions.
 - **Category:** Primary **Productivity**, Secondary **Education**.
 - **App Privacy:** **Data Not Collected** (answers in `AppStore/privacy_labels.md`).
 - **Age Rating:** answer using `AppStore/age_rating.md`.

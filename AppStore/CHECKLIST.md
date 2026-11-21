@@ -31,9 +31,9 @@ role in App Store Connect you can do the rest.
       `Shared/Brand.swift`. "Rate QuizLock" uses it.
 - [ ] Category: **Productivity** (secondary: **Education**).
 - [ ] Localizations: **English (U.S.)** and **Portuguese (Portugal)**, with the texts from `metadata.md`.
-- [ ] Support URL: https://nis7777.github.io/lockfeeddupe/
-- [ ] Privacy Policy URL: https://nis7777.github.io/lockfeeddupe/privacy.html
-- [ ] Terms of Use: put https://nis7777.github.io/lockfeeddupe/terms.html in the description (already there).
+- [ ] Support URL: https://nis7777.github.io/QUIZLOCK/
+- [ ] Privacy Policy URL: https://nis7777.github.io/QUIZLOCK/privacy.html
+- [ ] Terms of Use: put https://nis7777.github.io/QUIZLOCK/terms.html in the description (already there).
 
 ## 4. Subscriptions (App → Monetization → Subscriptions)
 

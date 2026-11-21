@@ -52,8 +52,8 @@ Prices are shown in the app before you subscribe and may vary by country.
 Payment is charged to your Apple ID when you confirm the purchase, or when the free trial ends. The subscription renews automatically unless you turn off auto-renew at least 24 hours before the end of the current period; renewal is charged within 24 hours before the period ends. Manage or cancel anytime in Settings → your name → Subscriptions. If you cancel during the free trial, you won't be charged.
 
 Chess puzzles from the Lichess puzzle database (CC0).
-Terms of Use: https://nis7777.github.io/lockfeeddupe/terms.html
-Privacy Policy: https://nis7777.github.io/lockfeeddupe/privacy.html
+Terms of Use: https://nis7777.github.io/QUIZLOCK/terms.html
+Privacy Policy: https://nis7777.github.io/QUIZLOCK/privacy.html
 
 ## Portuguese (Portugal)
 
@@ -105,5 +105,5 @@ Os preços são mostrados na app antes de subscreveres e podem variar consoante 
 O pagamento é cobrado na tua conta Apple quando confirmas a compra ou quando termina o teste grátis. A subscrição renova-se automaticamente, a menos que desatives a renovação automática pelo menos 24 horas antes do fim do período atual; a renovação é cobrada nas 24 horas anteriores ao fim do período. Gere ou cancela quando quiseres em Definições → o teu nome → Subscrições. Se cancelares durante o teste grátis, não pagas nada.
 
 Puzzles de xadrez da base de dados de puzzles do Lichess (CC0).
-Termos de Utilização: https://nis7777.github.io/lockfeeddupe/terms.html
-Política de Privacidade: https://nis7777.github.io/lockfeeddupe/privacy.html
+Termos de Utilização: https://nis7777.github.io/QUIZLOCK/terms.html
+Política de Privacidade: https://nis7777.github.io/QUIZLOCK/privacy.html

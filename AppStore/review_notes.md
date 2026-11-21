@@ -68,7 +68,7 @@ accelerated. To see the paywall again after closing it: Settings tab → **QuizL
   access to it. Screen Time selections are never synced.
 - Screen Time data is only accessed through Apple's on-device APIs and never leaves the device; the
   "Today" screen-time card is rendered by Apple's DeviceActivityReport extension on-device.
-- Privacy Policy: https://nis7777.github.io/lockfeeddupe/privacy.html
-- Terms of Use: https://nis7777.github.io/lockfeeddupe/terms.html
+- Privacy Policy: https://nis7777.github.io/QUIZLOCK/privacy.html
+- Terms of Use: https://nis7777.github.io/QUIZLOCK/terms.html
 
 Chess puzzles come from the Lichess puzzle database (CC0).

@@ -8,8 +8,8 @@ public enum Brand {
     public static let bundleID = "com.dinismagina.quizlock"
     public static let appGroup = "group.com.dinismagina.quizlock"
     public static let supportEmail = "nismagina@gmail.com"
-    public static let termsURL = URL(string: "https://nis7777.github.io/lockfeeddupe/terms.html") ?? URL(fileURLWithPath: "/")
-    public static let privacyURL = URL(string: "https://nis7777.github.io/lockfeeddupe/privacy.html") ?? URL(fileURLWithPath: "/")
+    public static let termsURL = URL(string: "https://nis7777.github.io/QUIZLOCK/terms.html") ?? URL(fileURLWithPath: "/")
+    public static let privacyURL = URL(string: "https://nis7777.github.io/QUIZLOCK/privacy.html") ?? URL(fileURLWithPath: "/")
     /// Auto-renewable subscriptions, all in the App Store Connect subscription group "QuizLock Pro".
     /// Prices and the free trial live in App Store Connect / Products.storekit; the app always reads them from StoreKit.
     public static let subscriptionGroupName = "QuizLock Pro"

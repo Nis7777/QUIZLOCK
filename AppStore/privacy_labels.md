@@ -35,4 +35,4 @@ declare instead:
 - **User Content → Customer Support / Other User Content**: purpose *App Functionality*; linked to the user; not used for tracking.
 - **Diagnostics → Other Diagnostic Data** (app and iOS version): purpose *App Functionality*; linked to the user; not used for tracking.
 
-Keep the Privacy Policy in sync if you change anything: https://nis7777.github.io/lockfeeddupe/privacy.html
+Keep the Privacy Policy in sync if you change anything: https://nis7777.github.io/QUIZLOCK/privacy.html
