@@ -264,11 +264,11 @@ def main():
 
 
 def max_dimension(asset):
-    """Display-size caps (MOTION.md performance): mascots ≤ ~260pt, covers ≤ full width, @3x."""
+    """Display-size caps (MOTION.md performance), @3x: mascots ≤ ~260pt, square game icons ≤ 200pt."""
     if asset.startswith("mascot_"):
         return 780
     if asset.startswith("game_"):
-        return 1200
+        return 600
     return None
 
 

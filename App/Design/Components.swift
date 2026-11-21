@@ -500,3 +500,26 @@ struct LegalLinksText: View {
         return s + terms + and + privacy
     }
 }
+
+/// A game's square icon art (game_chess…), shown whole at its natural square shape. The rounded corners
+/// and transparent edges are part of the image, so there's no crop, background or extra clip shape.
+struct GameIcon: View {
+    let game: GameID
+    let size: CGFloat
+
+    var body: some View {
+        Group {
+            if let ui = UIImage(named: game.coverAsset) {
+                Image(uiImage: ui).resizable().scaledToFit()
+            } else {
+                // Missing art only: a neutral tile with the game's symbol.
+                RoundedRectangle(cornerRadius: size * 0.22, style: .continuous)
+                    .fill(Color(hex: 0xE5E5EA))
+                    .overlay(Image(systemName: game.systemIcon).font(.system(size: size * 0.4, weight: .medium))
+                        .foregroundStyle(Color(hex: 0x8E8E93)))
+            }
+        }
+        .frame(width: size, height: size)
+        .accessibilityHidden(true)
+    }
+}

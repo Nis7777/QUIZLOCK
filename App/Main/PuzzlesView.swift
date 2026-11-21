@@ -139,9 +139,7 @@ private struct GameCard: View {
         VStack(spacing: 0) {
             Button(action: onOpen) {
                 HStack(alignment: .top, spacing: 16) {
-                    AssetImage(name: game.coverAsset, placeholderSymbol: game.systemIcon)
-                        .frame(width: 115, height: 115)
-                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    GameIcon(game: game, size: 115)
                     VStack(alignment: .leading, spacing: 6) {
                         Text(LocalizedStringKey(game.displayName)).appFont(22, .semibold).foregroundStyle(palette.textPrimary)
                         Text(LocalizedStringKey(game.tagline)).appFont(16).foregroundStyle(palette.textSecondary)

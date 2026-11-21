@@ -70,9 +70,7 @@ struct DailyPuzzleCard: View {
             if !done { model.dailyPuzzleOpen = true }
         } label: {
             HStack(spacing: 14) {
-                AssetImage(name: game.coverAsset, placeholderSymbol: game.systemIcon)
-                    .frame(width: 76, height: 76)
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                GameIcon(game: game, size: 64)
                 VStack(alignment: .leading, spacing: 4) {
                     Text("TODAY'S PUZZLE").appFont(12, .bold).tracking(1.5).foregroundStyle(palette.accentText)
                     Text(LocalizedStringKey(game.displayName)).appFont(20, .bold).foregroundStyle(palette.textPrimary)

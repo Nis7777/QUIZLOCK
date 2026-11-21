@@ -17,10 +17,9 @@ struct PuzzleDetailView: View {
                         Spacer()
                     }
                     .padding(.top, 4)
-                    AssetImage(name: game.coverAsset, placeholderSymbol: game.systemIcon)
-                        .frame(height: 230)
+                    // A centred square on the normal screen background (no banner).
+                    GameIcon(game: game, size: 200)
                         .frame(maxWidth: .infinity)
-                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     Text(LocalizedStringKey(game.displayName))
                         .appFont(34, .bold)
                         .foregroundStyle(palette.textPrimary)
