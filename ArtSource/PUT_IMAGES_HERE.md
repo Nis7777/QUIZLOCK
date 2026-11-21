@@ -13,3 +13,6 @@ Save each image as a PNG with the exact file name below and put it in this folde
 | `game_sudoku.png` | 1536×1024 landscape, subject centred | A floating glossy 3D 3×3 grid of rounded white tiles with a few chunky coral and dark navy numbers on them (digits only), slightly tilted, one tile popping out. Soft peach background (#FFE9E2). |
 | `game_math.png` | 1536×1024 landscape, subject centred | Chunky glossy 3D math symbols floating together: a coral plus sign, a yellow division sign, a teal equals sign and a purple multiplication sign, bouncy and playful. Soft peach background (#FFE9E2). |
 | `game_word.png` | 1536×1024 landscape, subject centred | Five chunky glossy 3D letter tiles in a row, coloured green, yellow and grey like a word-guessing game, slightly bouncing at different heights, with blank faces (no readable letters). Soft peach background (#FFE9E2). |
+
+## Lockie expressions (transparent PNG, 1254×1254)
+`mascot_wave.png`, `mascot_happy.png`, `mascot_worried.png`, `mascot_sad.png`, `mascot_thinking.png`, `mascot_clipboard.png`, `mascot_celebrate.png`, `mascot_calm.png` (plus `mascot_pointing.png`). They're used by ONBOARDING_V3.md; import each into Assets.xcassets with the same name.
