@@ -15,11 +15,13 @@ private struct PreviewHost<Content: View>: View {
     }
 }
 
-#Preview("Welcome") { PreviewHost { WelcomeView {} } }
-#Preview("Pick puzzles") { PreviewHost { PickGamesView(onBack: {}, onContinue: {}) } }
-#Preview("How it works") { PreviewHost { HowItWorksView(onBack: {}, onFinish: {}) } }
-#Preview("Reality check") { PreviewHost { RealityCheckView(progress: 0.75, onBack: {}, onNext: {}) } }
-#Preview("Commitment") { PreviewHost { CommitmentView(progress: 0.9, onBack: {}, onNext: {}) } }
+#Preview("Onboarding") { PreviewHost { OnboardingFlowView() } }
+#Preview("Hero") { PreviewHost { HeroView {}.modifier(SharedMascotOverlay()) } }
+#Preview("Chat") { PreviewHost { LockieChatView(onBack: {}, onDone: {}) } }
+#Preview("How it works") { PreviewHost { HowItWorksCardsView {} } }
+#Preview("Reality check") { PreviewHost { RealityCheckView {}.modifier(SharedMascotOverlay()) } }
+#Preview("Commitment") { PreviewHost { CommitView {}.modifier(SharedMascotOverlay()) } }
+#Preview("Plan ready") { PreviewHost { PlanReadyView {}.modifier(SharedMascotOverlay()) } }
 #Preview("Dashboard") { PreviewHost { MainTabView() } }
 #Preview("Dashboard · Dark") { PreviewHost(theme: .dark) { MainTabView() }.preferredColorScheme(.dark) }
 #Preview("Stats") { PreviewHost { NavigationStack { StatsView() } } }

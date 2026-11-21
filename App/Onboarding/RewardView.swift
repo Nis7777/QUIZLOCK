@@ -1,8 +1,7 @@
 import SwiftUI
 
-/// S11: "Choose your puzzle reward" (step 3 of 3).
+/// "Choose your reward" (Chapter 6): how long apps stay unlocked after a puzzle.
 struct RewardView: View {
-    let onBack: () -> Void
     let onChangeApps: () -> Void
     let onTurnOn: () -> Void
     @Environment(AppModel.self) private var model
@@ -10,7 +9,6 @@ struct RewardView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            OnboardingHeader(onBack: onBack, steps: 3, current: 2)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 14) {
                     Image(systemName: "timer")
@@ -19,7 +17,7 @@ struct RewardView: View {
                         .frame(width: 100, height: 100)
                         .background(palette.tint, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                         .overlay(RoundedRectangle(cornerRadius: 26, style: .continuous).strokeBorder(palette.accent.opacity(0.2), lineWidth: 1))
-                    ScreenTitle(title: "Choose your\npuzzle reward",
+                    ScreenTitle(title: "Choose your reward",
                                 subtitle: "Choose how long your apps stay unlocked after you solve a puzzle.", size: 38)
                     Text("Your first \(Brand.freeUnlocks) app unlocks are free. After that, unlimited unlocks and standalone puzzle practice need \(Brand.subscriptionGroupName), an optional subscription.")
                         .appFont(15)
@@ -41,17 +39,14 @@ struct RewardView: View {
                     Text("You can change your puzzle reward later in Settings.")
                         .appFont(15)
                         .foregroundStyle(palette.textSecondary)
-                    Button("Change apps", action: onChangeApps)
-                        .tapTarget()
-                        .appFont(16, .bold)
-                        .foregroundStyle(palette.accentText)
+                    OnboardingLink(title: "Change apps", action: onChangeApps)
                 }
                 .padding(.bottom, 16)
             }
-            PrimaryButton(title: "Turn On Locks", trailingImage: "checkmark", action: onTurnOn)
+            ChunkyButton(title: "Turn On Locks", systemImage: "checkmark", action: onTurnOn)
+                .accessibilityIdentifier("onboarding.turnOn")
                 .padding(.horizontal, 20)
                 .padding(.bottom, 8)
         }
-        .screenBackground()
     }
 }

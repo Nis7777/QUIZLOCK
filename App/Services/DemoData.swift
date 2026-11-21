@@ -27,7 +27,7 @@ enum DemoData {
             return
         }
         guard isEnabled else { return }
-        let onboardingSteps: [String: OnboardingStep] = ["realityCheck": .realityCheck, "pickGames": .pickGames]
+        let onboardingSteps: [String: OnboardingStep] = ["realityCheck": .realityCheck, "pickGames": .qPuzzles, "chat": .chat]
         let onboardingStep = screen.flatMap { onboardingSteps[$0] }
         let onboardingScreen = onboardingStep != nil
 
