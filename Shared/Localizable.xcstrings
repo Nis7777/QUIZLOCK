@@ -3551,6 +3551,16 @@
         }
       }
     },
+    "Tap Manage Apps to Lock to choose the apps that distract you most.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca em Gerir apps a bloquear para escolheres as apps que mais te distraem."
+          }
+        }
+      }
+    },
     "Tap a cell, then a number. Use Notes for pencil marks.": {
       "localizations": {
         "pt-PT": {

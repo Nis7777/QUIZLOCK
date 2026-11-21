@@ -46,9 +46,11 @@ struct UnlockedDemoView: View {
             .padding(.vertical, 20)
         }
         .screenBackground()
+        .confetti(appeared)
         .contentShape(Rectangle())
         .onTapGesture { advance() }
         .task {
+            Haptics.success()
             withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) { appeared = true }
             try? await Task.sleep(nanoseconds: 2_000_000_000)
             guard !Task.isCancelled else { return }

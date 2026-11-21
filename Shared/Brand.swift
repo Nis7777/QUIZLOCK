@@ -47,5 +47,7 @@ public enum Brand {
         public static let chessDark: UInt32 = 0x65884E
         public static let chessHighlight: UInt32 = 0xF6F669
         public static let paywallCream: UInt32 = 0xFFF3DC
+        /// Launch screen + splash background.
+        public static let peach: UInt32 = 0xFFF1EC
     }
 }

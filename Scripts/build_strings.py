@@ -364,6 +364,7 @@ PT = {
     "Apps use the default time unless you choose a different one below.": "As apps usam o tempo predefinido, a não ser que escolhas outro abaixo.",
     "No apps locked yet": "Ainda não há apps bloqueadas",
     "Tap Add Apps to choose the apps that distract you most.": "Toca em Adicionar apps para escolheres as apps que mais te distraem.",
+    "Tap Manage Apps to Lock to choose the apps that distract you most.": "Toca em Gerir apps a bloquear para escolheres as apps que mais te distraem.",
     "Remove": "Remover",
     "Remove %@": "Remover %@",
     "The default for apps without an override. Changes apply the next time you earn an unlock; current unlocks keep their remaining time.":

@@ -98,7 +98,9 @@ struct UnlockSuccessView: View {
                 .padding(.bottom, 12)
         }
         .screenBackground()
+        .confetti(appeared)
         .onAppear {
+            Haptics.success()
             withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) { appeared = true }
         }
     }

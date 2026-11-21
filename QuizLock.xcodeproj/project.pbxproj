@@ -148,6 +148,7 @@
 		BA9C405E1AD9AFA56035A9F0 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6827AD5701B598CC4EA464B /* ShieldConfigurationExtension.swift */; };
 		BAFAE062F2B88F0E881B3B53 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8985D9C6653D4A3FE93A203C /* Theme.swift */; };
 		BBB80D26FCFD9CC46D580C5D /* SudokuEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62583AE6FB5E05EA747E7E70 /* SudokuEngineTests.swift */; };
+		BBC6BD73C6F94A6C7861A1A1 /* Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC6928A4359C5C3910A2A2 /* Previews.swift */; };
 		BD6970FF4A1AA66FC0785435 /* PuzzleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167018FBA1D94767D3FE3D2E /* PuzzleDetailView.swift */; };
 		BDC80BF54A9C908308C3605D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7639454CA00F6AC31F770A53 /* StoreKit.framework */; };
 		BFA0FE705A7491C1F96F07D0 /* PuzzleGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979F8D4AB206D57E5765EAF5 /* PuzzleGame.swift */; };
@@ -362,6 +363,7 @@
 		CA176A50D5BC535A033EC1A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CA941D72FB8839B218AC86FA /* QuizQuestionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionViews.swift; sourceTree = "<group>"; };
 		D02266A42F30AE6C479B86FA /* OnboardingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHeader.swift; sourceTree = "<group>"; };
+		D1BC6928A4359C5C3910A2A2 /* Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
 		D206A722133574726087818B /* WordGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordGameView.swift; sourceTree = "<group>"; };
 		D291FED8ED215C9FD509A49E /* MathGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathGameView.swift; sourceTree = "<group>"; };
 		D5B3CA834B2792CDD0058BCA /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 				3E8D02304C8CA0D403577567 /* AppModel+Retention.swift */,
 				98501522B82A15C1A49A1401 /* Assets.xcassets */,
 				161EB218835D4232AB88BEDA /* Info.plist */,
+				D1BC6928A4359C5C3910A2A2 /* Previews.swift */,
 				427244501479857D132F1EDD /* PrivacyInfo.xcprivacy */,
 				98A057EA8CD118FEB7D5BDF9 /* QuizLockApp.swift */,
 				9BAC7E1137AC09D68DB54271 /* RootView.swift */,
@@ -1092,6 +1095,7 @@
 				01E748DB6DE19D9D5F0D3B3A /* PhoneMockup.swift in Sources */,
 				33E06008F16FD09941576140 /* PickGameView.swift in Sources */,
 				2AFD160CB48223F5E51E1439 /* PracticeView.swift in Sources */,
+				BBC6BD73C6F94A6C7861A1A1 /* Previews.swift in Sources */,
 				79AB7FD14E4E839384A75BCE /* PuzzleChrome.swift in Sources */,
 				BD6970FF4A1AA66FC0785435 /* PuzzleDetailView.swift in Sources */,
 				B02CB8005B56138433A47A99 /* PuzzleGame.swift in Sources */,

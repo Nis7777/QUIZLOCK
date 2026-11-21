@@ -294,7 +294,11 @@ struct SettingsView: View {
             .card()
             .padding(.horizontal, 16)
 
-            if !model.lockItems.isEmpty {
+            if model.lockItems.isEmpty {
+                MascotEmptyState(title: "No apps locked yet",
+                                 message: "Tap Manage Apps to Lock to choose the apps that distract you most.")
+                    .padding(.horizontal, 16)
+            } else {
                 VStack(spacing: 0) {
                     ForEach(Array(model.lockItems.enumerated()), id: \.element.id) { index, item in
                         if index > 0 { Divider().padding(.leading, 46) }

@@ -224,7 +224,7 @@ def main():
     os.makedirs(XC, exist_ok=True)
     write_json(os.path.join(XC, "Contents.json"), {"info": INFO})
     color_set("AccentColor", 0xFF, 0x5A, 0x36)
-    color_set("LaunchBackground", 0xF6, 0xF5, 0xF8)
+    color_set("LaunchBackground", 0xFF, 0xF1, 0xEC)  # peach, matches the splash
 
     icon_dir = os.path.join(XC, "AppIcon.appiconset")
     os.makedirs(icon_dir, exist_ok=True)
