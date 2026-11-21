@@ -13,8 +13,8 @@ Work through the parts below in order. Keep the existing design system (coral #F
 3. **No third-party trademarks in our UI.** In the onboarding phone mockups, replace "Instagram" with a generic "Social" label and generic icons, and change "Tap Instagram at the top left" to "Tap the app at the top left". The real app names shown via `Label(token)` are fine.
 4. **Paywall:**
    - Screen A needs a visible close (×) button at the top right.
-   - Show the price, "One-time purchase", Restore Purchases, Terms of Use and Privacy Policy on **both** paywall screens.
-   - The discount screen must not claim a fake original price. Keep "83% OFF" **only** because the $29.99 product really is purchasable. Label it "Launch offer" rather than implying a timer or scarcity. Never show countdowns.
+   - Show the price and billing period, "Auto-renews. Cancel anytime in Settings.", Restore Purchases, Terms of Use and Privacy Policy on **every** paywall screen.
+   - The exit-offer screen must not claim a fake original price: the struck-through price is the real, purchasable yearly plan, and the % is computed from the two StoreKit prices. No timers, countdowns or fake scarcity.
    - If StoreKit products fail to load, show "Couldn't load prices. Try again" with a retry button. Never show placeholder prices.
 5. **Permissions UX.** Before each system prompt, show our own explainer screen with a single Continue. Do this for Screen Time and for notifications (copy below). If the user denies, the app must still work and must explain how to enable the permission later.
 6. **Settings additions:**

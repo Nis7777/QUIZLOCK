@@ -14,7 +14,7 @@ struct AppSettings: Codable, Equatable {
     var freeUnlocksUsed = 0
     /// Cached "QuizLock Pro" entitlement (StoreKit is the source of truth; refreshed on launch and on Transaction.updates).
     var isPro = false
-    /// The one-time exit offer has been shown (it appears once, when the main paywall is closed).
+    /// The exit offer has been shown (it appears once, when the main paywall is closed).
     var exitOfferShown = false
     var simulatorAuthorized = false
     /// Where onboarding was left (so killing the app mid-onboarding resumes there).

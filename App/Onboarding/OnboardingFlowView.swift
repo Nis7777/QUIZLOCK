@@ -143,7 +143,7 @@ struct OnboardingFlowView: View {
             LockAppsView(onBack: back) { flow.go(.reward) }
         case .reward:
             // "Turn On Locks" → locks on, onboarding done → the paywall opens over the dashboard.
-            // Closing it (after the one-time exit offer) leaves the user on the dashboard with 5 free unlocks.
+            // Closing it (after the exit offer, shown once) leaves the user on the dashboard with 5 free unlocks.
             RewardView(onBack: back, onChangeApps: back) {
                 model.turnOnLocksFromOnboarding()
                 model.finishOnboarding()

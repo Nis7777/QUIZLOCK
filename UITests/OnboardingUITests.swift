@@ -86,14 +86,16 @@ final class OnboardingUITests: XCTestCase {
             XCTAssertTrue(app.staticTexts["Auto-renews. Cancel anytime in Settings."].exists)
             tap(app.buttons["paywall.close"])
         }
-        XCTAssertTrue(app.buttons["settings.proCard"].waitForExistence(timeout: 8))
+        let proCard = app.buttons["settings.proCard"]
+        XCTAssertTrue(proCard.waitForExistence(timeout: 8))
+        scrollUntilHittable(proCard)
         // Nothing was paid: all 5 free unlocks are still there.
         let freeUnlocks = app.descendants(matching: .any)
             .matching(NSPredicate(format: "label CONTAINS %@", "5 of 5 free unlocks left")).firstMatch
         XCTAssertTrue(freeUnlocks.exists)
 
         // The exit offer shows only once: reopening the paywall and closing it goes straight back.
-        tap(app.buttons["settings.proCard"])
+        tap(proCard)
         XCTAssertTrue(app.staticTexts["paywall.title"].waitForExistence(timeout: 5))
         tap(app.buttons["paywall.close"])
         XCTAssertFalse(app.staticTexts["paywall.offer.title"].waitForExistence(timeout: 2))
@@ -116,6 +118,14 @@ final class OnboardingUITests: XCTestCase {
         let button = app.buttons.matching(NSPredicate(format: "label == 'Continue'")).firstMatch
         tap(button, timeout: timeout, file: file, line: line)
         Thread.sleep(forTimeInterval: 0.5)
+    }
+
+    private func scrollUntilHittable(_ element: XCUIElement) {
+        var tries = 0
+        while !element.isHittable && tries < 8 {
+            app.swipeUp()
+            tries += 1
+        }
     }
 
     /// The system notification prompt (shown by Springboard).
