@@ -16,12 +16,12 @@ enum OnboardingStep: String, CaseIterable {
     // 6. Permissions
     case connectScreenTime, reward, notifications, rating
     // 7. Commitment
-    case commit, aboutTo, settingUp, planReady
+    case commit, settingUp, planReady
 
     var index: Int { Self.allCases.firstIndex(of: self) ?? 0 }
 
     /// Full-bleed screens draw their own background/header (no container back button).
-    var isFullBleed: Bool { [.hero, .chat, .aboutTo, .planReady].contains(self) }
+    var isFullBleed: Bool { [.hero, .chat, .planReady].contains(self) }
 
     var showsBack: Bool { !isFullBleed && ![.settingUp].contains(self) }
 
@@ -34,13 +34,12 @@ enum OnboardingStep: String, CaseIterable {
     }
 
     /// Steps the back button skips over.
-    var skippedOnBack: Bool { [.talkIntro, .settingUp, .aboutTo].contains(self) }
+    var skippedOnBack: Bool { [.talkIntro, .settingUp].contains(self) }
 
     /// Where to resume after the app was killed on this step.
     var resumeStep: OnboardingStep {
         switch self {
         case .settingUp: return .planReady
-        case .aboutTo: return .commit
         default: return self
         }
     }
@@ -57,7 +56,9 @@ final class OnboardingModel {
     @ObservationIgnored var onStepChange: (OnboardingStep) -> Void = { _ in }
 
     func restore(_ saved: String?) {
-        guard let saved, let s = OnboardingStep(rawValue: saved) else { return }
+        // "aboutTo" was removed: resume at the commitment screen.
+        let name = saved == "aboutTo" ? OnboardingStep.commit.rawValue : saved
+        guard let name, let s = OnboardingStep(rawValue: name) else { return }
         step = s.resumeStep
     }
 
@@ -150,7 +151,7 @@ struct OnboardingFlowView: View {
         case .chat where flow.forward:
             // Zoom out of the notification banner.
             return .asymmetric(insertion: .scale(scale: 0.2, anchor: .top).combined(with: .opacity), removal: .opacity)
-        case .howItWorks where flow.forward, .aboutTo, .planReady:
+        case .howItWorks where flow.forward, .settingUp, .planReady:
             return .opacity
         default:
             let dx: CGFloat = flow.forward ? 40 : -40
@@ -202,7 +203,6 @@ struct OnboardingFlowView: View {
         case .rating: RatingStepView(onContinue: next)
         // 7. Commitment
         case .commit: CommitView(onCommitted: next)
-        case .aboutTo: AboutToView(onContinue: next)
         case .settingUp: SettingUpView(onDone: next)
         case .planReady: PlanReadyView { model.finishOnboarding() }
         }

@@ -53,6 +53,7 @@ struct CommitView: View {
             }
         }
         .ignoresSafeArea(edges: .bottom)
+        .confetti(done, origin: UnitPoint(x: 0.5, y: 0.45), haptic: false)
         .onDisappear { holdTask?.cancel() }
     }
 
@@ -115,99 +116,15 @@ struct CommitView: View {
             progress = 1
         }
         model.updateProfile { $0.committed = true }
+        // Confetti over the coral screen, then straight to "Setting up QuizLock…".
         Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 450_000_000)
+            try? await Task.sleep(nanoseconds: 1_100_000_000)
             onCommitted()
         }
     }
 }
 
-/// 7.2 Full coral screen: "You're about to…" → "Unlock" types itself → "(verb)" → the paragraph line by line.
-struct AboutToView: View {
-    let onContinue: () -> Void
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var showIntro = false
-    @State private var typed = 0
-    @State private var showVerb = false
-    @State private var lines = 0
-    @State private var showButton = false
-
-    private let word = String(localized: "Unlock")
-    private let paragraph = [
-        String(localized: "To earn your scroll."),
-        String(localized: "You solve a puzzle, your brain wakes up,"),
-        String(localized: "and the app gets a little less powerful every time."),
-    ]
-
-    var body: some View {
-        ZStack {
-            Color.brand.ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 10) {
-                Spacer()
-                Text("You're about to…")
-                    .appFont(24, .bold, design: .rounded)
-                    .opacity(showIntro ? 1 : 0)
-                HStack(alignment: .firstTextBaseline, spacing: 10) {
-                    Text(verbatim: String(word.prefix(typed)))
-                        .appFont(64, .black, design: .rounded)
-                    Text("(verb)")
-                        .appFont(22, .semibold)
-                        .italic()
-                        .opacity(showVerb ? 0.85 : 0)
-                }
-                .frame(minHeight: 80, alignment: .leading)
-                VStack(alignment: .leading, spacing: 6) {
-                    ForEach(paragraph.indices, id: \.self) { i in
-                        Text(verbatim: paragraph[i])
-                            .appFont(19, .medium)
-                            .opacity(i < lines ? 1 : 0)
-                            .offset(y: i < lines || reduceMotion ? 0 : 8)
-                    }
-                }
-                .padding(.top, 12)
-                Spacer()
-                ChunkyButton(title: "Let's go", style: .white, action: onContinue)
-                    .accessibilityIdentifier("onboarding.letsGo")
-                    .opacity(showButton ? 1 : 0)
-                    .disabled(!showButton)
-                    .padding(.bottom, 10)
-            }
-            .foregroundStyle(.white)
-            .padding(.horizontal, 26)
-        }
-        .accessibilityElement(children: .contain)
-        .task { await play() }
-    }
-
-    private func play() async {
-        func wait(_ s: Double) async { try? await Task.sleep(nanoseconds: UInt64(s * 1_000_000_000)) }
-        if reduceMotion {
-            withAnimation(.easeOut(duration: 0.3)) {
-                showIntro = true; typed = word.count; showVerb = true; lines = paragraph.count; showButton = true
-            }
-            return
-        }
-        await wait(0.3)
-        withAnimation(Motion.gentle) { showIntro = true }
-        await wait(0.8)
-        let tick = UISelectionFeedbackGenerator()
-        for i in 1...word.count {
-            typed = i
-            tick.selectionChanged()
-            await wait(0.11)
-        }
-        await wait(0.25)
-        withAnimation(Motion.gentle) { showVerb = true }
-        await wait(0.6)
-        for i in 1...paragraph.count {
-            withAnimation(Motion.gentle) { lines = i }
-            await wait(0.55)
-        }
-        withAnimation(Motion.bouncy) { showButton = true }
-    }
-}
-
-/// 7.3 "Setting up QuizLock…": a coral semicircle arc around a calm Lockie; 3 steps tick off (~3s).
+/// 7.2 "Setting up QuizLock…": a coral semicircle arc around a calm Lockie; 3 steps tick off (~3s).
 struct SettingUpView: View {
     let onDone: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -307,7 +224,7 @@ struct HalfArc: Shape {
     }
 }
 
-/// 7.4 Plan ready: coral sky, celebrating Lockie, confetti, and the plan card → paywall.
+/// 7.3 Plan ready: coral sky, celebrating Lockie, confetti, and the plan card → paywall.
 struct PlanReadyView: View {
     let onStart: () -> Void
     @Environment(AppModel.self) private var model

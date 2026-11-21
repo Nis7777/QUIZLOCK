@@ -140,16 +140,12 @@ Open with a transition screen: `mascot_clipboard` + "Let's set you up, {name}!" 
 1. **"Are you ready to take your time back, {name}?"** with `mascot_thinking`. At the bottom: "Hold your finger on the button to commit" and a coral circular button with a tap icon (SF Symbol `hand.tap.fill`; never use the Touch ID / Face ID glyphs for non-biometric actions).
    - **While holding:** the screen fills with a coral circle expanding from the button (a radial reveal tied to hold progress over 1.6s), with continuous haptics ramping up and the mascot growing slightly.
    - **Release early:** it springs back.
-   - **Complete:** a heavy haptic, and the whole screen becomes solid coral.
-2. **Full coral screen** (white text):
-   - "You're about to…" fades in, then "Unlock" types itself letter by letter (with a tick haptic per letter), then "(verb)" fades in.
-   - Then a paragraph fades in line by line: "To earn your scroll. You solve a puzzle, your brain wakes up, and the app gets a little less powerful every time."
-   - Then the white ChunkyButton "Let's go".
-3. **Setup screen:**
-   - A large semicircle arc progress (coral) around `mascot_calm`, with the title "Setting up QuizLock…".
+   - **Complete:** a heavy haptic and confetti, and the whole screen becomes solid coral, then it goes straight to the setup screen.
+2. **Setup screen:**
+   - Top to bottom, no overlaps: a large semicircle arc progress (coral) with `mascot_calm` fully inside it → the percentage (CountingText, 40pt bold coral) → the title "Setting up QuizLock…" → the checklist.
    - 3 steps tick off one by one: "Analysing your answers", "Building your plan", "Locking in your puzzles".
    - Each turns into a coral check circle with `symbolEffect(.bounce)` + a haptic. About 3s in total.
-4. **Plan ready:**
+3. **Plan ready:**
    - A coral gradient sky with clouds and `mascot_celebrate` + confetti.
    - Big white text: "In 4 weeks, you won't recognise your screen time, {name}." (Use the US spelling "recognize" in en-US.)
    - A white card with a check: "Your personalised plan is ready", then 3 rows built from their answers: locked categories, daily puzzle mix, unlock time.

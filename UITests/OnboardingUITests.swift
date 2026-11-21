@@ -33,7 +33,7 @@ final class OnboardingUITests: XCTestCase {
         // 3. How it works: Continue through the 3 cards.
         tapContinue(); tapContinue(); tapContinue()
 
-        // 4. Questions (single choice auto-advances; multi-select has Continue).
+        // 4. Questions (source and hours auto-advance; every screen also has a pinned Continue).
         tapContinue()                          // "Let's set you up"
         tapFirstChoice()                       // source
         tapFirstChoice()                       // hours
@@ -44,7 +44,7 @@ final class OnboardingUITests: XCTestCase {
         let selected = app.buttons.matching(identifier: "quiz.choice").allElementsBoundByIndex.filter(\.isSelected)
         XCTAssertEqual(selected.count, 4, "All 4 puzzles should be pre-selected")
         tapContinue()                          // puzzles (multi)
-        tapFirstChoice()                       // challenge
+        tapFirstChoice(); tapContinue()        // challenge (no auto-advance)
 
         // 5. The turn
         tapContinue(); tapContinue(); tapContinue(); tapContinue()
@@ -60,11 +60,10 @@ final class OnboardingUITests: XCTestCase {
         allowSystemAlertIfShown()
         tapContinue(timeout: 8)               // rating
 
-        // 7. Commitment: press and hold → "Let's go" → setup → plan ready → paywall
+        // 7. Commitment: press and hold → setup → plan ready → paywall
         let hold = app.buttons["onboarding.commit"]
         XCTAssertTrue(hold.waitForExistence(timeout: 5))
         hold.press(forDuration: 2.0)
-        tap(app.buttons["onboarding.letsGo"], timeout: 10)
         tap(app.buttons["onboarding.startPlan"], timeout: 10)
 
         // Paywall right after "Start my plan".
