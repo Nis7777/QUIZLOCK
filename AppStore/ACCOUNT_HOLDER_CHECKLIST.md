@@ -42,15 +42,11 @@ After registering each one, open it → next to **App Groups** click **Configure
 
 ⚠️ **Never change these IDs after this step.** Apple's approval is tied to them.
 
-### ☐ 6. Request the Screen Time permission (the slow one)
-1. While logged in, go to **developer.apple.com/contact/request/family-controls-distribution**.
-2. Submit **one request for each of the 5 IDs marked ✅** (rows 1–5; the widget doesn't need it).
-3. Paste this as the description:
-
-> QuizLock is a self-control app that helps people reduce compulsive scrolling. Users choose their own distracting apps using FamilyActivityPicker with individual authorization (.individual), and the app blocks them with ManagedSettings shields. To unlock an app for a short, user-chosen time, the user solves a quick puzzle (chess, Sudoku, math or word game). DeviceActivity re-applies the block when the time ends. All Screen Time data, app tokens and settings stay on the device. Nothing is sent to a server, there are no accounts and no tracking. It is for adults managing their own phone use, not for monitoring others.
-
-4. **Screenshot each form before you press submit.** Apple sends no confirmation.
-5. When the approval email arrives, check whether it says **team** (it covers future apps too) or lists specific IDs, and tell Dinis.
+### ☐ 6. Request the Screen Time permission (the slow one) ✅ submitted 21 Nov 2026
+1. While logged in as the Account Holder, go to **developer.apple.com/contact/request/family-controls-distribution**.
+2. It's **one request for the whole developer account** (not per bundle ID). Check the details and click **Get Entitlement**. It then shows "Reviewing submission".
+3. Wait for Apple's email (days to a few weeks). Once approved, "Family Controls (Development)" on the App IDs becomes Distribution; nothing needs re-registering.
+4. Meanwhile, continue with Part 2. Development builds from Xcode already work on a real iPhone.
 
 ## PART 2: Do while waiting for approval
 
