@@ -41,6 +41,26 @@
         }
       }
     },
+    "%@ every %lld %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ a cada %2$lld %3$@"
+          }
+        }
+      }
+    },
+    "%@ is active. Thank you!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O %@ está ativo. Obrigado!"
+          }
+        }
+      }
+    },
     "%@ is locked by %@.\nTap START PUZZLE, then open %@.": {
       "localizations": {
         "pt-PT": {
@@ -117,6 +137,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@, este é o teu plano"
+          }
+        }
+      }
+    },
+    "%@/day": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@/dia"
+          }
+        }
+      }
+    },
+    "%@/month": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@/mês"
+          }
+        }
+      }
+    },
+    "%@/week": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@/semana"
+          }
+        }
+      }
+    },
+    "%@/year": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@/ano"
           }
         }
       }
@@ -261,22 +321,12 @@
         }
       }
     },
-    "%lld of %lld free app unlocks remaining": {
+    "%lld of %lld free unlocks left": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
             "value": "Restam %1$lld de %2$lld desbloqueios grátis"
-          }
-        }
-      }
-    },
-    "%lld of your %lld free unlocks are left. Get lifetime access with a one-time purchase.": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restam-te %1$lld de %2$lld desbloqueios grátis. Obtém acesso vitalício com uma compra única."
           }
         }
       }
@@ -287,16 +337,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld por cento"
-          }
-        }
-      }
-    },
-    "%lld percent off": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld por cento de desconto"
           }
         }
       }
@@ -387,6 +427,26 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "%lld%% off your first year": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% de desconto no primeiro ano"
+          }
+        }
+      }
+    },
+    "%lld-day free trial": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teste grátis de %lld dias"
           }
         }
       }
@@ -561,6 +621,16 @@
         }
       }
     },
+    "A one-time offer, just for now.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma oferta única, só agora."
+          }
+        }
+      }
+    },
     "A whole month of choosing yourself over the feed. Incredible.": {
       "localizations": {
         "pt-PT": {
@@ -587,6 +657,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "ARITMÉTICA"
+          }
+        }
+      }
+    },
+    "Active": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativo"
+          }
+        }
+      }
+    },
+    "Active · ends %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativo · termina a %@"
+          }
+        }
+      }
+    },
+    "Active · renews %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativo · renova a %@"
           }
         }
       }
@@ -631,12 +731,12 @@
         }
       }
     },
-    "All 4 puzzle games": {
+    "All 4 puzzle games + daily puzzle": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "Os 4 jogos de puzzle"
+            "value": "Os 4 jogos de puzzle + puzzle diário"
           }
         }
       }
@@ -657,16 +757,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Todos os puzzles"
-          }
-        }
-      }
-    },
-    "Already bought lifetime access?": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Já compraste o acesso vitalício?"
           }
         }
       }
@@ -801,6 +891,26 @@
         }
       }
     },
+    "Auto-renews. Cancel anytime in Settings.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renova automaticamente. Cancela quando quiseres nas Definições."
+          }
+        }
+      }
+    },
+    "BEST VALUE": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MELHOR VALOR"
+          }
+        }
+      }
+    },
     "Back": {
       "localizations": {
         "pt-PT": {
@@ -817,6 +927,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Estar mais presente"
+          }
+        }
+      }
+    },
+    "Billed %@, starting today. No free trial with this offer.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cobrado %@ a partir de hoje. Esta oferta não inclui teste grátis."
           }
         }
       }
@@ -1051,6 +1171,16 @@
         }
       }
     },
+    "Claim my discount": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quero o desconto"
+          }
+        }
+      }
+    },
     "Classic": {
       "localizations": {
         "pt-PT": {
@@ -1171,12 +1301,12 @@
         }
       }
     },
-    "Couldn't load prices. Try again.": {
+    "Couldn't load prices": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não foi possível carregar os preços. Tenta novamente."
+            "value": "Não foi possível carregar os preços"
           }
         }
       }
@@ -1207,6 +1337,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Escuro"
+          }
+        }
+      }
+    },
+    "Day %lld: we'll remind you": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia %lld: avisamos-te"
+          }
+        }
+      }
+    },
+    "Day %lld: you're billed %@, cancel anytime before": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia %1$lld: é-te cobrado %2$@, cancela quando quiseres antes disso"
           }
         }
       }
@@ -1881,16 +2031,6 @@
         }
       }
     },
-    "Instead of the standard %@. One-time purchase.": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Em vez dos habituais %@. Compra única."
-          }
-        }
-      }
-    },
     "It really helps": {
       "localizations": {
         "pt-PT": {
@@ -1907,6 +2047,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mantém pelo menos um puzzle ativo."
+          }
+        }
+      }
+    },
+    "Keep earning unlocks with puzzles with %@.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continua a ganhar desbloqueios com puzzles com o %@."
           }
         }
       }
@@ -1991,16 +2141,6 @@
         }
       }
     },
-    "Launch offer": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oferta de lançamento"
-          }
-        }
-      }
-    },
     "Learn something every day": {
       "localizations": {
         "pt-PT": {
@@ -2027,46 +2167,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Subir de nível"
-          }
-        }
-      }
-    },
-    "Lifetime Access": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acesso vitalício"
-          }
-        }
-      }
-    },
-    "Lifetime Access · Active": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acesso vitalício · Ativo"
-          }
-        }
-      }
-    },
-    "Lifetime access for %@": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acesso vitalício por %@"
-          }
-        }
-      }
-    },
-    "Lifetime access is active. Thank you!": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O acesso vitalício está ativo. Obrigado!"
           }
         }
       }
@@ -2231,6 +2331,16 @@
         }
       }
     },
+    "Manage subscription": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerir subscrição"
+          }
+        }
+      }
+    },
     "Mate in 1–2 · %lld puzzles": {
       "localizations": {
         "pt-PT": {
@@ -2301,6 +2411,16 @@
         }
       }
     },
+    "Monthly": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mensal"
+          }
+        }
+      }
+    },
     "More options": {
       "localizations": {
         "pt-PT": {
@@ -2361,6 +2481,16 @@
         }
       }
     },
+    "No active subscription was found for this Apple ID.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi encontrada nenhuma subscrição ativa para esta conta Apple."
+          }
+        }
+      }
+    },
     "No apps locked yet": {
       "localizations": {
         "pt-PT": {
@@ -2377,16 +2507,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ainda sem bloqueios"
-          }
-        }
-      }
-    },
-    "No previous purchase was found for this Apple ID.": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Não foi encontrada nenhuma compra anterior para esta conta Apple."
           }
         }
       }
@@ -2521,16 +2641,6 @@
         }
       }
     },
-    "OFF": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DESC."
-          }
-        }
-      }
-    },
     "OK": {
       "localizations": {
         "pt-PT": {
@@ -2567,26 +2677,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ativo até às %@"
-          }
-        }
-      }
-    },
-    "One-time lifetime access": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acesso vitalício com compra única"
-          }
-        }
-      }
-    },
-    "One-time purchase. No subscription.": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Compra única. Sem subscrição."
           }
         }
       }
@@ -2671,26 +2761,6 @@
         }
       }
     },
-    "Pay once, keep lifetime access": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Paga uma vez, acesso para sempre"
-          }
-        }
-      }
-    },
-    "Pay standard price · %@": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pagar preço normal · %@"
-          }
-        }
-      }
-    },
     "Permission preview": {
       "localizations": {
         "pt-PT": {
@@ -2737,6 +2807,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vírgula"
+          }
+        }
+      }
+    },
+    "Practice anytime with %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pratica quando quiseres com o %@"
           }
         }
       }
@@ -2981,6 +3061,16 @@
         }
       }
     },
+    "Regular price %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preço normal %@"
+          }
+        }
+      }
+    },
     "Reminders": {
       "localizations": {
         "pt-PT": {
@@ -3027,6 +3117,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Restaurar compras"
+          }
+        }
+      }
+    },
+    "Retry": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar de novo"
           }
         }
       }
@@ -3091,6 +3191,16 @@
         }
       }
     },
+    "Save %lld%%": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poupa %lld%%"
+          }
+        }
+      }
+    },
     "Saved this week": {
       "localizations": {
         "pt-PT": {
@@ -3127,6 +3237,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Faz menos scroll."
+          }
+        }
+      }
+    },
+    "See plans": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver planos"
           }
         }
       }
@@ -3401,12 +3521,22 @@
         }
       }
     },
-    "Standard lifetime price": {
+    "Start %lld-day free trial": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "Preço vitalício normal"
+            "value": "Começar teste grátis de %lld dias"
+          }
+        }
+      }
+    },
+    "Start free trial": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Começar teste grátis"
           }
         }
       }
@@ -3441,6 +3571,16 @@
         }
       }
     },
+    "Streaks, stats and widgets": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sequências, estatísticas e widgets"
+          }
+        }
+      }
+    },
     "Strict mode": {
       "localizations": {
         "pt-PT": {
@@ -3467,6 +3607,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modo rigoroso ativo até às %@"
+          }
+        }
+      }
+    },
+    "Subscribe": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscrever"
+          }
+        }
+      }
+    },
+    "Subscribe for %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscrever por %@"
+          }
+        }
+      }
+    },
+    "Subscribed on another device?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscreveste noutro dispositivo?"
           }
         }
       }
@@ -3771,6 +3941,16 @@
         }
       }
     },
+    "Today: full access": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoje: acesso total"
+          }
+        }
+      }
+    },
     "Try": {
       "localizations": {
         "pt-PT": {
@@ -3851,22 +4031,12 @@
         }
       }
     },
-    "Unlimited puzzle-earned unlocks": {
+    "Unlimited unlocks": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "Desbloqueios ilimitados ganhos com puzzles"
-          }
-        }
-      }
-    },
-    "Unlock Lifetime Access": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Desbloquear acesso vitalício"
+            "value": "Desbloqueios ilimitados"
           }
         }
       }
@@ -4121,12 +4291,12 @@
         }
       }
     },
-    "YOUR LIFETIME OFFER": {
+    "Yearly": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "A TUA OFERTA VITALÍCIA"
+            "value": "Anual"
           }
         }
       }
@@ -4201,6 +4371,16 @@
         }
       }
     },
+    "You won't be charged if you cancel before then in Settings → Apple ID → Subscriptions.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não serás cobrado se cancelares antes disso em Definições → Conta Apple → Subscrições."
+          }
+        }
+      }
+    },
     "You're all set": {
       "localizations": {
         "pt-PT": {
@@ -4241,6 +4421,16 @@
         }
       }
     },
+    "You've used your %lld free unlocks": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Já usaste os teus %lld desbloqueios grátis"
+          }
+        }
+      }
+    },
     "Your apps · %lld": {
       "localizations": {
         "pt-PT": {
@@ -4261,12 +4451,22 @@
         }
       }
     },
-    "Your first %lld app unlocks are free. After that, lifetime access is a one-time purchase. Standalone puzzle practice requires lifetime access.": {
+    "Your first %lld app unlocks are free. After that, unlimited unlocks and standalone puzzle practice need %@, an optional subscription.": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "Os primeiros %lld desbloqueios são grátis. Depois disso, o acesso vitalício é uma compra única. Praticar puzzles à parte requer acesso vitalício."
+            "value": "Os primeiros %1$lld desbloqueios são grátis. Depois disso, desbloqueios ilimitados e praticar puzzles à parte requerem o %2$@, uma subscrição opcional."
+          }
+        }
+      }
+    },
+    "Your free trial ends in 2 days": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O teu teste grátis termina daqui a 2 dias"
           }
         }
       }
@@ -4297,6 +4497,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "O teu plano"
+          }
+        }
+      }
+    },
+    "Your plan is ready": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O teu plano está pronto"
+          }
+        }
+      }
+    },
+    "Your plan is ready, %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O teu plano está pronto, %@"
           }
         }
       }
@@ -4381,6 +4601,16 @@
         }
       }
     },
+    "days": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dias"
+          }
+        }
+      }
+    },
     "hours": {
       "localizations": {
         "pt-PT": {
@@ -4397,6 +4627,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "min"
+          }
+        }
+      }
+    },
+    "months": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "meses"
           }
         }
       }
@@ -4441,12 +4681,42 @@
         }
       }
     },
+    "then %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "depois %@"
+          }
+        }
+      }
+    },
     "today": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
             "value": "hoje"
+          }
+        }
+      }
+    },
+    "weeks": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "semanas"
+          }
+        }
+      }
+    },
+    "years": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "anos"
           }
         }
       }

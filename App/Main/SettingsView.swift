@@ -1,3 +1,4 @@
+import StoreKit
 import MessageUI
 import SwiftUI
 import UIKit
@@ -61,6 +62,7 @@ struct SettingsView: View {
     @State private var link: URL?
     @State private var showMail = false
     @State private var restoreMessage: String?
+    @State private var showManageSubscriptions = false
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -77,7 +79,7 @@ struct SettingsView: View {
                 remindersSection
                 appearanceSection
                 if model.notificationsDenied { notificationsOffCard }
-                lifetimeCard
+                proCard
                 supportSection
                 // No "Analytics" / "Ad measurement" sections: the app has no analytics or ads code and its
                 // App Privacy label is "Data Not Collected". If you add an SDK later, bring the sections back
@@ -115,6 +117,7 @@ struct SettingsView: View {
                          body: "\n\n—\n\(Brand.appName) \(appVersion) · iOS \(UIDevice.current.systemVersion)") { showMail = false }
                 .ignoresSafeArea()
         }
+        .manageSubscriptionsSheet(isPresented: $showManageSubscriptions)
         .alert("Restore Purchases", isPresented: Binding(get: { restoreMessage != nil }, set: { if !$0 { restoreMessage = nil } })) {
             Button("OK", role: .cancel) {}
         } message: {
@@ -205,7 +208,7 @@ struct SettingsView: View {
             VStack(spacing: 0) {
                 Button { restore() } label: {
                     InfoRow(icon: AnyView(Image(systemName: "arrow.clockwise.circle").appFont(22).foregroundStyle(palette.accent)),
-                            title: "Restore Purchases", subtitle: "Already bought lifetime access?")
+                            title: "Restore Purchases", subtitle: "Subscribed on another device?")
                         .padding(.vertical, 12)
                 }
                 .buttonStyle(.plain)
@@ -236,9 +239,9 @@ struct SettingsView: View {
     private func restore() {
         Task {
             await model.store.restore()
-            restoreMessage = model.settings.hasLifetime
-                ? "Lifetime access is active. Thank you!"
-                : "No previous purchase was found for this Apple ID."
+            restoreMessage = model.settings.isPro
+                ? String(localized: "\(Brand.subscriptionGroupName) is active. Thank you!")
+                : String(localized: "No active subscription was found for this Apple ID.")
         }
     }
 
@@ -402,40 +405,65 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: Lifetime
+    // MARK: QuizLock Pro
 
-    private var lifetimeCard: some View {
-        Button {
-            if !model.settings.hasLifetime { model.presentPaywall(.settings) }
-        } label: {
-            HStack(spacing: 14) {
-                Image(systemName: "lock.open.fill")
-                    .appFont(22)
-                    .foregroundStyle(palette.accent)
-                    .frame(width: 34)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(LocalizedStringKey(model.settings.hasLifetime ? "Lifetime Access · Active" : "Unlock Lifetime Access"))
-                        .appFont(17, .semibold)
-                        .foregroundStyle(palette.textPrimary)
-                    if !model.settings.hasLifetime {
-                        Text("\(model.settings.freeUnlocksRemaining) of \(Brand.freeUnlocks) free app unlocks remaining")
+    private var proCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Button {
+                if !model.settings.isPro { model.presentPaywall(.settings) }
+            } label: {
+                HStack(spacing: 14) {
+                    Image(systemName: "crown.fill")
+                        .appFont(22)
+                        .foregroundStyle(palette.accent)
+                        .frame(width: 34)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(verbatim: Brand.subscriptionGroupName)
+                            .appFont(17, .semibold)
+                            .foregroundStyle(palette.textPrimary)
+                        Text(proSubtitle)
                             .appFont(15)
                             .foregroundStyle(palette.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer()
+                    if model.settings.isPro {
+                        Image(systemName: "checkmark.seal.fill").appFont(20).foregroundStyle(palette.accent)
+                    } else {
+                        Image(systemName: "chevron.right").appFont(16, .bold).foregroundStyle(palette.accent)
                     }
                 }
-                Spacer()
-                if !model.settings.hasLifetime {
-                    Image(systemName: "chevron.right").appFont(16, .bold).foregroundStyle(palette.accent)
-                } else {
-                    Image(systemName: "checkmark.seal.fill").appFont(20).foregroundStyle(palette.accent)
-                }
+                .contentShape(Rectangle())
             }
-            .contentShape(Rectangle())
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("settings.proCard")
+            if model.settings.isPro {
+                Divider()
+                Button("Manage subscription") { showManageSubscriptions = true }
+                    .appFont(16, .semibold)
+                    .foregroundStyle(palette.accentText)
+                    .tapTarget()
+            }
         }
-        .buttonStyle(.plain)
         .card()
         .padding(.horizontal, 16)
         .padding(.top, 10)
+    }
+
+    /// Not subscribed: "3 of 5 free unlocks left · Start free trial". Subscribed: "Active · renews 21 Nov 2027".
+    private var proSubtitle: String {
+        let store = model.store
+        if model.settings.isPro {
+            guard let date = store.expirationDate?.formatted(date: .abbreviated, time: .omitted) else {
+                return String(localized: "Active")
+            }
+            return store.willAutoRenew ? String(localized: "Active · renews \(date)")
+                                       : String(localized: "Active · ends \(date)")
+        }
+        let left = String(localized: "\(model.settings.freeUnlocksRemaining) of \(Brand.freeUnlocks) free unlocks left")
+        let action = store.showsTrial ? String(localized: "Start free trial") : String(localized: "See plans")
+        return left + " · " + action
     }
 
     private var footerCard: some View {

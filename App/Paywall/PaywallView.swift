@@ -1,9 +1,10 @@
 import StoreKit
 import SwiftUI
 
-/// Lifetime paywall: Screen A ("Lifetime Access") → Screen B ("Launch offer").
-/// Both screens show the price, "One-time purchase", Restore Purchases, Terms of Use and Privacy Policy.
-/// Prices always come from StoreKit; if they can't load, we say so and offer a retry (never placeholder prices).
+/// QuizLock Pro paywall (auto-renewable subscriptions).
+/// Main screen: yearly (pre-selected, free trial when eligible) or monthly → on close, the one-time exit offer.
+/// Every screen shows price + period, "Auto-renews. Cancel anytime in Settings.", Restore Purchases,
+/// Terms of Use, Privacy Policy and a visible close button. Prices, periods and the trial come from StoreKit.
 struct PaywallView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
@@ -14,17 +15,16 @@ struct PaywallView: View {
     var body: some View {
         ZStack {
             if showOffer {
-                OfferScreen(link: $link,
-                            onBuy: { buy(model.store.promo) },
-                            onRestore: { restore() },
-                            onClose: { close() })
+                ExitOfferScreen(link: $link,
+                                onBuy: { buy(model.store.yearlyOffer) },
+                                onRestore: { restore() },
+                                onClose: { close() })
                     .transition(reduceMotion ? .opacity : .push(forward: true))
             } else {
-                LifetimeScreen(link: $link,
-                               onContinue: { withAnimation(.easeInOut(duration: 0.35)) { showOffer = true } },
-                               onBuyStandard: { buy(model.store.standard) },
-                               onRestore: { restore() },
-                               onClose: { close() })
+                PlansScreen(link: $link,
+                            onBuy: { buy($0) },
+                            onRestore: { restore() },
+                            onClose: { closeMain() })
                     .transition(reduceMotion ? .opacity : .push(forward: false))
             }
         }
@@ -35,13 +35,24 @@ struct PaywallView: View {
             Text(model.store.lastError ?? "")
         }
         .task { await model.store.loadProductsIfNeeded() }
-        .onChange(of: model.settings.hasLifetime) { _, owned in
-            if owned { close() }
+        .onChange(of: model.settings.isPro) { _, pro in
+            if pro { close() }
         }
     }
 
     private var errorBinding: Binding<Bool> {
         Binding(get: { model.store.lastError != nil }, set: { if !$0 { model.store.lastError = nil } })
+    }
+
+    /// Closing the main paywall shows the exit offer once (if it loaded); after that it just closes.
+    private func closeMain() {
+        if !model.settings.exitOfferShown, !model.settings.isPro, model.store.yearlyOffer != nil,
+           model.store.offerDiscountPercent != nil {
+            model.updateSettings { $0.exitOfferShown = true }
+            withAnimation(.easeInOut(duration: 0.35)) { showOffer = true }
+        } else {
+            close()
+        }
     }
 
     private func close() {
@@ -58,18 +69,21 @@ struct PaywallView: View {
     private func restore() {
         Task {
             await model.store.restore()
-            if model.settings.hasLifetime { close() }
+            if model.settings.isPro {
+                close()
+            } else if model.store.lastError == nil {
+                model.store.lastError = String(localized: "No active subscription was found for this Apple ID.")
+            }
         }
     }
 }
 
 // MARK: - Shared pieces
 
-/// "Couldn't load prices. Try again" with a retry button.
+/// "Couldn't load prices" with a Retry button (never placeholder prices).
 private struct PricesUnavailable: View {
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
-    var dark = false
 
     var body: some View {
         VStack(spacing: 12) {
@@ -77,89 +91,129 @@ private struct PricesUnavailable: View {
                 ProgressView().controlSize(.large)
                     .accessibilityLabel("Loading prices")
             } else {
-                Text("Couldn't load prices. Try again.")
+                Text("Couldn't load prices")
                     .appFont(17, .semibold)
-                    .foregroundStyle(dark ? Color.textPrimary : palette.textPrimary)
+                    .foregroundStyle(palette.textPrimary)
                     .multilineTextAlignment(.center)
                 Button {
                     Task { await model.store.loadProducts() }
                 } label: {
-                    Label("Try again", systemImage: "arrow.clockwise")
+                    Label("Retry", systemImage: "arrow.clockwise")
                         .appFont(16, .semibold)
-                        .foregroundStyle(Color.brandDeep)
+                        .foregroundStyle(palette.accentText)
                         .tapTarget()
                 }
+                .accessibilityIdentifier("paywall.retry")
             }
         }
         .frame(maxWidth: .infinity, minHeight: 90)
     }
 }
 
-/// Restore Purchases + Terms of Use + Privacy Policy.
+/// "Auto-renews. Cancel anytime in Settings." + Restore Purchases + Terms of Use + Privacy Policy.
 private struct PaywallFooter: View {
     @Binding var link: URL?
     let onRestore: () -> Void
-    var color: Color = .brandDeep
+    @Environment(\.palette) private var palette
 
     var body: some View {
-        VStack(spacing: 6) {
-            Button("Restore Purchases", action: onRestore)
-                .tapTarget()
-            HStack(spacing: 24) {
+        VStack(spacing: 4) {
+            Text("Auto-renews. Cancel anytime in Settings.")
+                .appFont(13)
+                .foregroundStyle(palette.textSecondary)
+                .multilineTextAlignment(.center)
+            HStack(spacing: 18) {
+                Button("Restore Purchases", action: onRestore).tapTarget()
                 Button("Terms of Use") { link = Brand.termsURL }.tapTarget()
                 Button("Privacy Policy") { link = Brand.privacyURL }.tapTarget()
             }
+            .appFont(13, .semibold)
+            .foregroundStyle(palette.accentText)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
         }
-        .appFont(15, .medium)
-        .foregroundStyle(color)
     }
 }
 
-// MARK: - Screen A
+private struct PaywallCloseButton: View {
+    let action: () -> Void
+    @Environment(\.palette) private var palette
 
-private struct LifetimeScreen: View {
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "xmark")
+                .appFont(17, .bold)
+                .foregroundStyle(palette.textSecondary)
+                .frame(width: 36, height: 36)
+                .background(palette.separator.opacity(0.6), in: Circle())
+                .frame(width: 48, height: 48)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel("Close")
+        .accessibilityIdentifier("paywall.close")
+    }
+}
+
+// MARK: - Main screen
+
+private enum Plan { case yearly, monthly }
+
+private struct PlansScreen: View {
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
     @Binding var link: URL?
-    let onContinue: () -> Void
-    let onBuyStandard: () -> Void
+    let onBuy: (Product?) -> Void
     let onRestore: () -> Void
     let onClose: () -> Void
+    @State private var plan: Plan = .yearly
+
+    private var store: Store { model.store }
+    private var selectedProduct: Product? { plan == .yearly ? store.yearly : store.monthly }
+    private var trialOnSelected: Bool { plan == .yearly && store.showsTrial }
 
     var body: some View {
         VStack(spacing: 0) {
             HStack {
                 Spacer()
-                CloseButton(action: onClose)
+                PaywallCloseButton(action: onClose)
             }
             .padding(.horizontal, 12)
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 14) {
-                    IconTile(systemName: "lock.open.fill", size: 64)
-                    Text("Lifetime Access")
-                        .appFont(36, .bold)
+                VStack(spacing: 16) {
+                    AssetImage(name: "mascot_pointing", placeholderSymbol: "face.smiling", contentMode: .fit)
+                        .frame(height: 110)
+                        .accessibilityHidden(true)
+                    Text(headline)
+                        .appFont(30, .bold)
                         .foregroundStyle(palette.textPrimary)
                         .multilineTextAlignment(.center)
-                    Text("\(model.settings.freeUnlocksRemaining) of your \(Brand.freeUnlocks) free unlocks are left. Get lifetime access with a one-time purchase.")
-                        .appFont(18)
-                        .foregroundStyle(palette.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 12)
-                    priceCard.padding(.top, 8)
+                        .accessibilityIdentifier("paywall.title")
+                    if store.yearly != nil && store.monthly != nil {
+                        plans
+                    } else {
+                        PricesUnavailable()
+                    }
+                    benefits
+                    if trialOnSelected, let days = store.trialDays, let price = store.pricePerPeriod(store.yearly) {
+                        TrialTimeline(trialDays: days, price: price)
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 12)
             }
-            VStack(spacing: 10) {
-                PrimaryButton(title: "Continue", isLoading: model.store.isPurchasing, action: onContinue)
-                if let price = model.store.standardPrice {
-                    Button("Pay standard price · \(price)", action: onBuyStandard)
-                        .appFont(16, .semibold)
-                        .foregroundStyle(palette.accentText)
-                        .disabled(model.store.isPurchasing)
-                        .tapTarget()
+            VStack(spacing: 6) {
+                PrimaryButton(title: buttonTitle, isLoading: store.isPurchasing,
+                              isEnabled: selectedProduct != nil && !store.isPurchasing) {
+                    onBuy(selectedProduct)
                 }
-                PaywallFooter(link: $link, onRestore: onRestore, color: palette.accentText)
+                .accessibilityIdentifier("paywall.buy")
+                if let price = store.pricePerPeriod(selectedProduct) {
+                    // The amount that will be billed, right under the button.
+                    Text(trialOnSelected ? String(localized: "then \(price)") : price)
+                        .appFont(17, .semibold)
+                        .foregroundStyle(palette.textPrimary)
+                }
+                PaywallFooter(link: $link, onRestore: onRestore)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 8)
@@ -167,51 +221,184 @@ private struct LifetimeScreen: View {
         .screenBackground()
     }
 
-    private var priceCard: some View {
-        VStack(spacing: 10) {
-            if let price = model.store.standardPrice {
-                Text(price)
-                    .appFont(64, .bold)
-                    .foregroundStyle(palette.textPrimary)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(1)
-                Text("Standard lifetime price").appFont(16).foregroundStyle(palette.textSecondary)
-            } else {
-                PricesUnavailable()
-            }
-            Text("One-time purchase. No subscription.").appFont(16).foregroundStyle(palette.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.top, 6)
-            Divider().padding(.vertical, 8)
-            VStack(alignment: .leading, spacing: 14) {
-                feature("Unlimited puzzle-earned unlocks")
-                feature("All 4 puzzle games")
-                feature("Pay once, keep lifetime access")
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+    private var headline: String {
+        switch model.paywallReason {
+        case .onboarding?:
+            let name = model.profile.trimmedName
+            return name.isEmpty ? String(localized: "Your plan is ready") : String(localized: "Your plan is ready, \(name)")
+        case .unlockLimit?:
+            return String(localized: "You've used your \(Brand.freeUnlocks) free unlocks")
+        case .practice?:
+            return String(localized: "Practice anytime with \(Brand.subscriptionGroupName)")
+        default:
+            return Brand.subscriptionGroupName
         }
-        .card(padding: 28, radius: 28)
     }
 
-    private func feature(_ text: LocalizedStringKey) -> some View {
+    private var buttonTitle: String {
+        if trialOnSelected, let days = store.trialDays {
+            return String(localized: "Start \(days)-day free trial")
+        }
+        if let price = store.pricePerPeriod(selectedProduct) {
+            return String(localized: "Subscribe for \(price)")
+        }
+        return String(localized: "Subscribe")
+    }
+
+    private var plans: some View {
+        VStack(spacing: 12) {
+            PlanCard(title: String(localized: "Yearly"),
+                     price: store.pricePerPeriod(store.yearly) ?? "",
+                     detail: store.showsTrial ? store.trialDays.map { String(localized: "\($0)-day free trial") } : nil,
+                     badge: yearlyBadge,
+                     selected: plan == .yearly) { plan = .yearly }
+                .accessibilityIdentifier("paywall.plan.yearly")
+            PlanCard(title: String(localized: "Monthly"),
+                     price: store.pricePerPeriod(store.monthly) ?? "",
+                     detail: nil, badge: nil,
+                     selected: plan == .monthly) { plan = .monthly }
+                .accessibilityIdentifier("paywall.plan.monthly")
+        }
+    }
+
+    /// "BEST VALUE · $3.33/month · Save 67%" (all computed from StoreKit prices).
+    private var yearlyBadge: String {
+        var parts = [String(localized: "BEST VALUE")]
+        if let perMonth = store.yearlyMonthlyEquivalent { parts.append(String(localized: "\(perMonth)/month")) }
+        if let save = store.yearlySavingsPercent { parts.append(String(localized: "Save \(save)%")) }
+        return parts.joined(separator: " · ")
+    }
+
+    private var benefits: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            benefit("lock.open.fill", "Unlimited unlocks")
+            benefit("puzzlepiece.fill", "All 4 puzzle games + daily puzzle")
+            benefit("flame.fill", "Streaks, stats and widgets")
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .card(padding: 18)
+    }
+
+    private func benefit(_ symbol: String, _ text: LocalizedStringKey) -> some View {
         HStack(spacing: 14) {
-            Image(systemName: "checkmark.circle.fill")
-                .appFont(18)
+            Image(systemName: symbol)
+                .appFont(17, .semibold)
                 .foregroundStyle(palette.accent)
+                .frame(width: 34, height: 34)
+                .background(palette.tint, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                 .accessibilityHidden(true)
             Text(text).appFont(17, .medium).foregroundStyle(palette.textPrimary)
         }
     }
 }
 
-// MARK: - Screen B
+private struct PlanCard: View {
+    let title: String
+    let price: String
+    let detail: String?
+    let badge: String?
+    let selected: Bool
+    let action: () -> Void
+    @Environment(\.palette) private var palette
 
-private struct OfferScreen: View {
+    var body: some View {
+        Button {
+            Haptics.tap()
+            withAnimation(.selectionSpring) { action() }
+        } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                if let badge {
+                    Text(badge)
+                        .appFont(12, .heavy)
+                        .foregroundStyle(palette.onAccent)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(palette.accent, in: Capsule())
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+                HStack(alignment: .center, spacing: 12) {
+                    RadioMark(isSelected: selected)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(title).appFont(17, .semibold).foregroundStyle(palette.textPrimary)
+                        if let detail {
+                            Text(detail).appFont(14).foregroundStyle(palette.textSecondary)
+                        }
+                    }
+                    Spacer()
+                    Text(price)
+                        .appFont(19, .bold)
+                        .foregroundStyle(palette.textPrimary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+            }
+            .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(palette.card, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .strokeBorder(selected ? palette.accent : palette.separator, lineWidth: selected ? 2.5 : 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+    }
+}
+
+/// "Today: full access" → "Day 5: we'll remind you" → "Day 7: you're billed $39.99/year, cancel anytime before".
+private struct TrialTimeline: View {
+    let trialDays: Int
+    let price: String
+    @Environment(\.palette) private var palette
+
+    private var reminderDay: Int { max(1, trialDays - Brand.trialReminderDaysBeforeEnd) }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            row("lock.open.fill", String(localized: "Today: full access"), last: false)
+            row("bell.fill", String(localized: "Day \(reminderDay): we'll remind you"), last: false)
+            row("creditcard.fill", String(localized: "Day \(trialDays): you're billed \(price), cancel anytime before"), last: true)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .card(padding: 18)
+        .accessibilityElement(children: .combine)
+    }
+
+    private func row(_ symbol: String, _ text: String, last: Bool) -> some View {
+        HStack(alignment: .top, spacing: 14) {
+            VStack(spacing: 0) {
+                Image(systemName: symbol)
+                    .appFont(14, .bold)
+                    .foregroundStyle(palette.onAccent)
+                    .frame(width: 30, height: 30)
+                    .background(palette.accent, in: Circle())
+                if !last {
+                    Rectangle().fill(palette.accent.opacity(0.35)).frame(width: 3, height: 22)
+                }
+            }
+            .accessibilityHidden(true)
+            Text(text)
+                .appFont(16, .medium)
+                .foregroundStyle(palette.textPrimary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 5)
+        }
+    }
+}
+
+// MARK: - Exit offer (shown once)
+
+private struct ExitOfferScreen: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.palette) private var palette
     @Binding var link: URL?
     let onBuy: () -> Void
     let onRestore: () -> Void
     let onClose: () -> Void
+
+    private var store: Store { model.store }
 
     var body: some View {
         ZStack {
@@ -220,104 +407,72 @@ private struct OfferScreen: View {
             VStack(spacing: 0) {
                 HStack {
                     Spacer()
-                    Button(action: onClose) {
-                        Image(systemName: "xmark")
-                            .appFont(20, .semibold)
-                            .foregroundStyle(Color.brandDeep)
-                            .frame(width: 52, height: 52)
-                            .background(Color.brand.opacity(0.16), in: Circle())
-                    }
-                    .accessibilityLabel("Close")
+                    PaywallCloseButton(action: onClose)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 12)
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 0) {
-                        Image(systemName: "sparkles")
-                            .appFont(44, .semibold)
-                            .foregroundStyle(Color(hex: 0xF0A01A))
+                    VStack(spacing: 14) {
+                        AssetImage(name: "mascot_pointing", placeholderSymbol: "face.smiling", contentMode: .fit)
+                            .frame(height: 120)
                             .accessibilityHidden(true)
-                        Text("Launch offer")
-                            .appFont(20, .semibold)
-                            .foregroundStyle(Color.textPrimary)
-                            .padding(.top, 16)
-                        if let percent = model.store.discountPercent, let promo = model.store.promoPrice,
-                           let standard = model.store.standardPrice {
-                            Text(verbatim: "\(percent)%")
-                                .appFont(120, .black, design: .rounded)
-                                .foregroundStyle(Color.brand)
-                                .minimumScaleFactor(0.5)
-                                .lineLimit(1)
-                                .padding(.top, 4)
-                                .accessibilityLabel("\(percent) percent off")
-                            Text("OFF")
-                                .appFont(48, .black, design: .rounded)
-                                .tracking(10)
-                                .foregroundStyle(Color.brand)
-                                .offset(y: -10)
-                                .accessibilityHidden(true)
-                            Text("Lifetime access for \(promo)")
-                                .appFont(21, .semibold)
-                                .foregroundStyle(Color.textPrimary)
+                        if let percent = store.offerDiscountPercent,
+                           let offerPrice = store.pricePerPeriod(store.yearlyOffer),
+                           let regular = store.pricePerPeriod(store.yearly) {
+                            Text("\(percent)% off your first year")
+                                .appFont(34, .black, design: .rounded)
+                                .foregroundStyle(Color.brandDeep)
                                 .multilineTextAlignment(.center)
-                            Text("Instead of the standard \(standard). One-time purchase.")
+                                .accessibilityIdentifier("paywall.offer.title")
+                            Text("A one-time offer, just for now.")
+                                .appFont(17)
+                                .foregroundStyle(Color.textSecondary)
+                            VStack(spacing: 6) {
+                                Text(regular)
+                                    .appFont(17)
+                                    .strikethrough()
+                                    .foregroundStyle(Color.textSecondary)
+                                    .accessibilityLabel(String(localized: "Regular price \(regular)"))
+                                Text(offerPrice)
+                                    .appFont(36, .bold)
+                                    .foregroundStyle(Color.textPrimary)
+                                    .minimumScaleFactor(0.6)
+                                    .lineLimit(1)
+                                Text(Brand.subscriptionGroupName + " · " + String(localized: "Yearly"))
+                                    .appFont(15, .semibold)
+                                    .foregroundStyle(Color.textSecondary)
+                            }
+                            .padding(.vertical, 18)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white.opacity(0.7), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                    .strokeBorder(Color.brand.opacity(0.4), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
+                            )
+                            Text("Billed \(offerPrice), starting today. No free trial with this offer.")
                                 .appFont(15)
                                 .foregroundStyle(Color.textSecondary)
                                 .multilineTextAlignment(.center)
-                                .padding(.top, 4)
                         } else {
-                            PricesUnavailable(dark: true).padding(.top, 20)
+                            PricesUnavailable()
                         }
-                        ticket.padding(.top, 20)
-                        Text("Thank you for supporting \(Brand.appName)")
-                            .appFont(17, .semibold)
-                            .foregroundStyle(Color.brandDeep)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, 18)
                     }
                     .padding(.horizontal, 24)
-                    .padding(.top, 8)
                 }
-                Button(action: onBuy) {
-                    HStack(spacing: 10) {
-                        if model.store.isPurchasing { ProgressView().tint(.white) }
-                        Text("Apply discount").appFont(19, .bold)
+                VStack(spacing: 6) {
+                    PrimaryButton(title: String(localized: "Claim my discount"), isLoading: store.isPurchasing,
+                                  isEnabled: store.yearlyOffer != nil && !store.isPurchasing, action: onBuy)
+                        .accessibilityIdentifier("paywall.offer.buy")
+                    if let offerPrice = store.pricePerPeriod(store.yearlyOffer) {
+                        Text(offerPrice).appFont(17, .semibold).foregroundStyle(Color.textPrimary)
                     }
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: 64)
-                    .background(Color.brand, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-                    .shadow(color: Color.brandDeep.opacity(0.35), radius: 0, y: 5)
+                    PaywallFooter(link: $link, onRestore: onRestore)
                 }
-                .buttonStyle(PressableStyle())
-                .disabled(model.store.isPurchasing || model.store.promo == nil)
-                .opacity(model.store.promo == nil ? 0.5 : 1)
                 .padding(.horizontal, 24)
-                PaywallFooter(link: $link, onRestore: onRestore)
-                    .padding(.top, 6)
-                    .padding(.bottom, 8)
+                .padding(.bottom, 8)
             }
         }
         .environment(\.colorScheme, .light)
-    }
-
-    private var ticket: some View {
-        VStack(spacing: 8) {
-            Text("YOUR LIFETIME OFFER")
-                .appFont(14, .semibold)
-                .tracking(3)
-                .foregroundStyle(Color.textSecondary)
-            HStack(spacing: 10) {
-                Text(verbatim: "🎟").appFont(18).accessibilityHidden(true)
-                Text("One-time lifetime access").appFont(17, .semibold).foregroundStyle(Color.textPrimary)
-            }
-        }
-        .padding(.horizontal, 30)
-        .padding(.vertical, 16)
-        .background(Color.white.opacity(0.55), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .strokeBorder(Color.brand.opacity(0.4), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
-        )
+        .environment(\.palette, .classic)
     }
 }
 

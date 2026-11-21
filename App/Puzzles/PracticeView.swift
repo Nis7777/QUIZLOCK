@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Standalone practice ("Try") from the Puzzles tab. Requires lifetime access.
+/// Standalone practice ("Try") from the Puzzles tab. Requires QuizLock Pro.
 struct PracticeView: View {
     let game: GameID
     @Environment(AppModel.self) private var model

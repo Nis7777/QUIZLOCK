@@ -10,8 +10,15 @@ public enum Brand {
     public static let supportEmail = "nismagina@gmail.com"
     public static let termsURL = URL(string: "https://nis7777.github.io/lockfeeddupe/terms.html") ?? URL(fileURLWithPath: "/")
     public static let privacyURL = URL(string: "https://nis7777.github.io/lockfeeddupe/privacy.html") ?? URL(fileURLWithPath: "/")
-    public static let iapLifetimeStandard = "com.dinismagina.quizlock.lifetime"       // $29.99 non-consumable
-    public static let iapLifetimePromo = "com.dinismagina.quizlock.lifetime.discount" // $4.99 non-consumable
+    /// Auto-renewable subscriptions, all in the App Store Connect subscription group "QuizLock Pro".
+    /// Prices and the free trial live in App Store Connect / Products.storekit; the app always reads them from StoreKit.
+    public static let subscriptionGroupName = "QuizLock Pro"
+    public static let iapProYearly = "com.dinismagina.quizlock.pro.yearly"            // yearly, 7-day free trial (intro offer)
+    public static let iapProMonthly = "com.dinismagina.quizlock.pro.monthly"          // monthly, no trial
+    public static let iapProYearlyOffer = "com.dinismagina.quizlock.pro.yearly.offer" // yearly, exit offer only, no trial
+    public static let proProductIDs = [iapProYearly, iapProMonthly, iapProYearlyOffer]
+    /// The trial reminder fires this many days before the trial ends (day 5 of a 7-day trial).
+    public static let trialReminderDaysBeforeEnd = 2
     public static let freeUnlocks = 5
     /// Your app's numeric Apple ID from App Store Connect (App Information → Apple ID). Used by "Rate QuizLock".
     public static let appStoreID = "0000000000"

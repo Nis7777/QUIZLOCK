@@ -22,7 +22,7 @@ enum DemoData {
         settings.onboardingStep = onboardingScreen ? OnboardingStep.realityCheck.rawValue : nil
         settings.showAllSetBanner = false
         settings.simulatorAuthorized = true
-        settings.hasLifetime = true
+        settings.isPro = true
         settings.freeUnlocksUsed = 2
         settings.ratingRequested = true
         SharedStore.save(settings, .settings)

@@ -21,7 +21,7 @@ struct RewardView: View {
                         .overlay(RoundedRectangle(cornerRadius: 26, style: .continuous).strokeBorder(palette.accent.opacity(0.2), lineWidth: 1))
                     ScreenTitle(title: "Choose your\npuzzle reward",
                                 subtitle: "Choose how long your apps stay unlocked after you solve a puzzle.", size: 38)
-                    Text("Your first \(Brand.freeUnlocks) app unlocks are free. After that, lifetime access is a one-time purchase. Standalone puzzle practice requires lifetime access.")
+                    Text("Your first \(Brand.freeUnlocks) app unlocks are free. After that, unlimited unlocks and standalone puzzle practice need \(Brand.subscriptionGroupName), an optional subscription.")
                         .appFont(15)
                         .foregroundStyle(palette.textSecondary)
                         .multilineTextAlignment(.center)

@@ -13,7 +13,10 @@ struct AppSettings: Codable, Equatable {
     var analyticsEnabled = false
     var adMeasurementEnabled = false
     var freeUnlocksUsed = 0
-    var hasLifetime = false
+    /// Cached "QuizLock Pro" entitlement (StoreKit is the source of truth; refreshed on launch and on Transaction.updates).
+    var isPro = false
+    /// The one-time exit offer has been shown (it appears once, when the main paywall is closed).
+    var exitOfferShown = false
     var simulatorAuthorized = false
     /// Where onboarding was left (so killing the app mid-onboarding resumes there).
     var onboardingStep: String?
@@ -37,7 +40,8 @@ struct AppSettings: Codable, Equatable {
         analyticsEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .analyticsEnabled)) ?? d.analyticsEnabled
         adMeasurementEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .adMeasurementEnabled)) ?? d.adMeasurementEnabled
         freeUnlocksUsed = (try? c.decodeIfPresent(Int.self, forKey: .freeUnlocksUsed)) ?? d.freeUnlocksUsed
-        hasLifetime = (try? c.decodeIfPresent(Bool.self, forKey: .hasLifetime)) ?? d.hasLifetime
+        isPro = (try? c.decodeIfPresent(Bool.self, forKey: .isPro)) ?? d.isPro
+        exitOfferShown = (try? c.decodeIfPresent(Bool.self, forKey: .exitOfferShown)) ?? d.exitOfferShown
         simulatorAuthorized = (try? c.decodeIfPresent(Bool.self, forKey: .simulatorAuthorized)) ?? d.simulatorAuthorized
         onboardingStep = try? c.decodeIfPresent(String.self, forKey: .onboardingStep)
         ratingRequested = (try? c.decodeIfPresent(Bool.self, forKey: .ratingRequested)) ?? d.ratingRequested

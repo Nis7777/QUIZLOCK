@@ -69,7 +69,7 @@ final class AppModel {
         phase = (SharedStore.load(AppSettings.self, .settings)?.onboardingComplete ?? false) ? .main : .splash
         store.onEntitlementChange = { [weak self] owned in
             guard let self else { return }
-            if owned != self.settings.hasLifetime { self.updateSettings { $0.hasLifetime = owned } }
+            if owned != self.settings.isPro { self.updateSettings { $0.isPro = owned } }
             if owned, self.awaitingEntitlementForUnlock {
                 self.awaitingEntitlementForUnlock = false
                 self.paywallReason = nil
@@ -294,13 +294,17 @@ final class AppModel {
     func closePaywall() {
         let reason = paywallReason
         paywallReason = nil
-        if reason == .unlockLimit, !settings.hasLifetime {
+        if reason == .unlockLimit, !settings.isPro {
             awaitingEntitlementForUnlock = false
         }
     }
 
+    /// Free unlocks are used up and there's no active subscription: the unlock screen shows the
+    /// "You've used your 5 free unlocks" card instead of a puzzle.
+    var needsProForUnlock: Bool { !settings.isPro && settings.freeUnlocksUsed >= Brand.freeUnlocks }
+
     func tryPractice(_ game: GameID) {
-        if settings.hasLifetime {
+        if settings.isPro {
             practiceGame = game
         } else {
             presentPaywall(.practice)
@@ -415,7 +419,7 @@ final class AppModel {
     }
 
     private func completeUnlock() {
-        if !settings.hasLifetime && settings.freeUnlocksUsed >= Brand.freeUnlocks {
+        if !settings.isPro && settings.freeUnlocksUsed >= Brand.freeUnlocks {
             awaitingEntitlementForUnlock = true
             paywallReason = .unlockLimit
             return
@@ -426,7 +430,7 @@ final class AppModel {
     private func grantUnlock() {
         guard let session = unlockSession else { return }
         let pending = session.pending
-        if !settings.hasLifetime { updateSettings { $0.freeUnlocksUsed += 1 } }
+        if !settings.isPro { updateSettings { $0.freeUnlocksUsed += 1 } }
         let duration = lock.duration(for: pending.itemKey)
         let unlock = ActiveUnlock(itemKey: pending.itemKey, appToken: pending.appToken, webToken: pending.webToken,
                                   expiresAt: duration.endDate(from: Date()))

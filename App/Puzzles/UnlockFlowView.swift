@@ -13,6 +13,10 @@ struct UnlockFlowView: View {
                     model.finishUnlockResult()
                 }
                 .transition(.opacity)
+            } else if model.unlockSession != nil, model.needsProForUnlock {
+                OutOfFreeUnlocksView(onStartTrial: { model.presentPaywall(.unlockLimit) },
+                                     onClose: { model.closeUnlockFlow() })
+                    .transition(.opacity)
             } else if let session = model.unlockSession {
                 PuzzleChrome(game: session.current?.game ?? session.currentGame,
                              subLabel: session.current?.subLabel ?? "",
@@ -68,6 +72,57 @@ struct UnlockFlowView: View {
     private var paywallBinding: Binding<Bool> {
         Binding(get: { model.paywallReason == .unlockLimit },
                 set: { if !$0 { model.closePaywall() } })
+    }
+}
+
+/// Shown instead of a puzzle once the free unlocks are used up (no subscription).
+struct OutOfFreeUnlocksView: View {
+    let onStartTrial: () -> Void
+    let onClose: () -> Void
+    @Environment(AppModel.self) private var model
+    @Environment(\.palette) private var palette
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                CloseButton(action: onClose)
+            }
+            .padding(.horizontal, 12)
+            Spacer(minLength: 12)
+            VStack(spacing: 14) {
+                AssetImage(name: "mascot_pointing", placeholderSymbol: "face.smiling", contentMode: .fit)
+                    .frame(height: 150)
+                    .accessibilityHidden(true)
+                Text("You've used your \(Brand.freeUnlocks) free unlocks")
+                    .appFont(26, .bold)
+                    .foregroundStyle(palette.textPrimary)
+                    .multilineTextAlignment(.center)
+                    .accessibilityIdentifier("unlock.outOfFreeUnlocks")
+                Text("Keep earning unlocks with puzzles with \(Brand.subscriptionGroupName).")
+                    .appFont(17)
+                    .foregroundStyle(palette.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity)
+            .card(padding: 24, radius: 28)
+            .padding(.horizontal, 20)
+            Spacer()
+            PrimaryButton(title: buttonTitle, action: onStartTrial)
+                .accessibilityIdentifier("unlock.startTrial")
+                .padding(.horizontal, 20)
+                .padding(.bottom, 12)
+        }
+        .screenBackground()
+        .task { await model.store.loadProductsIfNeeded() }
+    }
+
+    /// "Start 7-day free trial" while the user is eligible (length from StoreKit); otherwise "See plans".
+    private var buttonTitle: String {
+        if model.store.showsTrial, let days = model.store.trialDays {
+            return String(localized: "Start \(days)-day free trial")
+        }
+        return String(localized: "See plans")
     }
 }
 
