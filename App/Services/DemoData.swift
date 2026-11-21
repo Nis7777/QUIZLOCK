@@ -3,7 +3,7 @@ import Foundation
 #if DEBUG
 /// Screenshot / demo mode. Launch with `-demoData` (and optionally `-screen <name>`):
 /// seeds a 12-day streak, sample stats, sample locked apps (Simulator mock) and a profile, then opens
-/// `puzzles`, `word`, `chess`, `sudoku`, `stats` or `realityCheck`. Debug builds only.
+/// `puzzles`, `word`, `chess`, `sudoku`, `stats`, `realityCheck` or `pickGames`. Debug builds only.
 enum DemoData {
     static var arguments: [String] { ProcessInfo.processInfo.arguments }
     static var isEnabled: Bool { arguments.contains("-demoData") }
@@ -12,14 +12,28 @@ enum DemoData {
         return arguments[i + 1]
     }
 
+    /// UI tests: `-uiTestFreshInstall` starts from an empty App Group (first launch), with iCloud sync off
+    /// and the review prompt already "requested" so it can't block the test.
+    static var isFreshInstallTest: Bool { arguments.contains("-uiTestFreshInstall") }
+
     /// Runs before AppModel reads anything from disk.
     static func seedIfRequested() {
+        if isFreshInstallTest {
+            let defaults = SharedStore.defaults
+            for key in defaults.dictionaryRepresentation().keys { defaults.removeObject(forKey: key) }
+            var settings = AppSettings()
+            settings.ratingRequested = true
+            SharedStore.save(settings, .settings)
+            return
+        }
         guard isEnabled else { return }
-        let onboardingScreen = screen == "realityCheck"
+        let onboardingSteps: [String: OnboardingStep] = ["realityCheck": .realityCheck, "pickGames": .pickGames]
+        let onboardingStep = screen.flatMap { onboardingSteps[$0] }
+        let onboardingScreen = onboardingStep != nil
 
         var settings = AppSettings()
         settings.onboardingComplete = !onboardingScreen
-        settings.onboardingStep = onboardingScreen ? OnboardingStep.realityCheck.rawValue : nil
+        settings.onboardingStep = onboardingStep?.rawValue
         settings.showAllSetBanner = false
         settings.simulatorAuthorized = true
         settings.isPro = true

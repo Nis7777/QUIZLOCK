@@ -165,8 +165,8 @@ final class AppModel {
     /// Pre-fills the later setup screens from the personalised plan.
     func applyPlan() {
         let plan = profile
+        // Games come from "Which puzzles sound fun?", so the plan only suggests the unlock time.
         updateLock(applyShield: false) { $0.defaultDuration = plan.suggestedDuration }
-        updateSettings { $0.enabledGames = plan.suggestedGames }
     }
 
     func settingsBinding<T>(_ keyPath: WritableKeyPath<AppSettings, T>) -> Binding<T> {

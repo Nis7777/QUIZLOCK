@@ -119,6 +119,7 @@ struct ChoiceCard: View {
         }
         .buttonStyle(PressableStyle())
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+        .accessibilityIdentifier("quiz.choice")
     }
 }
 
@@ -166,6 +167,7 @@ struct ChoiceTile: View {
         }
         .buttonStyle(PressableStyle())
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+        .accessibilityIdentifier("quiz.choice")
     }
 }
 

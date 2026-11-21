@@ -2771,22 +2771,22 @@
         }
       }
     },
-    "Pick a game. Just one quick round.": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Escolhe um jogo. Só uma ronda rápida."
-          }
-        }
-      }
-    },
     "Pick all that apply.": {
       "localizations": {
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
             "value": "Escolhe todas as que se aplicam."
+          }
+        }
+      }
+    },
+    "Pick all that apply. You can change this anytime.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe todos os que quiseres. Podes mudar quando quiseres."
           }
         }
       }
@@ -3971,16 +3971,6 @@
         }
       }
     },
-    "Try your first puzzle": {
-      "localizations": {
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Experimenta o teu primeiro puzzle"
-          }
-        }
-      }
-    },
     "Turn On Locks": {
       "localizations": {
         "pt-PT": {
@@ -4241,6 +4231,16 @@
         }
       }
     },
+    "Which puzzles sound fun?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Que puzzles te parecem divertidos?"
+          }
+        }
+      }
+    },
     "While strict mode is on, you can't turn off locks, remove apps or change the lock schedule unless you solve 3 hard puzzles.": {
       "localizations": {
         "pt-PT": {
@@ -4477,6 +4477,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "O teu objetivo"
+          }
+        }
+      }
+    },
+    "Your locked app shows a shield": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A app bloqueada mostra um ecrã de bloqueio"
           }
         }
       }

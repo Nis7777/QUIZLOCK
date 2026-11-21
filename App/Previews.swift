@@ -16,6 +16,8 @@ private struct PreviewHost<Content: View>: View {
 }
 
 #Preview("Welcome") { PreviewHost { WelcomeView {} } }
+#Preview("Pick puzzles") { PreviewHost { PickGamesView(onBack: {}, onContinue: {}) } }
+#Preview("How it works") { PreviewHost { HowItWorksView(onBack: {}, onFinish: {}) } }
 #Preview("Reality check") { PreviewHost { RealityCheckView(progress: 0.75, onBack: {}, onNext: {}) } }
 #Preview("Commitment") { PreviewHost { CommitmentView(progress: 0.9, onBack: {}, onNext: {}) } }
 #Preview("Dashboard") { PreviewHost { MainTabView() } }

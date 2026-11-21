@@ -5,7 +5,6 @@ import ManagedSettings
 /// App-only settings (persisted as JSON in the App Group).
 struct AppSettings: Codable, Equatable {
     var onboardingComplete = false
-    var practiceGame: GameID = .math
     var enabledGames: [GameID] = GameID.allCases
     var difficulties: [String: Difficulty] = [:]
     var theme: AppTheme = .classic
@@ -31,7 +30,6 @@ struct AppSettings: Codable, Equatable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         let d = AppSettings.defaults
         onboardingComplete = (try? c.decodeIfPresent(Bool.self, forKey: .onboardingComplete)) ?? d.onboardingComplete
-        practiceGame = (try? c.decodeIfPresent(GameID.self, forKey: .practiceGame)) ?? d.practiceGame
         enabledGames = (try? c.decodeIfPresent([GameID].self, forKey: .enabledGames)) ?? d.enabledGames
         if enabledGames.isEmpty { enabledGames = d.enabledGames }
         difficulties = (try? c.decodeIfPresent([String: Difficulty].self, forKey: .difficulties)) ?? d.difficulties

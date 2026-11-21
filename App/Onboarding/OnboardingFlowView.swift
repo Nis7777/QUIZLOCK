@@ -3,12 +3,12 @@ import SwiftUI
 
 /// Onboarding screens, in order. Stored by name, so killing the app mid-onboarding resumes here.
 enum OnboardingStep: String, CaseIterable {
-    case splash, welcome, pickGame, howItWorks, practice, unlocked, enjoyFeed
+    case splash, welcome, pickGames, howItWorks
     // Personalised questions
     case askName, askAge, askScreenTime, askWasters, askGoal, askFeelings, askWhen
     case calculating, realityCheck, plan, commitment, rating
     // Setup
-    case screenTimeIntro, connect, lockApps, reward, notifications
+    case screenTimeIntro, connect, notifications, lockApps, reward
 
     var index: Int { Self.allCases.firstIndex(of: self) ?? 0 }
 
@@ -22,13 +22,13 @@ enum OnboardingStep: String, CaseIterable {
     }
 
     /// Screens that the back button skips over.
-    var skippedOnBack: Bool { [.splash, .howItWorks, .practice, .calculating].contains(self) }
+    var skippedOnBack: Bool { [.splash, .howItWorks, .calculating].contains(self) }
 
     /// Where to resume if the app was killed on this screen.
     var resumeStep: OnboardingStep {
         switch self {
         case .splash: return .welcome
-        case .howItWorks, .practice: return .pickGame
+        case .howItWorks: return .pickGames
         case .calculating: return .realityCheck
         default: return self
         }
@@ -43,8 +43,9 @@ final class OnboardingModel {
     @ObservationIgnored var onStepChange: (OnboardingStep) -> Void = { _ in }
 
     func restore(_ saved: String?) {
-        guard let saved, let s = OnboardingStep(rawValue: saved) else { return }
-        step = s.resumeStep
+        guard let saved else { return }
+        // Steps from older builds that no longer exist resume at the welcome screen.
+        step = OnboardingStep(rawValue: saved)?.resumeStep ?? .welcome
     }
 
     func go(_ next: OnboardingStep) {
@@ -98,20 +99,11 @@ struct OnboardingFlowView: View {
         case .splash:
             SplashView { flow.go(.welcome) }
         case .welcome:
-            WelcomeView { flow.go(.pickGame) }
-        case .pickGame:
-            PickGameView(onBack: back) { game in
-                model.updateSettings { $0.practiceGame = game }
-                flow.go(.howItWorks)
-            }
+            WelcomeView { flow.go(.pickGames) }
+        case .pickGames:
+            PickGamesView(onBack: back) { flow.go(.howItWorks) }
         case .howItWorks:
-            HowItWorksView(game: model.settings.practiceGame, onBack: back) { flow.go(.practice) }
-        case .practice:
-            OnboardingPracticeView(game: model.settings.practiceGame, onClose: back) { flow.go(.unlocked) }
-        case .unlocked:
-            UnlockedDemoView(onBack: back) { flow.go(.enjoyFeed) }
-        case .enjoyFeed:
-            EnjoyFeedView { flow.go(.askName) }
+            HowItWorksView(onBack: back) { flow.go(.askName) }
         case .askName:
             NameQuestionView(progress: progress, onBack: back) { flow.go(.askAge) }
         case .askAge:
@@ -139,20 +131,22 @@ struct OnboardingFlowView: View {
         case .screenTimeIntro:
             ScreenTimeIntroView(onBack: back) { flow.go(.connect) }
         case .connect:
-            ConnectScreenTimeView(onBack: back) { flow.go(.lockApps) }
-        case .lockApps:
-            LockAppsView(onBack: back) { flow.go(.reward) }
-        case .reward:
-            RewardView(onBack: back, onChangeApps: back) {
-                model.turnOnLocksFromOnboarding()
-                flow.go(.notifications)
-            }
+            ConnectScreenTimeView(onBack: back) { flow.go(.notifications) }
         case .notifications:
             NotificationsExplainerView(onBack: back) {
                 Task {
                     await model.requestNotificationPermission()
-                    model.finishOnboarding()
+                    flow.go(.lockApps)
                 }
+            }
+        case .lockApps:
+            LockAppsView(onBack: back) { flow.go(.reward) }
+        case .reward:
+            // "Turn On Locks" → locks on, onboarding done → the paywall opens over the dashboard.
+            // Closing it (after the one-time exit offer) leaves the user on the dashboard with 5 free unlocks.
+            RewardView(onBack: back, onChangeApps: back) {
+                model.turnOnLocksFromOnboarding()
+                model.finishOnboarding()
             }
         }
     }
@@ -161,8 +155,6 @@ struct OnboardingFlowView: View {
         if reduceMotion { return .opacity }
         switch (flow.step, flow.forward) {
         case (.welcome, true): return .opacity
-        // The phone mockup zooms and fades into the full-screen practice puzzle.
-        case (.practice, true): return .asymmetric(insertion: .scale(scale: 0.55).combined(with: .opacity), removal: .opacity)
         default: return .push(forward: flow.forward)
         }
     }

@@ -158,7 +158,7 @@ struct PlanView: View {
                 row(icon: "timer", title: "Unlock time", value: p.suggestedDuration.localizedLabel)
                 Divider().padding(.leading, 46)
                 row(icon: "puzzlepiece.fill", title: "Puzzle mix",
-                    value: p.suggestedGames.map { String(localized: String.LocalizationValue($0.displayName)) }.formatted(.list(type: .and)))
+                    value: model.settings.enabledGames.map { String(localized: String.LocalizationValue($0.displayName)) }.formatted(.list(type: .and)))
             }
             .card()
         } footer: {

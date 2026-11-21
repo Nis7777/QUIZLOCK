@@ -1,24 +1,40 @@
 import SwiftUI
 
-/// S04: animated phone mockup in 3 beats: home screen → shield → the picked game.
+/// "Here's how QuizLock works": a fully automatic phone demo — home screen → shield → a puzzle that solves
+/// itself → "You unlocked the app!" → "Enjoy your feed." Nothing to play. "Skip" (top right) jumps ahead;
+/// a single Continue appears at the end.
 struct HowItWorksView: View {
-    let game: GameID
     let onBack: () -> Void
     let onFinish: () -> Void
-    @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
     @State private var beat = 1
     @State private var tapPoint: CGPoint?
     @State private var tapPulse = false
-    @State private var zoom = false
-    @State private var previewRound: AnyRound?
+    @State private var typed = false
+    @State private var solved = false
+    @State private var finished = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(spacing: 0) {
-            OnboardingHeader(onBack: onBack)
-            ScreenTitle(title: "Here's how\n\(Brand.appName) works", size: 34)
+            HStack {
+                BackButton(action: onBack)
+                Spacer()
+                if !finished {
+                    Button("Skip", action: onFinish)
+                        .appFont(17, .semibold)
+                        .foregroundStyle(palette.accentText)
+                        .tapTarget()
+                        .accessibilityIdentifier("onboarding.skip")
+                }
+            }
+            .frame(height: 56)
+            .padding(.horizontal, 16)
+            .padding(.top, 4)
+            ScreenTitle(title: title, subtitle: beat == 5 ? String(localized: "You've earned it!") : nil, size: 34)
                 .padding(.top, 2)
+                .id(title)
+                .transition(.opacity)
             GeometryReader { geo in
                 let width = min(geo.size.width * 0.66, (geo.size.height - 50) / 1.98)
                 VStack(spacing: 18) {
@@ -26,19 +42,42 @@ struct HowItWorksView: View {
                         screen(width: width)
                     }
                     .overlay { tapIndicator }
-                    .scaleEffect(zoom && !reduceMotion ? 1.6 : 1)
-                    .opacity(zoom ? 0 : 1)
-                    Text("Solve the puzzle to unlock the app")
-                        .appFont(22, .medium)
+                    Text(caption)
+                        .appFont(20, .medium)
                         .foregroundStyle(palette.textPrimary)
-                        .opacity(beat == 3 ? 1 : 0)
+                        .multilineTextAlignment(.center)
+                        .opacity(caption.isEmpty ? 0 : 1)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .padding(.top, 18)
+            PrimaryButton(title: "Continue", action: onFinish)
+                .accessibilityIdentifier("onboarding.continue")
+                .padding(.horizontal, 20)
+                .padding(.bottom, 8)
+                .opacity(finished ? 1 : 0)
+                .disabled(!finished)
+                .accessibilityHidden(!finished)
         }
         .screenBackground()
+        .confetti(beat == 4)
         .task { await play() }
+    }
+
+    private var title: String {
+        switch beat {
+        case 4: return String(localized: "You unlocked the app!")
+        case 5: return String(localized: "Enjoy your feed.")
+        default: return String(localized: "Here's how\n\(Brand.appName) works")
+        }
+    }
+
+    private var caption: String {
+        switch beat {
+        case 2: return String(localized: "Your locked app shows a shield")
+        case 3: return String(localized: "Solve the puzzle to unlock the app")
+        default: return ""
+        }
     }
 
     @ViewBuilder
@@ -46,7 +85,9 @@ struct HowItWorksView: View {
         switch beat {
         case 1: homeScreen(width: width).transition(.opacity)
         case 2: shieldScreen(width: width).transition(.opacity)
-        default: gameScreen(width: width).transition(.opacity)
+        case 3: puzzleScreen(width: width).transition(.opacity)
+        case 4: unlockedScreen(width: width).transition(.opacity)
+        default: feedScreen(width: width).transition(.opacity)
         }
     }
 
@@ -137,21 +178,123 @@ struct HowItWorksView: View {
         }
     }
 
-    // MARK: Beat 3 – the picked game, scaled down
+    // MARK: Beat 3 – a puzzle that solves itself
 
-    private func gameScreen(width: CGFloat) -> some View {
-        let fullWidth: CGFloat = 393
-        let scale = (width * 0.93) / fullWidth
-        return PuzzleChrome(game: game, subLabel: previewRound?.subLabel ?? "", isPractice: true) {
-            if let round = previewRound {
-                PuzzleGameView(round: round, dictionary: model.rounds.wordDictionary, onFinish: { _ in })
+    private func puzzleScreen(width: CGFloat) -> some View {
+        VStack(spacing: width * 0.08) {
+            HStack(spacing: 6) {
+                Image(systemName: "function")
+                Text("Math")
+                Spacer()
+                ZStack {
+                    Circle().fill(Color.correctGreen)
+                    Image(systemName: "checkmark").font(.system(size: width * 0.03, weight: .heavy)).foregroundStyle(.white)
+                }
+                .frame(width: width * 0.07, height: width * 0.07)
+                .scaleEffect(solved ? 1 : 0.01)
+                .opacity(solved ? 1 : 0)
             }
+            .font(.system(size: width * 0.05, weight: .semibold))
+            .foregroundStyle(Color.textSecondary)
+            .padding(.horizontal, width * 0.07)
+            Spacer()
+            Text("If 3x + 5 = 20,\nwhat is x?")
+                .font(.system(size: width * 0.085, weight: .bold))
+                .foregroundStyle(Color.textPrimary)
+                .multilineTextAlignment(.center)
+            HStack(spacing: 8) {
+                Text(verbatim: solved ? "x = 5" : (typed ? "5" : " "))
+                    .font(.system(size: width * 0.075, weight: .semibold, design: .rounded))
+                    .foregroundStyle(solved ? Color.answerGreen : Color.textPrimary)
+                if solved {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: width * 0.065))
+                        .foregroundStyle(Color.answerGreen)
+                        .transition(.scale.combined(with: .opacity))
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: width * 0.18)
+            .background(solved ? Color.correctGreenBg : Color(hex: 0xF4F4F7),
+                        in: RoundedRectangle(cornerRadius: width * 0.045, style: .continuous))
+            .padding(.horizontal, width * 0.08)
+            Spacer()
+            Spacer()
         }
-        .frame(width: fullWidth, height: fullWidth * 1.85)
-        .scaleEffect(scale)
-        .frame(width: width * 0.93, height: fullWidth * 1.85 * scale)
-        .allowsHitTesting(false)
-        .environment(\.palette, .classic)
+        .padding(.top, width * 0.02)
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: Beat 4 – unlocked
+
+    private func unlockedScreen(width: CGFloat) -> some View {
+        VStack(spacing: width * 0.07) {
+            HStack(spacing: 3) {
+                Image(systemName: "arrowtriangle.left.fill").font(.system(size: width * 0.03))
+                Text("Social").font(.system(size: width * 0.045, weight: .medium))
+                Spacer()
+            }
+            .foregroundStyle(Color(hex: 0x0A84FF))
+            .padding(.horizontal, width * 0.06)
+            .padding(.top, -width * 0.06)
+            Spacer()
+            ZStack {
+                Circle().fill(Color.brandTint).frame(width: width * 0.36, height: width * 0.36)
+                Image(systemName: "lock.open.fill")
+                    .font(.system(size: width * 0.15, weight: .semibold))
+                    .foregroundStyle(Color.brand)
+            }
+            Text("Tap the app at the top left\nto return to your app.")
+                .font(.system(size: width * 0.055, weight: .semibold))
+                .foregroundStyle(Color.textPrimary)
+                .multilineTextAlignment(.center)
+            Spacer()
+            Spacer()
+        }
+    }
+
+    // MARK: Beat 5 – the feed
+
+    private func feedScreen(width: CGFloat) -> some View {
+        let grey = Color(hex: 0xD8D8DD)
+        return VStack(alignment: .leading, spacing: width * 0.035) {
+            HStack {
+                Text(verbatim: "Social").font(.system(size: width * 0.07, weight: .bold, design: .rounded))
+                Spacer()
+                Image(systemName: "heart")
+                Image(systemName: "paperplane")
+            }
+            .font(.system(size: width * 0.06))
+            .foregroundStyle(Color.textPrimary)
+            ForEach(0..<2, id: \.self) { _ in
+                VStack(alignment: .leading, spacing: width * 0.025) {
+                    HStack(spacing: width * 0.03) {
+                        Circle().fill(grey).frame(width: width * 0.09, height: width * 0.09)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Capsule().fill(grey).frame(width: width * 0.3, height: width * 0.025)
+                            Capsule().fill(grey).frame(width: width * 0.18, height: width * 0.02)
+                        }
+                    }
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 6).fill(Color(hex: 0xECECEF))
+                        Image(systemName: "photo").font(.system(size: width * 0.1)).foregroundStyle(Color(hex: 0xB8B8BE))
+                    }
+                    .frame(height: width * 0.48)
+                    HStack(spacing: width * 0.04) {
+                        Image(systemName: "heart")
+                        Image(systemName: "bubble.right")
+                        Image(systemName: "paperplane")
+                        Spacer()
+                        Image(systemName: "bookmark")
+                    }
+                    .font(.system(size: width * 0.05))
+                    .foregroundStyle(Color(hex: 0x9A9AA0))
+                }
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, width * 0.05)
+        .accessibilityHidden(true)
     }
 
     // MARK: Animation
@@ -183,18 +326,26 @@ struct HowItWorksView: View {
     }
 
     private func play() async {
-        previewRound = model.rounds.onboardingRound(game)
-        try? await Task.sleep(nanoseconds: 900_000_000)
+        func wait(_ seconds: Double) async -> Bool {
+            try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+            return !Task.isCancelled
+        }
+        guard await wait(0.8) else { return }
         await tap(at: CGPoint(x: 0.26, y: 0.27))
         withAnimation(.easeInOut(duration: 0.4)) { beat = 2 }
-        try? await Task.sleep(nanoseconds: 1_100_000_000)
+        guard await wait(1.0) else { return }
         await tap(at: CGPoint(x: 0.5, y: 0.82))
         withAnimation(.easeInOut(duration: 0.4)) { beat = 3 }
-        try? await Task.sleep(nanoseconds: 2_200_000_000)
-        guard !Task.isCancelled else { return }
-        withAnimation(.easeIn(duration: 0.45)) { zoom = true }
-        try? await Task.sleep(nanoseconds: 300_000_000)
-        guard !Task.isCancelled else { return }
-        onFinish()
+        guard await wait(0.9) else { return }
+        withAnimation(.easeOut(duration: 0.2)) { typed = true }
+        guard await wait(0.5) else { return }
+        Haptics.success()
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) { solved = true }
+        guard await wait(1.0) else { return }
+        withAnimation(.easeInOut(duration: 0.45)) { beat = 4 }
+        guard await wait(1.8) else { return }
+        withAnimation(.easeInOut(duration: 0.45)) { beat = 5 }
+        guard await wait(0.6) else { return }
+        withAnimation(.easeOut(duration: 0.3)) { finished = true }
     }
 }

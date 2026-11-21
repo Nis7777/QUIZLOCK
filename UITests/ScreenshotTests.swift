@@ -2,7 +2,7 @@ import XCTest
 
 /// Captures the App Store screenshots. Run the "Screenshots" scheme on the **iPhone 16 Pro Max**
 /// Simulator (6.9", 1320 × 2868 px). PNGs are written to AppStore/screenshots/<language>/
-/// and also attached to the test report.
+/// (that folder is the source of truth; the report attachments are only kept for failed runs).
 final class ScreenshotTests: XCTestCase {
     private let screens: [(file: String, screen: String)] = [
         ("01-puzzles", "puzzles"),
@@ -11,6 +11,7 @@ final class ScreenshotTests: XCTestCase {
         ("04-sudoku", "sudoku"),
         ("05-stats", "stats"),
         ("06-reality-check", "realityCheck"),
+        ("07-pick-puzzles", "pickGames"),
     ]
 
     override func setUpWithError() throws {
@@ -41,7 +42,6 @@ final class ScreenshotTests: XCTestCase {
             let shot = XCUIScreen.main.screenshot()
             let attachment = XCTAttachment(screenshot: shot)
             attachment.name = "\(language)-\(item.file)"
-            attachment.lifetime = .keepAlways
             add(attachment)
             let url = folder.appendingPathComponent("\(item.file).png")
             try shot.pngRepresentation.write(to: url)

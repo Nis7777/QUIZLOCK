@@ -180,10 +180,6 @@ struct UserProfile: Codable, Equatable {
 
     var suggestedDuration: UnlockDuration { goal == .doomscroll ? .minutes(5) : .minutes(15) }
 
-    var suggestedGames: [GameID] {
-        goal == .learn ? [.math, .word, .chess] : GameID.allCases
-    }
-
     var suggestedCategories: [Waster] {
         let picked = wasters.filter { $0 != .other }
         return picked.isEmpty ? [.shortVideos, .socialMedia] : picked
