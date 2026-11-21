@@ -51,7 +51,7 @@ final class OnboardingUITests: XCTestCase {
 
         // 6. Permissions: connect (mocked) → pick a mock app → confirmation → reward → notifications → rating
         tap(app.buttons["onboarding.connect"], timeout: 5)
-        let mockApp = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Social'")).firstMatch
+        let mockApp = app.buttons.matching(NSPredicate(format: "label CONTAINS 'TikTok'")).firstMatch
         tap(mockApp, timeout: 5)
         tap(app.buttons["Done"])
         tapContinue(timeout: 6)

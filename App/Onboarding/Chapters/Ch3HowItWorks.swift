@@ -100,10 +100,7 @@ struct PhoneMock<Content: View>: View {
     }
 }
 
-private let sampleIcons: [(String, UInt32)] = [
-    ("play.fill", 0x1C1C1E), ("camera.fill", 0xC13584), ("play.rectangle.fill", 0xE53935),
-    ("bubble.left.fill", 0x1DA1F2), ("person.2.fill", 0x3B5998), ("bag.fill", 0xFF9500),
-]
+private let sampleIcons = ["tiktok", "instagram", "youtube", "snapchat", "reddit", "x"]
 
 /// Card 1: icons slide in, then a coral padlock clicks shut over them.
 private struct LockedAppsScene: View {
@@ -115,8 +112,7 @@ private struct LockedAppsScene: View {
         ZStack {
             LazyVGrid(columns: Array(repeating: GridItem(.fixed(40), spacing: 14), count: 3), spacing: 14) {
                 ForEach(0..<6, id: \.self) { i in
-                    let s = sampleIcons[i]
-                    MockAppIcon(symbol: s.0, colors: [Color(hex: s.1), Color(hex: s.1, opacity: 0.8)], size: 40)
+                    BrandAppIcon(name: sampleIcons[i], size: 40)
                         .offset(y: arrived ? 0 : 260)
                         .opacity(arrived ? (locked ? 0.35 : 1) : 0)
                         .animation(Motion.bouncy.delay(Double(i) * Motion.stagger), value: arrived)

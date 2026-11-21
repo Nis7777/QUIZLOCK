@@ -37,7 +37,7 @@ Every time the mascot changes expression, cross-fade with a tiny squash-and-stre
   - The chips are right-aligned, with a peach background (brandTint) and coral text.
   - Tapping one turns it into the user's sent bubble (coral fill, white text, right-aligned) with a `matchedGeometryEffect` from chip to bubble; the other chips fade out.
   - Then Lockie continues.
-- **Rich bubble:** an "app icon grid" bubble of 8 generic social-app silhouettes (neutral SF Symbols on coloured rounded squares, NO real logos).
+- **Rich bubble:** an "app icon grid" bubble with the real icons of TikTok, YouTube, Instagram, X, Facebook, Threads, Reddit and Snapchat (`BrandAppIcon`: white glyph from simple-icons on the brand-coloured rounded square).
 
 ### Other components
 - **`ChoiceCard`** (single and multi select): white, radius 16, 1pt light border, emoji or SF Symbol on the left, title, and a radio circle on the right. Selected = 2pt coral border, peach fill, filled coral radio with a check (Motion.bouncy) + a selection haptic. Multi-select screens are grouped under small grey section headers.
@@ -98,7 +98,7 @@ Each card is a phone-mockup illustration drawn in SwiftUI with a big title + sub
 ## 4. Chapter 4: Getting to know you (questions; progress bar visible)
 Open with a transition screen: `mascot_clipboard` + "Let's set you up, {name}!" + "I'll ask a few quick questions to build your plan." + Continue.
 
-1. **"Where did you hear about us?"** (single choice): TikTok, Instagram, YouTube, App Store, Friend, Other. Use neutral SF Symbols / emoji, not real logos. Store it for attribution.
+1. **"Where did you hear about us?"** (single choice): TikTok, Instagram, YouTube, App Store, Friend, Other. TikTok, Instagram, YouTube and App Store use their real icons (`BrandAppIcon`); Friend and Other use SF Symbols. Store it for attribution.
 2. **"How many hours do you spend scrolling each day?"** Subtitle "Don't worry about the exact number, just a best guess." Options: Less than 2h, 2–4h, 4–6h, 6–8h, More than 8h.
 3. **"Which apps eat most of your time?"** (multi): Short videos, Social feeds, YouTube-style videos, Games, News, Messaging, Shopping, Other.
 4. **"How do you feel after scrolling?"** (multi, emoji): 😞 Guilty, 😶 Empty, 😰 Anxious, ⏳ Like I'm wasting my life, 🪫 Low energy, 🌫️ Foggy, 🙂 Fine actually.

@@ -95,19 +95,20 @@ struct LockItem: Identifiable, Hashable {
     }
 }
 
-/// Fake apps used by the Simulator mock (FamilyControls isn't available there).
+/// Apps shown by the Simulator mock picker (FamilyControls isn't available there), drawn with BrandAppIcon.
+/// On a real device the locked-apps lists use Apple's Label(token) instead.
 enum MockApps {
-    static let all: [(name: String, symbol: String, colors: [UInt32])] = [
-        ("Social", "camera.circle", [0x8A3AB9, 0xE95950, 0xFCCC63]),
-        ("Shorts", "music.note", [0x111111, 0x333333]),
-        ("Videos", "play.rectangle.fill", [0xFF3B30, 0xD70015]),
-        ("Chat", "bubble.left.fill", [0xFFE600, 0xF5C400]),
-        ("Forum", "bubble.left.and.bubble.right.fill", [0xFF5700, 0xFF7A33]),
-        ("News", "newspaper.fill", [0x000000, 0x2C2C2E]),
+    static let all: [(name: String, logo: String)] = [
+        ("TikTok", "tiktok"),
+        ("Instagram", "instagram"),
+        ("YouTube", "youtube"),
+        ("Snapchat", "snapchat"),
+        ("Reddit", "reddit"),
+        ("X", "x"),
     ]
 
-    static func info(_ name: String) -> (symbol: String, colors: [UInt32]) {
-        if let m = all.first(where: { $0.name == name }) { return (m.symbol, m.colors) }
-        return ("app.fill", [0x8E8E93, 0x636366])
+    /// BrandAppIcon name for a mock app (old saved names fall back to a neutral tile).
+    static func logo(_ name: String) -> String {
+        all.first(where: { $0.name == name })?.logo ?? name.lowercased()
     }
 }

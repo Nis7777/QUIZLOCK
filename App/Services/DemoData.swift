@@ -42,7 +42,7 @@ enum DemoData {
         SharedStore.save(settings, .settings)
 
         var lock = LockState()
-        lock.mockApps = ["Social", "Videos", "Shorts"]
+        lock.mockApps = ["TikTok", "Instagram", "YouTube"]
         lock.locksEnabled = true
         SharedStore.lockState = lock
         SharedStore.pendingUnlock = nil

@@ -374,7 +374,7 @@ final class AppModel {
         let name: String
         switch item?.kind {
         case .mock(let n): name = n
-        default: name = "Social"
+        default: name = "TikTok"
         }
         SharedStore.pendingUnlock = PendingUnlock(itemKey: item?.key ?? TokenKey.mock(name), appName: name)
         SharedStore.save(nil as UnlockSession?, .unlockSession)

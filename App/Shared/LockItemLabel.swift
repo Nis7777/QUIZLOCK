@@ -18,11 +18,10 @@ struct LockItemLabel: View {
             case .web(let token):
                 Label(token)
             case .mock(let name):
-                let info = MockApps.info(name)
                 Label {
                     Text(name)
                 } icon: {
-                    MockAppIcon(symbol: info.symbol, colors: info.colors.map { Color(hex: $0) }, size: 30)
+                    BrandAppIcon(name: MockApps.logo(name), size: 30)
                 }
             }
         }
@@ -86,7 +85,7 @@ struct MockAppPicker: View {
                             }
                         } label: {
                             HStack(spacing: 14) {
-                                MockAppIcon(symbol: app.symbol, colors: app.colors.map { Color(hex: $0) }, size: 32)
+                                BrandAppIcon(name: app.logo, size: 32)
                                 Text(app.name).foregroundStyle(palette.textPrimary)
                                 Spacer()
                                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")

@@ -339,23 +339,19 @@ struct TypingBubble: View {
     }
 }
 
-/// Eight generic social-app silhouettes (neutral SF Symbols on coloured squares, no real logos).
+/// The 8 apps built to keep you scrolling, as their real home-screen icons.
 struct AppGridBubble: View {
-    private let apps: [(String, UInt32)] = [
-        ("play.square.stack.fill", 0x1C1C1E), ("camera.circle.fill", 0xE1306C), ("play.rectangle.fill", 0xFF3B30),
-        ("bubble.left.fill", 0xFFCC00), ("person.2.fill", 0x0A84FF), ("music.note", 0x30D158),
-        ("bubble.left.and.bubble.right.fill", 0xFF6A00), ("photo.on.rectangle", 0xAF52DE),
-    ]
+    private let apps = ["tiktok", "youtube", "instagram", "x", "facebook", "threads", "reddit", "snapchat"]
 
     var body: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.fixed(48), spacing: 10), count: 4), spacing: 10) {
             ForEach(0..<apps.count, id: \.self) { i in
-                MockAppIcon(symbol: apps[i].0, colors: [Color(hex: apps[i].1), Color(hex: apps[i].1, opacity: 0.8)], size: 48)
+                BrandAppIcon(name: apps[i], size: 48)
                     .staggeredAppear(i, baseDelay: 0)
             }
         }
         .padding(12)
         .background(Color(hex: 0xEFEFF2), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .accessibilityLabel(Text("A grid of social apps"))
+        .accessibilityLabel(Text("TikTok, YouTube, Instagram, X, Facebook, Threads, Reddit and Snapchat"))
     }
 }

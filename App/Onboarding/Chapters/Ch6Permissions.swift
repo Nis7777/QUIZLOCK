@@ -137,8 +137,7 @@ struct LockItemIcon: View {
             case .category(let token): Label(token).labelStyle(.iconOnly)
             case .web(let token): Label(token).labelStyle(.iconOnly)
             case .mock(let name):
-                let info = MockApps.info(name)
-                MockAppIcon(symbol: info.symbol, colors: info.colors.map { Color(hex: $0) }, size: 54)
+                BrandAppIcon(name: MockApps.logo(name), size: 54)
             }
         }
         .scaleEffect(item.isMock ? 1 : 1.8)
