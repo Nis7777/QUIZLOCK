@@ -80,6 +80,9 @@ struct RootView: View {
         .appToast()
         .task {
             model.bootstrap()
+            #if DEBUG
+            DemoData.route(model)
+            #endif
             // Authorization status can lag right after launch; check again shortly.
             try? await Task.sleep(nanoseconds: 1_000_000_000)
             model.refreshFromStore()

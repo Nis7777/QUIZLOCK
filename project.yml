@@ -249,6 +249,21 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.tests
         GENERATE_INFOPLIST_FILE: NO
 
+  ScreenshotTests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: UITests
+    dependencies:
+      - target: App
+    info:
+      path: UITests/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.screenshots
+        TEST_TARGET_NAME: App
+        GENERATE_INFOPLIST_FILE: NO
+
 schemes:
   App:
     build:
@@ -269,3 +284,12 @@ schemes:
       config: Debug
     archive:
       config: Release
+  Screenshots:
+    build:
+      targets:
+        App: all
+        ScreenshotTests: [test]
+    test:
+      config: Debug
+      targets:
+        - ScreenshotTests

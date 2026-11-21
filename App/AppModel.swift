@@ -44,6 +44,8 @@ final class AppModel {
     var showStats = false
     @ObservationIgnored var roundStartedAt = Date()
     @ObservationIgnored var pendingStrictAction: (() -> Void)?
+    /// Screenshot mode: pre-made rounds used by practice (see DemoData).
+    @ObservationIgnored var demoRounds: [GameID: AnyRound] = [:]
     var practiceGame: GameID?
     var isAuthorized = true
     /// The user chose "Not Now" on the Reconnect screen (until the next launch).
@@ -57,6 +59,9 @@ final class AppModel {
     @ObservationIgnored private var dismissedPendingDate: Date?
 
     private init() {
+        #if DEBUG
+        DemoData.seedIfRequested()
+        #endif
         settings = SharedStore.load(AppSettings.self, .settings) ?? AppSettings()
         lock = SharedStore.lockState
         profile = SharedStore.load(UserProfile.self, .userProfile) ?? UserProfile()

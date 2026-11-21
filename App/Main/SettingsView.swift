@@ -18,6 +18,8 @@ struct SettingsTab: View {
     var body: some View {
         NavigationStack(path: $path) {
             SettingsView(path: $path)
+                .onAppear(perform: openStatsIfRequested)
+                .onChange(of: model.showStats) { _, _ in openStatsIfRequested() }
                 .toolbar(.hidden, for: .navigationBar)
                 .navigationDestination(for: SettingsRoute.self) { route in
                     Group {
@@ -38,6 +40,14 @@ struct SettingsTab: View {
                     .navigationBarBackButtonHidden(true)
                 }
         }
+    }
+}
+
+extension SettingsTab {
+    private func openStatsIfRequested() {
+        guard model.showStats else { return }
+        model.showStats = false
+        path = [.stats]
     }
 }
 

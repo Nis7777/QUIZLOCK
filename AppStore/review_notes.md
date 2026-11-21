@@ -27,6 +27,12 @@ full flow without paying.
 If you decline Screen Time access or notifications, the app keeps working and explains how to turn them
 on later (Settings tab).
 
+Optional features you may see:
+- **Lock schedule** (Settings → Manage Apps to Lock → Lock schedule): locks apply only during chosen hours.
+- **Strict mode** (Settings): for 1/4/24 hours, turning locks off requires solving 3 hard puzzles.
+- **Emergency unlock** (link on the puzzle screen): 1 minute without a puzzle, 3 per week.
+- **Reminders** (Settings): opt-in local notifications, at most one per day.
+
 ## In-app purchases
 
 - `com.dinismagina.quizlock.lifetime`: non-consumable, standard lifetime access.

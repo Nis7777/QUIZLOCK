@@ -61,7 +61,12 @@ struct PracticeView: View {
     }
 
     private func load() async {
-        let next = await model.rounds.nextRound(game, difficulty: model.settings.difficulty(for: game))
+        let next: AnyRound
+        if let demo = model.demoRounds.removeValue(forKey: game) {
+            next = demo
+        } else {
+            next = await model.rounds.nextRound(game, difficulty: model.settings.difficulty(for: game))
+        }
         withAnimation(.easeInOut(duration: 0.3)) { round = next }
         startedAt = Date()
     }
