@@ -8,14 +8,14 @@ You are building a native iOS app, ready for the App Store, in **Swift + SwiftUI
 APP_NAME            = "QuizLock"                 // shown in UI wherever the spec says {APP_NAME}
 APP_NAME_CAPS       = "QUIZLOCK"                 // small tracked label on puzzle screens
 TAGLINE             = "Get smarter before scrolling"
-BUNDLE_ID           = "com.dinismagina.quizlock"
-APP_GROUP           = "group.com.dinismagina.quizlock"
+BUNDLE_ID           = "app.quizlock.ios"
+APP_GROUP           = "group.app.quizlock.ios"
 SUPPORT_EMAIL       = "nismagina@gmail.com"
 TERMS_URL           = "https://example.com/terms"
 PRIVACY_URL         = "https://example.com/privacy"
-IAP_PRO_YEARLY      = "com.dinismagina.quizlock.pro.yearly"         // $39.99/year, 7-day free trial (intro offer)
-IAP_PRO_MONTHLY     = "com.dinismagina.quizlock.pro.monthly"        // $9.99/month, no trial
-IAP_PRO_OFFER       = "com.dinismagina.quizlock.pro.yearly.offer"   // $29.99/year, exit offer only
+IAP_PRO_YEARLY      = "app.quizlock.ios.pro.yearly"         // $39.99/year, 7-day free trial (intro offer)
+IAP_PRO_MONTHLY     = "app.quizlock.ios.pro.monthly"        // $9.99/month, no trial
+IAP_PRO_OFFER       = "app.quizlock.ios.pro.yearly.offer"   // $29.99/year, exit offer only
 // All three are auto-renewable subscriptions in the group "QuizLock Pro".
 FREE_UNLOCKS        = 5
 MIN_IOS             = 17.0

@@ -54,12 +54,12 @@ Swift + SwiftUI, iOS 17+, iPhone only, portrait. No third-party packages.
 ## Running on a physical iPhone (needed for real blocking)
 
 1. **Signing:** in Xcode, select each of the 4 targets (`App`, `ShieldConfigurationExt`, `ShieldActionExt`, `DeviceActivityMonitorExt`). Under *Signing & Capabilities*, set your **Team**. To make it stick across `xcodegen generate`, put your Team ID in `DEVELOPMENT_TEAM` in `project.yml`.
-2. **App Group:** all 4 targets use `group.com.dinismagina.quizlock`. With automatic signing, Xcode registers it for you. If it doesn't, create it under Certificates, Identifiers & Profiles → App Groups and enable it on all 4 App IDs.
+2. **App Group:** all 4 targets use `group.app.quizlock.ios`. With automatic signing, Xcode registers it for you. If it doesn't, create it under Certificates, Identifiers & Profiles → App Groups and enable it on all 4 App IDs.
 3. **Family Controls:** the `com.apple.developer.family-controls` entitlement works in development builds on your own devices. Distributing through TestFlight or the App Store needs Apple's **Family Controls (Distribution)** approval, which you request at developer.apple.com/contact/request/family-controls-distribution for **each** of the 4 bundle IDs:
-   - `com.dinismagina.quizlock`
-   - `com.dinismagina.quizlock.ShieldConfiguration`
-   - `com.dinismagina.quizlock.ShieldAction`
-   - `com.dinismagina.quizlock.DeviceActivityMonitor`
+   - `app.quizlock.ios`
+   - `app.quizlock.ios.ShieldConfiguration`
+   - `app.quizlock.ios.ShieldAction`
+   - `app.quizlock.ios.DeviceActivityMonitor`
 4. Run on the device and allow Screen Time access (Face ID or passcode). Pick apps, then open one: the QuizLock shield appears. Tap **START PUZZLE**, then tap the notification to solve your puzzle.
 
 ## How unlocking works

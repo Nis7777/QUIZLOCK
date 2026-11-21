@@ -44,10 +44,10 @@ Optional features you may see:
 
 Subscription group **QuizLock Pro**:
 
-- `com.dinismagina.quizlock.pro.yearly`: 1 year, with a **7-day free trial** (introductory offer, new subscribers).
+- `app.quizlock.ios.pro.yearly`: 1 year, with a **7-day free trial** (introductory offer, new subscribers).
   Pre-selected on the paywall.
-- `com.dinismagina.quizlock.pro.monthly`: 1 month, no trial.
-- `com.dinismagina.quizlock.pro.yearly.offer`: 1 year at a lower price, no trial. Shown only once, on the
+- `app.quizlock.ios.pro.monthly`: 1 month, no trial.
+- `app.quizlock.ios.pro.yearly.offer`: 1 year at a lower price, no trial. Shown only once, on the
   discount screen that appears after the main paywall is closed.
 
 Any active subscription in the group unlocks QuizLock Pro (unlimited puzzle-earned unlocks and standalone puzzle

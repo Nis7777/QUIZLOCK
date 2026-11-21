@@ -52,7 +52,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "com.dinismagina.quizlock.pro.yearly",
+          "productID" : "app.quizlock.ios.pro.yearly",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "QuizLock Pro Yearly",
           "subscriptionGroupID" : "21500001",
@@ -79,7 +79,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "com.dinismagina.quizlock.pro.yearly.offer",
+          "productID" : "app.quizlock.ios.pro.yearly.offer",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "QuizLock Pro Yearly Offer",
           "subscriptionGroupID" : "21500001",
@@ -106,7 +106,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "com.dinismagina.quizlock.pro.monthly",
+          "productID" : "app.quizlock.ios.pro.monthly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "QuizLock Pro Monthly",
           "subscriptionGroupID" : "21500001",

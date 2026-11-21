@@ -7,15 +7,15 @@ role in App Store Connect you can do the rest.
 
 - [ ] **[Holder]** Request **Family Controls (Distribution)** for **every** target that uses Screen Time.
       Submit the form once per bundle ID: https://developer.apple.com/contact/request/family-controls-distribution
-  - `com.dinismagina.quizlock` (app)
-  - `com.dinismagina.quizlock.ShieldConfiguration`
-  - `com.dinismagina.quizlock.ShieldAction`
-  - `com.dinismagina.quizlock.DeviceActivityMonitor`
-  - `com.dinismagina.quizlock.ScreenTimeReport`
-  - (The widget, `com.dinismagina.quizlock.Widgets`, doesn't use Family Controls.)
+  - `app.quizlock.ios` (app)
+  - `app.quizlock.ios.ShieldConfiguration`
+  - `app.quizlock.ios.ShieldAction`
+  - `app.quizlock.ios.DeviceActivityMonitor`
+  - `app.quizlock.ios.ScreenTimeReport`
+  - (The widget, `app.quizlock.ios.Widgets`, doesn't use Family Controls.)
 - [ ] Register all 6 bundle IDs (automatic signing in Xcode usually does this).
-- [ ] Register the App Group `group.com.dinismagina.quizlock` and enable it on all 6 App IDs.
-- [ ] On the main App ID `com.dinismagina.quizlock` **only**, enable **iCloud** (Key-value storage; no container
+- [ ] Register the App Group `group.app.quizlock.ios` and enable it on all 6 App IDs.
+- [ ] On the main App ID `app.quizlock.ios` **only**, enable **iCloud** (Key-value storage; no container
       needed). The app's entitlement `com.apple.developer.ubiquity-kvstore-identifier` is already in `project.yml`.
       In Xcode, **Signing & Capabilities** on the App target should then show **iCloud → Key-value storage**.
 - [ ] In Xcode, set the Team on all 6 targets (or put the Team ID in `DEVELOPMENT_TEAM` in `project.yml`).
@@ -26,7 +26,7 @@ role in App Store Connect you can do the rest.
 
 ## 3. App record (App Store Connect → Apps → +)
 
-- [ ] Platform iOS, name and subtitle from `metadata.md`, bundle ID `com.dinismagina.quizlock`, SKU `quizlock-001`.
+- [ ] Platform iOS, name and subtitle from `metadata.md`, bundle ID `app.quizlock.ios`, SKU `quizlock-001`.
 - [ ] After creating it, copy the numeric **Apple ID** (App Information) into `Brand.appStoreID` in
       `Shared/Brand.swift`. "Rate QuizLock" uses it.
 - [ ] Category: **Productivity** (secondary: **Education**).
@@ -44,9 +44,9 @@ No accounts: the subscription is tied to the Apple ID, and progress syncs throug
 
 | Reference name | Product ID | Duration | Price (USA) | Introductory offer |
 |---|---|---|---|---|
-| Pro Yearly | `com.dinismagina.quizlock.pro.yearly` | 1 Year | $39.99 | **Free trial · 1 Week · New subscribers** |
-| Pro Monthly | `com.dinismagina.quizlock.pro.monthly` | 1 Month | $9.99 | None |
-| Pro Yearly Offer | `com.dinismagina.quizlock.pro.yearly.offer` | 1 Year | $29.99 | None |
+| Pro Yearly | `app.quizlock.ios.pro.yearly` | 1 Year | $39.99 | **Free trial · 1 Week · New subscribers** |
+| Pro Monthly | `app.quizlock.ios.pro.monthly` | 1 Month | $9.99 | None |
+| Pro Yearly Offer | `app.quizlock.ios.pro.yearly.offer` | 1 Year | $29.99 | None |
 
 - [ ] Prices: set the USA price, let Apple fill in the other countries. The app always shows the StoreKit price, and
       computes "Save 67%" (yearly vs 12 × monthly) and "25% off" (offer vs yearly) from the real prices.

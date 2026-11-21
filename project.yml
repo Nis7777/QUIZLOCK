@@ -1,6 +1,6 @@
 name: QuizLock
 options:
-  bundleIdPrefix: com.dinismagina
+  bundleIdPrefix: app.quizlock
   deploymentTarget:
     iOS: "17.0"
   createIntermediateGroups: true
@@ -85,7 +85,7 @@ targets:
         UIRequiresFullScreen: true
         UIStatusBarStyle: UIStatusBarStyleDefault
         CFBundleURLTypes:
-          - CFBundleURLName: com.dinismagina.quizlock
+          - CFBundleURLName: app.quizlock.ios
             CFBundleURLSchemes:
               - quizlock
     entitlements:
@@ -93,12 +93,12 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.dinismagina.quizlock
+          - group.app.quizlock.ios
         # iCloud → Key-value storage (progress sync, no accounts). Needs iCloud enabled on the App ID.
         com.apple.developer.ubiquity-kvstore-identifier: $(TeamIdentifierPrefix)$(CFBundleIdentifier)
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock
+        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios
         PRODUCT_NAME: QuizLock
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
@@ -126,10 +126,10 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.dinismagina.quizlock
+          - group.app.quizlock.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.ShieldConfiguration
+        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.ShieldConfiguration
         PRODUCT_NAME: ShieldConfigurationExt
 
   ShieldActionExt:
@@ -150,10 +150,10 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.dinismagina.quizlock
+          - group.app.quizlock.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.ShieldAction
+        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.ShieldAction
         PRODUCT_NAME: ShieldActionExt
 
   DeviceActivityMonitorExt:
@@ -174,10 +174,10 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.dinismagina.quizlock
+          - group.app.quizlock.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.DeviceActivityMonitor
+        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.DeviceActivityMonitor
         PRODUCT_NAME: DeviceActivityMonitorExt
 
   ScreenTimeReportExt:
@@ -199,10 +199,10 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.dinismagina.quizlock
+          - group.app.quizlock.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.ScreenTimeReport
+        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.ScreenTimeReport
         PRODUCT_NAME: ScreenTimeReportExt
 
   QuizLockWidgets:
@@ -228,10 +228,10 @@ targets:
       path: Extensions/QuizLockWidgets/QuizLockWidgets.entitlements
       properties:
         com.apple.security.application-groups:
-          - group.com.dinismagina.quizlock
+          - group.app.quizlock.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.Widgets
+        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.Widgets
         PRODUCT_NAME: QuizLockWidgets
         APPLICATION_EXTENSION_API_ONLY: YES
         SKIP_INSTALL: YES
@@ -251,7 +251,7 @@ targets:
       path: Tests/Info.plist
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.tests
+        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.tests
         GENERATE_INFOPLIST_FILE: NO
 
   ScreenshotTests:
@@ -265,7 +265,7 @@ targets:
       path: UITests/Info.plist
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.screenshots
+        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.screenshots
         TEST_TARGET_NAME: App
         GENERATE_INFOPLIST_FILE: NO
 

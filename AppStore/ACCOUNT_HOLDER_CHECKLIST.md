@@ -22,23 +22,23 @@ Go to developer.apple.com/app-store/small-business-program → **Enroll**. Apple
 ### ☐ 4. Create the App Group
 1. Go to developer.apple.com/account → **Certificates, Identifiers & Profiles → Identifiers → (+)**.
 2. Choose **App Groups → Continue**.
-3. Description: `QuizLock Group`. Identifier: `group.com.dinismagina.quizlock` → **Register**.
+3. Description: `QuizLock Group`. Identifier: `group.app.quizlock.ios` → **Register**.
 
 ### ☐ 5. Register the 6 bundle IDs
 For each one: **Identifiers → (+) → App IDs → App → Continue**, choose **Explicit**, paste the Bundle ID, tick the capabilities shown, then **Continue → Register**.
 
 | # | Bundle ID (copy exactly) | Description | Family Controls | App Groups |
 |---|---|---|---|---|
-| 1 | `com.dinismagina.quizlock` | QuizLock App | ✅ | ✅ |
-| 2 | `com.dinismagina.quizlock.ShieldConfiguration` | QuizLock Shield | ✅ | ✅ |
-| 3 | `com.dinismagina.quizlock.ShieldAction` | QuizLock Shield Action | ✅ | ✅ |
-| 4 | `com.dinismagina.quizlock.DeviceActivityMonitor` | QuizLock Monitor | ✅ | ✅ |
-| 5 | `com.dinismagina.quizlock.ScreenTimeReport` | QuizLock Report | ✅ | ✅ |
-| 6 | `com.dinismagina.quizlock.Widgets` | QuizLock Widgets | ❌ | ✅ |
+| 1 | `app.quizlock.ios` | QuizLock App | ✅ | ✅ |
+| 2 | `app.quizlock.ios.ShieldConfiguration` | QuizLock Shield | ✅ | ✅ |
+| 3 | `app.quizlock.ios.ShieldAction` | QuizLock Shield Action | ✅ | ✅ |
+| 4 | `app.quizlock.ios.DeviceActivityMonitor` | QuizLock Monitor | ✅ | ✅ |
+| 5 | `app.quizlock.ios.ScreenTimeReport` | QuizLock Report | ✅ | ✅ |
+| 6 | `app.quizlock.ios.Widgets` | QuizLock Widgets | ❌ | ✅ |
 
-On the main app ID (`com.dinismagina.quizlock`) **only**, also tick **iCloud** (it's used for key-value storage, which syncs streaks and stats; no container needed).
+On the main app ID (`app.quizlock.ios`) **only**, also tick **iCloud** (it's used for key-value storage, which syncs streaks and stats; no container needed).
 
-After registering each one, open it → next to **App Groups** click **Configure** → tick `group.com.dinismagina.quizlock` → **Save**.
+After registering each one, open it → next to **App Groups** click **Configure** → tick `group.app.quizlock.ios` → **Save**.
 
 ⚠️ **Never change these IDs after this step.** Apple's approval is tied to them.
 
@@ -57,7 +57,7 @@ After registering each one, open it → next to **App Groups** click **Configure
 ### ☐ 7. Create the app
 1. App Store Connect → **Apps → (+) → New App**.
 2. Platform **iOS**, Name **QuizLock**, Primary language **English (U.S.)**.
-3. Bundle ID `com.dinismagina.quizlock`, SKU `quizlock001`, User Access **Full Access** → **Create**.
+3. Bundle ID `app.quizlock.ios`, SKU `quizlock001`, User Access **Full Access** → **Create**.
 4. Open **App Information**, copy the **Apple ID** number, and send it to Dinis (it goes into the app's "Rate" button).
 
 ### ☐ 8. Create the subscription group
@@ -69,9 +69,9 @@ After registering each one, open it → next to **App Groups** click **Configure
 
 | Reference name | Product ID (copy exactly) | Duration | Price (USA) | Introductory offer |
 |---|---|---|---|---|
-| Pro Yearly | `com.dinismagina.quizlock.pro.yearly` | 1 Year | $39.99 | Free · 1 Week · New subscribers |
-| Pro Monthly | `com.dinismagina.quizlock.pro.monthly` | 1 Month | $9.99 | None |
-| Pro Yearly Offer | `com.dinismagina.quizlock.pro.yearly.offer` | 1 Year | $29.99 | None |
+| Pro Yearly | `app.quizlock.ios.pro.yearly` | 1 Year | $39.99 | Free · 1 Week · New subscribers |
+| Pro Monthly | `app.quizlock.ios.pro.monthly` | 1 Month | $9.99 | None |
+| Pro Yearly Offer | `app.quizlock.ios.pro.yearly.offer` | 1 Year | $29.99 | None |
 
 For each subscription:
 1. **Subscription Prices → Add pricing**: set the USA price and let Apple fill in the other countries automatically.

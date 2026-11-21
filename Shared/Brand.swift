@@ -5,17 +5,17 @@ public enum Brand {
     public static let appName = "QuizLock"
     public static let appNameCaps = "QUIZLOCK"
     public static let tagline = "Get smarter before scrolling"
-    public static let bundleID = "com.dinismagina.quizlock"
-    public static let appGroup = "group.com.dinismagina.quizlock"
+    public static let bundleID = "app.quizlock.ios"
+    public static let appGroup = "group.app.quizlock.ios"
     public static let supportEmail = "nismagina@gmail.com"
     public static let termsURL = URL(string: "https://nis7777.github.io/QUIZLOCK/terms.html") ?? URL(fileURLWithPath: "/")
     public static let privacyURL = URL(string: "https://nis7777.github.io/QUIZLOCK/privacy.html") ?? URL(fileURLWithPath: "/")
     /// Auto-renewable subscriptions, all in the App Store Connect subscription group "QuizLock Pro".
     /// Prices and the free trial live in App Store Connect / Products.storekit; the app always reads them from StoreKit.
     public static let subscriptionGroupName = "QuizLock Pro"
-    public static let iapProYearly = "com.dinismagina.quizlock.pro.yearly"            // yearly, 7-day free trial (intro offer)
-    public static let iapProMonthly = "com.dinismagina.quizlock.pro.monthly"          // monthly, no trial
-    public static let iapProYearlyOffer = "com.dinismagina.quizlock.pro.yearly.offer" // yearly, exit offer only, no trial
+    public static let iapProYearly = "app.quizlock.ios.pro.yearly"            // yearly, 7-day free trial (intro offer)
+    public static let iapProMonthly = "app.quizlock.ios.pro.monthly"          // monthly, no trial
+    public static let iapProYearlyOffer = "app.quizlock.ios.pro.yearly.offer" // yearly, exit offer only, no trial
     public static let proProductIDs = [iapProYearly, iapProMonthly, iapProYearlyOffer]
     /// The trial reminder fires this many days before the trial ends (day 5 of a 7-day trial).
     public static let trialReminderDaysBeforeEnd = 2
