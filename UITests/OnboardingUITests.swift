@@ -1,10 +1,10 @@
 import XCTest
 
-/// Taps through the whole first-launch onboarding on a fresh install (Simulator, Screen Time mocked) and checks:
-/// - "Which puzzles sound fun?" has the 4 games pre-selected and nothing to play,
-/// - "Here's how it works" plays by itself and can be skipped,
-/// - every screen is tap-only (the name question is skipped),
-/// - the paywall ("Your plan is ready") comes right after "Turn On Locks" and can be closed,
+/// Taps through the whole story-mode onboarding (ONBOARDING_V3) on a fresh install (Simulator, Screen Time
+/// mocked) and checks:
+/// - the chat can be skipped, every question is tap-only and the name can be skipped,
+/// - "Which puzzles sound fun?" has the 4 games pre-selected,
+/// - hold-to-commit works, and "Start my plan" opens the paywall, which can be closed,
 /// - closing it (exit offer once, if prices loaded) lands on the dashboard.
 /// Run with the "Screenshots" scheme (⌘U) on any iPhone Simulator.
 final class OnboardingUITests: XCTestCase {
@@ -21,60 +21,57 @@ final class OnboardingUITests: XCTestCase {
     func testOnboardingReachesClosablePaywallByTappingOnly() throws {
         let start = Date()
 
-        // Splash → Welcome
-        tap(app.buttons["Get Started"], timeout: 8)
-
-        // Which puzzles sound fun? (all 4 pre-selected)
-        XCTAssertTrue(app.staticTexts["Which puzzles sound fun?"].waitForExistence(timeout: 5))
-        for game in ["chess", "sudoku", "math", "word"] {
-            let card = app.buttons["onboarding.game.\(game)"]
-            XCTAssertTrue(card.exists, "\(game) card missing")
-            XCTAssertTrue(card.isSelected, "\(game) should be pre-selected")
-        }
-        tap(app.buttons["onboarding.continue"])
-
-        // Here's how it works: auto-plays; Skip at the top right.
-        tap(app.buttons["onboarding.skip"], timeout: 5)
-
-        // Name (optional): Skip.
+        // 1. Hello: hero → "Hey! I'm Lockie." → name (skipped)
+        tap(app.buttons["onboarding.start"], timeout: 8)
+        tapContinue()
         tap(app.buttons["Skip"], timeout: 5)
 
-        // Single-choice questions auto-advance; multi-select ones have Continue.
-        tapFirstChoice()                       // age
-        tapFirstChoice()                       // daily screen time
-        tapFirstChoice(); tapContinue()        // time-wasters (multi)
-        tapFirstChoice()                       // goal
+        // 2. The chat: tap the notification banner, then "Skip chat".
+        tap(app.buttons["onboarding.chatBanner"], timeout: 6)
+        tap(app.buttons["Skip chat"], timeout: 5)
+
+        // 3. How it works: Continue through the 3 cards.
+        tapContinue(); tapContinue(); tapContinue()
+
+        // 4. Questions (single choice auto-advances; multi-select has Continue).
+        tapContinue()                          // "Let's set you up"
+        tapFirstChoice()                       // source
+        tapFirstChoice()                       // hours
+        tapFirstChoice(); tapContinue()        // apps (multi)
         tapFirstChoice(); tapContinue()        // feelings (multi)
-        tapFirstChoice()                       // when
+        tapFirstChoice(); tapContinue()        // wants (multi)
+        XCTAssertTrue(app.staticTexts["Which puzzles sound fun?"].waitForExistence(timeout: 5))
+        let selected = app.buttons.matching(identifier: "quiz.choice").allElementsBoundByIndex.filter(\.isSelected)
+        XCTAssertEqual(selected.count, 4, "All 4 puzzles should be pre-selected")
+        tapContinue()                          // puzzles (multi)
+        tapFirstChoice()                       // challenge
 
-        // Calculating → reality check → plan
-        tap(app.buttons["Show my plan"], timeout: 10)
-        tap(app.buttons["Use this plan"], timeout: 5)
+        // 5. The turn
+        tapContinue(); tapContinue(); tapContinue(); tapContinue()
 
-        // Commitment: press and hold.
-        let hold = app.buttons["Hold to commit"]
+        // 6. Permissions: connect (mocked) → pick a mock app → confirmation → reward → notifications → rating
+        tap(app.buttons["onboarding.connect"], timeout: 5)
+        let mockApp = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Social'")).firstMatch
+        tap(mockApp, timeout: 5)
+        tap(app.buttons["Done"])
+        tapContinue(timeout: 6)
+        tap(app.buttons["onboarding.turnOn"], timeout: 5)
+        tap(app.buttons["onboarding.notifications"], timeout: 5)
+        allowSystemAlertIfShown()
+        tapContinue(timeout: 8)               // rating
+
+        // 7. Commitment: press and hold → "Let's go" → setup → plan ready → paywall
+        let hold = app.buttons["onboarding.commit"]
         XCTAssertTrue(hold.waitForExistence(timeout: 5))
         hold.press(forDuration: 2.0)
-        tapContinue()
+        tap(app.buttons["onboarding.letsGo"], timeout: 10)
+        tap(app.buttons["onboarding.startPlan"], timeout: 10)
 
-        // Rating screen
-        tapContinue()
-
-        // Screen Time intro → connect (mocked in the Simulator) → notifications explainer
-        tapContinue()
-        tapContinue()
-        tapContinue(timeout: 8)
-        allowSystemAlertIfShown()
-
-        // Lock apps → Turn On Locks
-        tapContinue(timeout: 8)
-        tap(app.buttons["Turn On Locks"], timeout: 5)
-
-        // Paywall right after Turn On Locks.
+        // Paywall right after "Start my plan".
         let title = app.staticTexts["paywall.title"]
         XCTAssertTrue(title.waitForExistence(timeout: 8))
         XCTAssertTrue(title.label.hasPrefix("Your plan is ready"))
-        XCTAssertLessThan(Date().timeIntervalSince(start), 90, "Launch → paywall should take under 90 seconds")
+        XCTAssertLessThan(Date().timeIntervalSince(start), 150, "Launch → paywall should stay quick")
         XCTAssertTrue(app.staticTexts["Auto-renews. Cancel anytime in Settings."].exists)
         XCTAssertTrue(app.buttons["Restore Purchases"].exists)
         XCTAssertTrue(app.buttons["Terms of Use"].exists)
