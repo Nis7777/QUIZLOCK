@@ -256,10 +256,39 @@ def main():
             if os.path.isdir(d):
                 shutil.rmtree(d)
             os.makedirs(d)
-            shutil.copyfile(os.path.join(ART, name), os.path.join(d, name))
+            dst = os.path.join(d, name)
+            how = downscale(os.path.join(ART, name), dst, max_dimension(asset))
             write_json(os.path.join(d, "Contents.json"), {
                 "images": [{"filename": name, "idiom": "universal"}], "info": INFO})
-            print(f"Image: {asset}")
+            print(f"Image: {asset} ({how})")
+
+
+def max_dimension(asset):
+    """Display-size caps (MOTION.md performance): mascots ≤ ~260pt, covers ≤ full width, @3x."""
+    if asset.startswith("mascot_"):
+        return 780
+    if asset.startswith("game_"):
+        return 1200
+    return None
+
+
+def downscale(src, dst, max_dim):
+    """Copies src to dst, shrinking so the longest side is ≤ max_dim (Pillow, else macOS sips, else as-is)."""
+    if max_dim:
+        try:
+            from PIL import Image  # optional
+            with Image.open(src) as im:
+                if max(im.size) > max_dim:
+                    im.thumbnail((max_dim, max_dim), Image.LANCZOS)
+                    im.save(dst, optimize=True)
+                    return f"resized to {im.size[0]}×{im.size[1]}"
+        except ImportError:
+            if shutil.which("sips"):
+                shutil.copyfile(src, dst)
+                subprocess.run(["sips", "-Z", str(max_dim), dst], check=True, stdout=subprocess.DEVNULL)
+                return f"resized to ≤{max_dim}px (sips)"
+    shutil.copyfile(src, dst)
+    return "copied"
 
 
 if __name__ == "__main__":
