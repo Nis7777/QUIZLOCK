@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// A real app's icon as it looks on the home screen: the brand glyph (vector asset `logo_<name>`, from
 /// simple-icons) on its brand-coloured rounded square (continuous corners, radius ≈ 22% of the size).

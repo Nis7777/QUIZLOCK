@@ -71,6 +71,7 @@
 		518A9285B17CD688EDA895E8 /* PuzzleGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979F8D4AB206D57E5765EAF5 /* PuzzleGame.swift */; };
 		531AD71D92E1F83BF18107DD /* WordGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D206A722133574726087818B /* WordGameView.swift */; };
 		5325F6F3D25E3A854A483CA1 /* AppModel+Retention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D02304C8CA0D403577567 /* AppModel+Retention.swift */; };
+		547D44F3CF8E0117035ACC11 /* BrandAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476CE78141FACFDAB73D445 /* BrandAppIcon.swift */; };
 		551057914AD5C16F071041DD /* ChessEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCFA0957009CD5A7EA92D7E /* ChessEngineTests.swift */; };
 		56BCF8E5D144013D598CC598 /* Ch6Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA748D1A3D1ACA80B639D06 /* Ch6Permissions.swift */; };
 		5A8718C19F33F6ECEE5EB9AE /* LockModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CB86DFDFF16B0785820A5E /* LockModels.swift */; };
@@ -378,6 +379,7 @@
 		C1B35FC1F7C0B9B36999245B /* ManageAppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAppsView.swift; sourceTree = "<group>"; };
 		C2F4F67FABC5F4864920EF52 /* ManagedSettingsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettingsUI.framework; path = System/Library/Frameworks/ManagedSettingsUI.framework; sourceTree = SDKROOT; };
 		C42B1F5B6F5687F716A3C13A /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
+		C476CE78141FACFDAB73D445 /* BrandAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandAppIcon.swift; sourceTree = "<group>"; };
 		C91FFA73BBB2F65D83E5D85E /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		CA176A50D5BC535A033EC1A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D1BC6928A4359C5C3910A2A2 /* Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 			isa = PBXGroup;
 			children = (
 				173284C7F8A7B106E33F71CA /* Accessibility.swift */,
+				C476CE78141FACFDAB73D445 /* BrandAppIcon.swift */,
 				1A9A2EA611A66B8D8D92BD57 /* ChunkyButton.swift */,
 				F33DB2CC93991F88E8C469D7 /* Components.swift */,
 				67CD60094F80C1855F95D99B /* Confetti.swift */,
@@ -1127,6 +1130,7 @@
 				2A53CDE95B8E3DA8B56127E2 /* AppModel.swift in Sources */,
 				FAC58A8F39E58408327F6172 /* AppSettings.swift in Sources */,
 				62E465CC0561D54350CBE818 /* Brand.swift in Sources */,
+				547D44F3CF8E0117035ACC11 /* BrandAppIcon.swift in Sources */,
 				E71533903512DB0EAB44402D /* Ch1Hello.swift in Sources */,
 				437EBF102083E851512F0902 /* Ch2Chat.swift in Sources */,
 				4B351F098DC51198414230E0 /* Ch3HowItWorks.swift in Sources */,
