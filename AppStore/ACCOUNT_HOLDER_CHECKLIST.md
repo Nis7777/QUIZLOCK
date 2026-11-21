@@ -36,6 +36,8 @@ For each one: **Identifiers → (+) → App IDs → App → Continue**, choose *
 | 5 | `com.dinismagina.quizlock.ScreenTimeReport` | QuizLock Report | ✅ | ✅ |
 | 6 | `com.dinismagina.quizlock.Widgets` | QuizLock Widgets | ❌ | ✅ |
 
+On the main app ID (`com.dinismagina.quizlock`) **only**, also tick **iCloud** (it's used for key-value storage, which syncs streaks and stats; no container needed).
+
 After registering each one, open it → next to **App Groups** click **Configure** → tick `group.com.dinismagina.quizlock` → **Save**.
 
 ⚠️ **Never change these IDs after this step.** Apple's approval is tied to them.
