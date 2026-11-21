@@ -175,11 +175,16 @@ final class AppModel {
         pushProfileToCloud()
     }
 
-    /// Pre-fills the later setup screens from the personalised plan.
-    func applyPlan() {
-        let plan = profile
-        // Games come from "Which puzzles sound fun?", so the plan only suggests the unlock time.
-        updateLock(applyShield: false) { $0.defaultDuration = plan.suggestedDuration }
+    /// "How hard should unlocking be?" → puzzles per unlock + difficulty for every game.
+    func applyChallenge(_ challenge: UserProfile.Challenge) {
+        updateProfile { $0.challenge = challenge }
+        updateLock(applyShield: false) { $0.puzzlesPerUnlock = challenge.puzzlesPerUnlock }
+        updateSettings { s in
+            for game in GameID.allCases {
+                let level = challenge.difficulty
+                s.difficulties[game.rawValue] = game.difficulties.contains(level) ? level : .easy
+            }
+        }
     }
 
     func settingsBinding<T>(_ keyPath: WritableKeyPath<AppSettings, T>) -> Binding<T> {

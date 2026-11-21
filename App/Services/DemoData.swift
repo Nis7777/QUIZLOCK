@@ -50,12 +50,12 @@ enum DemoData {
 
         var profile = UserProfile()
         profile.name = "Alex"
-        profile.ageRange = .from18to24
-        profile.screenTime = .fiveToSix
-        profile.wasters = [.shortVideos, .socialMedia]
-        profile.goal = .doomscroll
-        profile.feelings = [.drained, .guilty]
-        profile.when = .lateNight
+        profile.source = .friend
+        profile.scrollHours = .from4to6
+        profile.wasters = [.shortVideos, .socialFeeds]
+        profile.feelings = [.guilty, .foggy]
+        profile.wants = [.reading, .sleep, .friends]
+        profile.challenge = .balanced
         SharedStore.save(profile, .userProfile)
 
         var stats = Stats()

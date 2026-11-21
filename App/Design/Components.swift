@@ -73,49 +73,26 @@ private struct ShackleShape: Shape {
 
 // MARK: - Buttons
 
+/// Primary button: rendered as a ChunkyButton (coral face on a darker 3D edge, MOTION.md press).
 struct PrimaryButton: View {
     let title: String
     var systemImage: String?
     var trailingImage: String?
     var isLoading = false
     var isEnabled = true
+    var shimmer = false
     let action: () -> Void
-    @Environment(\.palette) private var palette
 
     var body: some View {
-        Button {
-            Haptics.tap()
-            action()
-        } label: {
-            HStack(spacing: 10) {
-                if isLoading {
-                    ProgressView().tint(palette.onAccent)
-                }
-                if let systemImage, !isLoading {
-                    Image(systemName: systemImage).appFont(19, .bold)
-                }
-                Text(LocalizedStringKey(title)).appFont(19, .bold)
-                if let trailingImage {
-                    Image(systemName: trailingImage).appFont(19, .bold)
-                }
-            }
-            .foregroundStyle(isEnabled ? palette.onAccent : Color.white)
-            .frame(maxWidth: .infinity)
-            .frame(height: 64)
-            .background(isEnabled ? palette.accent : Color(hex: 0xC7C7CC),
-                        in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        }
-        .buttonStyle(PressableStyle())
-        .disabled(!isEnabled || isLoading)
+        ChunkyButton(title: title, systemImage: systemImage ?? trailingImage, isEnabled: isEnabled,
+                     isLoading: isLoading, shimmer: shimmer, action: action)
     }
 }
 
+/// Kept for existing call sites; same as PressableButtonStyle (MOTION.md).
 struct PressableStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.97 : 1)
-            .opacity(configuration.isPressed ? 0.9 : 1)
-            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
+        PressableButtonStyle().makeBody(configuration: configuration)
     }
 }
 
