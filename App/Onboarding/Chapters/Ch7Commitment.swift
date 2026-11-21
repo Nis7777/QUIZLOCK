@@ -218,31 +218,28 @@ struct SettingUpView: View {
     private static let duration = 3.0
     private let steps = ["Analyzing your answers", "Building your plan", "Locking in your puzzles"]
 
+    // Arc geometry: Lockie sits fully inside the semicircle, above the line between its two ends.
+    private static let arcWidth: CGFloat = 260
+    private static let lineWidth: CGFloat = 14
+    private static var arcRadius: CGFloat { arcWidth / 2 - lineWidth / 2 }
+    /// The largest square that fits inside the inner half-circle, resting on its base: side = 2r/√5.
+    private static var mascotSize: CGFloat { ((arcRadius - lineWidth / 2) * 2 / sqrt(5)).rounded(.down) }
+
     var body: some View {
-        VStack(spacing: 26) {
-            Spacer()
-            ZStack {
-                Circle()
-                    .trim(from: 0, to: 0.5)
-                    .stroke(Color.brandTint, style: StrokeStyle(lineWidth: 14, lineCap: .round))
-                    .rotationEffect(.degrees(180))
-                Circle()
-                    .trim(from: 0, to: 0.5 * count.progress)
-                    .stroke(Color.brand, style: StrokeStyle(lineWidth: 14, lineCap: .round))
-                    .rotationEffect(.degrees(180))
-                MascotSlot(expression: .calm, size: 160)
-                    .offset(y: -30)
-                CountingText(value: 100 * count.progress, final: 100, format: CountingText.percent, landed: count.landed)
-                    .appFont(22, .heavy, design: .rounded)
-                    .foregroundStyle(Color.brand)
-                    .offset(y: 66)
-            }
-            .frame(width: 270, height: 270)
-            .padding(.bottom, -100)
+        VStack(spacing: 0) {
+            Spacer(minLength: 16)
+            arc
+            CountingText(value: 100 * count.progress, final: 100, format: CountingText.percent, landed: count.landed)
+                .appFont(40, .bold, design: .rounded)
+                .foregroundStyle(Color.brand)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 24)
             Text(verbatim: String(localized: "Setting up \(Brand.appName)…"))
                 .appFont(28, .heavy, design: .rounded)
                 .foregroundStyle(Color.textPrimary)
+                .multilineTextAlignment(.center)
                 .accessibilityAddTraits(.isHeader)
+                .padding(.top, 8)
             VStack(alignment: .leading, spacing: 16) {
                 ForEach(steps.indices, id: \.self) { i in
                     let done = i < doneSteps
@@ -259,10 +256,11 @@ struct SettingUpView: View {
                     .accessibilityElement(children: .combine)
                 }
             }
-            .padding(.top, 6)
-            Spacer()
-            Spacer()
+            .padding(.top, 32)
+            Spacer(minLength: 16)
+            Spacer(minLength: 0)
         }
+        .padding(.horizontal, 24)
         .frame(maxWidth: .infinity)
         .sensoryFeedback(.impact(weight: .medium), trigger: doneSteps)
         .countUp($count, duration: Self.duration, feedback: .success)
@@ -276,6 +274,36 @@ struct SettingUpView: View {
             try? await Task.sleep(nanoseconds: 500_000_000)
             onDone()
         }
+    }
+
+    /// The track and the coral progress arc, with Lockie resting on the arc's base line.
+    private var arc: some View {
+        let w = Self.arcWidth, lw = Self.lineWidth
+        return ZStack(alignment: .bottom) {
+            HalfArc(lineWidth: lw)
+                .stroke(Color.brandTint, style: StrokeStyle(lineWidth: lw, lineCap: .round))
+            HalfArc(lineWidth: lw)
+                .trim(from: 0, to: count.progress)
+                .stroke(Color.brand, style: StrokeStyle(lineWidth: lw, lineCap: .round))
+            MascotSlot(expression: .calm, size: Self.mascotSize)
+                .padding(.bottom, lw / 2)
+        }
+        .frame(width: w, height: Self.arcRadius + lw)
+        .accessibilityHidden(true)
+    }
+}
+
+/// The top half of a circle whose centre sits `lineWidth / 2` above the bottom edge, so the round caps
+/// stay inside the frame. Drawn left → right so `trim` fills it clockwise.
+struct HalfArc: Shape {
+    let lineWidth: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        let radius = rect.width / 2 - lineWidth / 2
+        let center = CGPoint(x: rect.midX, y: rect.maxY - lineWidth / 2)
+        var path = Path()
+        path.addArc(center: center, radius: radius, startAngle: .degrees(180), endAngle: .degrees(360), clockwise: false)
+        return path
     }
 }
 
