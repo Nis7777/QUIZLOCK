@@ -58,6 +58,13 @@ final class ScreenTimeService {
         }
     }
 
+    /// "Reset all data": removes every shield and stops all DeviceActivity monitoring (schedules and re-locks).
+    func removeAllShieldsAndMonitoring() {
+        ShieldController.clear()
+        if Self.isMock { return }
+        DeviceActivityCenter().stopMonitoring()
+    }
+
     /// Schedules the re-lock. DeviceActivity needs schedules of at least 15 minutes, so for
     /// shorter unlocks the interval starts in the past: start = end − 15 min.
     func scheduleRelock(_ unlock: ActiveUnlock, now: Date = Date()) {

@@ -436,6 +436,15 @@ PT = {
     "Copy email address": "Copiar endereço de email",
     "Copied": "Copiado",
 
+    # Settings → Data
+    "Data": "Dados",
+    "%@ has no accounts. Your subscription is tied to your Apple ID (use Restore Purchases on a new phone). Progress syncs with your iCloud.":
+        "A %@ não tem contas. A tua subscrição está associada à tua conta Apple (usa Restaurar compras num telemóvel novo). O progresso sincroniza com o teu iCloud.",
+    "Reset all data": "Repor todos os dados",
+    "Reset all data?": "Repor todos os dados?",
+    "This removes your locks, settings, stats and streaks from this device and iCloud. Your subscription isn't affected.":
+        "Isto remove os teus bloqueios, definições, estatísticas e sequências deste dispositivo e do iCloud. A tua subscrição não é afetada.",
+
     # iCloud restore
     "Welcome back!": "Bem-vindo de volta!",
     "Your streak and stats are restored. Pick the apps to lock again.":

@@ -51,6 +51,16 @@
         }
       }
     },
+    "%@ has no accounts. Your subscription is tied to your Apple ID (use Restore Purchases on a new phone). Progress syncs with your iCloud.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A %@ não tem contas. A tua subscrição está associada à tua conta Apple (usa Restaurar compras num telemóvel novo). O progresso sincroniza com o teu iCloud."
+          }
+        }
+      }
+    },
     "%@ is active. Thank you!": {
       "localizations": {
         "pt-PT": {
@@ -1337,6 +1347,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Escuro"
+          }
+        }
+      }
+    },
+    "Data": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dados"
           }
         }
       }
@@ -3121,6 +3141,26 @@
         }
       }
     },
+    "Reset all data": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repor todos os dados"
+          }
+        }
+      }
+    },
+    "Reset all data?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repor todos os dados?"
+          }
+        }
+      }
+    },
     "Restore Purchases": {
       "localizations": {
         "pt-PT": {
@@ -3877,6 +3917,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Isto substitui a predefinição para esta app. Os desbloqueios atuais mantêm o tempo restante."
+          }
+        }
+      }
+    },
+    "This removes your locks, settings, stats and streaks from this device and iCloud. Your subscription isn't affected.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Isto remove os teus bloqueios, definições, estatísticas e sequências deste dispositivo e do iCloud. A tua subscrição não é afetada."
           }
         }
       }

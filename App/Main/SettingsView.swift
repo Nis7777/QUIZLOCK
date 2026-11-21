@@ -63,6 +63,7 @@ struct SettingsView: View {
     @State private var showMail = false
     @State private var restoreMessage: String?
     @State private var showManageSubscriptions = false
+    @State private var showResetSheet = false
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -80,6 +81,7 @@ struct SettingsView: View {
                 appearanceSection
                 if model.notificationsDenied { notificationsOffCard }
                 proCard
+                dataSection
                 supportSection
                 // No "Analytics" / "Ad measurement" sections: the app has no analytics or ads code and its
                 // App Privacy label is "Data Not Collected". If you add an SDK later, bring the sections back
@@ -118,6 +120,17 @@ struct SettingsView: View {
                 .ignoresSafeArea()
         }
         .manageSubscriptionsSheet(isPresented: $showManageSubscriptions)
+        .sheet(isPresented: $showResetSheet) {
+            ResetDataSheet {
+                showResetSheet = false
+                model.guardStrict(weakening: true) { model.resetAllData() }
+            } onCancel: {
+                showResetSheet = false
+            }
+            .environment(\.palette, model.palette)
+            .presentationDetents([.medium])
+            .presentationCornerRadius(28)
+        }
         .alert("Restore Purchases", isPresented: Binding(get: { restoreMessage != nil }, set: { if !$0 { restoreMessage = nil } })) {
             Button("OK", role: .cancel) {}
         } message: {
@@ -198,6 +211,48 @@ struct SettingsView: View {
         }
         .card()
         .padding(.horizontal, 16)
+    }
+
+    // MARK: Data
+
+    private var dataSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            SectionHeader(title: "Data")
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .top, spacing: 14) {
+                    Image(systemName: "icloud.fill")
+                        .appFont(20)
+                        .foregroundStyle(palette.accent)
+                        .frame(width: 34)
+                        .accessibilityHidden(true)
+                    Text("\(Brand.appName) has no accounts. Your subscription is tied to your Apple ID (use Restore Purchases on a new phone). Progress syncs with your iCloud.")
+                        .appFont(15)
+                        .foregroundStyle(palette.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Divider()
+                Button {
+                    Haptics.tap()
+                    showResetSheet = true
+                } label: {
+                    HStack(spacing: 14) {
+                        Image(systemName: "trash")
+                            .appFont(20)
+                            .frame(width: 34)
+                            .accessibilityHidden(true)
+                        Text("Reset all data").appFont(17, .semibold)
+                        Spacer()
+                    }
+                    .foregroundStyle(Color.errorRed)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("settings.resetAllData")
+            }
+            .card()
+            .padding(.horizontal, 16)
+        }
+        .padding(.top, 10)
     }
 
     // MARK: Support
@@ -562,5 +617,50 @@ private struct ThemeCard: View {
         .padding(8)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(dark ? Color.black : Color.appBg, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+}
+
+/// Confirmation for "Reset all data".
+private struct ResetDataSheet: View {
+    let onConfirm: () -> Void
+    let onCancel: () -> Void
+    @Environment(\.palette) private var palette
+
+    var body: some View {
+        VStack(spacing: 18) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .appFont(40, .semibold)
+                .foregroundStyle(Color.errorRed)
+                .padding(.top, 28)
+                .accessibilityHidden(true)
+            Text("Reset all data?")
+                .appFont(24, .bold)
+                .foregroundStyle(palette.textPrimary)
+            Text("This removes your locks, settings, stats and streaks from this device and iCloud. Your subscription isn't affected.")
+                .appFont(16)
+                .foregroundStyle(palette.textSecondary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 12)
+            Spacer(minLength: 0)
+            Button(role: .destructive, action: onConfirm) {
+                Text("Reset all data")
+                    .appFont(19, .bold)
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 60)
+                    .background(Color.errorRed, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            }
+            .buttonStyle(PressableStyle())
+            .accessibilityIdentifier("settings.resetConfirm")
+            Button("Cancel", action: onCancel)
+                .appFont(17, .semibold)
+                .foregroundStyle(palette.accentText)
+                .tapTarget()
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 12)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(palette.bg.ignoresSafeArea())
     }
 }

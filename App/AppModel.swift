@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import SwiftUI
 import UserNotifications
+import WidgetKit
 
 enum MainTab: Hashable { case settings, puzzles, feedback }
 
@@ -467,6 +468,45 @@ final class AppModel {
     func finishUnlockResult() {
         unlockResult = nil
         unlockSession = nil
+    }
+
+    // MARK: Reset all data
+
+    /// Settings → Data → "Reset all data": removes the locks, settings, stats and streaks from this device and
+    /// iCloud, removes all shields, stops all DeviceActivity monitoring and returns to onboarding.
+    /// The subscription is untouched (it belongs to the Apple ID; StoreKit re-reads it).
+    func resetAllData() {
+        screenTime.removeAllShieldsAndMonitoring()
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+        center.removeAllDeliveredNotifications()
+
+        let defaults = SharedStore.defaults
+        defaults.removePersistentDomain(forName: Brand.appGroup)
+        for key in defaults.dictionaryRepresentation().keys { defaults.removeObject(forKey: key) }
+        cloud.removeAll()
+
+        unlockSession = nil
+        unlockResult = nil
+        awaitingEntitlementForUnlock = false
+        paywallReason = nil
+        practiceGame = nil
+        welcomeBack = false
+        reconnectSnoozed = false
+        milestone = nil
+        progressionOffer = nil
+        dailyPuzzleOpen = false
+        showStats = false
+        toast = nil
+        selectedTab = .settings
+        settings = AppSettings()
+        lock = LockState()
+        profile = UserProfile()
+        stats = StatsStore.load()
+        isAuthorized = screenTime.isAuthorized(simulatorFlag: false)
+        WidgetCenter.shared.reloadAllTimelines()
+        Task { await store.refreshEntitlements() }
+        withAnimation(.easeInOut(duration: 0.35)) { phase = .splash }
     }
 
     // MARK: Text helpers
