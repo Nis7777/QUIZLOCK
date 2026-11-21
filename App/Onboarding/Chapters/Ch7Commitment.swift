@@ -92,7 +92,7 @@ struct CommitView: View {
                 let t = Date().timeIntervalSince(start) / Self.holdDuration
                 if t >= 1 { break }
                 // Continuous haptics ramping up in strength and rate.
-                generator.impactOccurred(intensity: 0.3 + 0.7 * t)
+                generator.impactOccurred(intensity: CGFloat(0.3 + 0.7 * t))
                 try? await Task.sleep(nanoseconds: UInt64((0.14 - 0.09 * t) * 1_000_000_000))
             }
             if !Task.isCancelled { complete() }
