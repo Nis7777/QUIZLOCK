@@ -13,7 +13,7 @@ private struct PreviewCardShell<Content: View>: View {
         VStack(spacing: 0) {
             HStack(spacing: 8) {
                 icon
-                Text(title).appFont(17, .semibold)
+                Text(LocalizedStringKey(title)).appFont(17, .semibold)
                 Spacer()
                 ZStack {
                     Circle().fill(Color.correctGreen)
@@ -169,7 +169,7 @@ struct SudokuPreviewCard: View {
                     board(side: side)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                AnswerBar(text: "Row complete ✓")
+                AnswerBar(text: String(localized: "Row complete ✓"))
                     .opacity(solved ? 1 : 0)
                     .scaleEffect(solved ? 1 : 0.92)
             }
@@ -240,7 +240,7 @@ struct ChessPreviewCard: View {
         PreviewCardShell(icon: AnyView(CheckerIcon(color: .white.opacity(0.8), size: 16)),
                          title: "Chess", dark: true, solved: solved) {
             VStack(spacing: 14) {
-                Text(headerText)
+                Text(LocalizedStringKey(headerText))
                     .appFont(20, .bold)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -251,7 +251,7 @@ struct ChessPreviewCard: View {
                         .frame(width: side, height: side)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                AnswerBar(text: "\(Self.data?.san ?? "Rd8#") · Checkmate ✓")
+                AnswerBar(text: String(localized: "\(Self.data?.san ?? "Rd8#") · Checkmate ✓"))
                     .opacity(solved ? 1 : 0)
                     .scaleEffect(solved ? 1 : 0.92)
             }

@@ -9,7 +9,7 @@ struct SplashView: View {
         VStack(spacing: 14) {
             Spacer()
             Wordmark(size: 58)
-            Text(Brand.tagline)
+            Text(LocalizedStringKey(Brand.tagline))
                 .appFont(20, .medium)
                 .foregroundStyle(palette.textSecondary)
                 .multilineTextAlignment(.center)

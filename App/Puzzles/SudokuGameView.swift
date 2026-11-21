@@ -97,12 +97,12 @@ struct SudokuGameView: View {
 
     private var toolRow: some View {
         HStack(spacing: 10) {
-            tool(icon: "eraser", title: "Erase", active: false) { vm.erase() }
-            tool(icon: vm.notesMode ? "pencil.circle.fill" : "pencil", title: vm.notesMode ? "Notes On" : "Notes", active: vm.notesMode) {
+            tool(icon: "eraser", title: String(localized: "Erase"), active: false) { vm.erase() }
+            tool(icon: vm.notesMode ? "pencil.circle.fill" : "pencil", title: vm.notesMode ? String(localized: "Notes On") : String(localized: "Notes"), active: vm.notesMode) {
                 Haptics.tap()
                 withAnimation(.selectionSpring) { vm.notesMode.toggle() }
             }
-            tool(icon: "lightbulb", title: "Hint (\(vm.round.hintsLeft))", active: false) { vm.hint() }
+            tool(icon: "lightbulb", title: String(localized: "Hint (\(vm.round.hintsLeft))"), active: false) { vm.hint() }
                 .opacity(vm.round.hintsLeft > 0 ? 1 : 0.4)
         }
     }
@@ -111,7 +111,7 @@ struct SudokuGameView: View {
         Button(action: action) {
             VStack(spacing: 4) {
                 Image(systemName: icon).appFont(20, .semibold)
-                Text(title).appFont(13, .semibold)
+                Text(LocalizedStringKey(title)).appFont(13, .semibold)
             }
             .foregroundStyle(active ? Color.white : palette.textPrimary)
             .frame(maxWidth: .infinity)

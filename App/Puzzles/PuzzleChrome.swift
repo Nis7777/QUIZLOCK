@@ -7,6 +7,8 @@ struct PuzzleChrome<Content: View>: View {
     var progress: String?
     var isPractice = false
     var onClose: (() -> Void)?
+    /// Small extra control shown next to the close button (e.g. "Emergency unlock").
+    var headerAccessory: AnyView?
     @ViewBuilder var content: () -> Content
     @Environment(\.palette) private var palette
 
@@ -18,12 +20,15 @@ struct PuzzleChrome<Content: View>: View {
                         .appFont(12, .bold)
                         .tracking(3)
                         .foregroundStyle(palette.accentText)
-                    Text(game.displayName)
+                    Text(LocalizedStringKey(game.displayName))
                         .appFont(17, .semibold)
                         .foregroundStyle(palette.textPrimary)
                 }
                 .accessibilityElement(children: .combine)
                 Spacer()
+                if let headerAccessory {
+                    headerAccessory.offset(y: -4)
+                }
                 if let onClose {
                     CloseButton(action: onClose).offset(x: 10, y: -6)
                 }
@@ -31,7 +36,7 @@ struct PuzzleChrome<Content: View>: View {
             .padding(.top, 8)
 
             HStack(alignment: .center) {
-                Text(subLabel)
+                Text(LocalizedStringKey(subLabel))
                     .appFont(13, .semibold)
                     .tracking(0.6)
                     .foregroundStyle(palette.textSecondary)
@@ -82,10 +87,10 @@ extension AnyRound {
     /// Grey caps sub-label ("ALGEBRA", "5 LETTERS · 6 TRIES", "EASY", "MATE IN 1").
     var subLabel: String {
         switch self {
-        case .math(let r): return r.question.topic
-        case .word(let r): return "5 LETTERS · \(r.maxTries) TRIES"
-        case .sudoku(let r): return r.difficulty == .quick ? "QUICK 6×6" : r.difficulty.displayName.uppercased()
-        case .chess(let r): return "MATE IN \(r.puzzle.mateIn)"
+        case .math(let r): return String(localized: String.LocalizationValue(r.question.topic))
+        case .word(let r): return String(localized: "5 LETTERS · \(r.maxTries) TRIES")
+        case .sudoku(let r): return r.difficulty == .quick ? String(localized: "QUICK 6×6") : r.difficulty.localizedName.uppercased()
+        case .chess(let r): return String(localized: "MATE IN \(r.puzzle.mateIn)")
         }
     }
 

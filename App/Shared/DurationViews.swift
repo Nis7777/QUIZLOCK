@@ -15,7 +15,7 @@ struct DurationOptionsCard: View {
                 Divider().padding(.leading, 20)
             }
             ForEach(Array(UnlockDuration.presets.enumerated()), id: \.offset) { _, option in
-                row(title: option.label, selected: selection == option) { onSelect(option) }
+                row(title: option.localizedLabel, selected: selection == option) { onSelect(option) }
                 Divider().padding(.leading, 20)
             }
             Button {
@@ -28,7 +28,7 @@ struct DurationOptionsCard: View {
                             .appFont(19, .semibold)
                             .foregroundStyle(palette.accent)
                         if let s = selection, s.isCustom {
-                            Text(s.label).appFont(15).foregroundStyle(palette.textSecondary)
+                            Text(s.localizedLabel).appFont(15).foregroundStyle(palette.textSecondary)
                         }
                     }
                     Spacer()
@@ -92,7 +92,7 @@ struct DurationRadioCards: View {
                     withAnimation(.selectionSpring) { onSelect(option) }
                 } label: {
                     HStack {
-                        Text(option.label).appFont(19, .semibold).foregroundStyle(palette.textPrimary)
+                        Text(option.localizedLabel).appFont(19, .semibold).foregroundStyle(palette.textPrimary)
                         Spacer()
                         RadioMark(isSelected: selected)
                     }
@@ -112,7 +112,7 @@ struct DurationRadioCards: View {
                 showCustom = true
             } label: {
                 HStack {
-                    Text(selection.isCustom ? "Custom · \(selection.label)" : "Custom")
+                    Text(selection.isCustom ? String(localized: "Custom · \(selection.localizedLabel)") : String(localized: "Custom"))
                         .appFont(19, .semibold)
                         .foregroundStyle(palette.accent)
                     Spacer()
@@ -198,7 +198,7 @@ struct CustomDurationSheet: View {
             .pickerStyle(.wheel)
             .frame(maxWidth: .infinity)
             .clipped()
-            Text(unit)
+            Text(LocalizedStringKey(unit))
                 .appFont(19, .semibold)
                 .foregroundStyle(palette.textPrimary)
                 .frame(width: 64, alignment: .leading)

@@ -143,7 +143,7 @@ final class ChessViewModel {
             dragPieceID = nil
         case .wrong(let left):
             onUpdate(round)
-            wrongFeedback(message: "Not quite. \(left) \(left == 1 ? "try" : "tries") left")
+            wrongFeedback(message: String(localized: "Not quite. \(left) tries left"))
         case .correctContinue:
             commitDrag()
             animate(move, before: before)
@@ -167,7 +167,7 @@ final class ChessViewModel {
             Haptics.success()
             withAnimation(.selectionSpring.delay(0.25)) {
                 answerIsSuccess = true
-                answerText = san.hasSuffix("#") ? "\(san) · Checkmate ✓" : "\(san)# · Checkmate ✓"
+                answerText = String(localized: "\(san.hasSuffix("#") ? san : san + "#") · Checkmate ✓")
             }
             Task {
                 try? await Task.sleep(nanoseconds: 1_500_000_000)
@@ -175,7 +175,7 @@ final class ChessViewModel {
             }
         case .failed:
             onUpdate(round)
-            wrongFeedback(message: "Out of tries. Here's the solution.")
+            wrongFeedback(message: String(localized: "Out of tries. Here's the solution."))
             playSolution()
         }
     }
@@ -208,7 +208,7 @@ final class ChessViewModel {
             }
             withAnimation(.selectionSpring) {
                 answerIsSuccess = false
-                answerText = "Solution: \(lastSAN)"
+                answerText = String(localized: "Solution: \(lastSAN)")
             }
             try? await Task.sleep(nanoseconds: 1_800_000_000)
             onFinish(.failed)
@@ -229,7 +229,7 @@ struct ChessGameView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text(vm.round.headerText)
+            Text(LocalizedStringKey(vm.round.headerText))
                 .appFont(22, .bold)
                 .foregroundStyle(palette.textPrimary)
                 .frame(maxWidth: .infinity, alignment: .leading)

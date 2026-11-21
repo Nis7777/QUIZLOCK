@@ -16,7 +16,8 @@ public enum ShieldController {
         _ = now
         #else
         let store = ManagedSettingsStore(named: .main)
-        guard state.locksEnabled else {
+        guard state.locksActive(now: now) else {
+            // Locks off, or outside the lock schedule.
             store.clearAllSettings()
             return
         }

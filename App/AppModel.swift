@@ -33,6 +33,17 @@ final class AppModel {
     var awaitingEntitlementForUnlock = false
 
     var paywallReason: PaywallReason?
+
+    // Retention (see AppModel+Retention.swift)
+    var stats = StatsStore.load()
+    var milestone: Int?
+    var progressionOffer: GameID?
+    var toast: String?
+    var strictChallengeActive = false
+    var dailyPuzzleOpen = false
+    var showStats = false
+    @ObservationIgnored var roundStartedAt = Date()
+    @ObservationIgnored var pendingStrictAction: (() -> Void)?
     var practiceGame: GameID?
     var isAuthorized = true
     /// The user chose "Not Now" on the Reconnect screen (until the next launch).
@@ -74,6 +85,7 @@ final class AppModel {
             resumeUnlockIfNeeded()
         }
         warmUpRounds()
+        if settings.onboardingComplete { screenTime.registerSchedule(lock.schedule) }
         sweepTimer?.invalidate()
         sweepTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { _ in
             Task { @MainActor in AppModel.shared.sweepExpiredUnlocks() }
@@ -83,6 +95,8 @@ final class AppModel {
     /// Called on launch and whenever the app becomes active.
     func refreshFromStore() {
         lock = SharedStore.lockState
+        StatsStore.recordActive()
+        statsChanged()
         isAuthorized = screenTime.isAuthorized(simulatorFlag: settings.simulatorAuthorized)
         sweepExpiredUnlocks(reapply: true)
         Task { await refreshNotificationStatus() }
@@ -164,7 +178,19 @@ final class AppModel {
 
     func itemEnabledBinding(_ key: String) -> Binding<Bool> {
         Binding(get: { self.lock.isEnabled(key) },
-                set: { value in self.updateLock { $0.items[key, default: ItemConfig()].enabled = value } })
+                set: { value in
+                    self.guardStrict(weakening: !value) {
+                        self.updateLock { $0.items[key, default: ItemConfig()].enabled = value }
+                    }
+                })
+    }
+
+    /// Master "Enable locks" switch (strict mode blocks turning it off).
+    var locksEnabledBinding: Binding<Bool> {
+        Binding(get: { self.lock.locksEnabled },
+                set: { value in
+                    self.guardStrict(weakening: !value) { self.updateLock { $0.locksEnabled = value } }
+                })
     }
 
     func setOverride(_ duration: UnlockDuration?, for key: String) {
@@ -172,6 +198,10 @@ final class AppModel {
     }
 
     func remove(_ item: LockItem) {
+        guardStrict(weakening: true) { self.performRemove(item) }
+    }
+
+    private func performRemove(_ item: LockItem) {
         updateLock { state in
             switch item.kind {
             case .app(let t): state.selection.applicationTokens.remove(t)
@@ -334,6 +364,7 @@ final class AppModel {
         let round = await rounds.nextRound(game, difficulty: settings.difficulty(for: game))
         guard unlockSession != nil else { return }
         unlockSession?.current = round
+        roundStartedAt = Date()
         saveSession()
     }
 
@@ -346,6 +377,7 @@ final class AppModel {
 
     func sessionRoundFinished(_ status: RoundStatus) {
         guard var session = unlockSession else { return }
+        recordResult(game: session.current?.game ?? session.currentGame, status: status, startedAt: roundStartedAt)
         session.current = nil
         switch status {
         case .solved:
@@ -397,11 +429,13 @@ final class AppModel {
             state.activeUnlocks.removeAll { $0.itemKey == pending.itemKey }
             state.activeUnlocks.append(unlock)
         }
+        StatsStore.recordUnlockEarned()
+        statsChanged()
         screenTime.scheduleRelock(unlock)
         SharedStore.pendingUnlock = nil
         SharedStore.save(nil as UnlockSession?, .unlockSession)
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["quizlock.unlock"])
-        let name = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? "your app"
+        let name = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? String(localized: "your app")
         Haptics.success()
         withAnimation(.easeInOut(duration: 0.3)) {
             unlockResult = UnlockResult(appName: name, duration: duration)
@@ -416,11 +450,10 @@ final class AppModel {
     // MARK: Text helpers
 
     var selectedCountText: String {
-        let n = lock.selectedCount
-        return "\(n) app\(n == 1 ? "" : "s") selected"
+        String(localized: "\(lock.selectedCount) apps selected")
     }
 
     var enabledGamesText: String {
-        settings.enabledGames.map(\.displayName).joined(separator: ", ")
+        settings.enabledGames.map(\.localizedName).formatted(.list(type: .and))
     }
 }

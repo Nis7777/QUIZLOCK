@@ -6,6 +6,8 @@ enum SettingsRoute: Hashable {
     case manageApps
     case unlockTime
     case appUnlockTime(String)
+    case stats
+    case schedule
 }
 
 /// Settings tab (the dashboard).
@@ -26,6 +28,10 @@ struct SettingsTab: View {
                             UnlockTimeView(itemKey: nil)
                         case .appUnlockTime(let key):
                             UnlockTimeView(itemKey: key)
+                        case .stats:
+                            StatsView()
+                        case .schedule:
+                            ScheduleView()
                         }
                     }
                     .toolbar(.hidden, for: .navigationBar)
@@ -40,6 +46,7 @@ struct SettingsView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
     @State private var showPuzzlesPerUnlock = false
+    @State private var showStrictSheet = false
     @State private var showUnlockPuzzles = false
     @State private var link: URL?
     @State private var showMail = false
@@ -53,8 +60,11 @@ struct SettingsView: View {
                 if model.settings.showAllSetBanner {
                     allSetBanner.transition(.opacity.combined(with: .move(edge: .top)))
                 }
+                if model.isStrict { strictBanner }
+                TodayCard(onOpenStats: { path.append(.stats) })
                 appLocksSection
                 unlockRulesSection
+                remindersSection
                 appearanceSection
                 if model.notificationsDenied { notificationsOffCard }
                 lifetimeCard
@@ -75,6 +85,13 @@ struct SettingsView: View {
                 .presentationDetents([.medium])
                 .presentationCornerRadius(28)
         }
+        .sheet(isPresented: $showStrictSheet) {
+            StrictModeSheet()
+                .environment(model)
+                .environment(\.palette, model.palette)
+                .presentationDetents([.medium, .large])
+                .presentationCornerRadius(28)
+        }
         .sheet(isPresented: $showUnlockPuzzles) {
             UnlockPuzzlesSheet()
                 .environment(model)
@@ -93,6 +110,54 @@ struct SettingsView: View {
         } message: {
             Text(restoreMessage ?? "")
         }
+    }
+
+    // MARK: Strict mode
+
+    private var strictBanner: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "lock.shield.fill").appFont(22).foregroundStyle(.white).accessibilityHidden(true)
+            Text("Strict mode on until \(model.strictUntilText)")
+                .appFont(17, .bold)
+                .foregroundStyle(.white)
+            Spacer()
+        }
+        .padding(16)
+        .background(Color.brand, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .padding(.horizontal, 16)
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: Reminders
+
+    private var remindersSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            SectionHeader(title: "Reminders")
+            VStack(spacing: 0) {
+                reminderRow(title: "Evening streak reminder", subtitle: "At 20:00 if you haven't solved a puzzle",
+                            isOn: Binding(get: { model.settings.streakReminderEnabled },
+                                          set: { model.setReminder(streak: $0) }))
+                Divider().padding(.leading, 4)
+                reminderRow(title: "Weekly summary", subtitle: "Sundays: how much time you saved",
+                            isOn: Binding(get: { model.settings.weeklySummaryEnabled },
+                                          set: { model.setReminder(weekly: $0) }))
+            }
+            .card()
+            .padding(.horizontal, 16)
+            FooterText(text: String(localized: "Local notifications only, never more than one a day."))
+        }
+    }
+
+    private func reminderRow(title: LocalizedStringKey, subtitle: LocalizedStringKey, isOn: Binding<Bool>) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title).appFont(17, .semibold).foregroundStyle(palette.textPrimary)
+                Text(subtitle).appFont(15).foregroundStyle(palette.textSecondary)
+            }
+            Spacer()
+            PillToggle(isOn: isOn)
+        }
+        .padding(.vertical, 6)
     }
 
     // MARK: Notifications off
@@ -220,11 +285,11 @@ struct SettingsView: View {
                     .frame(width: 34)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Enable locks").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
-                    Text(model.lock.locksEnabled ? "All apps protected" : "Locks paused")
+                    Text(LocalizedStringKey(model.lock.locksEnabled ? "All apps protected" : "Locks paused"))
                         .appFont(15).foregroundStyle(palette.textSecondary)
                 }
                 Spacer()
-                PillToggle(isOn: model.lockBinding(\.locksEnabled), label: "Enable locks")
+                PillToggle(isOn: model.locksEnabledBinding, label: "Enable locks")
             }
             .card()
             .padding(.horizontal, 16)
@@ -253,6 +318,19 @@ struct SettingsView: View {
             .buttonStyle(.plain)
             .card()
             .padding(.horizontal, 16)
+
+            Button {
+                if !model.isStrict { showStrictSheet = true }
+            } label: {
+                InfoRow(icon: AnyView(Image(systemName: "lock.shield").appFont(20).foregroundStyle(palette.accent)),
+                        title: "Strict mode",
+                        subtitle: model.isStrict ? String(localized: "On until \(model.strictUntilText)")
+                                                 : String(localized: "Make locks harder to turn off"),
+                        showsChevron: !model.isStrict)
+            }
+            .buttonStyle(.plain)
+            .card()
+            .padding(.horizontal, 16)
         }
     }
 
@@ -264,7 +342,7 @@ struct SettingsView: View {
             VStack(spacing: 0) {
                 Button { path.append(.unlockTime) } label: {
                     InfoRow(icon: AnyView(Image(systemName: "timer").appFont(22).foregroundStyle(palette.accent)),
-                            title: "Unlock time", subtitle: "Default time for each app", value: model.lock.defaultDuration.label)
+                            title: "Unlock time", subtitle: "Default time for each app", value: model.lock.defaultDuration.localizedLabel)
                         .padding(.vertical, 14)
                 }
                 .buttonStyle(.plain)
@@ -322,7 +400,7 @@ struct SettingsView: View {
                     .foregroundStyle(palette.accent)
                     .frame(width: 34)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(model.settings.hasLifetime ? "Lifetime Access · Active" : "Unlock Lifetime Access")
+                    Text(LocalizedStringKey(model.settings.hasLifetime ? "Lifetime Access · Active" : "Unlock Lifetime Access"))
                         .appFont(17, .semibold)
                         .foregroundStyle(palette.textPrimary)
                     if !model.settings.hasLifetime {
@@ -354,7 +432,7 @@ struct SettingsView: View {
             }
             .appFont(15, .semibold)
             .foregroundStyle(palette.accentText)
-            Text(Brand.credits)
+            Text(LocalizedStringKey(Brand.credits))
                 .appFont(13)
                 .foregroundStyle(palette.textSecondary)
             Text("\(Brand.appName) \(appVersion)")
@@ -403,8 +481,8 @@ private struct ThemeCard: View {
                 mini
                 HStack {
                     VStack(alignment: .leading, spacing: 1) {
-                        Text(theme.title).appFont(16, .semibold).foregroundStyle(palette.textPrimary)
-                        Text(theme.subtitle).appFont(13).foregroundStyle(palette.textSecondary)
+                        Text(LocalizedStringKey(theme.title)).appFont(16, .semibold).foregroundStyle(palette.textPrimary)
+                        Text(LocalizedStringKey(theme.subtitle)).appFont(13).foregroundStyle(palette.textSecondary)
                     }
                     Spacer()
                     RadioMark(isSelected: selected)

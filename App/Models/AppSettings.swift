@@ -18,6 +18,9 @@ struct AppSettings: Codable, Equatable {
     /// Where onboarding was left (so killing the app mid-onboarding resumes there).
     var onboardingStep: String?
     var ratingRequested = false
+    /// Local reminders (opt-in, off by default).
+    var streakReminderEnabled = false
+    var weeklySummaryEnabled = false
 
     init() {}
 
@@ -38,6 +41,8 @@ struct AppSettings: Codable, Equatable {
         simulatorAuthorized = (try? c.decodeIfPresent(Bool.self, forKey: .simulatorAuthorized)) ?? d.simulatorAuthorized
         onboardingStep = try? c.decodeIfPresent(String.self, forKey: .onboardingStep)
         ratingRequested = (try? c.decodeIfPresent(Bool.self, forKey: .ratingRequested)) ?? d.ratingRequested
+        streakReminderEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .streakReminderEnabled)) ?? d.streakReminderEnabled
+        weeklySummaryEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .weeklySummaryEnabled)) ?? d.weeklySummaryEnabled
     }
 
     private static let defaults = AppSettings()

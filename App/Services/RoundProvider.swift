@@ -60,6 +60,43 @@ final class RoundProvider {
         }
     }
 
+    // MARK: Daily puzzle (same for everyone on a given day)
+
+    static func dayNumber(for date: Date, calendar: Calendar = .current) -> Int {
+        let start = calendar.startOfDay(for: date)
+        return Int((start.timeIntervalSince1970 + Double(calendar.timeZone.secondsFromGMT(for: start))) / 86_400)
+    }
+
+    static func dailyGame(for date: Date) -> GameID {
+        let games: [GameID] = [.word, .chess, .math, .sudoku]
+        return games[((dayNumber(for: date) % games.count) + games.count) % games.count]
+    }
+
+    func dailyRound(for date: Date) async -> AnyRound {
+        let day = Self.dayNumber(for: date)
+        let seed = UInt64(truncatingIfNeeded: day) &* 0x9E37_79B9 &+ 0x5EED
+        var rng = SeededGenerator(seed: seed)
+        switch Self.dailyGame(for: date) {
+        case .math:
+            return .math(MathRound(question: MathEngine.generate(difficulty: .medium, using: &rng), difficulty: .medium))
+        case .word:
+            let answers = wordDictionary.answers
+            let answer = answers.isEmpty ? "plant" : answers[Int(seed % UInt64(answers.count))]
+            return .word(WordRound(answer: answer, difficulty: .easy))
+        case .chess:
+            let pool = chessBank.puzzles(for: .medium)
+            guard !pool.isEmpty else { return .chess(ChessRound.fallback(difficulty: .medium)) }
+            let puzzle = pool[Int(seed % UInt64(pool.count))]
+            return .chess((try? ChessRound(puzzle: puzzle, difficulty: .medium)) ?? ChessRound.fallback(difficulty: .medium))
+        case .sudoku:
+            let puzzle = await Task.detached(priority: .userInitiated) { () -> SudokuPuzzle in
+                var r = SeededGenerator(seed: seed)
+                return SudokuGenerator.generate(difficulty: .easy, using: &r)
+            }.value
+            return .sudoku(SudokuRound(puzzle: puzzle, difficulty: .easy))
+        }
+    }
+
     // MARK: Onboarding rounds (deliberately easy)
 
     func onboardingRound(_ id: GameID) -> AnyRound {

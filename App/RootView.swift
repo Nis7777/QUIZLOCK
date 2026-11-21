@@ -40,8 +40,44 @@ struct RootView: View {
                     PracticeView(game: game)
                         .environment(model)
                         .environment(\.palette, model.palette)
+                        .appToast()
                 }
         )
+        .background(
+            Color.clear
+                .fullScreenCover(isPresented: Binding(get: { model.strictChallengeActive },
+                                                      set: { if !$0 { model.strictChallengeCancelled() } })) {
+                    StrictChallengeView()
+                        .environment(model)
+                        .environment(\.palette, model.palette)
+                        .appToast()
+                }
+        )
+        .background(
+            Color.clear
+                .fullScreenCover(isPresented: Binding(get: { model.dailyPuzzleOpen }, set: { model.dailyPuzzleOpen = $0 })) {
+                    DailyPuzzleView()
+                        .environment(model)
+                        .environment(\.palette, model.palette)
+                        .appToast()
+                }
+        )
+        .background(
+            Color.clear
+                .fullScreenCover(isPresented: Binding(get: { model.milestone != nil && model.phase == .main },
+                                                      set: { if !$0 { model.milestoneCelebrated() } })) {
+                    MilestoneView(days: model.milestone ?? 3) { model.milestoneCelebrated() }
+                        .environment(\.palette, model.palette)
+                }
+        )
+        .alert(progressionTitle, isPresented: Binding(get: { model.progressionOffer != nil },
+                                                      set: { if !$0 { model.progressionOffer = nil } })) {
+            Button("Level up") { model.acceptProgression() }
+            Button("Not now", role: .cancel) { model.progressionOffer = nil }
+        } message: {
+            Text("You've solved 5 in a row quickly. Want to try a harder level?")
+        }
+        .appToast()
         .task {
             model.bootstrap()
             // Authorization status can lag right after launch; check again shortly.
@@ -51,6 +87,11 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active { model.refreshFromStore() }
         }
+    }
+
+    private var progressionTitle: String {
+        guard let game = model.progressionOffer, let next = model.nextDifficulty(for: game) else { return "" }
+        return String(localized: "Ready for \(next.localizedName)?")
     }
 
     private var unlockPresented: Binding<Bool> {

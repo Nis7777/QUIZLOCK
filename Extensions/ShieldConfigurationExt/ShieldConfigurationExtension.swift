@@ -34,16 +34,16 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     }
 
     private func makeConfiguration(name: String?) -> ShieldConfiguration {
-        let appName = name ?? "This app"
+        let appName = name ?? String(localized: "This app")
         return ShieldConfiguration(
             backgroundBlurStyle: nil,
             backgroundColor: .white,
             icon: Self.shieldIcon,
-            title: ShieldConfiguration.Label(text: "Solve a puzzle to unlock the app", color: Self.textPrimary),
-            subtitle: ShieldConfiguration.Label(text: "\(appName) is locked by \(Brand.appName).\nTap START PUZZLE, then open \(Brand.appName).", color: Self.textSecondary),
-            primaryButtonLabel: ShieldConfiguration.Label(text: "START PUZZLE", color: .white),
+            title: ShieldConfiguration.Label(text: String(localized: "Solve a puzzle to unlock the app"), color: Self.textPrimary),
+            subtitle: ShieldConfiguration.Label(text: String(localized: "\(appName) is locked by \(Brand.appName).\nTap START PUZZLE, then open \(Brand.appName)."), color: Self.textSecondary),
+            primaryButtonLabel: ShieldConfiguration.Label(text: String(localized: "START PUZZLE"), color: .white),
             primaryButtonBackgroundColor: Self.brand,
-            secondaryButtonLabel: ShieldConfiguration.Label(text: "NOT NOW", color: Self.textSecondary)
+            secondaryButtonLabel: ShieldConfiguration.Label(text: String(localized: "NOT NOW"), color: Self.textSecondary)
         )
     }
 

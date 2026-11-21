@@ -94,7 +94,7 @@ struct PrimaryButton: View {
                 if let systemImage, !isLoading {
                     Image(systemName: systemImage).appFont(19, .bold)
                 }
-                Text(title).appFont(19, .bold)
+                Text(LocalizedStringKey(title)).appFont(19, .bold)
                 if let trailingImage {
                     Image(systemName: trailingImage).appFont(19, .bold)
                 }
@@ -167,7 +167,7 @@ struct PillButton: View {
             Haptics.tap()
             action()
         } label: {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .appFont(16, .semibold)
                 .foregroundStyle(filled ? palette.onAccent : palette.textPrimary)
                 .padding(.horizontal, 18)
@@ -290,7 +290,7 @@ struct SectionHeader: View {
 
     var body: some View {
         HStack {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .appFont(17, .semibold)
                 .foregroundStyle(palette.textSecondary)
             Spacer()
@@ -308,7 +308,7 @@ struct FooterText: View {
     let text: String
     @Environment(\.palette) private var palette
     var body: some View {
-        Text(text)
+        Text(LocalizedStringKey(text))
             .appFont(14)
             .foregroundStyle(palette.textSecondary)
             .fixedSize(horizontal: false, vertical: true)
@@ -345,14 +345,14 @@ struct InfoRow: View {
             if let icon { icon.frame(width: 30) }
             VStack(alignment: .leading, spacing: 3) {
                 HStack(alignment: .firstTextBaseline) {
-                    Text(title).appFont(17, .semibold).foregroundStyle(palette.textPrimary)
+                    Text(LocalizedStringKey(title)).appFont(17, .semibold).foregroundStyle(palette.textPrimary)
                     Spacer(minLength: 8)
                     if let value {
                         Text(value).appFont(15).foregroundStyle(palette.textSecondary).lineLimit(1)
                     }
                 }
                 if let subtitle {
-                    Text(subtitle).appFont(15).foregroundStyle(palette.textSecondary)
+                    Text(LocalizedStringKey(subtitle)).appFont(15).foregroundStyle(palette.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -376,7 +376,7 @@ struct ScreenTitle: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .appFont(size, .bold)
                 .foregroundStyle(palette.textPrimary)
                 .multilineTextAlignment(.center)
@@ -384,7 +384,7 @@ struct ScreenTitle: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
             if let subtitle {
-                Text(subtitle)
+                Text(LocalizedStringKey(subtitle))
                     .appFont(19)
                     .foregroundStyle(palette.textSecondary)
                     .multilineTextAlignment(.center)
@@ -418,6 +418,26 @@ struct AssetImage: View {
 }
 
 // MARK: - Toast & shake
+
+/// Shows `AppModel.toast` at the top of the screen.
+struct AppToastModifier: ViewModifier {
+    @Environment(AppModel.self) private var model
+
+    func body(content: Content) -> some View {
+        content.overlay(alignment: .top) {
+            if let text = model.toast {
+                Toast(text: text)
+                    .padding(.top, 8)
+                    .padding(.horizontal, 20)
+                    .allowsHitTesting(false)
+            }
+        }
+    }
+}
+
+extension View {
+    func appToast() -> some View { modifier(AppToastModifier()) }
+}
 
 struct Toast: View {
     let text: String
@@ -474,7 +494,7 @@ extension View {
 
 /// "By continuing, you agree to our Terms of Service and Privacy Policy" with tappable links.
 struct LegalLinksText: View {
-    var prefix = "By continuing, you agree to our "
+    var prefix = String(localized: "By continuing, you agree to our ")
     @Binding var openURL: URL?
     @Environment(\.palette) private var palette
 
@@ -492,12 +512,12 @@ struct LegalLinksText: View {
     private var attributed: AttributedString {
         var s = AttributedString(prefix)
         s.foregroundColor = palette.textSecondary
-        var terms = AttributedString("Terms of Use")
+        var terms = AttributedString(localized: "Terms of Use")
         terms.foregroundColor = palette.accentText
         terms.link = Brand.termsURL
-        var and = AttributedString(" and ")
+        var and = AttributedString(localized: " and ")
         and.foregroundColor = palette.textSecondary
-        var privacy = AttributedString("Privacy Policy")
+        var privacy = AttributedString(localized: "Privacy Policy")
         privacy.foregroundColor = palette.accentText
         privacy.link = Brand.privacyURL
         return s + terms + and + privacy

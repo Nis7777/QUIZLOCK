@@ -104,6 +104,10 @@ public struct LockState: Codable {
     public var puzzlesPerUnlock = 1
     /// Simulator only: fake app names used instead of real tokens.
     public var mockApps: [String] = []
+    /// When locks apply; nil = Always.
+    public var schedule: LockSchedule?
+    /// Strict mode: locks can't be weakened until this time (without solving 3 hard puzzles).
+    public var strictUntil: Date?
 
     public init() {}
 
@@ -116,6 +120,8 @@ public struct LockState: Codable {
         defaultDuration = (try? c.decodeIfPresent(UnlockDuration.self, forKey: .defaultDuration)) ?? .default
         puzzlesPerUnlock = (try? c.decodeIfPresent(Int.self, forKey: .puzzlesPerUnlock)) ?? 1
         mockApps = (try? c.decodeIfPresent([String].self, forKey: .mockApps)) ?? []
+        schedule = try? c.decodeIfPresent(LockSchedule.self, forKey: .schedule)
+        strictUntil = try? c.decodeIfPresent(Date.self, forKey: .strictUntil)
     }
 
     public func config(for key: String) -> ItemConfig { items[key] ?? ItemConfig() }
@@ -125,6 +131,13 @@ public struct LockState: Codable {
     /// Number of apps + categories (+ websites) selected.
     public var selectedCount: Int {
         selection.applicationTokens.count + selection.categoryTokens.count + selection.webDomainTokens.count + mockApps.count
+    }
+
+    public func isStrict(now: Date = Date()) -> Bool { (strictUntil ?? .distantPast) > now }
+
+    /// Locks are on now (master switch and schedule).
+    public func locksActive(now: Date = Date()) -> Bool {
+        locksEnabled && (schedule?.isActive(at: now) ?? true)
     }
 
     public func isUnlocked(_ key: String, now: Date = Date()) -> Bool {

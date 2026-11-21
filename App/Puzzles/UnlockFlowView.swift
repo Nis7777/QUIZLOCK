@@ -4,6 +4,7 @@ import SwiftUI
 struct UnlockFlowView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
+    @State private var confirmEmergency = false
 
     var body: some View {
         ZStack {
@@ -17,7 +18,8 @@ struct UnlockFlowView: View {
                              subLabel: session.current?.subLabel ?? "",
                              progress: "\(min(session.solved + 1, session.required)) of \(session.required)",
                              isPractice: false,
-                             onClose: { model.closeUnlockFlow() }) {
+                             onClose: { model.closeUnlockFlow() },
+                             headerAccessory: AnyView(emergencyButton)) {
                     if let round = session.current {
                         PuzzleGameView(round: round, dictionary: model.rounds.wordDictionary,
                                        onUpdate: { model.sessionRoundUpdated($0) },
@@ -33,10 +35,33 @@ struct UnlockFlowView: View {
         }
         .animation(.easeInOut(duration: 0.3), value: model.unlockResult)
         .screenBackground()
+        .appToast()
         .fullScreenCover(isPresented: paywallBinding) {
             PaywallView()
                 .environment(model)
                 .environment(\.palette, model.palette)
+        }
+    }
+
+    private var emergencyButton: some View {
+        Button {
+            Haptics.tap()
+            confirmEmergency = true
+        } label: {
+            Text("Emergency unlock")
+                .appFont(13, .semibold)
+                .foregroundStyle(palette.textSecondary)
+                .underline()
+                .tapTarget()
+        }
+        .buttonStyle(.plain)
+        .disabled(model.emergencyUnlocksLeft == 0)
+        .opacity(model.emergencyUnlocksLeft == 0 ? 0.4 : 1)
+        .confirmationDialog("Emergency unlock", isPresented: $confirmEmergency, titleVisibility: .visible) {
+            Button("Unlock for 1 minute") { model.emergencyUnlock() }
+            Button("Keep solving", role: .cancel) {}
+        } message: {
+            Text("Opens the app for 1 minute without a puzzle. You have \(model.emergencyUnlocksLeft) of 3 left this week, and it breaks today's streak.")
         }
     }
 
@@ -66,7 +91,7 @@ struct UnlockSuccessView: View {
             .scaleEffect(appeared ? 1 : 0.6)
             .opacity(appeared ? 1 : 0)
             ScreenTitle(title: "You unlocked the app!",
-                        subtitle: "Go back to \(appName) — it's unlocked for \(duration.sentenceLabel).")
+                        subtitle: String(localized: "Go back to \(appName) — it's unlocked for \(duration.localizedSentenceLabel)."))
             Spacer()
             PrimaryButton(title: "Done", action: onDone)
                 .padding(.horizontal, 20)

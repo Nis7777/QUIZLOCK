@@ -41,9 +41,9 @@ final class WordViewModel {
     func submit() {
         guard !isBusy, round.status == .playing else { return }
         switch round.submit(dictionary: dictionary) {
-        case .notEnoughLetters: reject("Not enough letters")
-        case .notInWordList: reject("Not in word list")
-        case .hardMode(let message): reject(message)
+        case .notEnoughLetters: reject(String(localized: "Not enough letters"))
+        case .notInWordList: reject(String(localized: "Not in word list"))
+        case .hardMode(let message): reject(Self.localizedHardMode(message))
         case .roundOver: break
         case .accepted:
             onUpdate(round)
@@ -69,6 +69,18 @@ final class WordViewModel {
                 }
             }
         }
+    }
+
+    /// Engine messages are English ("2nd letter must be A", "Guess must contain R").
+    static func localizedHardMode(_ message: String) -> String {
+        let parts = message.split(separator: " ").map(String.init)
+        if message.hasPrefix("Guess must contain"), let letter = parts.last {
+            return String(localized: "Guess must contain \(letter)")
+        }
+        if parts.count >= 5, let n = Int(parts[0].filter(\.isNumber)), let letter = parts.last {
+            return String(localized: "Letter \(n) must be \(letter)")
+        }
+        return message
     }
 
     private func reject(_ message: String) {

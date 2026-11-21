@@ -9,6 +9,7 @@ struct PracticeView: View {
     @State private var round: AnyRound?
     @State private var solvedCount = 0
     @State private var showSolved = false
+    @State private var startedAt = Date()
 
     var body: some View {
         PuzzleChrome(game: game, subLabel: round?.subLabel ?? "", isPractice: true, onClose: { dismiss() }) {
@@ -25,6 +26,7 @@ struct PracticeView: View {
                     solvedCard.transition(.scale(scale: 0.9).combined(with: .opacity))
                 }
             }
+            .confetti(showSolved)
         }
         .task { await load() }
     }
@@ -49,6 +51,7 @@ struct PracticeView: View {
     }
 
     private func finished(_ status: RoundStatus) {
+        model.recordResult(game: game, status: status, startedAt: startedAt)
         if status == .solved {
             solvedCount += 1
             withAnimation(.selectionSpring) { showSolved = true }
@@ -60,5 +63,6 @@ struct PracticeView: View {
     private func load() async {
         let next = await model.rounds.nextRound(game, difficulty: model.settings.difficulty(for: game))
         withAnimation(.easeInOut(duration: 0.3)) { round = next }
+        startedAt = Date()
     }
 }

@@ -29,6 +29,8 @@ struct PuzzlesView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 14) {
                 TabHeader()
+                DailyPuzzleCard()
+                    .padding(.top, 6)
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Text("Unlock puzzles").appFont(20, .semibold).foregroundStyle(palette.textPrimary)
                     Text("\(model.settings.enabledGames.count)").appFont(18).foregroundStyle(palette.textSecondary)
@@ -81,7 +83,7 @@ struct PuzzlesView: View {
                 ForEach(model.settings.enabledGames) { game in
                     Button { toggle(game, false) } label: {
                         HStack(spacing: 8) {
-                            Text(game.displayName).appFont(16, .medium)
+                            Text(LocalizedStringKey(game.displayName)).appFont(16, .medium)
                             Image(systemName: "xmark").appFont(13, .semibold)
                         }
                         .foregroundStyle(palette.textPrimary)
@@ -90,7 +92,7 @@ struct PuzzlesView: View {
                         .background(palette.tint, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                     }
                     .buttonStyle(PressableStyle())
-                    .accessibilityLabel("Remove \(game.displayName)")
+                    .accessibilityLabel(String(localized: "Remove \(game.localizedName)"))
                     .transition(.scale.combined(with: .opacity))
                 }
             }
@@ -103,7 +105,7 @@ struct PuzzlesView: View {
         Haptics.tap()
         if !model.setGame(game, enabled: on) {
             Haptics.error()
-            withAnimation { hint = "Keep at least one puzzle enabled." }
+            withAnimation { hint = String(localized: "Keep at least one puzzle enabled.") }
             Task {
                 try? await Task.sleep(nanoseconds: 2_000_000_000)
                 withAnimation { hint = nil }
@@ -115,10 +117,13 @@ struct PuzzlesView: View {
 extension GameID {
     func metaLine(chessCount: Int) -> String {
         switch self {
-        case .chess: return "Mate in 1–2 · \(chessCount) puzzles"
-        case .sudoku: return "Endless · Unique solutions"
-        case .math: return "Endless · Type your answer"
-        case .word: return "6 tries · Real words only"
+        case .chess: return String(localized: "Mate in 1–2 · \(chessCount) puzzles")
+        case .sudoku: return String(localized: "Endless · Unique solutions")
+        case .math: return String(localized: "Endless · Type your answer")
+        case .word:
+            // The Word game uses English words; say so in Portuguese.
+            let base = String(localized: "6 tries · Real words only")
+            return Bundle.main.preferredLocalizations.first?.hasPrefix("pt") == true ? base + " · Palavras em inglês" : base
         }
     }
 }
@@ -140,8 +145,8 @@ private struct GameCard: View {
                         .frame(width: 115, height: 115)
                         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(game.displayName).appFont(22, .semibold).foregroundStyle(palette.textPrimary)
-                        Text(game.tagline).appFont(16).foregroundStyle(palette.textSecondary)
+                        Text(LocalizedStringKey(game.displayName)).appFont(22, .semibold).foregroundStyle(palette.textPrimary)
+                        Text(LocalizedStringKey(game.tagline)).appFont(16).foregroundStyle(palette.textSecondary)
                         Text(game.metaLine(chessCount: model.rounds.chessBank.puzzles.count))
                             .appFont(14).foregroundStyle(palette.textSecondary)
                     }
@@ -155,7 +160,7 @@ private struct GameCard: View {
             HStack {
                 Text("Use for unlocks").appFont(16).foregroundStyle(palette.textPrimary)
                 Spacer()
-                PillToggle(isOn: Binding(get: { inUse }, set: { onToggle($0) }), label: "Use \(game.displayName) for unlocks")
+                PillToggle(isOn: Binding(get: { inUse }, set: { onToggle($0) }), label: String(localized: "Use \(game.localizedName) for unlocks"))
                 Button(action: onTry) {
                     HStack(spacing: 4) {
                         Text("Try")

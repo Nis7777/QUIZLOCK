@@ -16,7 +16,7 @@ struct PuzzlesPerUnlockSheet: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, 22)
             HStack {
-                Text("\(count) puzzle\(count == 1 ? "" : "s")")
+                Text("\(count) puzzles")
                     .appFont(22, .bold)
                     .foregroundStyle(palette.textPrimary)
                     .contentTransition(.numericText())
@@ -72,7 +72,7 @@ struct SheetHeader: View {
 
     var body: some View {
         ZStack {
-            Text(title).appFont(19, .semibold).foregroundStyle(palette.textPrimary)
+            Text(LocalizedStringKey(title)).appFont(19, .semibold).foregroundStyle(palette.textPrimary)
             HStack {
                 Spacer()
                 PillButton(title: "Done", action: onDone)

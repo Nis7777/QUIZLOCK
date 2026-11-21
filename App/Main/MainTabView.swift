@@ -54,7 +54,7 @@ struct FloatingTabBar: View {
         } label: {
             VStack(spacing: 3) {
                 icon(color).frame(height: 28)
-                Text(title).appFont(13, .semibold).foregroundStyle(color)
+                Text(LocalizedStringKey(title)).appFont(13, .semibold).foregroundStyle(color)
             }
             .frame(width: 104, height: 60)
             .background {
@@ -91,7 +91,7 @@ struct PushHeader<Trailing: View>: View {
 
     var body: some View {
         ZStack {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .appFont(19, .semibold)
                 .foregroundStyle(palette.textPrimary)
                 .accessibilityAddTraits(.isHeader)

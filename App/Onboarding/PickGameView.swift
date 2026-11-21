@@ -36,10 +36,10 @@ struct PickGameView: View {
         VStack(alignment: .leading, spacing: 6) {
             GameIcon(game: game, size: 46, color: palette.accent)
             Spacer()
-            Text(game.displayName)
+            Text(LocalizedStringKey(game.displayName))
                 .appFont(22, .bold)
                 .foregroundStyle(palette.textPrimary)
-            Text(game.onboardingSubtitle)
+            Text(LocalizedStringKey(game.onboardingSubtitle))
                 .appFont(15)
                 .foregroundStyle(palette.textSecondary)
         }

@@ -22,7 +22,16 @@ struct ManageAppsView: View {
                         .padding(.horizontal, 16)
                     Button { path.append(.unlockTime) } label: {
                         InfoRow(icon: AnyView(Image(systemName: "timer").appFont(22).foregroundStyle(palette.accent)),
-                                title: "Default unlock time", subtitle: model.lock.defaultDuration.label)
+                                title: "Default unlock time", subtitle: model.lock.defaultDuration.localizedLabel)
+                    }
+                    .buttonStyle(.plain)
+                    .card()
+                    .padding(.horizontal, 16)
+
+                    Button { path.append(.schedule) } label: {
+                        InfoRow(icon: AnyView(Image(systemName: "calendar.badge.clock").appFont(22).foregroundStyle(palette.accent)),
+                                title: "Lock schedule",
+                                subtitle: model.lock.schedule?.summary ?? String(localized: "Always"))
                     }
                     .buttonStyle(.plain)
                     .card()
@@ -38,6 +47,11 @@ struct ManageAppsView: View {
                         .foregroundStyle(palette.textSecondary)
                         .padding(.horizontal, 22)
 
+                    if model.lockItems.isEmpty {
+                        MascotEmptyState(title: "No apps locked yet",
+                                         message: "Tap Add Apps to choose the apps that distract you most.")
+                            .padding(.horizontal, 16)
+                    }
                     ForEach(model.lockItems) { item in
                         appCard(item)
                             .transition(.opacity.combined(with: .scale(scale: 0.96)))
@@ -73,7 +87,7 @@ struct ManageAppsView: View {
                 HStack {
                     Text("Unlock time").appFont(16).foregroundStyle(palette.textPrimary)
                     Spacer()
-                    Text(override.map(\.label) ?? "Default · \(model.lock.defaultDuration.label)")
+                    Text(override.map(\.localizedLabel) ?? String(localized: "Default · \(model.lock.defaultDuration.localizedLabel)"))
                         .appFont(15)
                         .foregroundStyle(palette.textSecondary)
                     Image(systemName: "chevron.right")

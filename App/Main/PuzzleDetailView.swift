@@ -21,10 +21,10 @@ struct PuzzleDetailView: View {
                         .frame(height: 230)
                         .frame(maxWidth: .infinity)
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    Text(game.displayName)
+                    Text(LocalizedStringKey(game.displayName))
                         .appFont(34, .bold)
                         .foregroundStyle(palette.textPrimary)
-                    Text(game.tagline).appFont(18).foregroundStyle(palette.textSecondary)
+                    Text(LocalizedStringKey(game.tagline)).appFont(18).foregroundStyle(palette.textSecondary)
                     Text(game.metaLine(chessCount: model.rounds.chessBank.puzzles.count))
                         .appFont(15).foregroundStyle(palette.textSecondary)
 
@@ -34,7 +34,7 @@ struct PuzzleDetailView: View {
                         .padding(.top, 8)
                     Picker("Difficulty", selection: difficultyBinding) {
                         ForEach(game.difficulties) { d in
-                            Text(d.displayName).tag(d)
+                            Text(LocalizedStringKey(d.displayName)).tag(d)
                         }
                     }
                     .pickerStyle(.segmented)
@@ -58,7 +58,7 @@ struct PuzzleDetailView: View {
                                 ForEach(game.howToPlay, id: \.self) { rule in
                                     HStack(alignment: .top, spacing: 10) {
                                         Circle().fill(palette.accent).frame(width: 6, height: 6).padding(.top, 8)
-                                        Text(rule).appFont(16).foregroundStyle(palette.textPrimary)
+                                        Text(LocalizedStringKey(rule)).appFont(16).foregroundStyle(palette.textPrimary)
                                             .fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
@@ -88,7 +88,7 @@ struct PuzzleDetailView: View {
             Spacer()
             PillToggle(isOn: Binding(get: { model.settings.isEnabled(game) },
                                      set: { on in if !model.setGame(game, enabled: on) { Haptics.error() } }),
-                       label: "Use \(game.displayName) for unlocks")
+                       label: String(localized: "Use \(game.localizedName) for unlocks"))
             Button { model.tryPractice(game) } label: {
                 HStack(spacing: 4) {
                     Text("Try")

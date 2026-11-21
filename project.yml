@@ -53,6 +53,8 @@ targets:
       - target: ShieldConfigurationExt
       - target: ShieldActionExt
       - target: DeviceActivityMonitorExt
+      - target: ScreenTimeReportExt
+      - target: QuizLockWidgets
       - sdk: FamilyControls.framework
       - sdk: ManagedSettings.framework
       - sdk: DeviceActivity.framework
@@ -60,6 +62,7 @@ targets:
       - sdk: UserNotifications.framework
       - sdk: MessageUI.framework
       - sdk: SafariServices.framework
+      - sdk: WidgetKit.framework
     info:
       path: App/Info.plist
       properties:
@@ -170,12 +173,71 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.DeviceActivityMonitor
         PRODUCT_NAME: DeviceActivityMonitorExt
 
+  ScreenTimeReportExt:
+    templates: [ScreenTimeExtension]
+    sources:
+      - path: Extensions/ScreenTimeReportExt
+    dependencies:
+      - sdk: SwiftUI.framework
+    info:
+      path: Extensions/ScreenTimeReportExt/Info.plist
+      properties:
+        CFBundleDisplayName: QuizLock Report
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
+    entitlements:
+      path: Extensions/ScreenTimeReportExt/ScreenTimeReportExt.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups:
+          - group.com.dinismagina.quizlock
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.ScreenTimeReport
+        PRODUCT_NAME: ScreenTimeReportExt
+
+  QuizLockWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Extensions/QuizLockWidgets
+      - path: Shared/Brand.swift
+      - path: Shared/Stats
+      - path: Shared/Localizable.xcstrings
+    dependencies:
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+    info:
+      path: Extensions/QuizLockWidgets/Info.plist
+      properties:
+        CFBundleDisplayName: QuizLock
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Extensions/QuizLockWidgets/QuizLockWidgets.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.dinismagina.quizlock
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dinismagina.quizlock.Widgets
+        PRODUCT_NAME: QuizLockWidgets
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
+
   AppTests:
     type: bundle.unit-test
     platform: iOS
     sources:
       - path: Tests
       - path: Shared/Engine
+      - path: Shared/Stats
+      - path: Shared/Schedule
+      - path: Shared/Brand.swift
       - path: Resources
         buildPhase: resources
     info:

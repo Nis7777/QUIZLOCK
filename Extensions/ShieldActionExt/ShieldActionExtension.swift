@@ -36,15 +36,27 @@ final class ShieldActionExtension: ShieldActionDelegate {
                 completion(.defer)
             }
         } else {
+            if case .secondaryButtonPressed = action {
+                // NOT NOW: an unlock skipped. Counts toward "time saved" (skips × the unlock time).
+                StatsStore.recordSkip(minutes: Self.unlockMinutes(SharedStore.lockState.duration(for: pending.itemKey)))
+            }
             completion(.close)
+        }
+    }
+
+    private static func unlockMinutes(_ d: UnlockDuration) -> Int {
+        switch d {
+        case .minutes(let m): return m
+        case .forToday: return 60
+        case .custom(let h, let m): return h * 60 + m
         }
     }
 
     private func postNotification(appName: String?, then done: @escaping () -> Void) {
         let n = max(1, SharedStore.lockState.puzzlesPerUnlock)
         let content = UNMutableNotificationContent()
-        content.title = "Tap to start your puzzle 🧩"
-        content.body = "Solve \(n) puzzle\(n == 1 ? "" : "s") to unlock \(appName ?? "your app")"
+        content.title = String(localized: "Tap to start your puzzle 🧩")
+        content.body = String(localized: "Solve \(n) puzzles to unlock \(appName ?? String(localized: "your app"))")
         content.sound = .default
         content.userInfo = ["deeplink": Brand.unlockDeepLink.absoluteString]
         let request = UNNotificationRequest(identifier: "quizlock.unlock", content: content, trigger: nil)

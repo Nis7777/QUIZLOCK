@@ -6,7 +6,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PKG="${TMPDIR:-/tmp}/quizlock-engine-pkg"
 rm -rf "$PKG"
 mkdir -p "$PKG/Sources/Engine" "$PKG/Tests/EngineTests"
-for f in "$ROOT"/Shared/Engine/*.swift; do ln -s "$f" "$PKG/Sources/Engine/"; done
+for f in "$ROOT"/Shared/Engine/*.swift "$ROOT"/Shared/Stats/*.swift "$ROOT"/Shared/Schedule/*.swift "$ROOT"/Shared/Brand.swift; do ln -s "$f" "$PKG/Sources/Engine/"; done
 for f in "$ROOT"/Tests/*.swift; do
   # Tests compile the engine sources directly in Xcode; under SwiftPM import the module instead.
   { echo "@testable import Engine"; cat "$f"; } > "$PKG/Tests/EngineTests/$(basename "$f")"

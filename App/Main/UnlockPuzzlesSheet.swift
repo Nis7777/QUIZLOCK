@@ -24,12 +24,12 @@ struct UnlockPuzzlesSheet: View {
                             .frame(width: 40, height: 40)
                             .background(palette.tint, in: RoundedRectangle(cornerRadius: 11, style: .continuous))
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(game.displayName).appFont(17, .semibold).foregroundStyle(palette.textPrimary)
-                            Text(model.settings.difficulty(for: game).displayName)
+                            Text(LocalizedStringKey(game.displayName)).appFont(17, .semibold).foregroundStyle(palette.textPrimary)
+                            Text(LocalizedStringKey(model.settings.difficulty(for: game).displayName))
                                 .appFont(15).foregroundStyle(palette.textSecondary)
                         }
                         Spacer()
-                        PillToggle(isOn: binding(for: game), label: game.displayName)
+                        PillToggle(isOn: binding(for: game), label: game.localizedName)
                     }
                     .padding(.vertical, 10)
                 }
@@ -68,7 +68,7 @@ struct UnlockPuzzlesSheet: View {
                 set: { on in
                     if !model.setGame(game, enabled: on) {
                         Haptics.error()
-                        withAnimation { hint = "Keep at least one puzzle enabled." }
+                        withAnimation { hint = String(localized: "Keep at least one puzzle enabled.") }
                         Task {
                             try? await Task.sleep(nanoseconds: 2_000_000_000)
                             withAnimation { hint = nil }

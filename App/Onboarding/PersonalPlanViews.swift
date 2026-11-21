@@ -225,7 +225,7 @@ struct CommitmentView: View {
                     VStack(spacing: 6) {
                         Image(systemName: committed ? "checkmark" : "hand.tap.fill")
                             .appFont(34, .bold)
-                        Text(committed ? "Committed!" : "Hold to commit")
+                        Text(LocalizedStringKey(committed ? "Committed!" : "Hold to commit"))
                             .appFont(17, .bold)
                     }
                     .foregroundStyle(.white)

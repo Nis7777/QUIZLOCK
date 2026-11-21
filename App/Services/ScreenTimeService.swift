@@ -37,6 +37,27 @@ final class ScreenTimeService {
         ShieldController.apply(state)
     }
 
+    /// Registers daily "schedule.start" / "schedule.end" activities whose boundaries make the monitor
+    /// extension re-apply the shield. With no schedule (Always) they're removed.
+    func registerSchedule(_ schedule: LockSchedule?) {
+        if Self.isMock { return }
+        let center = DeviceActivityCenter()
+        center.stopMonitoring([DeviceActivityName("schedule.start"), DeviceActivityName("schedule.end")])
+        guard let schedule else { return }
+        for (name, minute) in [("schedule.start", schedule.startMinute), ("schedule.end", schedule.endMinute)] {
+            let end = (minute + 15) % (24 * 60)
+            let activity = DeviceActivitySchedule(
+                intervalStart: DateComponents(hour: minute / 60, minute: minute % 60),
+                intervalEnd: DateComponents(hour: end / 60, minute: end % 60),
+                repeats: true)
+            do {
+                try center.startMonitoring(DeviceActivityName(name), during: activity)
+            } catch {
+                print("Schedule monitoring failed: \(error)")
+            }
+        }
+    }
+
     /// Schedules the re-lock. DeviceActivity needs schedules of at least 15 minutes, so for
     /// shorter unlocks the interval starts in the past: start = end − 15 min.
     func scheduleRelock(_ unlock: ActiveUnlock, now: Date = Date()) {

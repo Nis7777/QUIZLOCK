@@ -49,7 +49,7 @@ struct LockAppsView: View {
                     }
                     .buttonStyle(PressableStyle())
                     .padding(.horizontal, 20)
-                    Text(model.lockItems.isEmpty ? "You can add apps later in Settings." : "You can update this later in Settings.")
+                    Text(LocalizedStringKey(model.lockItems.isEmpty ? "You can add apps later in Settings." : "You can update this later in Settings."))
                         .appFont(15, .medium)
                         .foregroundStyle(palette.accentText)
                 }

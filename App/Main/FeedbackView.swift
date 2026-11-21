@@ -52,7 +52,7 @@ struct FeedbackTab: View {
         .screenBackground()
         .overlay(alignment: .top) {
             if copied {
-                Toast(text: "Copied").padding(.top, 8)
+                Toast(text: String(localized: "Copied")).padding(.top, 8)
             }
         }
         .sheet(isPresented: $showMail) {
@@ -68,11 +68,11 @@ struct FeedbackTab: View {
                 Spacer()
                 Menu {
                     Picker("Type", selection: $typeRaw) {
-                        ForEach(FeedbackType.allCases) { t in Text(t.rawValue).tag(t.rawValue) }
+                        ForEach(FeedbackType.allCases) { t in Text(LocalizedStringKey(t.rawValue)).tag(t.rawValue) }
                     }
                 } label: {
                     HStack(spacing: 4) {
-                        Text(type.rawValue)
+                        Text(LocalizedStringKey(type.rawValue))
                         Image(systemName: "chevron.up.chevron.down").appFont(12, .semibold)
                     }
                     .appFont(16, .semibold)
@@ -123,7 +123,7 @@ struct FeedbackTab: View {
         .card()
     }
 
-    private var subject: String { "[\(Brand.appName)] \(type.rawValue)" }
+    private var subject: String { "[\(Brand.appName)] " + String(localized: String.LocalizationValue(type.rawValue)) }
 
     private var mailBody: String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"

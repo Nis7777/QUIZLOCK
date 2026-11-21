@@ -1,0 +1,4526 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    " and ": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " e a "
+          }
+        }
+      }
+    },
+    "%@ can't block apps without Screen Time access. You can continue and connect it later from the app.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A %@ não consegue bloquear apps sem acesso ao Tempo de ecrã. Podes continuar e ligá-lo mais tarde na app."
+          }
+        }
+      }
+    },
+    "%@ does not collect your Screen Time usage.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A %@ não recolhe a tua utilização do Tempo de ecrã."
+          }
+        }
+      }
+    },
+    "%@ doesn't have Screen Time permission, so your apps aren't locked right now.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A %@ não tem autorização do Tempo de ecrã, por isso as tuas apps não estão bloqueadas agora."
+          }
+        }
+      }
+    },
+    "%@ is locked by %@.\nTap START PUZZLE, then open %@.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ está bloqueada pela %2$@.\nToca em INICIAR PUZZLE e depois abre a %3$@."
+          }
+        }
+      }
+    },
+    "%@ is made by a tiny team. If you like it so far, a rating helps other people find it.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A %@ é feita por uma equipa pequenina. Se estás a gostar, uma avaliação ajuda outras pessoas a encontrá-la."
+          }
+        }
+      }
+    },
+    "%@ is now %@. Good luck!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ está agora em %2$@. Boa sorte!"
+          }
+        }
+      }
+    },
+    "%@ saved today": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ poupados hoje"
+          }
+        }
+      }
+    },
+    "%@ years": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ anos"
+          }
+        }
+      }
+    },
+    "%@ · Checkmate ✓": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · Xeque-mate ✓"
+          }
+        }
+      }
+    },
+    "%@, here's the reality check": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, eis a realidade"
+          }
+        }
+      }
+    },
+    "%@, here's your plan": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, este é o teu plano"
+          }
+        }
+      }
+    },
+    "%lld apps selected": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld app selected"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld apps selected"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld app selecionada"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld apps selecionadas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld enabled": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ativos"
+          }
+        }
+      }
+    },
+    "%lld hours": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld hour"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld hours"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld hora"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld horas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld minutes": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld minute"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld minutes"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld minuto"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld minutos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld of %lld": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld de %2$lld"
+          }
+        }
+      }
+    },
+    "%lld of %lld free app unlocks remaining": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restam %1$lld de %2$lld desbloqueios grátis"
+          }
+        }
+      }
+    },
+    "%lld of your %lld free unlocks are left. Get lifetime access with a one-time purchase.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restam-te %1$lld de %2$lld desbloqueios grátis. Obtém acesso vitalício com uma compra única."
+          }
+        }
+      }
+    },
+    "%lld percent": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld por cento"
+          }
+        }
+      }
+    },
+    "%lld percent off": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld por cento de desconto"
+          }
+        }
+      }
+    },
+    "%lld puzzles": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld puzzle"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld puzzles"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld puzzle"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld puzzles"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld selected": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld selecionados"
+          }
+        }
+      }
+    },
+    "%lld tries left": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld try left"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld tries left"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Resta %lld tentativa"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Restam %lld tentativas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld-day streak": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld-day streak"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld-day streak"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Sequência de %lld dia"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Sequência de %lld dias"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld-day streak!": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld-day streak!"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld-day streak!"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Sequência de %lld dia!"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Sequência de %lld dias!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "1 hour": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 hora"
+          }
+        }
+      }
+    },
+    "1–2 hours": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1–2 horas"
+          }
+        }
+      }
+    },
+    "3–4 hours": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3–4 horas"
+          }
+        }
+      }
+    },
+    "5 LETTERS · %lld TRIES": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 LETRAS · %lld TENTATIVAS"
+          }
+        }
+      }
+    },
+    "5–6 hours": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5–6 horas"
+          }
+        }
+      }
+    },
+    "6 tries · Real words only": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 tentativas · Só palavras reais"
+          }
+        }
+      }
+    },
+    "7+ hours": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7+ horas"
+          }
+        }
+      }
+    },
+    "A full week. You're building a real habit.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma semana inteira. Estás a criar um hábito a sério."
+          }
+        }
+      }
+    },
+    "A new week, a fresh start. Solve a puzzle today 🧩": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma nova semana, um novo começo. Resolve um puzzle hoje 🧩"
+          }
+        }
+      }
+    },
+    "A whole month of choosing yourself over the feed. Incredible.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um mês inteiro a escolheres-te a ti em vez do feed. Incrível."
+          }
+        }
+      }
+    },
+    "ALGEBRA": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ÁLGEBRA"
+          }
+        }
+      }
+    },
+    "ARITHMETIC": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ARITMÉTICA"
+          }
+        }
+      }
+    },
+    "Add Apps": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar apps"
+          }
+        }
+      }
+    },
+    "Add Apps to Lock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar apps a bloquear"
+          }
+        }
+      }
+    },
+    "Add apps → Search → Select → Done": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar apps → Pesquisar → Selecionar → OK"
+          }
+        }
+      }
+    },
+    "Add, remove, and set unlock times": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adiciona, remove e define tempos de desbloqueio"
+          }
+        }
+      }
+    },
+    "All 4 puzzle games": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os 4 jogos de puzzle"
+          }
+        }
+      }
+    },
+    "All apps protected": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todas as apps protegidas"
+          }
+        }
+      }
+    },
+    "All puzzles": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos os puzzles"
+          }
+        }
+      }
+    },
+    "Already bought lifetime access?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Já compraste o acesso vitalício?"
+          }
+        }
+      }
+    },
+    "Always": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sempre"
+          }
+        }
+      }
+    },
+    "Analysing your answers": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A analisar as tuas respostas"
+          }
+        }
+      }
+    },
+    "Answer: %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resposta: %@"
+          }
+        }
+      }
+    },
+    "Answers are whole numbers or decimals with up to 2 places.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As respostas são números inteiros ou decimais com até 2 casas."
+          }
+        }
+      }
+    },
+    "Anxious": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ansioso"
+          }
+        }
+      }
+    },
+    "Any move that delivers checkmate on your final move counts.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qualquer jogada que dê xeque-mate na tua última jogada conta."
+          }
+        }
+      }
+    },
+    "App locks": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bloqueios de apps"
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aspeto"
+          }
+        }
+      }
+    },
+    "Apply discount": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aplicar desconto"
+          }
+        }
+      }
+    },
+    "Apps to lock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps a bloquear"
+          }
+        }
+      }
+    },
+    "Apps use the default time unless you choose a different one below.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As apps usam o tempo predefinido, a não ser que escolhas outro abaixo."
+          }
+        }
+      }
+    },
+    "At 20:00 if you haven't solved a puzzle": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Às 20:00 se ainda não resolveste um puzzle"
+          }
+        }
+      }
+    },
+    "At work or class": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No trabalho ou nas aulas"
+          }
+        }
+      }
+    },
+    "Back": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar"
+          }
+        }
+      }
+    },
+    "Be more present": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estar mais presente"
+          }
+        }
+      }
+    },
+    "Black & coral": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preto e coral"
+          }
+        }
+      }
+    },
+    "Black to move. Mate in one.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogam as pretas. Mate em um."
+          }
+        }
+      }
+    },
+    "Black to move. Mate in two.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogam as pretas. Mate em dois."
+          }
+        }
+      }
+    },
+    "Bored": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aborrecido"
+          }
+        }
+      }
+    },
+    "Break the doom-scrolling habit": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Largar o vício do scroll"
+          }
+        }
+      }
+    },
+    "Bug report": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erro"
+          }
+        }
+      }
+    },
+    "Building your plan": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A criar o teu plano"
+          }
+        }
+      }
+    },
+    "Built from your answers. You can change everything later.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Criado a partir das tuas respostas. Podes mudar tudo mais tarde."
+          }
+        }
+      }
+    },
+    "By continuing, you agree to our ": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao continuar, aceitas os nossos "
+          }
+        }
+      }
+    },
+    "Calculating your screen time": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A calcular o teu tempo de ecrã"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "Change apps": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mudar apps"
+          }
+        }
+      }
+    },
+    "Check": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificar"
+          }
+        }
+      }
+    },
+    "Check Settings → Screen Time to see your daily average. We'll use 4 hours for now.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vê em Definições → Tempo de ecrã a tua média diária. Por agora usamos 4 horas."
+          }
+        }
+      }
+    },
+    "Chess": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xadrez"
+          }
+        }
+      }
+    },
+    "Chess puzzles from the Lichess puzzle database (CC0).": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzles de xadrez da base de dados de puzzles do Lichess (CC0)."
+          }
+        }
+      }
+    },
+    "Choose 1–10. Progress is saved if you leave. Changes apply to the next unlock.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe de 1 a 10. O progresso fica guardado se saíres. As alterações aplicam-se ao próximo desbloqueio."
+          }
+        }
+      }
+    },
+    "Choose Activities": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolher atividades"
+          }
+        }
+      }
+    },
+    "Choose an app to get started.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe uma app para começar."
+          }
+        }
+      }
+    },
+    "Choose apps to limit distracting scrolling. Solve a puzzle to unlock them temporarily.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe apps para limitar o scroll que distrai. Resolve um puzzle para as desbloquear temporariamente."
+          }
+        }
+      }
+    },
+    "Choose how long your apps stay unlocked after you solve a puzzle.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe quanto tempo as tuas apps ficam desbloqueadas depois de resolveres um puzzle."
+          }
+        }
+      }
+    },
+    "Choose your\npuzzle reward": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe a tua\nrecompensa"
+          }
+        }
+      }
+    },
+    "Choose your apps and how long each stays unlocked after a puzzle.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe as tuas apps e quanto tempo cada uma fica desbloqueada depois de um puzzle."
+          }
+        }
+      }
+    },
+    "Classic": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clássico"
+          }
+        }
+      }
+    },
+    "Close": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fechar"
+          }
+        }
+      }
+    },
+    "Committed": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prometido"
+          }
+        }
+      }
+    },
+    "Committed!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prometido!"
+          }
+        }
+      }
+    },
+    "Connect %@\nto Screen Time": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liga a %@\nao Tempo de ecrã"
+          }
+        }
+      }
+    },
+    "Connect Screen Time to see today's usage": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liga o Tempo de ecrã para veres a utilização de hoje"
+          }
+        }
+      }
+    },
+    "Contact support": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contactar o suporte"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar"
+          }
+        }
+      }
+    },
+    "Continue Without Access": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar sem acesso"
+          }
+        }
+      }
+    },
+    "Continue to email": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar para o email"
+          }
+        }
+      }
+    },
+    "Copied": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiado"
+          }
+        }
+      }
+    },
+    "Copy email address": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar endereço de email"
+          }
+        }
+      }
+    },
+    "Couldn't load prices. Try again.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar os preços. Tenta novamente."
+          }
+        }
+      }
+    },
+    "Custom": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personalizado"
+          }
+        }
+      }
+    },
+    "Custom · %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personalizado · %@"
+          }
+        }
+      }
+    },
+    "Dark": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escuro"
+          }
+        }
+      }
+    },
+    "Days": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dias"
+          }
+        }
+      }
+    },
+    "Decrease": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diminuir"
+          }
+        }
+      }
+    },
+    "Default time for each app": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempo predefinido para cada app"
+          }
+        }
+      }
+    },
+    "Default unlock time": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempo de desbloqueio predefinido"
+          }
+        }
+      }
+    },
+    "Default · %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Predefinição · %@"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar"
+          }
+        }
+      }
+    },
+    "Difficulty": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dificuldade"
+          }
+        }
+      }
+    },
+    "Don't Allow": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não permitir"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Drained": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esgotado"
+          }
+        }
+      }
+    },
+    "Duplicates turn red right away.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os repetidos ficam logo a vermelho."
+          }
+        }
+      }
+    },
+    "EASY": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FÁCIL"
+          }
+        }
+      }
+    },
+    "ENTER": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENTER"
+          }
+        }
+      }
+    },
+    "Easy": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fácil"
+          }
+        }
+      }
+    },
+    "Email me directly": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envia-me um email diretamente"
+          }
+        }
+      }
+    },
+    "Emergency unlock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloqueio de emergência"
+          }
+        }
+      }
+    },
+    "Enable locks": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar bloqueios"
+          }
+        }
+      }
+    },
+    "Endless · Type your answer": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Infinito · Escreve a resposta"
+          }
+        }
+      }
+    },
+    "Endless · Unique solutions": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Infinito · Soluções únicas"
+          }
+        }
+      }
+    },
+    "Enjoy your feed.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aproveita o teu feed."
+          }
+        }
+      }
+    },
+    "Enter": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter"
+          }
+        }
+      }
+    },
+    "Erase": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar"
+          }
+        }
+      }
+    },
+    "Estimate based on your answers.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimativa com base nas tuas respostas."
+          }
+        }
+      }
+    },
+    "Evening streak reminder": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lembrete da sequência ao fim do dia"
+          }
+        }
+      }
+    },
+    "Evenings": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao fim do dia"
+          }
+        }
+      }
+    },
+    "FRACTIONS": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FRAÇÕES"
+          }
+        }
+      }
+    },
+    "Feedback": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback"
+          }
+        }
+      }
+    },
+    "Fill every row, column and box with each digit exactly once.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preenche cada linha, coluna e quadrado com cada algarismo exatamente uma vez."
+          }
+        }
+      }
+    },
+    "Fill the 9×9 grid.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preenche a grelha 9×9."
+          }
+        }
+      }
+    },
+    "Fill the grid": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preenche a grelha"
+          }
+        }
+      }
+    },
+    "Fill the last row": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preenche a última linha"
+          }
+        }
+      }
+    },
+    "Find the answer": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Descobre a resposta"
+          }
+        }
+      }
+    },
+    "Find the checkmate.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encontra o xeque-mate."
+          }
+        }
+      }
+    },
+    "Find the move that checkmates. Mate-in-2 puzzles need two moves; the opponent replies in between.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encontra a jogada que dá xeque-mate. Os puzzles de mate em 2 precisam de duas jogadas; o adversário responde entre elas."
+          }
+        }
+      }
+    },
+    "Fine actually": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem, na verdade"
+          }
+        }
+      }
+    },
+    "Focus on studies or work": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Concentrar-me nos estudos ou no trabalho"
+          }
+        }
+      }
+    },
+    "For Today": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para hoje"
+          }
+        }
+      }
+    },
+    "Found a problem or have an idea? Send me a note.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encontraste um problema ou tens uma ideia? Envia-me uma mensagem."
+          }
+        }
+      }
+    },
+    "From": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De"
+          }
+        }
+      }
+    },
+    "Games": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogos"
+          }
+        }
+      }
+    },
+    "Get Started": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Começar"
+          }
+        }
+      }
+    },
+    "Get a gentle nudge when it's time to focus. We'll never spam you.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recebe um lembrete suave quando for altura de te concentrares. Nunca te vamos encher de notificações."
+          }
+        }
+      }
+    },
+    "Get smarter before scrolling": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fica mais esperto antes de fazer scroll"
+          }
+        }
+      }
+    },
+    "Go back to %@ — it's unlocked for %@.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volta a %1$@ — fica desbloqueada por %2$@."
+          }
+        }
+      }
+    },
+    "Got it": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Percebi"
+          }
+        }
+      }
+    },
+    "Green: right letter, right spot. Yellow: in the word, wrong spot. Grey: not in the word.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verde: letra certa no sítio certo. Amarelo: está na palavra, mas noutro sítio. Cinzento: não está na palavra."
+          }
+        }
+      }
+    },
+    "Guess must contain %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A palavra tem de conter %@"
+          }
+        }
+      }
+    },
+    "Guess the 5-letter word.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adivinha a palavra de 5 letras."
+          }
+        }
+      }
+    },
+    "Guess the hidden 5-letter word. Each guess must be a real word.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adivinha a palavra escondida de 5 letras. Cada tentativa tem de ser uma palavra real."
+          }
+        }
+      }
+    },
+    "Guess the word": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adivinha a palavra"
+          }
+        }
+      }
+    },
+    "Guilty": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Culpado"
+          }
+        }
+      }
+    },
+    "HARD": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DIFÍCIL"
+          }
+        }
+      }
+    },
+    "Hard": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Difícil"
+          }
+        }
+      }
+    },
+    "Help improve %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajuda a melhorar a %@"
+          }
+        }
+      }
+    },
+    "Help us grow": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajuda-nos a crescer"
+          }
+        }
+      }
+    },
+    "Here's how\n%@ works": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vê como\nfunciona a %@"
+          }
+        }
+      }
+    },
+    "Hint (%lld)": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dica (%lld)"
+          }
+        }
+      }
+    },
+    "Hints fill a cell for you (3 per puzzle).": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As dicas preenchem uma casa por ti (3 por puzzle)."
+          }
+        }
+      }
+    },
+    "Hold to commit": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantém premido"
+          }
+        }
+      }
+    },
+    "How does scrolling make you feel?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Como te sentes depois de fazer scroll?"
+          }
+        }
+      }
+    },
+    "How much time do you spend on your phone each day?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quanto tempo passas no telemóvel por dia?"
+          }
+        }
+      }
+    },
+    "How old are you?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Que idade tens?"
+          }
+        }
+      }
+    },
+    "How to play": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Como jogar"
+          }
+        }
+      }
+    },
+    "How to: Add apps, search, select, then Done": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Como fazer: adicionar apps, pesquisar, selecionar e OK"
+          }
+        }
+      }
+    },
+    "I don't know": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não sei"
+          }
+        }
+      }
+    },
+    "If 3x + 5 = 20,\nwhat is x?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se 3x + 5 = 20,\nquanto vale x?"
+          }
+        }
+      }
+    },
+    "Increase": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aumentar"
+          }
+        }
+      }
+    },
+    "Instead of the standard %@. One-time purchase.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Em vez dos habituais %@. Compra única."
+          }
+        }
+      }
+    },
+    "It really helps": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajuda mesmo muito"
+          }
+        }
+      }
+    },
+    "Keep at least one puzzle enabled.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantém pelo menos um puzzle ativo."
+          }
+        }
+      }
+    },
+    "Keep going": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar"
+          }
+        }
+      }
+    },
+    "Keep solving": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar a resolver"
+          }
+        }
+      }
+    },
+    "Keep your %lld-day streak 🔥": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Keep your %lld-day streak 🔥"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Keep your %lld-day streak 🔥"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Mantém a sequência de %lld dia 🔥"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Mantém a sequência de %lld dias 🔥"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Keeps your streak alive": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantém a tua sequência"
+          }
+        }
+      }
+    },
+    "Late at night": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarde da noite"
+          }
+        }
+      }
+    },
+    "Launch offer": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oferta de lançamento"
+          }
+        }
+      }
+    },
+    "Learn something every day": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aprender algo todos os dias"
+          }
+        }
+      }
+    },
+    "Letter %lld must be %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A letra %1$lld tem de ser %2$@"
+          }
+        }
+      }
+    },
+    "Level up": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subir de nível"
+          }
+        }
+      }
+    },
+    "Lifetime Access": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acesso vitalício"
+          }
+        }
+      }
+    },
+    "Lifetime Access · Active": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acesso vitalício · Ativo"
+          }
+        }
+      }
+    },
+    "Lifetime access for %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acesso vitalício por %@"
+          }
+        }
+      }
+    },
+    "Lifetime access is active. Thank you!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O acesso vitalício está ativo. Obrigado!"
+          }
+        }
+      }
+    },
+    "Light & coral": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claro e coral"
+          }
+        }
+      }
+    },
+    "Loading prices": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A carregar preços"
+          }
+        }
+      }
+    },
+    "Local notifications only, never more than one a day.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Só notificações locais, nunca mais do que uma por dia."
+          }
+        }
+      }
+    },
+    "Lock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bloquear"
+          }
+        }
+      }
+    },
+    "Lock schedule": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horário de bloqueio"
+          }
+        }
+      }
+    },
+    "Lock your apps.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bloqueia as tuas apps."
+          }
+        }
+      }
+    },
+    "Locks are on during these hours. Outside them, your apps open normally. Times past midnight continue into the next day.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os bloqueios estão ativos nestas horas. Fora delas, as apps abrem normalmente. Horas depois da meia-noite continuam no dia seguinte."
+          }
+        }
+      }
+    },
+    "Locks paused": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bloqueios em pausa"
+          }
+        }
+      }
+    },
+    "Long videos": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vídeos longos"
+          }
+        }
+      }
+    },
+    "MATE IN %lld": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MATE EM %lld"
+          }
+        }
+      }
+    },
+    "MEDIUM": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MÉDIO"
+          }
+        }
+      }
+    },
+    "Make a promise to yourself": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faz uma promessa a ti próprio"
+          }
+        }
+      }
+    },
+    "Make locks harder to turn off": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torna os bloqueios mais difíceis de desligar"
+          }
+        }
+      }
+    },
+    "Manage": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerir"
+          }
+        }
+      }
+    },
+    "Manage Apps to Lock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerir apps a bloquear"
+          }
+        }
+      }
+    },
+    "Manage apps": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerir apps"
+          }
+        }
+      }
+    },
+    "Mate in 1–2 · %lld puzzles": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mate em 1–2 · %lld puzzles"
+          }
+        }
+      }
+    },
+    "Mate in one": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mate em um"
+          }
+        }
+      }
+    },
+    "Math": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matemática"
+          }
+        }
+      }
+    },
+    "Medium": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Médio"
+          }
+        }
+      }
+    },
+    "Medium and Hard use hard mode: revealed hints must be used in later guesses.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Médio e o Difícil usam o modo difícil: as pistas reveladas têm de ser usadas nas tentativas seguintes."
+          }
+        }
+      }
+    },
+    "Messaging": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mensagens"
+          }
+        }
+      }
+    },
+    "Minus": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menos"
+          }
+        }
+      }
+    },
+    "More options": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mais opções"
+          }
+        }
+      }
+    },
+    "Morning in bed": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De manhã na cama"
+          }
+        }
+      }
+    },
+    "NOT NOW": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AGORA NÃO"
+          }
+        }
+      }
+    },
+    "News": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notícias"
+          }
+        }
+      }
+    },
+    "Next puzzle": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo puzzle"
+          }
+        }
+      }
+    },
+    "Nice to meet you, %@!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muito prazer, %@!"
+          }
+        }
+      }
+    },
+    "No apps locked yet": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não há apps bloqueadas"
+          }
+        }
+      }
+    },
+    "No locks yet": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda sem bloqueios"
+          }
+        }
+      }
+    },
+    "No previous purchase was found for this Apple ID.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi encontrada nenhuma compra anterior para esta conta Apple."
+          }
+        }
+      }
+    },
+    "No stats yet": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda sem estatísticas"
+          }
+        }
+      }
+    },
+    "No time in your locked apps today. Nice!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum tempo nas apps bloqueadas hoje. Boa!"
+          }
+        }
+      }
+    },
+    "Not Now": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agora não"
+          }
+        }
+      }
+    },
+    "Not enough letters": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faltam letras"
+          }
+        }
+      }
+    },
+    "Not in word list": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não está na lista de palavras"
+          }
+        }
+      }
+    },
+    "Not now": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agora não"
+          }
+        }
+      }
+    },
+    "Not quite. %lld tries left": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Not quite. %lld try left"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Not quite. %lld tries left"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Quase. Resta %lld tentativa"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Quase. Restam %lld tentativas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Notes": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notas"
+          }
+        }
+      }
+    },
+    "Notes On": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notas ativas"
+          }
+        }
+      }
+    },
+    "Notifications are off": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As notificações estão desligadas"
+          }
+        }
+      }
+    },
+    "OFF": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DESC."
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "ORDER OF OPERATIONS": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ORDEM DAS OPERAÇÕES"
+          }
+        }
+      }
+    },
+    "On a schedule": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Com horário"
+          }
+        }
+      }
+    },
+    "On until %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativo até às %@"
+          }
+        }
+      }
+    },
+    "One-time lifetime access": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acesso vitalício com compra única"
+          }
+        }
+      }
+    },
+    "One-time purchase. No subscription.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compra única. Sem subscrição."
+          }
+        }
+      }
+    },
+    "Open Settings": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir Definições"
+          }
+        }
+      }
+    },
+    "Opens the app for 1 minute without a puzzle. You have %lld of 3 left this week, and it breaks today's streak.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre a app durante 1 minuto sem puzzle. Restam-te %lld de 3 esta semana, e quebra a sequência de hoje."
+          }
+        }
+      }
+    },
+    "Opens today's puzzle": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre o puzzle de hoje"
+          }
+        }
+      }
+    },
+    "Other": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outro"
+          }
+        }
+      }
+    },
+    "Out of tries. Here's the solution.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acabaram as tentativas. Eis a solução."
+          }
+        }
+      }
+    },
+    "PERCENT": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PERCENTAGENS"
+          }
+        }
+      }
+    },
+    "PRACTICE": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TREINO"
+          }
+        }
+      }
+    },
+    "Page %lld of %lld": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Página %1$lld de %2$lld"
+          }
+        }
+      }
+    },
+    "Pay once, keep lifetime access": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paga uma vez, acesso para sempre"
+          }
+        }
+      }
+    },
+    "Pay standard price · %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pagar preço normal · %@"
+          }
+        }
+      }
+    },
+    "Permission preview": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pré-visualização da autorização"
+          }
+        }
+      }
+    },
+    "Pick a game. Just one quick round.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe um jogo. Só uma ronda rápida."
+          }
+        }
+      }
+    },
+    "Pick all that apply.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe todas as que se aplicam."
+          }
+        }
+      }
+    },
+    "Play": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogar"
+          }
+        }
+      }
+    },
+    "Point": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vírgula"
+          }
+        }
+      }
+    },
+    "Pretend a locked app's shield button was tapped": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finge que o botão de bloqueio de uma app foi tocado"
+          }
+        }
+      }
+    },
+    "Preview · Answers play automatically": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pré-visualização · As respostas aparecem sozinhas"
+          }
+        }
+      }
+    },
+    "Privacy Policy": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Política de Privacidade"
+          }
+        }
+      }
+    },
+    "Progress": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Progresso"
+          }
+        }
+      }
+    },
+    "Promote to": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Promover a"
+          }
+        }
+      }
+    },
+    "Providing “%@” access to Screen Time may allow it to see your activity data, restrict content, and limit the usage of apps and websites.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dar à “%@” acesso ao Tempo de ecrã pode permitir-lhe ver os seus dados de atividade, restringir conteúdo e limitar a utilização de apps e sites."
+          }
+        }
+      }
+    },
+    "Purchase": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compra"
+          }
+        }
+      }
+    },
+    "Puzzle %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzle %@"
+          }
+        }
+      }
+    },
+    "Puzzle boards keep their original colors.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os tabuleiros mantêm as cores originais."
+          }
+        }
+      }
+    },
+    "Puzzle mix": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mistura de puzzles"
+          }
+        }
+      }
+    },
+    "Puzzles": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzles"
+          }
+        }
+      }
+    },
+    "Puzzles per unlock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzles por desbloqueio"
+          }
+        }
+      }
+    },
+    "Puzzles solved": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzles resolvidos"
+          }
+        }
+      }
+    },
+    "Puzzles solved this week": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzles resolvidos esta semana"
+          }
+        }
+      }
+    },
+    "Puzzles you need to solve to unlock any app. One math answer, one word, one Sudoku grid or one chess puzzle each counts as one.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzles que tens de resolver para desbloquear qualquer app. Uma resposta de matemática, uma palavra, uma grelha de Sudoku ou um puzzle de xadrez contam como um."
+          }
+        }
+      }
+    },
+    "QUICK 6×6": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RÁPIDO 6×6"
+          }
+        }
+      }
+    },
+    "Question": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pergunta"
+          }
+        }
+      }
+    },
+    "Quick 6×6": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rápido 6×6"
+          }
+        }
+      }
+    },
+    "Quick mental math.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cálculo mental rápido."
+          }
+        }
+      }
+    },
+    "Rate QuizLock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avaliar a QuizLock"
+          }
+        }
+      }
+    },
+    "Ready for %@?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pronto para %@?"
+          }
+        }
+      }
+    },
+    "Ready to lock": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pronta a bloquear"
+          }
+        }
+      }
+    },
+    "Reconnect": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar a ligar"
+          }
+        }
+      }
+    },
+    "Reconnect Screen Time": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar a ligar o Tempo de ecrã"
+          }
+        }
+      }
+    },
+    "Reminders": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lembretes"
+          }
+        }
+      }
+    },
+    "Remove": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remover"
+          }
+        }
+      }
+    },
+    "Remove %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remover %@"
+          }
+        }
+      }
+    },
+    "Requesting Access…": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A pedir acesso…"
+          }
+        }
+      }
+    },
+    "Restore Purchases": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurar compras"
+          }
+        }
+      }
+    },
+    "Right now": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agora"
+          }
+        }
+      }
+    },
+    "Row complete ✓": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Linha completa ✓"
+          }
+        }
+      }
+    },
+    "SQUARES & ROOTS": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QUADRADOS E RAÍZES"
+          }
+        }
+      }
+    },
+    "START PUZZLE": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "INICIAR PUZZLE"
+          }
+        }
+      }
+    },
+    "STRICT MODE · HARD": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MODO RIGOROSO · DIFÍCIL"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar"
+          }
+        }
+      }
+    },
+    "Saved this week": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poupado esta semana"
+          }
+        }
+      }
+    },
+    "Screen Time data stays on your iPhone. Apple shows it here; %@ can't read or send it.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os dados do Tempo de ecrã ficam no teu iPhone. A Apple mostra-os aqui; a %@ não os consegue ler nem enviar."
+          }
+        }
+      }
+    },
+    "Screen Time not connected": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempo de ecrã não ligado"
+          }
+        }
+      }
+    },
+    "Scroll less.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faz menos scroll."
+          }
+        }
+      }
+    },
+    "Select the apps that distract you the most, the ones you open on autopilot.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolhe as apps que mais te distraem, as que abres em piloto automático."
+          }
+        }
+      }
+    },
+    "Set unlock time": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Definir tempo de desbloqueio"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Definições"
+          }
+        }
+      }
+    },
+    "Shopping": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compras"
+          }
+        }
+      }
+    },
+    "Short videos": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vídeos curtos"
+          }
+        }
+      }
+    },
+    "Show my plan": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver o meu plano"
+          }
+        }
+      }
+    },
+    "Simulate START PUZZLE": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simular INICIAR PUZZLE"
+          }
+        }
+      }
+    },
+    "Simulator mock: FamilyControls isn't available here, so these are fake apps.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simulação: o FamilyControls não está disponível aqui, por isso estas apps são fictícias."
+          }
+        }
+      }
+    },
+    "Simulator tools": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ferramentas do simulador"
+          }
+        }
+      }
+    },
+    "Skip": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saltar"
+          }
+        }
+      }
+    },
+    "Sleep better": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dormir melhor"
+          }
+        }
+      }
+    },
+    "Social media": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redes sociais"
+          }
+        }
+      }
+    },
+    "Solution: %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solução: %@"
+          }
+        }
+      }
+    },
+    "Solve %lld puzzles to unlock %@": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Solve %1$lld puzzle to unlock %2$@"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Solve %1$lld puzzles to unlock %2$@"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Resolve %1$lld puzzle para desbloquear %2$@"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Resolve %1$lld puzzles para desbloquear %2$@"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Solve a puzzle (or skip unlocks) every day to keep it going.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolve um puzzle (ou abdica de desbloqueios) todos os dias para a manteres."
+          }
+        }
+      }
+    },
+    "Solve a puzzle or skip an unlock, and your progress shows up here.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolve um puzzle ou abdica de um desbloqueio e o teu progresso aparece aqui."
+          }
+        }
+      }
+    },
+    "Solve a puzzle to unlock the app": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolve um puzzle para desbloquear a app"
+          }
+        }
+      }
+    },
+    "Solve a puzzle to unlock.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolve um puzzle para desbloquear."
+          }
+        }
+      }
+    },
+    "Solve one puzzle today to keep your streak going.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolve um puzzle hoje para manteres a tua sequência."
+          }
+        }
+      }
+    },
+    "Solve the puzzle to unlock the app": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolve o puzzle para desbloquear a app"
+          }
+        }
+      }
+    },
+    "Solve the question and type your answer with the keypad.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolve a pergunta e escreve a resposta com o teclado."
+          }
+        }
+      }
+    },
+    "Solved puzzles required": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzles resolvidos necessários"
+          }
+        }
+      }
+    },
+    "Solved ✓ · Come back tomorrow": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolvido ✓ · Volta amanhã"
+          }
+        }
+      }
+    },
+    "Solved!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolvido!"
+          }
+        }
+      }
+    },
+    "Standard lifetime price": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preço vitalício normal"
+          }
+        }
+      }
+    },
+    "Stats": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estatísticas"
+          }
+        }
+      }
+    },
+    "Stay on track": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantém o foco"
+          }
+        }
+      }
+    },
+    "Streak": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sequência"
+          }
+        }
+      }
+    },
+    "Strict mode": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modo rigoroso"
+          }
+        }
+      }
+    },
+    "Strict mode ended.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O modo rigoroso terminou."
+          }
+        }
+      }
+    },
+    "Strict mode on until %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modo rigoroso ativo até às %@"
+          }
+        }
+      }
+    },
+    "Sudoku": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sudoku"
+          }
+        }
+      }
+    },
+    "Suggested from your answers: %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sugestão com base nas tuas respostas: %@"
+          }
+        }
+      }
+    },
+    "Suggestion": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sugestão"
+          }
+        }
+      }
+    },
+    "Sundays: how much time you saved": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aos domingos: quanto tempo poupaste"
+          }
+        }
+      }
+    },
+    "Support": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suporte"
+          }
+        }
+      }
+    },
+    "TODAY'S PUZZLE": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PUZZLE DE HOJE"
+          }
+        }
+      }
+    },
+    "Take control of\nyour screen time": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assume o controlo\ndo teu tempo de ecrã"
+          }
+        }
+      }
+    },
+    "Tap Add Apps to choose the apps that distract you most.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca em Adicionar apps para escolheres as apps que mais te distraem."
+          }
+        }
+      }
+    },
+    "Tap a cell, then a number. Use Notes for pencil marks.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca numa casa e depois num número. Usa as Notas para apontamentos."
+          }
+        }
+      }
+    },
+    "Tap a piece to see its legal moves, then tap a square. You can also drag pieces.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca numa peça para ver as jogadas possíveis e depois toca numa casa. Também podes arrastar as peças."
+          }
+        }
+      }
+    },
+    "Tap a piece, then a square. Or drag it.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca numa peça e depois numa casa. Ou arrasta-a."
+          }
+        }
+      }
+    },
+    "Tap the app at the top left\nto return to your app.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca na app no canto superior esquerdo\npara voltar à tua app."
+          }
+        }
+      }
+    },
+    "Tap to start your puzzle 🧩": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca para começar o teu puzzle 🧩"
+          }
+        }
+      }
+    },
+    "Tell me what happened or what you'd like to see…": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conta-me o que aconteceu ou o que gostavas de ver…"
+          }
+        }
+      }
+    },
+    "Terms of Use": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Termos de Utilização"
+          }
+        }
+      }
+    },
+    "Thank you for supporting %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obrigado por apoiares a %@"
+          }
+        }
+      }
+    },
+    "The App Store isn't available right now. Please try again.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A App Store não está disponível agora. Tenta novamente."
+          }
+        }
+      }
+    },
+    "The default for apps without an override. Changes apply the next time you earn an unlock; current unlocks keep their remaining time.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A predefinição para apps sem exceção. As alterações aplicam-se no próximo desbloqueio; os desbloqueios atuais mantêm o tempo restante."
+          }
+        }
+      }
+    },
+    "The purchase couldn't be verified.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível verificar a compra."
+          }
+        }
+      }
+    },
+    "The reality check": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A realidade"
+          }
+        }
+      }
+    },
+    "This app": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta app"
+          }
+        }
+      }
+    },
+    "This overrides the default for this app. Current unlocks keep their remaining time.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Isto substitui a predefinição para esta app. Os desbloqueios atuais mantêm o tempo restante."
+          }
+        }
+      }
+    },
+    "Three days in a row. Great start!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Três dias seguidos. Ótimo começo!"
+          }
+        }
+      }
+    },
+    "Time for today's puzzle 🧩": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Está na hora do puzzle de hoje 🧩"
+          }
+        }
+      }
+    },
+    "Time saved": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempo poupado"
+          }
+        }
+      }
+    },
+    "To": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Até"
+          }
+        }
+      }
+    },
+    "To block the apps you choose, %@ needs Screen Time permission.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para bloquear as apps que escolheres, a %@ precisa de autorização do Tempo de ecrã."
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoje"
+          }
+        }
+      }
+    },
+    "Today's puzzle: solved!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzle de hoje: resolvido!"
+          }
+        }
+      }
+    },
+    "Try": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Experimentar"
+          }
+        }
+      }
+    },
+    "Try again": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar novamente"
+          }
+        }
+      }
+    },
+    "Try your first puzzle": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Experimenta o teu primeiro puzzle"
+          }
+        }
+      }
+    },
+    "Turn On Locks": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar bloqueios"
+          }
+        }
+      }
+    },
+    "Turn On Strict Mode": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar modo rigoroso"
+          }
+        }
+      }
+    },
+    "Turn them on in Settings so START PUZZLE can take you straight to your puzzle. Without them, open %@ after tapping START PUZZLE.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativa-as nas Definições para que INICIAR PUZZLE te leve diretamente ao puzzle. Sem elas, abre a %@ depois de tocares em INICIAR PUZZLE."
+          }
+        }
+      }
+    },
+    "Type": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipo"
+          }
+        }
+      }
+    },
+    "Under 18": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menos de 18"
+          }
+        }
+      }
+    },
+    "Unlimited puzzle-earned unlocks": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloqueios ilimitados ganhos com puzzles"
+          }
+        }
+      }
+    },
+    "Unlock Lifetime Access": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloquear acesso vitalício"
+          }
+        }
+      }
+    },
+    "Unlock for 1 minute": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloquear durante 1 minuto"
+          }
+        }
+      }
+    },
+    "Unlock puzzles": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puzzles de desbloqueio"
+          }
+        }
+      }
+    },
+    "Unlock rules": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regras de desbloqueio"
+          }
+        }
+      }
+    },
+    "Unlock time": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempo de desbloqueio"
+          }
+        }
+      }
+    },
+    "Unlocks earned": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloqueios ganhos"
+          }
+        }
+      }
+    },
+    "Unlocks skipped": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloqueios evitados"
+          }
+        }
+      }
+    },
+    "Use %@ for unlocks": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar %@ para desbloquear"
+          }
+        }
+      }
+    },
+    "Use default": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar predefinição"
+          }
+        }
+      }
+    },
+    "Use for unlocks": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar para desbloquear"
+          }
+        }
+      }
+    },
+    "Use these switches anytime to pause or resume a lock.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usa estes interruptores quando quiseres para pausar ou retomar um bloqueio."
+          }
+        }
+      }
+    },
+    "Use this plan": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar este plano"
+          }
+        }
+      }
+    },
+    "We made %@ a bit easier: %@.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tornámos %1$@ um pouco mais fácil: %2$@."
+          }
+        }
+      }
+    },
+    "We'll use it to personalise your plan.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vamos usá-lo para personalizar o teu plano."
+          }
+        }
+      }
+    },
+    "Weekly summary": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resumo semanal"
+          }
+        }
+      }
+    },
+    "What eats most of your time?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O que te rouba mais tempo?"
+          }
+        }
+      }
+    },
+    "What should we call you?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Como te devemos chamar?"
+          }
+        }
+      }
+    },
+    "What's on your mind?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Em que estás a pensar?"
+          }
+        }
+      }
+    },
+    "What's your main goal?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qual é o teu principal objetivo?"
+          }
+        }
+      }
+    },
+    "When does it happen most?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando acontece mais?"
+          }
+        }
+      }
+    },
+    "When you tap START PUZZLE on a locked app, a notification takes you straight to your puzzle.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando tocas em INICIAR PUZZLE numa app bloqueada, uma notificação leva-te diretamente ao teu puzzle."
+          }
+        }
+      }
+    },
+    "While strict mode is on, you can't turn off locks, remove apps or change the lock schedule unless you solve 3 hard puzzles.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Com o modo rigoroso ativo, não podes desligar bloqueios, remover apps ou mudar o horário sem resolveres 3 puzzles difíceis."
+          }
+        }
+      }
+    },
+    "White to move. Mate in one.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogam as brancas. Mate em um."
+          }
+        }
+      }
+    },
+    "White to move. Mate in two.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogam as brancas. Mate em dois."
+          }
+        }
+      }
+    },
+    "With %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Com a %@"
+          }
+        }
+      }
+    },
+    "Word": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palavra"
+          }
+        }
+      }
+    },
+    "YOUR LIFETIME OFFER": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A TUA OFERTA VITALÍCIA"
+          }
+        }
+      }
+    },
+    "You can add apps later in Settings.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podes adicionar apps mais tarde nas Definições."
+          }
+        }
+      }
+    },
+    "You can change your puzzle reward later in Settings.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podes mudar a tua recompensa mais tarde nas Definições."
+          }
+        }
+      }
+    },
+    "You can update this later in Settings.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podes alterar isto mais tarde nas Definições."
+          }
+        }
+      }
+    },
+    "You get 3 tries per question.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tens 3 tentativas por pergunta."
+          }
+        }
+      }
+    },
+    "You have 3 tries per puzzle.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tens 3 tentativas por puzzle."
+          }
+        }
+      }
+    },
+    "You saved %@ this week 🧩": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poupaste %@ esta semana 🧩"
+          }
+        }
+      }
+    },
+    "You unlocked the app!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloqueaste a app!"
+          }
+        }
+      }
+    },
+    "You're all set": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Está tudo pronto"
+          }
+        }
+      }
+    },
+    "You're on track to spend": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estás a caminho de passar"
+          }
+        }
+      }
+    },
+    "You've earned it!": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mereceste!"
+          }
+        }
+      }
+    },
+    "You've solved 5 in a row quickly. Want to try a harder level?": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolveste 5 seguidos rapidamente. Queres experimentar um nível mais difícil?"
+          }
+        }
+      }
+    },
+    "Your apps · %lld": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As tuas apps · %lld"
+          }
+        }
+      }
+    },
+    "Your draft is saved on this device. You'll review and send from your email account, so I can reply.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O teu rascunho fica guardado neste dispositivo. Vais revê-lo e enviá-lo a partir da tua conta de email, para eu poder responder."
+          }
+        }
+      }
+    },
+    "Your first %lld app unlocks are free. After that, lifetime access is a one-time purchase. Standalone puzzle practice requires lifetime access.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os primeiros %lld desbloqueios são grátis. Depois disso, o acesso vitalício é uma compra única. Praticar puzzles à parte requer acesso vitalício."
+          }
+        }
+      }
+    },
+    "Your goal": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O teu objetivo"
+          }
+        }
+      }
+    },
+    "Your name": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O teu nome"
+          }
+        }
+      }
+    },
+    "Your plan": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O teu plano"
+          }
+        }
+      }
+    },
+    "Your puzzle streak and the time you saved today.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A tua sequência de puzzles e o tempo que poupaste hoje."
+          }
+        }
+      }
+    },
+    "Your puzzle streak on the Lock Screen.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A tua sequência de puzzles no ecrã bloqueado."
+          }
+        }
+      }
+    },
+    "Your puzzles take turns in a shuffled order.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os teus puzzles alternam por ordem aleatória."
+          }
+        }
+      }
+    },
+    "Your stats": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As tuas estatísticas"
+          }
+        }
+      }
+    },
+    "Your streak is safe for today. Come back tomorrow for a new one.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A tua sequência está a salvo por hoje. Volta amanhã para um novo."
+          }
+        }
+      }
+    },
+    "Your turn": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "É a tua vez"
+          }
+        }
+      }
+    },
+    "Your week with %@": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A tua semana com a %@"
+          }
+        }
+      }
+    },
+    "day streak": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dias seguidos"
+          }
+        }
+      }
+    },
+    "hours": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "horas"
+          }
+        }
+      }
+    },
+    "min": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "min"
+          }
+        }
+      }
+    },
+    "of your life on your phone.": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "da tua vida ao telemóvel."
+          }
+        }
+      }
+    },
+    "saved today": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "poupados hoje"
+          }
+        }
+      }
+    },
+    "screen time today": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tempo de ecrã hoje"
+          }
+        }
+      }
+    },
+    "screen time today (Simulator sample)": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tempo de ecrã hoje (exemplo do simulador)"
+          }
+        }
+      }
+    },
+    "today": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hoje"
+          }
+        }
+      }
+    },
+    "your app": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "a tua app"
+          }
+        }
+      }
+    },
+    "— Social Networking": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "— Redes sociais"
+          }
+        }
+      }
+    },
+    "“%@” Would Like to Access Screen Time": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” gostaria de aceder ao Tempo de ecrã"
+          }
+        }
+      }
+    },
+    "“I'll be more present with the people around me.”": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Vou estar mais presente com quem está à minha volta.”"
+          }
+        }
+      }
+    },
+    "“I'll break the doom-scrolling habit.”": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Vou largar o vício do scroll.”"
+          }
+        }
+      }
+    },
+    "“I'll focus on what matters, not on my feed.”": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Vou concentrar-me no que importa, não no meu feed.”"
+          }
+        }
+      }
+    },
+    "“I'll learn something every day instead of scrolling.”": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Vou aprender algo todos os dias em vez de fazer scroll.”"
+          }
+        }
+      }
+    },
+    "“I'll put my phone down and sleep better.”": {
+      "localizations": {
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Vou pousar o telemóvel e dormir melhor.”"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
