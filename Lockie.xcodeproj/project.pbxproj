@@ -273,8 +273,8 @@
 		0BCB20C65B2D898D814A5D1A /* Embed ExtensionKit Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
-			dstSubfolderSpec = 16;
+			dstPath = Extensions;
+			dstSubfolderSpec = 1;
 			files = (
 				E8A638B5E475EBE8FE2747EF /* ScreenTimeReportExt.appex in Embed ExtensionKit Extensions */,
 			);
