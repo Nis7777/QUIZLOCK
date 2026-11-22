@@ -10,3 +10,4 @@ Scripts/*.csv
 Scripts/*.zst
 *.csv.zst
 lichess_db_puzzle.csv
+__pycache__/

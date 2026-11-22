@@ -1,4 +1,4 @@
-# QuizLock onboarding v3: "story mode" (premium, chat-driven)
+# Lockie onboarding v3: "story mode" (premium, chat-driven)
 
 Rebuild the onboarding as a **story told by our mascot**, in the spirit of motion_reference/ but with OUR copy and OUR brand. Apply MOTION.md everywhere. All copy below is final unless marked otherwise; {name} = the user's name.
 
@@ -46,7 +46,7 @@ Every time the mascot changes expression, cross-fade with a tiny squash-and-stre
 ## 1. Chapter 1: Hello (3 screens)
 1. **Splash/hero:**
    - A peach-to-coral gradient sky background with soft clouds drawn in SwiftUI, and `mascot_wave` big in the centre.
-   - "QuizLock" wordmark in white, with the line "The app blocker that makes you smarter" under it.
+   - "Lockie" wordmark in white, with the line "The app blocker that makes you smarter" under it.
    - ChunkyButton (white with a coral label): "Get started".
    - Fine print: Terms · Privacy.
    - NO fake ratings or user counts. Only show real App Store numbers later, and leave a hidden slot for them.
@@ -118,7 +118,7 @@ Open with a transition screen: `mascot_clipboard` + "Let's set you up, {name}!" 
 ## 5. Chapter 5: The turn (emotional payoff)
 1. **"Don't worry, {name}. That's about to change."** with `mascot_happy`.
 2. **Reality check:** "At this rate, you'll spend **X years** of your life scrolling." Use the formula from PROMPT_V2. The number counts up, `mascot_sad`.
-3. **"With QuizLock, you could get back Y years."** (Y = 50% of X.) The number counts up in coral, `mascot_celebrate`, with light confetti.
+3. **"With Lockie, you could get back Y years."** (Y = 50% of X.) The number counts up in coral, `mascot_celebrate`, with light confetti.
 4. **Projection chart:** "Less scrolling, more living". A simple illustrative 30-day line chart (Swift Charts): a coral "Scrolling" line trending down and a green "Living" line trending up, drawing themselves in (trim animation). Small footnote: "Illustration based on your goals." Never claim it as user data or study results.
 
 ## 6. Chapter 6: Permissions (mascot-guided)
@@ -142,7 +142,7 @@ Open with a transition screen: `mascot_clipboard` + "Let's set you up, {name}!" 
    - **Release early:** it springs back.
    - **Complete:** a heavy haptic and confetti, and the whole screen becomes solid coral, then it goes straight to the setup screen.
 2. **Setup screen:**
-   - Top to bottom, no overlaps: a large semicircle arc progress (coral) with `mascot_calm` fully inside it → the percentage (CountingText, 40pt bold coral) → the title "Setting up QuizLock…" → the checklist.
+   - Top to bottom, no overlaps: a large semicircle arc progress (coral) with `mascot_calm` fully inside it → the percentage (CountingText, 40pt bold coral) → the title "Setting up Lockie…" → the checklist.
    - 3 steps tick off one by one: "Analysing your answers", "Building your plan", "Locking in your puzzles".
    - Each turns into a coral check circle with `symbolEffect(.bounce)` + a haptic. About 3s in total.
 3. **Plan ready:**

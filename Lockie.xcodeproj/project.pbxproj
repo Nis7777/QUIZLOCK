@@ -62,7 +62,7 @@
 		4B351F098DC51198414230E0 /* Ch3HowItWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10F952C6744940AF92638D /* Ch3HowItWorks.swift */; };
 		4B36606A24D0201C0B9BB340 /* LockScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587B12B0207CDF5AF3DEF1 /* LockScheduleTests.swift */; };
 		4D284CB50C349BB6D011D353 /* DurationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687728A570639956F349EEB3 /* DurationViews.swift */; };
-		4D384DD4D7492CC8E8C18166 /* QuizLockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A057EA8CD118FEB7D5BDF9 /* QuizLockApp.swift */; };
+		4D384DD4D7492CC8E8C18166 /* LockieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A057EA8CD118FEB7D5BDF9 /* LockieApp.swift */; };
 		4DC8A4684FB2C202342174DD /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746D1999B82FEED1CD0EE00F /* SharedStore.swift */; };
 		4E5B70753943E0770210CDF1 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42B1F5B6F5687F716A3C13A /* RewardView.swift */; };
 		4F4FDA5E6CCD3645AABFD345 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D27F6D5D7A283AEDF21F52 /* DeviceActivity.framework */; };
@@ -105,7 +105,7 @@
 		8C774DB78C31414EA4C805F1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D9D7CED7E7AC2B1A28285D9B /* PrivacyInfo.xcprivacy */; };
 		8D3A8E9593C967F9AA4C16DB /* QuizComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4D7932DDEE070E35B57EE /* QuizComponents.swift */; };
 		8E347D68A673E57F3C9256B3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95A637ACD1A61CF822C60F /* SettingsView.swift */; };
-		921DA35C693E955FACF8309C /* QuizLockWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EF935481DCCD340C8E1CCDE1 /* QuizLockWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		921DA35C693E955FACF8309C /* LockieWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EF935481DCCD340C8E1CCDE1 /* LockieWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		93FC5E53365210CE24B63397 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5821E11222B9806E0CD16AF /* ManagedSettings.framework */; };
 		94237801C9AA4C9FD7EADC3E /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D27F6D5D7A283AEDF21F52 /* DeviceActivity.framework */; };
 		9436F379311C20EEF47156AB /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5821E11222B9806E0CD16AF /* ManagedSettings.framework */; };
@@ -142,7 +142,7 @@
 		B339EED38E13BDE5D0E581D4 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC01B2690BF4ACCA7438A0A /* Stats.swift */; };
 		B5144D4573E5B5AEC5F551EE /* Ch5Turn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04FF6310F5A321D31183D2C /* Ch5Turn.swift */; };
 		B5DA71C53404C7F24835D4E9 /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933CD67FFA48A8B71CD179BD /* ShieldActionExtension.swift */; };
-		B66E9DF682D408848BDADCFC /* QuizLockWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190327B085420604F0CA0802 /* QuizLockWidgets.swift */; };
+		B66E9DF682D408848BDADCFC /* LockieWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190327B085420604F0CA0802 /* LockieWidgets.swift */; };
 		B71BC9BE0469D02838E2D589 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98501522B82A15C1A49A1401 /* Assets.xcassets */; };
 		B756B0AD58DFEF06F752C317 /* SudokuEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836FC5DF88E9796F14C8D7F9 /* SudokuEngine.swift */; };
 		B85C6EAB96E33784FC35F9B2 /* LockSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F00C8D4081A86B0526A57DA /* LockSchedule.swift */; };
@@ -243,7 +243,7 @@
 			containerPortal = FCC7BE61B085E67E2453F9E4 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = C35A77B20A53B0B50DFFEEC2;
-			remoteInfo = QuizLockWidgets;
+			remoteInfo = LockieWidgets;
 		};
 		E10278DC1C7F8908875AFE40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -265,7 +265,7 @@
 				AFC73B64EBCAEDA67FADD616 /* ShieldActionExt.appex in Embed Foundation Extensions */,
 				422F982CC0C3BFBE6AF4D17A /* DeviceActivityMonitorExt.appex in Embed Foundation Extensions */,
 				E8A638B5E475EBE8FE2747EF /* ScreenTimeReportExt.appex in Embed Foundation Extensions */,
-				921DA35C693E955FACF8309C /* QuizLockWidgets.appex in Embed Foundation Extensions */,
+				921DA35C693E955FACF8309C /* LockieWidgets.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,7 +289,7 @@
 		161EB218835D4232AB88BEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		167018FBA1D94767D3FE3D2E /* PuzzleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleDetailView.swift; sourceTree = "<group>"; };
 		173284C7F8A7B106E33F71CA /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
-		190327B085420604F0CA0802 /* QuizLockWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLockWidgets.swift; sourceTree = "<group>"; };
+		190327B085420604F0CA0802 /* LockieWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockieWidgets.swift; sourceTree = "<group>"; };
 		1998621EDAB7EE80EA5A8B2A /* ScreenTimeReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeReport.swift; sourceTree = "<group>"; };
 		1A9A2EA611A66B8D8D92BD57 /* ChunkyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkyButton.swift; sourceTree = "<group>"; };
 		1D64DD5FE513C7C9085F5401 /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
@@ -339,7 +339,7 @@
 		70D4D7932DDEE070E35B57EE /* QuizComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizComponents.swift; sourceTree = "<group>"; };
 		746D1999B82FEED1CD0EE00F /* SharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStore.swift; sourceTree = "<group>"; };
 		7639454CA00F6AC31F770A53 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		771CE5B4C6B0F59C731DCDC9 /* QuizLockWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuizLockWidgets.entitlements; sourceTree = "<group>"; };
+		771CE5B4C6B0F59C731DCDC9 /* LockieWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LockieWidgets.entitlements; sourceTree = "<group>"; };
 		784676C3F8756FBBC5EE5105 /* Ch2Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ch2Chat.swift; sourceTree = "<group>"; };
 		7B4A9644D65E14289A9752C5 /* ShieldConfigurationExt.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ShieldConfigurationExt.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BCFA0957009CD5A7EA92D7E /* ChessEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessEngineTests.swift; sourceTree = "<group>"; };
@@ -357,7 +357,7 @@
 		933CD67FFA48A8B71CD179BD /* ShieldActionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldActionExtension.swift; sourceTree = "<group>"; };
 		979F8D4AB206D57E5765EAF5 /* PuzzleGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleGame.swift; sourceTree = "<group>"; };
 		98501522B82A15C1A49A1401 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		98A057EA8CD118FEB7D5BDF9 /* QuizLockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLockApp.swift; sourceTree = "<group>"; };
+		98A057EA8CD118FEB7D5BDF9 /* LockieApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockieApp.swift; sourceTree = "<group>"; };
 		9BAC7E1137AC09D68DB54271 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		9F00C8D4081A86B0526A57DA /* LockSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSchedule.swift; sourceTree = "<group>"; };
 		A0D27F6D5D7A283AEDF21F52 /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = System/Library/Frameworks/DeviceActivity.framework; sourceTree = SDKROOT; };
@@ -399,7 +399,7 @@
 		E87429549FF98FEC4ED381A8 /* UnlockPuzzlesSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockPuzzlesSheet.swift; sourceTree = "<group>"; };
 		EC7047D3F6F3B40BAD2AF47E /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		EF8AB804DD75980225C3BFAF /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		EF935481DCCD340C8E1CCDE1 /* QuizLockWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = QuizLockWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF935481DCCD340C8E1CCDE1 /* LockieWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LockieWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B1ED28DA6FBFA7DD2AD9D4 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		F33DB2CC93991F88E8C469D7 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		F4420F683D6C4DA7EEAFDE44 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
@@ -499,7 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				996EE570500777CA9111D136 /* DeviceActivityMonitorExt */,
-				AF0B95B6DF21BDB4A19DE117 /* QuizLockWidgets */,
+				AF0B95B6DF21BDB4A19DE117 /* LockieWidgets */,
 				950070BA69FA936F6AEB6C1F /* ScreenTimeReportExt */,
 				E7BA7FA5959AC7901001A217 /* ShieldActionExt */,
 				EDCE79A075043BA74DCF4775 /* ShieldConfigurationExt */,
@@ -535,7 +535,7 @@
 				161EB218835D4232AB88BEDA /* Info.plist */,
 				D1BC6928A4359C5C3910A2A2 /* Previews.swift */,
 				427244501479857D132F1EDD /* PrivacyInfo.xcprivacy */,
-				98A057EA8CD118FEB7D5BDF9 /* QuizLockApp.swift */,
+				98A057EA8CD118FEB7D5BDF9 /* LockieApp.swift */,
 				9BAC7E1137AC09D68DB54271 /* RootView.swift */,
 			);
 			path = App;
@@ -655,15 +655,15 @@
 			path = DeviceActivityMonitorExt;
 			sourceTree = "<group>";
 		};
-		AF0B95B6DF21BDB4A19DE117 /* QuizLockWidgets */ = {
+		AF0B95B6DF21BDB4A19DE117 /* LockieWidgets */ = {
 			isa = PBXGroup;
 			children = (
 				DCFA0571A4789E0B0C30818D /* Info.plist */,
 				08D2DA7F7D00169560E8862E /* PrivacyInfo.xcprivacy */,
-				771CE5B4C6B0F59C731DCDC9 /* QuizLockWidgets.entitlements */,
-				190327B085420604F0CA0802 /* QuizLockWidgets.swift */,
+				771CE5B4C6B0F59C731DCDC9 /* LockieWidgets.entitlements */,
+				190327B085420604F0CA0802 /* LockieWidgets.swift */,
 			);
-			path = QuizLockWidgets;
+			path = LockieWidgets;
 			sourceTree = "<group>";
 		};
 		AFFE6B75092B873C88E6A8FD /* ScreenTime */ = {
@@ -745,7 +745,7 @@
 				1D8C110D22D06933F3F78C5B /* App.app */,
 				660A2E1B4E22460608501DFE /* AppTests.xctest */,
 				E1A6487724BC94A162E1A5F9 /* DeviceActivityMonitorExt.appex */,
-				EF935481DCCD340C8E1CCDE1 /* QuizLockWidgets.appex */,
+				EF935481DCCD340C8E1CCDE1 /* LockieWidgets.appex */,
 				6FB9FAF0AE19F7B059B045CA /* ScreenshotTests.xctest */,
 				0998D58663EBF550639FF944 /* ScreenTimeReportExt.appex */,
 				B9FA1B4E4C156CC17331629E /* ShieldActionExt.appex */,
@@ -946,9 +946,9 @@
 			productReference = 7B4A9644D65E14289A9752C5 /* ShieldConfigurationExt.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		C35A77B20A53B0B50DFFEEC2 /* QuizLockWidgets */ = {
+		C35A77B20A53B0B50DFFEEC2 /* LockieWidgets */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A33BD6AB418C2AB4FD8E7CC0 /* Build configuration list for PBXNativeTarget "QuizLockWidgets" */;
+			buildConfigurationList = A33BD6AB418C2AB4FD8E7CC0 /* Build configuration list for PBXNativeTarget "LockieWidgets" */;
 			buildPhases = (
 				D5D9592486E42F2A40BB771B /* Sources */,
 				0ACA59FE93428ABFD5260D49 /* Resources */,
@@ -958,9 +958,9 @@
 			);
 			dependencies = (
 			);
-			name = QuizLockWidgets;
-			productName = QuizLockWidgets;
-			productReference = EF935481DCCD340C8E1CCDE1 /* QuizLockWidgets.appex */;
+			name = LockieWidgets;
+			productName = LockieWidgets;
+			productReference = EF935481DCCD340C8E1CCDE1 /* LockieWidgets.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		D3E1081FF86FA5415BF291A0 /* ShieldActionExt */ = {
@@ -1024,7 +1024,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1059662D6F8EA6BE52D04011 /* Build configuration list for PBXProject "QuizLock" */;
+			buildConfigurationList = 1059662D6F8EA6BE52D04011 /* Build configuration list for PBXProject "Lockie" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1039,7 +1039,7 @@
 				16CA00FC93035905536EEC7F /* App */,
 				68BD3FF6E3B08D60F0913FE6 /* AppTests */,
 				6764C04A89AE36A9DCE6031A /* DeviceActivityMonitorExt */,
-				C35A77B20A53B0B50DFFEEC2 /* QuizLockWidgets */,
+				C35A77B20A53B0B50DFFEEC2 /* LockieWidgets */,
 				128589B9523C55E0101832D6 /* ScreenTimeReportExt */,
 				4AC94A1F58E4A06676D2D131 /* ScreenshotTests */,
 				D3E1081FF86FA5415BF291A0 /* ShieldActionExt */,
@@ -1173,7 +1173,7 @@
 				9BF18BEE635B5585655F19AF /* PuzzlesPerUnlockSheet.swift in Sources */,
 				8AE60BC1135A9D787B3F14DB /* PuzzlesView.swift in Sources */,
 				8D3A8E9593C967F9AA4C16DB /* QuizComponents.swift in Sources */,
-				4D384DD4D7492CC8E8C18166 /* QuizLockApp.swift in Sources */,
+				4D384DD4D7492CC8E8C18166 /* LockieApp.swift in Sources */,
 				030D5830DE45AF27233215B1 /* ReconnectView.swift in Sources */,
 				A34C60B593AD54E95D33EB84 /* Reminders.swift in Sources */,
 				4E5B70753943E0770210CDF1 /* RewardView.swift in Sources */,
@@ -1299,7 +1299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA71777A2CD2CABFECE0436D /* Brand.swift in Sources */,
-				B66E9DF682D408848BDADCFC /* QuizLockWidgets.swift in Sources */,
+				B66E9DF682D408848BDADCFC /* LockieWidgets.swift in Sources */,
 				B339EED38E13BDE5D0E581D4 /* Stats.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1334,7 +1334,7 @@
 		};
 		059E0E9F82B854912B8A1CD7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C35A77B20A53B0B50DFFEEC2 /* QuizLockWidgets */;
+			target = C35A77B20A53B0B50DFFEEC2 /* LockieWidgets */;
 			targetProxy = DD020044D551F494A60CEA4B /* PBXContainerItemProxy */;
 		};
 		08A895FB9ADC1EBE0047355B /* PBXTargetDependency */ = {
@@ -1371,7 +1371,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.tests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1463,7 +1463,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.DeviceActivityMonitor;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.DeviceActivityMonitor;
 				PRODUCT_NAME = DeviceActivityMonitorExt;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1483,7 +1483,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.ScreenTimeReport;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.ScreenTimeReport;
 				PRODUCT_NAME = ScreenTimeReportExt;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1503,7 +1503,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.ShieldConfiguration;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.ShieldConfiguration;
 				PRODUCT_NAME = ShieldConfigurationExt;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1523,7 +1523,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.ShieldConfiguration;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.ShieldConfiguration;
 				PRODUCT_NAME = ShieldConfigurationExt;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1535,15 +1535,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = Extensions/QuizLockWidgets/QuizLockWidgets.entitlements;
-				INFOPLIST_FILE = Extensions/QuizLockWidgets/Info.plist;
+				CODE_SIGN_ENTITLEMENTS = Extensions/LockieWidgets/LockieWidgets.entitlements;
+				INFOPLIST_FILE = Extensions/LockieWidgets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.Widgets;
-				PRODUCT_NAME = QuizLockWidgets;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.Widgets;
+				PRODUCT_NAME = LockieWidgets;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1562,7 +1562,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.DeviceActivityMonitor;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.DeviceActivityMonitor;
 				PRODUCT_NAME = DeviceActivityMonitorExt;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1574,15 +1574,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = Extensions/QuizLockWidgets/QuizLockWidgets.entitlements;
-				INFOPLIST_FILE = Extensions/QuizLockWidgets/Info.plist;
+				CODE_SIGN_ENTITLEMENTS = Extensions/LockieWidgets/LockieWidgets.entitlements;
+				INFOPLIST_FILE = Extensions/LockieWidgets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.Widgets;
-				PRODUCT_NAME = QuizLockWidgets;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.Widgets;
+				PRODUCT_NAME = LockieWidgets;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1601,7 +1601,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.ShieldAction;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.ShieldAction;
 				PRODUCT_NAME = ShieldActionExt;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1620,7 +1620,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.screenshots;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.screenshots;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = App;
@@ -1639,7 +1639,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.ScreenTimeReport;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.ScreenTimeReport;
 				PRODUCT_NAME = ScreenTimeReportExt;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1658,7 +1658,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.screenshots;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.screenshots;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = App;
@@ -1744,7 +1744,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.ShieldAction;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.ShieldAction;
 				PRODUCT_NAME = ShieldActionExt;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1764,8 +1764,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios;
-				PRODUCT_NAME = QuizLock;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios;
+				PRODUCT_NAME = Lockie;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1786,8 +1786,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios;
-				PRODUCT_NAME = QuizLock;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios;
+				PRODUCT_NAME = Lockie;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1807,7 +1807,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.quizlock.ios.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = app.lockie.ios.tests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1816,7 +1816,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1059662D6F8EA6BE52D04011 /* Build configuration list for PBXProject "QuizLock" */ = {
+		1059662D6F8EA6BE52D04011 /* Build configuration list for PBXProject "Lockie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2A868B6DF0ADFBB292BE0608 /* Debug */,
@@ -1861,7 +1861,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A33BD6AB418C2AB4FD8E7CC0 /* Build configuration list for PBXNativeTarget "QuizLockWidgets" */ = {
+		A33BD6AB418C2AB4FD8E7CC0 /* Build configuration list for PBXNativeTarget "LockieWidgets" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				774BE1553C5F22373D09F1E9 /* Debug */,

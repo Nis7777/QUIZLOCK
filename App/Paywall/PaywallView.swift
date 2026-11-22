@@ -1,7 +1,7 @@
 import StoreKit
 import SwiftUI
 
-/// QuizLock Pro paywall (auto-renewable subscriptions).
+/// Lockie Pro paywall (auto-renewable subscriptions).
 /// Main screen: yearly (pre-selected, free trial when eligible) or monthly → on close, the exit offer (shown once).
 /// Every screen shows price + period, "Auto-renews. Cancel anytime in Settings.", Restore Purchases,
 /// Terms of Use, Privacy Policy and a visible close button. Prices, periods and the trial come from StoreKit.

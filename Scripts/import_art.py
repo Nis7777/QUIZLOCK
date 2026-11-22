@@ -19,7 +19,7 @@ import struct
 import subprocess
 import zlib
 
-ROOT = os.environ.get("QUIZLOCK_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.environ.get("LOCKIE_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ART = os.path.join(ROOT, "ArtSource")
 XC = os.path.join(ROOT, "App", "Assets.xcassets")
 SHIELD_XC = os.path.join(ROOT, "Extensions", "ShieldConfigurationExt", "Assets.xcassets")

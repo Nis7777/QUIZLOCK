@@ -462,7 +462,7 @@ final class AppModel {
         screenTime.scheduleRelock(unlock)
         SharedStore.pendingUnlock = nil
         SharedStore.save(nil as UnlockSession?, .unlockSession)
-        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["quizlock.unlock"])
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["lockie.unlock"])
         let name = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? String(localized: "your app")
         Haptics.success()
         withAnimation(.easeInOut(duration: 0.3)) {

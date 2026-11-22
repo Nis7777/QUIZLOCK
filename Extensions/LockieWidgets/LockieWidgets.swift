@@ -125,7 +125,7 @@ struct StreakLockScreenWidget: Widget {
 }
 
 @main
-struct QuizLockWidgets: WidgetBundle {
+struct LockieWidgets: WidgetBundle {
     var body: some Widget {
         StreakWidget()
         StreakLockScreenWidget()

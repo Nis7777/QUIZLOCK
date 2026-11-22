@@ -116,7 +116,7 @@ struct CommitView: View {
             progress = 1
         }
         model.updateProfile { $0.committed = true }
-        // Confetti over the coral screen, then straight to "Setting up QuizLock…".
+        // Confetti over the coral screen, then straight to "Setting up Lockie…".
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 1_100_000_000)
             onCommitted()
@@ -124,7 +124,7 @@ struct CommitView: View {
     }
 }
 
-/// 7.2 "Setting up QuizLock…": a coral semicircle arc around a calm Lockie; 3 steps tick off (~3s).
+/// 7.2 "Setting up Lockie…": a coral semicircle arc around a calm Lockie; 3 steps tick off (~3s).
 struct SettingUpView: View {
     let onDone: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

@@ -18,7 +18,7 @@
                BlueprintIdentifier = "16CA00FC93035905536EEC7F"
                BuildableName = "App.app"
                BlueprintName = "App"
-               ReferencedContainer = "container:QuizLock.xcodeproj">
+               ReferencedContainer = "container:Lockie.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,10 +29,10 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4AC94A1F58E4A06676D2D131"
-               BuildableName = "ScreenshotTests.xctest"
-               BlueprintName = "ScreenshotTests"
-               ReferencedContainer = "container:QuizLock.xcodeproj">
+               BlueprintIdentifier = "68BD3FF6E3B08D60F0913FE6"
+               BuildableName = "AppTests.xctest"
+               BlueprintName = "AppTests"
+               ReferencedContainer = "container:Lockie.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
             BlueprintIdentifier = "16CA00FC93035905536EEC7F"
             BuildableName = "App.app"
             BlueprintName = "App"
-            ReferencedContainer = "container:QuizLock.xcodeproj">
+            ReferencedContainer = "container:Lockie.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -57,10 +57,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4AC94A1F58E4A06676D2D131"
-               BuildableName = "ScreenshotTests.xctest"
-               BlueprintName = "ScreenshotTests"
-               ReferencedContainer = "container:QuizLock.xcodeproj">
+               BlueprintIdentifier = "68BD3FF6E3B08D60F0913FE6"
+               BuildableName = "AppTests.xctest"
+               BlueprintName = "AppTests"
+               ReferencedContainer = "container:Lockie.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -84,9 +84,14 @@
             BlueprintIdentifier = "16CA00FC93035905536EEC7F"
             BuildableName = "App.app"
             BlueprintName = "App"
-            ReferencedContainer = "container:QuizLock.xcodeproj">
+            ReferencedContainer = "container:Lockie.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
+      <StoreKitConfigurationFileReference
+         identifier = "../../Products.storekit">
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -101,9 +106,11 @@
             BlueprintIdentifier = "16CA00FC93035905536EEC7F"
             BuildableName = "App.app"
             BlueprintName = "App"
-            ReferencedContainer = "container:QuizLock.xcodeproj">
+            ReferencedContainer = "container:Lockie.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

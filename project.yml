@@ -1,6 +1,6 @@
-name: QuizLock
+name: Lockie
 options:
-  bundleIdPrefix: app.quizlock
+  bundleIdPrefix: app.lockie
   deploymentTarget:
     iOS: "17.0"
   createIntermediateGroups: true
@@ -57,7 +57,7 @@ targets:
       - target: ShieldActionExt
       - target: DeviceActivityMonitorExt
       - target: ScreenTimeReportExt
-      - target: QuizLockWidgets
+      - target: LockieWidgets
       - sdk: FamilyControls.framework
       - sdk: ManagedSettings.framework
       - sdk: DeviceActivity.framework
@@ -69,7 +69,7 @@ targets:
     info:
       path: App/Info.plist
       properties:
-        CFBundleDisplayName: QuizLock
+        CFBundleDisplayName: Lockie
         CFBundleDevelopmentRegion: en
         CFBundleLocalizations:
           - en
@@ -88,21 +88,21 @@ targets:
         UIRequiresFullScreen: true
         UIStatusBarStyle: UIStatusBarStyleDefault
         CFBundleURLTypes:
-          - CFBundleURLName: app.quizlock.ios
+          - CFBundleURLName: app.lockie.ios
             CFBundleURLSchemes:
-              - quizlock
+              - lockie
     entitlements:
       path: App/App.entitlements
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.app.quizlock.ios
+          - group.app.lockie.ios
         # iCloud → Key-value storage (progress sync, no accounts). Needs iCloud enabled on the App ID.
         com.apple.developer.ubiquity-kvstore-identifier: $(TeamIdentifierPrefix)$(CFBundleIdentifier)
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios
-        PRODUCT_NAME: QuizLock
+        PRODUCT_BUNDLE_IDENTIFIER: app.lockie.ios
+        PRODUCT_NAME: Lockie
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         SUPPORTS_MACCATALYST: NO
@@ -118,7 +118,7 @@ targets:
     info:
       path: Extensions/ShieldConfigurationExt/Info.plist
       properties:
-        CFBundleDisplayName: QuizLock Shield
+        CFBundleDisplayName: Lockie Shield
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -129,10 +129,10 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.app.quizlock.ios
+          - group.app.lockie.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.ShieldConfiguration
+        PRODUCT_BUNDLE_IDENTIFIER: app.lockie.ios.ShieldConfiguration
         PRODUCT_NAME: ShieldConfigurationExt
 
   ShieldActionExt:
@@ -142,7 +142,7 @@ targets:
     info:
       path: Extensions/ShieldActionExt/Info.plist
       properties:
-        CFBundleDisplayName: QuizLock Shield Action
+        CFBundleDisplayName: Lockie Shield Action
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -153,10 +153,10 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.app.quizlock.ios
+          - group.app.lockie.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.ShieldAction
+        PRODUCT_BUNDLE_IDENTIFIER: app.lockie.ios.ShieldAction
         PRODUCT_NAME: ShieldActionExt
 
   DeviceActivityMonitorExt:
@@ -166,7 +166,7 @@ targets:
     info:
       path: Extensions/DeviceActivityMonitorExt/Info.plist
       properties:
-        CFBundleDisplayName: QuizLock Monitor
+        CFBundleDisplayName: Lockie Monitor
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -177,10 +177,10 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.app.quizlock.ios
+          - group.app.lockie.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.DeviceActivityMonitor
+        PRODUCT_BUNDLE_IDENTIFIER: app.lockie.ios.DeviceActivityMonitor
         PRODUCT_NAME: DeviceActivityMonitorExt
 
   ScreenTimeReportExt:
@@ -192,7 +192,7 @@ targets:
     info:
       path: Extensions/ScreenTimeReportExt/Info.plist
       properties:
-        CFBundleDisplayName: QuizLock Report
+        CFBundleDisplayName: Lockie Report
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -202,17 +202,17 @@ targets:
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.app.quizlock.ios
+          - group.app.lockie.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.ScreenTimeReport
+        PRODUCT_BUNDLE_IDENTIFIER: app.lockie.ios.ScreenTimeReport
         PRODUCT_NAME: ScreenTimeReportExt
 
-  QuizLockWidgets:
+  LockieWidgets:
     type: app-extension
     platform: iOS
     sources:
-      - path: Extensions/QuizLockWidgets
+      - path: Extensions/LockieWidgets
       - path: Shared/Brand.swift
       - path: Shared/Stats
       - path: Shared/Localizable.xcstrings
@@ -220,22 +220,22 @@ targets:
       - sdk: WidgetKit.framework
       - sdk: SwiftUI.framework
     info:
-      path: Extensions/QuizLockWidgets/Info.plist
+      path: Extensions/LockieWidgets/Info.plist
       properties:
-        CFBundleDisplayName: QuizLock
+        CFBundleDisplayName: Lockie
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: Extensions/QuizLockWidgets/QuizLockWidgets.entitlements
+      path: Extensions/LockieWidgets/LockieWidgets.entitlements
       properties:
         com.apple.security.application-groups:
-          - group.app.quizlock.ios
+          - group.app.lockie.ios
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.Widgets
-        PRODUCT_NAME: QuizLockWidgets
+        PRODUCT_BUNDLE_IDENTIFIER: app.lockie.ios.Widgets
+        PRODUCT_NAME: LockieWidgets
         APPLICATION_EXTENSION_API_ONLY: YES
         SKIP_INSTALL: YES
 
@@ -254,7 +254,7 @@ targets:
       path: Tests/Info.plist
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.tests
+        PRODUCT_BUNDLE_IDENTIFIER: app.lockie.ios.tests
         GENERATE_INFOPLIST_FILE: NO
 
   ScreenshotTests:
@@ -268,7 +268,7 @@ targets:
       path: UITests/Info.plist
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.quizlock.ios.screenshots
+        PRODUCT_BUNDLE_IDENTIFIER: app.lockie.ios.screenshots
         TEST_TARGET_NAME: App
         GENERATE_INFOPLIST_FILE: NO
 

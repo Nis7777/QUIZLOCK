@@ -4,7 +4,7 @@ Suggested answers. Expected result: **4+**.
 
 | Question | Answer |
 |---|---|
-| Parental controls | **No.** QuizLock uses FamilyControls *individual* authorization: people limit their own apps. It is not a parental-control app. |
+| Parental controls | **No.** Lockie uses FamilyControls *individual* authorization: people limit their own apps. It is not a parental-control app. |
 | Age assurance | No |
 | Unrestricted web access | **No.** The only web content is our own Terms and Privacy pages, shown in an in-app Safari sheet. |
 | User-generated content | No |

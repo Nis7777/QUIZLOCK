@@ -7,15 +7,15 @@ role in App Store Connect you can do the rest.
 
 - [ ] **[Holder]** Request **Family Controls (Distribution)** for **every** target that uses Screen Time.
       Submit the form once per bundle ID: https://developer.apple.com/contact/request/family-controls-distribution
-  - `app.quizlock.ios` (app)
-  - `app.quizlock.ios.ShieldConfiguration`
-  - `app.quizlock.ios.ShieldAction`
-  - `app.quizlock.ios.DeviceActivityMonitor`
-  - `app.quizlock.ios.ScreenTimeReport`
-  - (The widget, `app.quizlock.ios.Widgets`, doesn't use Family Controls.)
+  - `app.lockie.ios` (app)
+  - `app.lockie.ios.ShieldConfiguration`
+  - `app.lockie.ios.ShieldAction`
+  - `app.lockie.ios.DeviceActivityMonitor`
+  - `app.lockie.ios.ScreenTimeReport`
+  - (The widget, `app.lockie.ios.Widgets`, doesn't use Family Controls.)
 - [ ] Register all 6 bundle IDs (automatic signing in Xcode usually does this).
-- [ ] Register the App Group `group.app.quizlock.ios` and enable it on all 6 App IDs.
-- [ ] On the main App ID `app.quizlock.ios` **only**, enable **iCloud** (Key-value storage; no container
+- [ ] Register the App Group `group.app.lockie.ios` and enable it on all 6 App IDs.
+- [ ] On the main App ID `app.lockie.ios` **only**, enable **iCloud** (Key-value storage; no container
       needed). The app's entitlement `com.apple.developer.ubiquity-kvstore-identifier` is already in `project.yml`.
       In Xcode, **Signing & Capabilities** on the App target should then show **iCloud → Key-value storage**.
 - [ ] In Xcode, set the Team on all 6 targets (or put the Team ID in `DEVELOPMENT_TEAM` in `project.yml`).
@@ -26,31 +26,31 @@ role in App Store Connect you can do the rest.
 
 ## 3. App record (App Store Connect → Apps → +)
 
-- [ ] Platform iOS, name and subtitle from `metadata.md`, bundle ID `app.quizlock.ios`, SKU `quizlock-001`.
+- [ ] Platform iOS, name and subtitle from `metadata.md`, bundle ID `app.lockie.ios`, SKU `lockie-001`.
 - [ ] After creating it, copy the numeric **Apple ID** (App Information) into `Brand.appStoreID` in
-      `Shared/Brand.swift`. "Rate QuizLock" uses it.
+      `Shared/Brand.swift`. "Rate Lockie" uses it.
 - [ ] Category: **Productivity** (secondary: **Education**).
 - [ ] Localization: **English (U.S.)** only, with the texts from `metadata.md`.
-- [ ] Support URL: https://nis7777.github.io/QUIZLOCK/
-- [ ] Privacy Policy URL: https://nis7777.github.io/QUIZLOCK/privacy.html
-- [ ] Terms of Use: put https://nis7777.github.io/QUIZLOCK/terms.html in the description (already there).
+- [ ] Support URL: https://nis7777.github.io/lockie/
+- [ ] Privacy Policy URL: https://nis7777.github.io/lockie/privacy.html
+- [ ] Terms of Use: put https://nis7777.github.io/lockie/terms.html in the description (already there).
 
 ## 4. Subscriptions (App → Monetization → Subscriptions)
 
 No accounts: the subscription is tied to the Apple ID, and progress syncs through iCloud.
 
-- [ ] Create the subscription group **QuizLock Pro** (group display name "QuizLock Pro" in English).
+- [ ] Create the subscription group **Lockie Pro** (group display name "Lockie Pro" in English).
 - [ ] Create the 3 auto-renewable subscriptions in that group:
 
 | Reference name | Product ID | Duration | Price (USA) | Introductory offer |
 |---|---|---|---|---|
-| Pro Yearly | `app.quizlock.ios.pro.yearly` | 1 Year | $39.99 | **Free trial · 1 Week · New subscribers** |
-| Pro Monthly | `app.quizlock.ios.pro.monthly` | 1 Month | $9.99 | None |
-| Pro Yearly Offer | `app.quizlock.ios.pro.yearly.offer` | 1 Year | $29.99 | None |
+| Pro Yearly | `app.lockie.ios.pro.yearly` | 1 Year | $39.99 | **Free trial · 1 Week · New subscribers** |
+| Pro Monthly | `app.lockie.ios.pro.monthly` | 1 Month | $9.99 | None |
+| Pro Yearly Offer | `app.lockie.ios.pro.yearly.offer` | 1 Year | $29.99 | None |
 
 - [ ] Prices: set the USA price, let Apple fill in the other countries. The app always shows the StoreKit price, and
       computes "Save 67%" (yearly vs 12 × monthly) and "25% off" (offer vs yearly) from the real prices.
-- [ ] Display name + description for each, in English (e.g. "QuizLock Pro Yearly" / "Unlimited
+- [ ] Display name + description for each, in English (e.g. "Lockie Pro Yearly" / "Unlimited
       unlocks, all 4 puzzle games and the daily puzzle").
 - [ ] **Review screenshot** for each: the main paywall for Yearly and Monthly, the discount screen for the Offer.
 - [ ] Only on Pro Yearly: **Introductory Offers → (+)** → **Free**, **1 Week**, **New subscribers**, all countries.
@@ -80,7 +80,7 @@ No accounts: the subscription is tied to the Apple ID, and progress syncs throug
 - [ ] Test on a real iPhone: onboarding (tap-only, paywall right after Turn On Locks, closable, discount screen
       once), Screen Time permission, block screen, START PUZZLE → notification → puzzle → unlock → automatic
       re-lock, the "You've used your 5 free unlocks" card after 5 unlocks, the 7-day trial, monthly and the
-      offer (sandbox), Restore Purchases, Settings → QuizLock Pro (Active · renews…, Manage subscription),
+      offer (sandbox), Restore Purchases, Settings → Lockie Pro (Active · renews…, Manage subscription),
       iCloud restore on a second device ("Welcome back!"), Settings → Data → Reset all data, the lock
       schedule, strict mode and widgets.
 

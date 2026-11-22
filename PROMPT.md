@@ -5,18 +5,18 @@ You are building a native iOS app, ready for the App Store, in **Swift + SwiftUI
 ## CONFIG (use these values everywhere and keep them in one `Brand.swift` file)
 
 ```
-APP_NAME            = "QuizLock"                 // shown in UI wherever the spec says {APP_NAME}
-APP_NAME_CAPS       = "QUIZLOCK"                 // small tracked label on puzzle screens
+APP_NAME            = "Lockie"                 // shown in UI wherever the spec says {APP_NAME}
+APP_NAME_CAPS       = "LOCKIE"                 // small tracked label on puzzle screens
 TAGLINE             = "Get smarter before scrolling"
-BUNDLE_ID           = "app.quizlock.ios"
-APP_GROUP           = "group.app.quizlock.ios"
+BUNDLE_ID           = "app.lockie.ios"
+APP_GROUP           = "group.app.lockie.ios"
 SUPPORT_EMAIL       = "nismagina@gmail.com"
 TERMS_URL           = "https://example.com/terms"
 PRIVACY_URL         = "https://example.com/privacy"
-IAP_PRO_YEARLY      = "app.quizlock.ios.pro.yearly"         // $39.99/year, 7-day free trial (intro offer)
-IAP_PRO_MONTHLY     = "app.quizlock.ios.pro.monthly"        // $9.99/month, no trial
-IAP_PRO_OFFER       = "app.quizlock.ios.pro.yearly.offer"   // $29.99/year, exit offer only
-// All three are auto-renewable subscriptions in the group "QuizLock Pro".
+IAP_PRO_YEARLY      = "app.lockie.ios.pro.yearly"         // $39.99/year, 7-day free trial (intro offer)
+IAP_PRO_MONTHLY     = "app.lockie.ios.pro.monthly"        // $9.99/month, no trial
+IAP_PRO_OFFER       = "app.lockie.ios.pro.yearly.offer"   // $29.99/year, exit offer only
+// All three are auto-renewable subscriptions in the group "Lockie Pro".
 FREE_UNLOCKS        = 5
 MIN_IOS             = 17.0
 ```
@@ -30,7 +30,7 @@ MIN_IOS             = 17.0
   3. `ShieldActionExt`: a `ShieldActionDelegate` that handles the shield buttons.
   4. `DeviceActivityMonitorExt`: a `DeviceActivityMonitor` that re-locks apps when an unlock window ends.
 - Frameworks: FamilyControls, ManagedSettings, ManagedSettingsUI, DeviceActivity, StoreKit (StoreKit 2), UserNotifications.
-- Add a **StoreKit Configuration file** (`Products.storekit`) with the 3 subscriptions (group "QuizLock Pro", 7-day free trial on yearly), and set it on the Run scheme so purchases work in Xcode without App Store Connect.
+- Add a **StoreKit Configuration file** (`Products.storekit`) with the 3 subscriptions (group "Lockie Pro", 7-day free trial on yearly), and set it on the Run scheme so purchases work in Xcode without App Store Connect.
 - Shared code (models, persistence, game engines, `ManagedSettingsStore` helpers) goes in a `Shared/` folder compiled into every target that needs it. Persist shared state as Codable JSON in the App Group `UserDefaults(suiteName:)`.
 - Art: import every PNG from `ArtSource/` into `Assets.xcassets` using the file name as the asset name. `AppIcon.png` may not be exactly 1024×1024: resize it to 1024×1024 with `sips`, strip any alpha, and use it as the single-size App Icon. Also put a copy in the shield extension as `shield_icon`. If an image is missing, show a neutral rounded placeholder (a light grey fill with an SF Symbol). Never crash.
 - Bundle the files in `Resources/` (`wordle_allowed.txt`, `wordle_answers.txt`, and `chess_puzzles.json`, which you'll generate in section 5) with the App target.
@@ -122,7 +122,7 @@ On success go to S06.
   - Red text: "You can add apps later in Settings." (switch to "You can update this later in Settings." once apps are selected).
   - Primary "Continue".
 
-**S11 Choose your puzzle reward**: a 3-step indicator. A 100pt pink rounded square holding a red timer icon (`timer`). Title "Choose your\npuzzle reward". Subtitle "Choose how long your apps stay unlocked after you solve a puzzle." Small print: "Your first 5 app unlocks are free. After that, unlimited unlocks and standalone puzzle practice need QuizLock Pro, an optional subscription." A pink pill reads "■ 2 apps selected", with the real count of apps + categories. Radio cards: **5 minutes**, **15 minutes** (default), **For Today**, and **Custom** in brand with a `plus.circle` icon. Custom opens a sheet titled "Set unlock time" with Cancel and Save pills and a wheel picker for hours (0–23) and min (0–59), styled like the iOS timer picker. Below the cards: "You can change your puzzle reward later in Settings." and a red "Change apps" link back to S10. Primary button "Turn On Locks ✓". On tap, apply the shield (section 4), request notification permission, and go to S12.
+**S11 Choose your puzzle reward**: a 3-step indicator. A 100pt pink rounded square holding a red timer icon (`timer`). Title "Choose your\npuzzle reward". Subtitle "Choose how long your apps stay unlocked after you solve a puzzle." Small print: "Your first 5 app unlocks are free. After that, unlimited unlocks and standalone puzzle practice need Lockie Pro, an optional subscription." A pink pill reads "■ 2 apps selected", with the real count of apps + categories. Radio cards: **5 minutes**, **15 minutes** (default), **For Today**, and **Custom** in brand with a `plus.circle` icon. Custom opens a sheet titled "Set unlock time" with Cancel and Save pills and a wheel picker for hours (0–23) and min (0–59), styled like the iOS timer picker. Below the cards: "You can change your puzzle reward later in Settings." and a red "Change apps" link back to S10. Primary button "Turn On Locks ✓". On tap, apply the shield (section 4), request notification permission, and go to S12.
 
 **S12 Paywall (once, right after onboarding)**: see section 6. Closing it lands on the dashboard with the "You're all set" banner.
 
@@ -142,7 +142,7 @@ Scrolling list on bg, top to bottom:
   - Red `shuffle`, "Unlock puzzles", subtitle listing the enabled game names ("Chess, Word"), trailing "2 selected". Opens the **Unlock puzzles** sheet.
   - Footer: "Your puzzles take turns in a shuffled order."
 - Section "Appearance": two side-by-side selectable cards, each with a mini drawing of the UI. "Classic · Light & coral" (selected: red border and red check) and "Dark · Black & white". Footer: "Puzzle boards keep their original colors."
-- A "QuizLock Pro" card. Not subscribed: "X of 5 free unlocks left · Start free trial" and a chevron that opens the paywall. Subscribed: "Active · renews {date}" plus "Manage subscription" (`AppStore.showManageSubscriptions`).
+- A "Lockie Pro" card. Not subscribed: "X of 5 free unlocks left · Start free trial" and a chevron that opens the paywall. Subscribed: "Active · renews {date}" plus "Manage subscription" (`AppStore.showManageSubscriptions`).
 - Section "Analytics": a card with "Share app analytics" and an off toggle. Body: "Help improve {APP_NAME} with anonymous analytics, including purchases, changes to your selected puzzles, and puzzle starts/completions during app unlocks. App identities, Screen Time reports, unlock times and typed answers stay on-device. Optional; turn off anytime." Only store the setting. Don't add any analytics SDK; leave a `// TODO: analytics` hook.
 - Section "Ad measurement": a card with "Share ad measurement" and an off toggle. Body: "Optionally share app opens and purchases to measure our ads. Protected apps, Screen Time activity and puzzle data are never included. Turning this off stops future events; it doesn't delete data already sent." Then a red link "Manage Apple tracking permission" that opens the app's page in Settings. Store the setting only.
 - A footer card with the "Terms of Service" and "Privacy Policy" links, plus the Credits line.
@@ -194,7 +194,7 @@ Scrolling list on bg, top to bottom:
   - A **Difficulty** segmented control (Easy / Medium / Hard; default Easy). For Sudoku it is Quick 6×6 / Easy / Medium / Hard.
   - An expandable red "How to play ⌄" section with short rules.
   - A pinned bottom bar holding "Use for unlocks" with its toggle and "Try ›".
-- **Try** (practice mode) is free for the onboarding demo only. Otherwise it needs QuizLock Pro and opens the paywall if the user doesn't have it.
+- **Try** (practice mode) is free for the onboarding demo only. Otherwise it needs Lockie Pro and opens the paywall if the user doesn't have it.
 
 ### Feedback tab
 - A centred nav title "Feedback".
@@ -216,13 +216,13 @@ Scrolling list on bg, top to bottom:
 - **Locking**: a named `ManagedSettingsStore(named: .init("main"))`. Set `shield.applications` to the enabled app tokens and `shield.applicationCategories = .specific(enabledCategoryTokens)`. The master toggle off clears the shield. Per-app toggles add or remove single tokens.
 - **Shield UI** (`ShieldConfigurationExt`): white background, our puzzle-padlock icon (bundle a copy of the app-icon artwork as `shield_icon`, or use `lock.fill` tinted coral), title "Solve a puzzle to unlock the app", subtitle "{app name} is locked by {APP_NAME}", a brand primary button with the label "START PUZZLE" and the secondary label "NOT NOW". Do this for applications, categories and web domains.
 - **Shield action** (`ShieldActionExt`):
-  - Primary: write the blocked token and a timestamp to the App Group as `pendingUnlock`. Then post an immediate local notification: "Tap to start your puzzle 🧩" / "Solve {N} puzzle(s) to unlock {app}", with the userInfo deep link `quizlock://unlock`. Return `.defer`. (A shield extension can't open the host app directly; the notification is how you get there.)
+  - Primary: write the blocked token and a timestamp to the App Group as `pendingUnlock`. Then post an immediate local notification: "Tap to start your puzzle 🧩" / "Solve {N} puzzle(s) to unlock {app}", with the userInfo deep link `lockie://unlock`. Return `.defer`. (A shield extension can't open the host app directly; the notification is how you get there.)
   - Secondary: return `.close`.
 - **Unlock flow** (main app): opening via that notification or deep link, or launching while `pendingUnlock` is set, presents the full-screen **Unlock puzzle** (the S05 chrome without "PRACTICE", plus a progress line "1 of N").
   - It picks games round-robin, in shuffled order, from the enabled games at each game's chosen difficulty.
   - The user must solve **N puzzles** (Puzzles per unlock). Progress, including the half-finished puzzle state, persists if they leave.
   - On success:
-    1. Check entitlement. If the user has no active QuizLock Pro subscription and `freeUnlocksUsed >= FREE_UNLOCKS`, show the "You've used your 5 free unlocks" card (which opens the paywall) instead of unlocking. Otherwise increment `freeUnlocksUsed` (unless Pro).
+    1. Check entitlement. If the user has no active Lockie Pro subscription and `freeUnlocksUsed >= FREE_UNLOCKS`, show the "You've used your 5 free unlocks" card (which opens the paywall) instead of unlocking. Otherwise increment `freeUnlocksUsed` (unless Pro).
     2. Remove that token from the shield.
     3. Schedule the re-lock: `DeviceActivityCenter().startMonitoring(DeviceActivityName("unlock.<id>"), during: schedule)`. **DeviceActivity needs schedules of at least 15 minutes**, so for shorter unlocks set `intervalStart = now − (15min − duration)` and `intervalEnd = now + duration`. "For Today" ends at 23:59:59. Custom uses the chosen h/m.
     4. Show the S06-style screen "You unlocked the app!" with the open-lock icon and the line "Go back to {app} — it's unlocked for 15 minutes."
@@ -323,7 +323,7 @@ Never call it "Wordle" anywhere in the UI or metadata; Wordle is a New York Time
 
 ## 6. Paywall (StoreKit 2, auto-renewable subscriptions)
 
-Subscription group "QuizLock Pro" with IAP_PRO_YEARLY (pre-selected, 7-day free trial for new subscribers), IAP_PRO_MONTHLY and IAP_PRO_OFFER.
+Subscription group "Lockie Pro" with IAP_PRO_YEARLY (pre-selected, 7-day free trial for new subscribers), IAP_PRO_MONTHLY and IAP_PRO_OFFER.
 
 **Main screen**: the mascot at the top, the headline ("Your plan is ready, {name}" after onboarding), two plan cards (Yearly with the badge "BEST VALUE · {yearly ÷ 12}/month · Save {x}%", and Monthly), 3 benefit rows with icons ("Unlimited unlocks", "All 4 puzzle games + daily puzzle", "Streaks, stats and widgets"), and, for the trial, a timeline "Today: full access" → "Day 5: we'll remind you" → "Day 7: you're billed {price}/year, cancel anytime before". The button reads "Start 7-day free trial" with "then {price}/year" under it, or "Subscribe for {price}/month" for monthly (and "Subscribe for {price}/year" when the user isn't eligible for the trial).
 

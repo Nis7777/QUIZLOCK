@@ -3,7 +3,7 @@
 # Works on macOS or Linux (e.g. `docker run --rm -v "$PWD":/src -w /src swift:6.0-noble Scripts/test_engines_linux.sh`).
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PKG="${TMPDIR:-/tmp}/quizlock-engine-pkg"
+PKG="${TMPDIR:-/tmp}/lockie-engine-pkg"
 rm -rf "$PKG"
 mkdir -p "$PKG/Sources/Engine" "$PKG/Tests/EngineTests"
 for f in "$ROOT"/Shared/Engine/*.swift "$ROOT"/Shared/Stats/*.swift "$ROOT"/Shared/Schedule/*.swift "$ROOT"/Shared/Brand.swift; do ln -s "$f" "$PKG/Sources/Engine/"; done

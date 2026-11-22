@@ -3,7 +3,7 @@ import Observation
 import StoreKit
 import UserNotifications
 
-/// StoreKit 2 subscriptions (group "QuizLock Pro"). Pro = an active, verified, non-revoked subscription in the group.
+/// StoreKit 2 subscriptions (group "Lockie Pro"). Pro = an active, verified, non-revoked subscription in the group.
 /// Prices, periods and the free trial always come from StoreKit; nothing here is hard-coded.
 @Observable
 @MainActor

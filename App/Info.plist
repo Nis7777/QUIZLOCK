@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>QuizLock</string>
+	<string>Lockie</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,10 +26,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>app.quizlock.ios</string>
+			<string>app.lockie.ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>quizlock</string>
+				<string>lockie</string>
 			</array>
 		</dict>
 	</array>

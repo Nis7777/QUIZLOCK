@@ -3,7 +3,7 @@ import ExtensionKit
 import ManagedSettings
 import SwiftUI
 
-// Renders on-device Screen Time numbers inside QuizLock's "Today" card. By Apple's design this
+// Renders on-device Screen Time numbers inside Lockie's "Today" card. By Apple's design this
 // extension runs in a sandbox with no network access, and the data never reaches the app itself.
 
 extension DeviceActivityReport.Context {

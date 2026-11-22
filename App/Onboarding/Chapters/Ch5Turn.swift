@@ -77,7 +77,7 @@ struct RealityCheckView: View {
     }
 }
 
-/// 5.3 "With QuizLock, you could get back Y years." (Y = 50% of X). Counts up in coral, the bar grows in
+/// 5.3 "With Lockie, you could get back Y years." (Y = 50% of X). Counts up in coral, the bar grows in
 /// sync, and light confetti lands with the number.
 struct GetBackView: View {
     let onContinue: () -> Void

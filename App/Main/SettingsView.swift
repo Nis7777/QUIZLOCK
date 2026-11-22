@@ -460,7 +460,7 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: QuizLock Pro
+    // MARK: Lockie Pro
 
     private var proCard: some View {
         VStack(alignment: .leading, spacing: 12) {

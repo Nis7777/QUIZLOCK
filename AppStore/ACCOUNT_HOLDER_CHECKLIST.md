@@ -22,23 +22,23 @@ Go to developer.apple.com/app-store/small-business-program → **Enroll**. Apple
 ### ☐ 4. Create the App Group
 1. Go to developer.apple.com/account → **Certificates, Identifiers & Profiles → Identifiers → (+)**.
 2. Choose **App Groups → Continue**.
-3. Description: `QuizLock Group`. Identifier: `group.app.quizlock.ios` → **Register**.
+3. Description: `Lockie Group`. Identifier: `group.app.lockie.ios` → **Register**.
 
 ### ☐ 5. Register the 6 bundle IDs
 For each one: **Identifiers → (+) → App IDs → App → Continue**, choose **Explicit**, paste the Bundle ID, tick the capabilities shown, then **Continue → Register**.
 
 | # | Bundle ID (copy exactly) | Description | Family Controls | App Groups |
 |---|---|---|---|---|
-| 1 | `app.quizlock.ios` | QuizLock App | ✅ | ✅ |
-| 2 | `app.quizlock.ios.ShieldConfiguration` | QuizLock Shield | ✅ | ✅ |
-| 3 | `app.quizlock.ios.ShieldAction` | QuizLock Shield Action | ✅ | ✅ |
-| 4 | `app.quizlock.ios.DeviceActivityMonitor` | QuizLock Monitor | ✅ | ✅ |
-| 5 | `app.quizlock.ios.ScreenTimeReport` | QuizLock Report | ✅ | ✅ |
-| 6 | `app.quizlock.ios.Widgets` | QuizLock Widgets | ❌ | ✅ |
+| 1 | `app.lockie.ios` | Lockie App | ✅ | ✅ |
+| 2 | `app.lockie.ios.ShieldConfiguration` | Lockie Shield | ✅ | ✅ |
+| 3 | `app.lockie.ios.ShieldAction` | Lockie Shield Action | ✅ | ✅ |
+| 4 | `app.lockie.ios.DeviceActivityMonitor` | Lockie Monitor | ✅ | ✅ |
+| 5 | `app.lockie.ios.ScreenTimeReport` | Lockie Report | ✅ | ✅ |
+| 6 | `app.lockie.ios.Widgets` | Lockie Widgets | ❌ | ✅ |
 
-On the main app ID (`app.quizlock.ios`) **only**, also tick **iCloud** (it's used for key-value storage, which syncs streaks and stats; no container needed).
+On the main app ID (`app.lockie.ios`) **only**, also tick **iCloud** (it's used for key-value storage, which syncs streaks and stats; no container needed).
 
-After registering each one, open it → next to **App Groups** click **Configure** → tick `group.app.quizlock.ios` → **Save**.
+After registering each one, open it → next to **App Groups** click **Configure** → tick `group.app.lockie.ios` → **Save**.
 
 ⚠️ **Never change these IDs after this step.** Apple's approval is tied to them.
 
@@ -52,22 +52,22 @@ After registering each one, open it → next to **App Groups** click **Configure
 
 ### ☐ 7. Create the app
 1. App Store Connect → **Apps → (+) → New App**.
-2. Platform **iOS**, Name **QuizLock**, Primary language **English (U.S.)**.
-3. Bundle ID `app.quizlock.ios`, SKU `quizlock001`, User Access **Full Access** → **Create**.
+2. Platform **iOS**, Name **Lockie**, Primary language **English (U.S.)**.
+3. Bundle ID `app.lockie.ios`, SKU `lockie001`, User Access **Full Access** → **Create**.
 4. Open **App Information**, copy the **Apple ID** number, and send it to Dinis (it goes into the app's "Rate" button).
 
 ### ☐ 8. Create the subscription group
 1. In the app → **Monetization → Subscriptions → Create** a subscription group.
-2. Reference name: **QuizLock Pro**.
-3. Add a group localization: English (U.S.), display name **QuizLock Pro**.
+2. Reference name: **Lockie Pro**.
+3. Add a group localization: English (U.S.), display name **Lockie Pro**.
 
 ### ☐ 9. Create the 3 subscriptions inside that group
 
 | Reference name | Product ID (copy exactly) | Duration | Price (USA) | Introductory offer |
 |---|---|---|---|---|
-| Pro Yearly | `app.quizlock.ios.pro.yearly` | 1 Year | $39.99 | Free · 1 Week · New subscribers |
-| Pro Monthly | `app.quizlock.ios.pro.monthly` | 1 Month | $9.99 | None |
-| Pro Yearly Offer | `app.quizlock.ios.pro.yearly.offer` | 1 Year | $29.99 | None |
+| Pro Yearly | `app.lockie.ios.pro.yearly` | 1 Year | $39.99 | Free · 1 Week · New subscribers |
+| Pro Monthly | `app.lockie.ios.pro.monthly` | 1 Month | $9.99 | None |
+| Pro Yearly Offer | `app.lockie.ios.pro.yearly.offer` | 1 Year | $29.99 | None |
 
 For each subscription:
 1. **Subscription Prices → Add pricing**: set the USA price and let Apple fill in the other countries automatically.
@@ -76,9 +76,9 @@ For each subscription:
 4. Only on **Pro Yearly**: **Introductory Offers → (+)**, type **Free**, duration **1 Week**, eligibility **New subscribers**, all countries.
 
 ### ☐ 10. Fill in the app information
-- **Privacy Policy URL:** https://nis7777.github.io/QUIZLOCK/privacy.html
-- **Support URL:** https://nis7777.github.io/QUIZLOCK/
-- **Terms of Use:** add the line `Terms of Use: https://nis7777.github.io/QUIZLOCK/terms.html` at the end of the description. Apple requires it for subscriptions.
+- **Privacy Policy URL:** https://nis7777.github.io/lockie/privacy.html
+- **Support URL:** https://nis7777.github.io/lockie/
+- **Terms of Use:** add the line `Terms of Use: https://nis7777.github.io/lockie/terms.html` at the end of the description. Apple requires it for subscriptions.
 - **Category:** Primary **Productivity**, Secondary **Education**.
 - **App Privacy:** **Data Not Collected** (answers in `AppStore/privacy_labels.md`).
 - **Age Rating:** answer using `AppStore/age_rating.md`.

@@ -12,7 +12,7 @@ struct AppSettings: Codable, Equatable {
     var analyticsEnabled = false
     var adMeasurementEnabled = false
     var freeUnlocksUsed = 0
-    /// Cached "QuizLock Pro" entitlement (StoreKit is the source of truth; refreshed on launch and on Transaction.updates).
+    /// Cached "Lockie Pro" entitlement (StoreKit is the source of truth; refreshed on launch and on Transaction.updates).
     var isPro = false
     /// The exit offer has been shown (it appears once, when the main paywall is closed).
     var exitOfferShown = false

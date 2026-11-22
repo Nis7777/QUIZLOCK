@@ -1,4 +1,4 @@
-# QuizLock motion & feel spec ("premium, like Duolingo / Opal")
+# Lockie motion & feel spec ("premium, like Duolingo / Opal")
 
 Apply this to the WHOLE app, and especially to onboarding and the paywall. Native SwiftUI only (iOS 17+): no third-party animation libraries.
 

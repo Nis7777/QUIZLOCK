@@ -59,7 +59,7 @@ final class ShieldActionExtension: ShieldActionDelegate {
         content.body = String(localized: "Solve \(n) puzzles to unlock \(appName ?? String(localized: "your app"))")
         content.sound = .default
         content.userInfo = ["deeplink": Brand.unlockDeepLink.absoluteString]
-        let request = UNNotificationRequest(identifier: "quizlock.unlock", content: content, trigger: nil)
+        let request = UNNotificationRequest(identifier: "lockie.unlock", content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request) { _ in done() }
     }
 }

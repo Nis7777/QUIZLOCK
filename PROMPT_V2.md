@@ -1,4 +1,4 @@
-# QuizLock v2: App Store compliance, longer onboarding, retention
+# Lockie v2: App Store compliance, longer onboarding, retention
 
 Work through the parts below in order. Keep the existing design system (coral #FF5A36, our 3D art, the floating tab bar). Every new screen must look like it belongs to the current app. Commit after each part with a clear message, and push.
 
@@ -20,7 +20,7 @@ Work through the parts below in order. Keep the existing design system (coral #F
 6. **Settings additions:**
    - "Restore Purchases".
    - "Contact support" (mail).
-   - "Rate QuizLock" (opens `itms-apps://itunes.apple.com/app/idAPP_ID?action=write-review`, with APP_ID as a constant in Brand.swift).
+   - "Rate Lockie" (opens `itms-apps://itunes.apple.com/app/idAPP_ID?action=write-review`, with APP_ID as a constant in Brand.swift).
    - App version and build at the bottom.
 7. **Accessibility pass:**
    - Dynamic Type on all text, minimum 44pt tap targets, VoiceOver labels on every icon button and game cell.
@@ -58,7 +58,7 @@ Store all answers in a `UserProfile` model (App Group, Codable). Use them later 
 9. **The reality check:**
    - Big number: "You're on track to spend **X years** of your life on your phone."
    - Compute X = (dailyHours / 24) × (80 − midpoint of the age range), rounded to 1 decimal. Use midpoints 1.5 / 3.5 / 5.5 / 7.5 hours for the screen-time ranges, and 4h for "I don't know".
-   - Show a simple bar comparing that number with "with QuizLock", calculated as 50% less, plus a small footnote: "Estimate based on your answers."
+   - Show a simple bar comparing that number with "with Lockie", calculated as 50% less, plus a small footnote: "Estimate based on your answers."
 10. **Your plan:** a personalised summary card:
     - The name.
     - The goal.

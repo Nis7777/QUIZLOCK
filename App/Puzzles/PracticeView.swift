@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Standalone practice ("Try") from the Puzzles tab. Requires QuizLock Pro.
+/// Standalone practice ("Try") from the Puzzles tab. Requires Lockie Pro.
 struct PracticeView: View {
     let game: GameID
     @Environment(AppModel.self) private var model

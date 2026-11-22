@@ -3,7 +3,7 @@ import UIKit
 import UserNotifications
 
 @main
-struct QuizLockApp: App {
+struct LockieApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var model = AppModel.shared
 

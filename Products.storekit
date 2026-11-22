@@ -22,11 +22,11 @@
       "localizations" : [
         {
           "description" : "",
-          "displayName" : "QuizLock Pro",
+          "displayName" : "Lockie Pro",
           "locale" : "en_US"
         }
       ],
-      "name" : "QuizLock Pro",
+      "name" : "Lockie Pro",
       "subscriptions" : [
         {
           "adHocOffers" : [
@@ -48,13 +48,13 @@
           "localizations" : [
             {
               "description" : "Unlimited puzzle unlocks, all 4 games, daily puzzle, streaks and stats.",
-              "displayName" : "QuizLock Pro Yearly",
+              "displayName" : "Lockie Pro Yearly",
               "locale" : "en_US"
             }
           ],
-          "productID" : "app.quizlock.ios.pro.yearly",
+          "productID" : "app.lockie.ios.pro.yearly",
           "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "QuizLock Pro Yearly",
+          "referenceName" : "Lockie Pro Yearly",
           "subscriptionGroupID" : "21500001",
           "type" : "RecurringSubscription",
           "winbackOffers" : [
@@ -74,14 +74,14 @@
           "internalID" : "6740000013",
           "localizations" : [
             {
-              "description" : "QuizLock Pro yearly at a special price.",
-              "displayName" : "QuizLock Pro Yearly (Offer)",
+              "description" : "Lockie Pro yearly at a special price.",
+              "displayName" : "Lockie Pro Yearly (Offer)",
               "locale" : "en_US"
             }
           ],
-          "productID" : "app.quizlock.ios.pro.yearly.offer",
+          "productID" : "app.lockie.ios.pro.yearly.offer",
           "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "QuizLock Pro Yearly Offer",
+          "referenceName" : "Lockie Pro Yearly Offer",
           "subscriptionGroupID" : "21500001",
           "type" : "RecurringSubscription",
           "winbackOffers" : [
@@ -102,13 +102,13 @@
           "localizations" : [
             {
               "description" : "Unlimited puzzle unlocks, all 4 games, daily puzzle, streaks and stats.",
-              "displayName" : "QuizLock Pro Monthly",
+              "displayName" : "Lockie Pro Monthly",
               "locale" : "en_US"
             }
           ],
-          "productID" : "app.quizlock.ios.pro.monthly",
+          "productID" : "app.lockie.ios.pro.monthly",
           "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "QuizLock Pro Monthly",
+          "referenceName" : "Lockie Pro Monthly",
           "subscriptionGroupID" : "21500001",
           "type" : "RecurringSubscription",
           "winbackOffers" : [
