@@ -189,6 +189,11 @@ targets:
 
   ScreenTimeReportExt:
     templates: [ScreenTimeExtension]
+    # A DeviceActivityReport extension is an ExtensionKit extension: it must be this product type, declare
+    # EXAppExtensionAttributes (not NSExtension) and be embedded in the app's Extensions folder ("Embed
+    # ExtensionKit Extensions"). Packaged as a classic app extension, iOS never finds it and the Today
+    # card's report stays blank.
+    type: extensionkit-extension
     sources:
       - path: Extensions/ScreenTimeReportExt
     dependencies:
@@ -199,8 +204,8 @@ targets:
         CFBundleDisplayName: Lockie Report
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        NSExtension:
-          NSExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
+        EXAppExtensionAttributes:
+          EXExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
     entitlements:
       path: Extensions/ScreenTimeReportExt/ScreenTimeReportExt.entitlements
       properties:

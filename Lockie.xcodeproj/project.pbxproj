@@ -186,7 +186,7 @@
 		E71533903512DB0EAB44402D /* Ch1Hello.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8E83C811C218D80AA7DC0C /* Ch1Hello.swift */; };
 		E7E16A9C504F317683887171 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746D1999B82FEED1CD0EE00F /* SharedStore.swift */; };
 		E87F558ADF6531FA57C4EEC5 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5821E11222B9806E0CD16AF /* ManagedSettings.framework */; };
-		E8A638B5E475EBE8FE2747EF /* ScreenTimeReportExt.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0998D58663EBF550639FF944 /* ScreenTimeReportExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E8A638B5E475EBE8FE2747EF /* ScreenTimeReportExt.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 0998D58663EBF550639FF944 /* ScreenTimeReportExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E93CD83763071ADBFF01BA08 /* MathEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC57A15E2DAEF602A2FCB8B /* MathEngine.swift */; };
 		EA60488277A10F4E26579858 /* Confetti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CD60094F80C1855F95D99B /* Confetti.swift */; };
 		EB1A0F33EEA58FF62CB119DF /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093711BBE2071903D93DA040 /* DemoData.swift */; };
@@ -264,10 +264,20 @@
 				DA20D93079BF333F59887FB3 /* ShieldConfigurationExt.appex in Embed Foundation Extensions */,
 				AFC73B64EBCAEDA67FADD616 /* ShieldActionExt.appex in Embed Foundation Extensions */,
 				422F982CC0C3BFBE6AF4D17A /* DeviceActivityMonitorExt.appex in Embed Foundation Extensions */,
-				E8A638B5E475EBE8FE2747EF /* ScreenTimeReportExt.appex in Embed Foundation Extensions */,
 				921DA35C693E955FACF8309C /* LockieWidgets.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BCB20C65B2D898D814A5D1A /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				E8A638B5E475EBE8FE2747EF /* ScreenTimeReportExt.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -278,7 +288,7 @@
 		07056E1B594209E299DF4215 /* ChessPuzzles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPuzzles.swift; sourceTree = "<group>"; };
 		08D2DA7F7D00169560E8862E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		093711BBE2071903D93DA040 /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
-		0998D58663EBF550639FF944 /* ScreenTimeReportExt.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ScreenTimeReportExt.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0998D58663EBF550639FF944 /* ScreenTimeReportExt.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = ScreenTimeReportExt.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		09D821904A525DAB8F908D9B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0B868449421EA47649272F99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C95E927A784D59BE4CFBD9D /* ReconnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectView.swift; sourceTree = "<group>"; };
@@ -855,7 +865,7 @@
 			name = ScreenTimeReportExt;
 			productName = ScreenTimeReportExt;
 			productReference = 0998D58663EBF550639FF944 /* ScreenTimeReportExt.appex */;
-			productType = "com.apple.product-type.app-extension";
+			productType = "com.apple.product-type.extensionkit-extension";
 		};
 		16CA00FC93035905536EEC7F /* App */ = {
 			isa = PBXNativeTarget;
@@ -865,6 +875,7 @@
 				2FB9C0D43068D0A85A44E026 /* Resources */,
 				73E6E6B67A9C07736D691D32 /* Frameworks */,
 				670797A8D10D395FACF9812B /* Embed Foundation Extensions */,
+				0BCB20C65B2D898D814A5D1A /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
