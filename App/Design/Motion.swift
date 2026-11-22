@@ -1,16 +1,36 @@
 import SwiftUI
 
-/// Motion tokens (MOTION.md). Use only these for animation.
+/// Motion tokens (MOTION.md). Use only these for animation, so every screen moves the same way.
 enum Motion {
     static let snappy = Animation.spring(response: 0.32, dampingFraction: 0.82) // taps, toggles, selections
     static let smooth = Animation.spring(response: 0.45, dampingFraction: 0.86) // screen content, cards
-    static let bouncy = Animation.spring(response: 0.50, dampingFraction: 0.62) // celebrations, mascot, success
+    static let bouncy = Animation.spring(response: 0.50, dampingFraction: 0.62) // celebrations, success
     static let gentle = Animation.spring(response: 0.70, dampingFraction: 0.90) // big layout changes, paywall
-    static let stagger: Double = 0.06                                              // delay between list items
+    /// Lockie moving and resizing between screens.
+    static let mascot = Animation.spring(response: 0.50, dampingFraction: 0.80)
+    /// Something landing with a tiny bounce (the rating Lockie, a chat reply settling).
+    static let landing = Animation.spring(response: 0.55, dampingFraction: 0.75)
+    /// Backgrounds that cross-fade (the coral sky).
+    static let backdrop = Animation.easeInOut(duration: 0.35)
+    /// Every onboarding step: the same push (40pt + fade), on `smooth`.
+    static let stepShift: CGFloat = 40
+    /// Delay between staggered items (title → subtitle → button).
+    static let stagger: Double = 0.08
+    /// How far staggered items rise as they fade in.
+    static let staggerRise: CGFloat = 12
 
     /// `animation`, or a quick fade when Reduce Motion is on.
     static func respecting(_ reduceMotion: Bool, _ animation: Animation) -> Animation {
         reduceMotion ? .easeOut(duration: 0.2) : animation
+    }
+
+    /// The one onboarding step transition: a push in the direction of travel, with a fade.
+    /// Reduce Motion: a plain cross-fade.
+    static func stepTransition(forward: Bool, reduceMotion: Bool) -> AnyTransition {
+        if reduceMotion { return .opacity }
+        let dx = forward ? stepShift : -stepShift
+        return .asymmetric(insertion: .offset(x: dx).combined(with: .opacity),
+                           removal: .offset(x: -dx).combined(with: .opacity))
     }
 }
 
@@ -29,7 +49,8 @@ struct PressableButtonStyle: ButtonStyle {
 
 // MARK: - Staggered appear
 
-/// Starts at opacity 0, y +18, blur 4, then springs in after `index × Motion.stagger`.
+/// Starts at opacity 0 and 12pt low, then rises in with Motion.smooth after `index × 80ms`.
+/// Transform + opacity only (no blur: blurs force an offscreen pass every frame and cause hitches).
 /// With Reduce Motion: a plain fade.
 struct StaggeredAppear: ViewModifier {
     let index: Int
@@ -40,8 +61,7 @@ struct StaggeredAppear: ViewModifier {
     func body(content: Content) -> some View {
         content
             .opacity(shown ? 1 : 0)
-            .offset(y: shown || reduceMotion ? 0 : 18)
-            .blur(radius: shown || reduceMotion ? 0 : 4)
+            .offset(y: shown || reduceMotion ? 0 : Motion.staggerRise)
             .onAppear {
                 let delay = baseDelay + Double(index) * Motion.stagger
                 withAnimation(Motion.respecting(reduceMotion, Motion.smooth).delay(delay)) { shown = true }

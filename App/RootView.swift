@@ -9,7 +9,8 @@ struct RootView: View {
     private enum IntroStage { case playing, revealing, done }
     private static var skipsIntro: Bool {
         let args = ProcessInfo.processInfo.arguments
-        return args.contains("-uiTestFreshInstall") || args.contains("-demoData")
+        // Also skipped when a puzzle is waiting: Lockie opens straight into it.
+        return args.contains("-uiTestFreshInstall") || args.contains("-demoData") || PendingPuzzleNote.current() != nil
     }
 
     var body: some View {

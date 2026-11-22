@@ -95,3 +95,18 @@ Delete any `.easeInOut`, `.linear` or fixed `withAnimation(.default)` in the app
 - **Every number** lives in `MascotTuning`. Helpers (`MascotMath`) come from rossark-motion-skill's Motion.swift.
 - One `TimelineView` per Lockie, paused off screen, in the background, and with Reduce Motion (then a still
   that still reads: slumped when sad). Small chat avatars (`breathing: false`) stay still.
+
+## Smoothness rules (Nov 2026 pass)
+- **Tokens** (`App/Design/Motion.swift`): `snappy`, `smooth`, `bouncy`, `gentle`, `mascot` (0.5 / 0.8: Lockie
+  moving between screens), `landing` (0.55 / 0.75: something arriving with a tiny bounce), `backdrop`
+  (0.35s easeInOut cross-fades), `stagger` 80ms, `staggerRise` 12pt. Use these; no ad-hoc springs on screens.
+- **One onboarding transition**: `Motion.stepTransition` (40pt push + fade, plain fade with Reduce Motion).
+  Screens are flattened with `.compositingGroup()` while they fade, so outlines can't linger.
+- **Transform + opacity only while animating.** No blurs on moving layers (the stagger used one; removed),
+  no per-frame state from timers, no rebuilding charts or paths on a timer: one animatable value (a trim,
+  a mask scale, an offset) driven by one `withAnimation`.
+- **Images are decoded before they're needed**: `MascotArtCache.preload()` at launch; mascot assets are exact
+  @2x (520px) / @3x (780px).
+- **Text input never re-renders the screen**: the text lives in a small `@Observable` that only the field reads;
+  no ScrollView around a single field; buttons in a bottom safe-area inset.
+- **Haptics**: light on taps (PressableButtonStyle), medium on key reveals, success on unlocks.

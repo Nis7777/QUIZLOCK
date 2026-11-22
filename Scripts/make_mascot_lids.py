@@ -1,4 +1,4 @@
-# Usage: python3 Scripts/make_mascot_lids.py . App/Assets.xcassets-staging
+# Usage: python3 Scripts/make_mascot_lids.py . <out-dir>  (writes 780px layers: save each as @3x and a 520px @2x copy)
 # Re-run after changing an open-eye mascot pose, then copy each mascot_<pose>_lids.png into its
 # App/Assets.xcassets/mascot_<pose>_lids.imageset and paste the printed eye boxes into
 # MascotExpression.eyes (App/Design/Mascot.swift). Needs opencv-python-headless and numpy.

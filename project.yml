@@ -95,6 +95,8 @@ targets:
       path: App/App.entitlements
       properties:
         com.apple.developer.family-controls: true
+        # Lets "Tap to solve" break through Focus / Sleep when the person allows Time Sensitive.
+        com.apple.developer.usernotifications.time-sensitive: true
         com.apple.security.application-groups:
           - group.app.lockie.ios
         # iCloud → Key-value storage (progress sync, no accounts). Needs iCloud enabled on the App ID.
@@ -152,6 +154,8 @@ targets:
       path: Extensions/ShieldActionExt/ShieldActionExt.entitlements
       properties:
         com.apple.developer.family-controls: true
+        # Lets "Tap to solve" break through Focus / Sleep when the person allows Time Sensitive.
+        com.apple.developer.usernotifications.time-sensitive: true
         com.apple.security.application-groups:
           - group.app.lockie.ios
     settings:

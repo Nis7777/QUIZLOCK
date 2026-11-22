@@ -18,6 +18,8 @@ role in App Store Connect you can do the rest.
 - [ ] Register all 6 **new** `app.lockie.ios…` bundle IDs (automatic signing in Xcode usually does this).
       Delete any App IDs or App Groups from before the rename: only the `lockie` ones are used.
 - [ ] Register the App Group `group.app.lockie.ios` and enable it on all 6 App IDs.
+- [ ] On `app.lockie.ios` and `app.lockie.ios.ShieldAction`, enable **Time Sensitive Notifications** (the
+      "Tap to solve" notification uses it to get through Focus / Sleep; both entitlements files ask for it).
 - [ ] On the main App ID `app.lockie.ios` **only**, enable **iCloud** (Key-value storage; no container
       needed). The app's entitlement `com.apple.developer.ubiquity-kvstore-identifier` is already in `project.yml`.
       In Xcode, **Signing & Capabilities** on the App target should then show **iCloud → Key-value storage**.

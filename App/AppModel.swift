@@ -281,6 +281,9 @@ final class AppModel {
 
     /// True when the user declined notifications (Settings then explains how to turn them on).
     var notificationsDenied = false
+    /// Notifications are allowed but Time Sensitive is switched off (so Focus / Sleep can hold back
+    /// "Tap to solve"). Settings offers a fix.
+    var timeSensitiveOff = false
 
     func requestNotificationPermission() async {
         _ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
@@ -290,6 +293,10 @@ final class AppModel {
     func refreshNotificationStatus() async {
         let settings = await UNUserNotificationCenter.current().notificationSettings()
         notificationsDenied = settings.authorizationStatus == .denied
+        let allowed = [.authorized, .provisional, .ephemeral].contains(settings.authorizationStatus)
+        timeSensitiveOff = allowed && settings.timeSensitiveSetting == .disabled
+        // The shield can't ask the system itself (its callbacks are synchronous), so it reads this.
+        SharedStore.notificationsAllowed = allowed
     }
 
     // MARK: Authorization
@@ -352,17 +359,22 @@ final class AppModel {
                   Date().timeIntervalSince(latest.createdAt) < Brand.autoResumeWindow else { return }
         }
         dismissedPendingDate = nil
-        if let saved {
-            if let pending = SharedStore.pendingUnlock, pending.itemKey != saved.pending.itemKey {
-                startSession(for: pending)
-            } else {
-                unlockSession = saved
-                if saved.current == nil { Task { await loadRoundForSession() } }
+        // Straight into the puzzle: no slide-up over the home screen, whatever route opened Lockie.
+        var instant = Transaction()
+        instant.disablesAnimations = true
+        withTransaction(instant) {
+            if let saved {
+                if let pending = SharedStore.pendingUnlock, pending.itemKey != saved.pending.itemKey {
+                    startSession(for: pending)
+                } else {
+                    unlockSession = saved
+                    if saved.current == nil { Task { await loadRoundForSession() } }
+                }
+                return
             }
-            return
-        }
-        if let pending = SharedStore.pendingUnlock {
-            startSession(for: pending)
+            if let pending = SharedStore.pendingUnlock {
+                startSession(for: pending)
+            }
         }
     }
 
@@ -468,6 +480,8 @@ final class AppModel {
         statsChanged()
         screenTime.scheduleRelock(unlock)
         SharedStore.pendingUnlock = nil
+        PendingPuzzleNote.clear()
+        WidgetCenter.shared.reloadAllTimelines()
         SharedStore.save(nil as UnlockSession?, .unlockSession)
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["lockie.unlock"])
         let name = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? String(localized: "your app")

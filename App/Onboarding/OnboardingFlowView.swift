@@ -93,16 +93,27 @@ struct OnboardingFlowView: View {
     var body: some View {
         ZStack(alignment: .top) {
             Color.appBg.ignoresSafeArea()
+            // The welcome screen's coral sky lives here, under every screen, and cross-fades out
+            // (0.35s) as onboarding moves on instead of being removed with the hero. Its clouds stop
+            // drawing once it's hidden.
+            CoralSky(paused: flow.step != .hero)
+                .opacity(flow.step == .hero ? 1 : 0)
+                .animation(Motion.respecting(reduceMotion, Motion.backdrop), value: flow.step == .hero)
+                .ignoresSafeArea(.keyboard)
             ZStack {
                 screen(flow.step)
+                    .environment(\.mascotSlotOwner, flow.step.rawValue)
+                    // Fade each screen as ONE layer: otherwise a card's coral outline and its fill fade
+                    // separately and the outline seems to linger for a few frames.
+                    .compositingGroup()
                     .id(flow.step)
-                    .transition(transition)
+                    .transition(Motion.stepTransition(forward: flow.forward, reduceMotion: reduceMotion))
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .safeAreaInset(edge: .top, spacing: 0) {
                 if !flow.step.isFullBleed { header }
             }
-            .modifier(SharedMascotOverlay())
+            .modifier(SharedMascotOverlay(active: flow.step.rawValue))
         }
         .environment(\.palette, .classic)
         .environment(\.colorScheme, .light)
@@ -137,27 +148,10 @@ struct OnboardingFlowView: View {
             }
             Spacer(minLength: 0)
         }
-        .animation(Motion.smooth, value: flow.step.questionProgress != nil)
+        .animation(Motion.respecting(reduceMotion, Motion.smooth), value: flow.step.questionProgress != nil)
         .padding(.horizontal, 12)
         .frame(height: 52)
         .background(Color.appBg.opacity(0.001))
-    }
-
-    // MARK: Transitions
-
-    private var transition: AnyTransition {
-        if reduceMotion { return .opacity }
-        switch flow.step {
-        case .chat where flow.forward:
-            // Zoom out of the notification banner.
-            return .asymmetric(insertion: .scale(scale: 0.2, anchor: .top).combined(with: .opacity), removal: .opacity)
-        case .howItWorks where flow.forward, .settingUp, .planReady:
-            return .opacity
-        default:
-            let dx: CGFloat = flow.forward ? 40 : -40
-            return .asymmetric(insertion: .offset(x: dx).combined(with: .opacity),
-                               removal: .offset(x: -dx).combined(with: .opacity))
-        }
     }
 
     // MARK: Screens
@@ -251,7 +245,7 @@ struct OnboardingPage<Content: View, Footer: View>: View {
             footer()
                 .padding(.horizontal, 20)
                 .padding(.bottom, 10)
-                .staggeredAppear(6)
+                .staggeredAppear(2)
         }
     }
 }
@@ -282,10 +276,12 @@ struct OnboardingLink: View {
 /// Soft clouds drawn in SwiftUI, drifting slowly (static with Reduce Motion).
 struct CloudLayer: View {
     var opacity: Double = 0.55
+    /// Stops the clock (e.g. while the sky is faded out).
+    var paused = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        TimelineView(.animation(paused: reduceMotion)) { context in
+        TimelineView(.animation(paused: reduceMotion || paused)) { context in
             let t = context.date.timeIntervalSinceReferenceDate
             GeometryReader { geo in
                 let w = geo.size.width, h = geo.size.height
@@ -298,6 +294,8 @@ struct CloudLayer: View {
                 .opacity(opacity)
             }
         }
+        // One flattened Metal pass for the whole layer instead of four separately blended clouds.
+        .drawingGroup()
         .allowsHitTesting(false)
         .accessibilityHidden(true)
     }
@@ -307,23 +305,31 @@ struct CloudLayer: View {
         return CGFloat(x.truncatingRemainder(dividingBy: Double(span))) - span * 0.2
     }
 
+    /// Soft-edged puffs drawn with radial gradients: the look of a blur without a blur pass per frame.
     private func cloud(width: CGFloat) -> some View {
         ZStack {
-            Ellipse().frame(width: width, height: width * 0.32)
-            Circle().frame(width: width * 0.42).offset(x: -width * 0.12, y: -width * 0.12)
-            Circle().frame(width: width * 0.32).offset(x: width * 0.16, y: -width * 0.08)
+            puff(width: width, height: width * 0.32)
+            puff(width: width * 0.42, height: width * 0.42).offset(x: -width * 0.12, y: -width * 0.12)
+            puff(width: width * 0.32, height: width * 0.32).offset(x: width * 0.16, y: -width * 0.08)
         }
-        .foregroundStyle(.white)
-        .blur(radius: 6)
+    }
+
+    private func puff(width: CGFloat, height: CGFloat) -> some View {
+        Ellipse()
+            .fill(RadialGradient(colors: [.white, .white, .white.opacity(0)], center: .center,
+                                 startRadius: 0, endRadius: max(width, height) * 0.56))
+            .frame(width: width + 12, height: height + 12)
     }
 }
 
 /// Peach → coral sky used by full-colour screens.
 struct CoralSky: View {
+    var paused = false
+
     var body: some View {
         LinearGradient(colors: [Color(hex: 0xFFE2D6), Color(hex: 0xFF9A78), Color(hex: 0xFF5A36)],
                        startPoint: .top, endPoint: .bottom)
-            .overlay(CloudLayer(opacity: 0.5))
+            .overlay(CloudLayer(opacity: 0.5, paused: paused))
             .ignoresSafeArea()
     }
 }

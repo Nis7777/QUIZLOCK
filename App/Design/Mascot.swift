@@ -9,8 +9,9 @@ enum MascotExpression: String, CaseIterable, Equatable {
 
     var assetName: String { "mascot_\(rawValue)" }
 
+    /// Decoded and display-ready (see MascotArtCache), never decoded mid-animation.
     var image: UIImage? {
-        UIImage(named: assetName) ?? UIImage(named: MascotExpression.pointing.assetName)
+        MascotArtCache.image(assetName) ?? MascotArtCache.image(MascotExpression.pointing.assetName)
     }
 
     /// The eyes in the 780×780 art (x, y, width, height), for blinking. Measured by
@@ -35,6 +36,37 @@ enum MascotExpression: String, CaseIterable, Equatable {
     /// drawn separately so it stays on the floor while Lockie is in the air.
     static let celebrateShadowTop: CGFloat = 744.0 / 780.0
     static let celebrateShadowCentre = UnitPoint(x: 0.513, y: 0.974)
+}
+
+/// Display-ready mascot images. A PNG is normally decoded the first time it's drawn, on the main thread,
+/// which drops frames if that happens during an animation (the rating screen's stutter). `preload()`
+/// decodes every pose and eyelid layer once, in the background, at launch; later lookups are free.
+enum MascotArtCache {
+    private static let lock = NSLock()
+    private static var images: [String: UIImage] = [:]
+
+    static func image(_ name: String) -> UIImage? {
+        lock.lock()
+        let cached = images[name]
+        lock.unlock()
+        if let cached { return cached }
+        guard let raw = UIImage(named: name) else { return nil }
+        let ready = raw.preparingForDisplay() ?? raw
+        lock.lock()
+        images[name] = ready
+        lock.unlock()
+        return ready
+    }
+
+    /// Call once at launch.
+    static func preload() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            for e in MascotExpression.allCases {
+                _ = image(e.assetName)
+                if e.eyes != nil { _ = image(e.lidsAssetName) }
+            }
+        }
+    }
 }
 
 // MARK: - States and triggers
@@ -569,8 +601,8 @@ private struct MascotArt: View {
                 .aspectRatio(contentMode: .fit)
                 .mask { MascotBand(from: 0, to: expression == .celebrate ? MascotExpression.celebrateShadowTop : 1) }
                 .overlay {
-                    if closure > 0.002, let eyes = expression.eyes, UIImage(named: expression.lidsAssetName) != nil {
-                        MascotLids(eyes: eyes, asset: expression.lidsAssetName, closure: closure)
+                    if closure > 0.002, let eyes = expression.eyes, let lids = MascotArtCache.image(expression.lidsAssetName) {
+                        MascotLids(eyes: eyes, skin: lids, closure: closure)
                     }
                 }
         } else {
@@ -589,7 +621,8 @@ private struct MascotArt: View {
 /// in the same style as the closed eyes in the calm art.
 private struct MascotLids: View {
     let eyes: [CGRect]
-    let asset: String
+    /// The pose's `_lids` layer, already decoded.
+    let skin: UIImage
     let closure: Double
 
     private static let meet = 0.62, sag = 0.2
@@ -599,7 +632,7 @@ private struct MascotLids: View {
         Canvas { ctx, canvas in
             let k = canvas.width / 780
             func pt(_ x: Double, _ y: Double) -> CGPoint { CGPoint(x: x * k, y: y * k) }
-            let skin = ctx.resolve(Image(asset))
+            let skin = ctx.resolve(Image(uiImage: skin))
             let p = min(1, max(0, closure))
             for e in eyes {
                 let x = Double(e.minX), y = Double(e.minY), w = Double(e.width), h = Double(e.height)
@@ -736,11 +769,15 @@ private struct MascotSquash: ViewModifier {
 
 // MARK: - Shared mascot between onboarding screens
 
-/// A screen reserves a spot for Lockie with `MascotSlot`; the onboarding container draws ONE Lockie at
-/// that spot, so it glides between consecutive screens instead of disappearing and reappearing.
+/// A screen reserves a spot for Lockie with `MascotSlot`; the onboarding container draws ONE Lockie that
+/// glides to the current screen's spot (the matched-geometry pattern, done with anchors so Lockie can
+/// move with transforms only: no re-layout and no image re-render while it travels).
 struct MascotSlotEntry {
     let expression: MascotExpression
     let anchor: Anchor<CGRect>
+    /// Which screen the slot belongs to (`\.mascotSlotOwner`), so a screen that is still fading out
+    /// can never pull Lockie back.
+    let owner: String?
 }
 
 struct MascotSlotKey: PreferenceKey {
@@ -750,35 +787,93 @@ struct MascotSlotKey: PreferenceKey {
     }
 }
 
+private struct MascotSlotOwnerKey: EnvironmentKey {
+    static let defaultValue: String? = nil
+}
+
+extension EnvironmentValues {
+    /// Set by the onboarding container on each screen (the step's name).
+    var mascotSlotOwner: String? {
+        get { self[MascotSlotOwnerKey.self] }
+        set { self[MascotSlotOwnerKey.self] = newValue }
+    }
+}
+
 /// Empty space of `size` where the container's Lockie appears.
 struct MascotSlot: View {
     let expression: MascotExpression
     var size: CGFloat = 200
+    @Environment(\.mascotSlotOwner) private var owner
 
     var body: some View {
         Color.clear
             .frame(width: size, height: size)
-            .anchorPreference(key: MascotSlotKey.self, value: .bounds) { [MascotSlotEntry(expression: expression, anchor: $0)] }
+            .anchorPreference(key: MascotSlotKey.self, value: .bounds) {
+                [MascotSlotEntry(expression: expression, anchor: $0, owner: owner)]
+            }
             .accessibilityElement()
             .accessibilityLabel(Text("Lockie"))
     }
 }
 
-/// Draws the shared Lockie at the newest slot. Moves with Motion.smooth when the slot moves.
+/// Draws the shared Lockie at the slot of the `active` screen.
 struct SharedMascotOverlay: ViewModifier {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// The current step's name; nil = whichever slot is newest.
+    var active: String?
 
     func body(content: Content) -> some View {
         content.overlayPreferenceValue(MascotSlotKey.self) { slots in
             GeometryReader { proxy in
-                if let slot = slots.last {
-                    let rect = proxy[slot.anchor]
-                    LockieView(expression: slot.expression, size: max(rect.width, 1))
-                        .position(x: rect.midX, y: rect.midY)
-                        .animation(Motion.respecting(reduceMotion, Motion.smooth), value: rect)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
+                let slot = active.map { a in slots.last { $0.owner == a } } ?? slots.last
+                SharedMascot(target: slot.map { SharedMascot.Target(rect: proxy[$0.anchor], expression: $0.expression) })
+            }
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+        }
+    }
+}
+
+/// One persistent Lockie. It's always drawn at a fixed size and scaled to the slot, so moving and
+/// resizing are pure transforms (scale + position) on the GPU, on Motion.mascot.
+private struct SharedMascot: View {
+    struct Target: Equatable {
+        let rect: CGRect
+        let expression: MascotExpression
+    }
+
+    let target: Target?
+    @State private var shown: Target?
+    @State private var visible = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    /// The size Lockie is rendered at (the biggest slot in onboarding).
+    private static let renderSize: CGFloat = 250
+
+    var body: some View {
+        ZStack {
+            if let t = shown {
+                LockieView(expression: t.expression, size: Self.renderSize)
+                    .scaleEffect(max(0.01, t.rect.width / Self.renderSize) * (visible ? 1 : 0.92))
+                    .opacity(visible ? 1 : 0)
+                    .position(x: t.rect.midX, y: t.rect.midY)
+            }
+        }
+        .onAppear {
+            shown = target
+            visible = target != nil
+        }
+        .onChange(of: target) { _, new in
+            guard let new else {
+                // The new screen has no Lockie: fade him out where he is, never just vanish.
+                withAnimation(Motion.respecting(reduceMotion, .easeInOut(duration: 0.25))) { visible = false }
+                return
+            }
+            if visible {
+                withAnimation(Motion.respecting(reduceMotion, Motion.mascot)) { shown = new }
+            } else {
+                // Coming back after a screen without him: appear in place, don't fly in from the old spot.
+                shown = new
+                withAnimation(Motion.respecting(reduceMotion, Motion.mascot)) { visible = true }
             }
         }
     }

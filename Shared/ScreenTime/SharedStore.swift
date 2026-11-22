@@ -44,6 +44,13 @@ public enum SharedStore {
         set { save(newValue, .pendingUnlock) }
     }
 
+    /// Whether Lockie may post notifications, as last seen by the app (nil = not known yet).
+    /// The shield reads it to tell people to open Lockie themselves when notifications are off.
+    public static var notificationsAllowed: Bool? {
+        get { defaults.object(forKey: "notificationsAllowed.v1") as? Bool }
+        set { defaults.set(newValue, forKey: "notificationsAllowed.v1") }
+    }
+
     /// Display names remembered by the shield configuration extension (token key → name).
     public static var tokenNames: [String: String] {
         get { load([String: String].self, .tokenNames) ?? [:] }

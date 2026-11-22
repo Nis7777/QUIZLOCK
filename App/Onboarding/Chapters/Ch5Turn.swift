@@ -27,16 +27,32 @@ struct TurnIntroView: View {
     }
 }
 
-/// 5.2 Reality check: "At this rate, you'll spend X years of your life scrolling." The number counts up
-/// (CountingText) and the comparison bar grows with it on the same curve.
+/// 5.2 Reality check: "At this rate, you'll spend X years of your life scrolling."
+/// One choreographed reveal: the title fades in → the number (the hero) rolls up over 1.2s and lands
+/// with a 1.0 → 1.08 → 1.0 bump and a medium haptic → the bars grow → the footer fades in.
+/// Everything is computed once before it starts; the number changes ~12 times (each a rolling digit
+/// transition), the bar is one trim animation, and nothing updates per frame from code.
 struct RealityCheckView: View {
     let onContinue: () -> Void
     @Environment(AppModel.self) private var model
-    @State private var count = CountUpState()
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private enum Stage: Int, Comparable {
+        case start, title, counting, landed, bars, footer
+        static func < (a: Stage, b: Stage) -> Bool { a.rawValue < b.rawValue }
+    }
+
+    /// Precomputed before the screen animates.
+    @State private var years: Double = 0
+    @State private var fraction: Double = 0
+    @State private var shown: Double = 0
+    @State private var stage = Stage.start
+    @State private var landTick = 0
+
+    private static let lifeLeft = 80 - 29.5
+    private static let format = CountingText.decimal(1)
 
     var body: some View {
-        let years = model.profile.yearsOnPhone
-        let yearsAhead = 80 - 29.5
         OnboardingPage {
             VStack(spacing: 14) {
                 MascotSlot(expression: .sad, size: 170)
@@ -44,36 +60,103 @@ struct RealityCheckView: View {
                 Text("At this rate, you'll spend")
                     .appFont(24, .bold, design: .rounded)
                     .foregroundStyle(Color.textPrimary)
-                    .staggeredAppear(1)
-                CountingText(value: years * count.progress, final: years, format: CountingText.decimal(1),
-                             landed: count.landed)
-                    .appFont(76, .black, design: .rounded)
-                    .foregroundStyle(Color(hex: 0xFF3B30))
-                    .staggeredAppear(2)
+                    .modifier(Reveal(on: stage >= .title, reduceMotion: reduceMotion))
+                ZStack {
+                    Text(verbatim: Self.format(years)).hidden()   // reserves the final width: nothing shifts
+                    Text(verbatim: Self.format(shown))
+                        .contentTransition(.numericText(value: shown))
+                }
+                .appFont(84, .black, design: .rounded)
+                .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+                .foregroundStyle(Color(hex: 0xFF3B30))
+                .keyframeAnimator(initialValue: 1.0, trigger: landTick) { view, scale in
+                    view.scaleEffect(scale)
+                } keyframes: { _ in
+                    KeyframeTrack {
+                        SpringKeyframe(1.08, duration: 0.14, spring: .snappy)
+                        SpringKeyframe(1.0, duration: 0.3, spring: .bouncy)
+                    }
+                }
+                .modifier(Reveal(on: stage >= .counting, reduceMotion: reduceMotion))
                 Text("years of your life scrolling.")
                     .appFont(24, .bold, design: .rounded)
                     .foregroundStyle(Color.textPrimary)
-                    .staggeredAppear(3)
+                    .modifier(Reveal(on: stage >= .counting, reduceMotion: reduceMotion))
                 VStack(spacing: 10) {
-                    ComparisonBar(title: "Your years until 80", fraction: 1, color: Color.textSecondary.opacity(0.3))
-                    ComparisonBar(title: "Spent scrolling", fraction: min(1, years / yearsAhead) * count.progress,
+                    ComparisonBar(title: "Your years until 80", fraction: stage >= .bars ? 1 : 0,
+                                  color: Color.textSecondary.opacity(0.3))
+                    ComparisonBar(title: "Spent scrolling", fraction: stage >= .bars ? fraction : 0,
                                   color: Color(hex: 0xFF3B30))
                 }
                 .padding(.top, 8)
-                .staggeredAppear(4)
+                .modifier(Reveal(on: stage >= .bars, reduceMotion: reduceMotion))
                 Text("Based on your daily scrolling time, until age 80.")
                     .appFont(14)
                     .foregroundStyle(Color.textSecondary)
                     .padding(.top, 4)
-                    .staggeredAppear(5)
+                    .modifier(Reveal(on: stage >= .footer, reduceMotion: reduceMotion))
             }
             .multilineTextAlignment(.center)
-            .accessibilityElement(children: .combine)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text("At this rate, you'll spend \(Self.format(years)) years of your life scrolling."))
         } footer: {
             ChunkyButton(title: "Continue", action: onContinue)
                 .accessibilityIdentifier("onboarding.continue")
+                .opacity(stage >= .footer ? 1 : 0)
+                .allowsHitTesting(stage >= .footer)
         }
-        .countUp($count, after: CountUpState.onboardingEntrance, feedback: .impact(weight: .heavy))
+        .sensoryFeedback(.impact(weight: .medium), trigger: landTick)
+        .task { await play() }
+    }
+
+    @MainActor
+    private func play() async {
+        func wait(_ s: Double) async { try? await Task.sleep(nanoseconds: UInt64(s * 1_000_000_000)) }
+        // Computed once, before anything moves.
+        years = model.profile.yearsOnPhone
+        fraction = min(1, years / Self.lifeLeft)
+        if reduceMotion {
+            shown = years
+            withAnimation(.easeOut(duration: 0.3)) { stage = .footer }
+            return
+        }
+        // Let the screen's push finish first.
+        await wait(0.3)
+        withAnimation(Motion.smooth) { stage = .title }
+        await wait(0.3)
+        withAnimation(Motion.smooth) { stage = .counting }
+        // Count up over 1.2s, ease-out: big steps first, small ones as it lands. Each step rolls its digits.
+        let steps = 12
+        for i in 1...steps {
+            await wait(0.1)
+            guard !Task.isCancelled else { return }
+            let p = Double(i) / Double(steps)
+            let eased = 1 - pow(1 - p, 3)
+            let value = i == steps ? years : (years * eased * 10).rounded() / 10
+            withAnimation(.snappy(duration: 0.18)) { shown = value }
+        }
+        stage = .landed
+        landTick += 1                       // bump + medium haptic
+        await wait(0.35)
+        withAnimation(.easeOut(duration: 0.2)) { stage = .bars }
+        await wait(0.05)
+        // The bars grow on their own single animation (see ComparisonBar).
+        await wait(0.7)
+        withAnimation(.easeOut(duration: 0.35)) { stage = .footer }
+    }
+}
+
+/// Fades and rises 12pt into place when `on` turns true (opacity only with Reduce Motion).
+private struct Reveal: ViewModifier {
+    let on: Bool
+    let reduceMotion: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(on ? 1 : 0)
+            .offset(y: on || reduceMotion ? 0 : Motion.staggerRise)
     }
 }
 
@@ -118,32 +201,48 @@ struct GetBackView: View {
             ChunkyButton(title: "Continue", action: onContinue)
                 .accessibilityIdentifier("onboarding.continue")
         }
-        .countUp($count, after: CountUpState.onboardingEntrance, feedback: .impact(weight: .heavy))
+        .countUp($count, after: CountUpState.onboardingEntrance, feedback: .impact(weight: .medium))   // key reveal: medium, like the reality check
         .confetti(count.landed, origin: UnitPoint(x: 0.5, y: 0.3), haptic: false)
     }
 }
 
-/// A labelled horizontal bar whose width is `fraction` (animated by the caller's transaction).
+/// A labelled horizontal bar that grows to `fraction`. The bar is one stroked line trimmed from 0 to
+/// `fraction`: a single animatable value the render server interpolates (no per-frame layout, no
+/// GeometryReader). It animates on its own easeOut(1.0) whenever `fraction` changes.
 struct ComparisonBar: View {
     let title: LocalizedStringKey
     let fraction: Double
     let color: Color
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(title)
                 .appFont(13, .semibold)
                 .foregroundStyle(Color.textSecondary)
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(Color.textSecondary.opacity(0.08))
-                    Capsule().fill(color).frame(width: max(0, geo.size.width * fraction))
-                }
+            ZStack {
+                BarTrack().stroke(Color.textSecondary.opacity(0.08), style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                BarTrack()
+                    .trim(from: 0, to: max(0, min(1, fraction)))
+                    .stroke(color, style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                    .opacity(fraction > 0 ? 1 : 0)   // a zero-length round-capped line would draw a dot
+                    .animation(reduceMotion ? nil : .easeOut(duration: 1.0), value: fraction)
             }
             .frame(height: 12)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityHidden(true)
+    }
+}
+
+/// A horizontal line through the middle, inset by half the line width so round caps stay inside.
+private struct BarTrack: Shape {
+    func path(in rect: CGRect) -> Path {
+        var p = Path()
+        let inset = rect.height / 2
+        p.move(to: CGPoint(x: rect.minX + inset, y: rect.midY))
+        p.addLine(to: CGPoint(x: rect.maxX - inset, y: rect.midY))
+        return p
     }
 }
 
@@ -172,7 +271,7 @@ struct ProjectionView: View {
     var body: some View {
         OnboardingPage(title: "Less scrolling, more living") {
             VStack(alignment: .leading, spacing: 12) {
-                Chart(Self.points.filter { Double($0.day) <= drawn * 30 }) { p in
+                Chart(Self.points) { p in
                     LineMark(x: .value("Day", p.day), y: .value("Hours", p.value))
                         .foregroundStyle(by: .value("Series", p.series))
                         .interpolationMethod(.catmullRom)
@@ -190,6 +289,13 @@ struct ProjectionView: View {
                     }
                 }
                 .chartLegend(position: .top, alignment: .leading)
+                // The lines draw in left to right with ONE mask animation on the plot area; the chart
+                // itself is built once (re-filtering the data every 40ms rebuilt the whole chart).
+                .chartPlotStyle { plot in
+                    plot.mask(alignment: .leading) {
+                        Rectangle().scaleEffect(x: drawn, y: 1, anchor: .leading)
+                    }
+                }
                 .frame(height: 260)
                 .padding(16)
                 .background(Color.cardWhite, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
@@ -206,13 +312,9 @@ struct ProjectionView: View {
                 .accessibilityIdentifier("onboarding.continue")
         }
         .task {
-            // The lines draw themselves in (a trim-like reveal over ~1.2s).
             if reduceMotion { drawn = 1; return }
             try? await Task.sleep(nanoseconds: 300_000_000)
-            for i in 1...30 {
-                withAnimation(.linear(duration: 0.04)) { drawn = Double(i) / 30 }
-                try? await Task.sleep(nanoseconds: 40_000_000)
-            }
+            withAnimation(.easeOut(duration: 1.0)) { drawn = 1 }
         }
     }
 }

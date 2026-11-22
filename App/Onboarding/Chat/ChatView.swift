@@ -40,6 +40,8 @@ final class ChatController {
     private(set) var replies: [ChatReply] = []
     private(set) var showCaption = false
     private(set) var finished = false
+    /// The reply just tapped: it takes the sent-bubble look in place, then flies into the conversation.
+    private(set) var sending: String?
 
     @ObservationIgnored private let segments: [ChatSegment]
     @ObservationIgnored private var index = 0
@@ -86,24 +88,31 @@ final class ChatController {
         running = false
     }
 
+    /// Two beats, so the reply never snaps: (1) the tapped chip turns coral with white text in place
+    /// while the other chips and the caption fade; (2) it moves into the conversation as the user's
+    /// bubble (matched geometry, Motion.mascot). Then Lockie's typing indicator shows before he answers.
     func choose(_ reply: ChatReply) {
-        guard !running, replies.contains(reply) else { return }
-        withAnimation(Motion.snappy) {
-            entries.append(.user(id: takeID(), text: reply.text, replyID: reply.id))
-            replies = []
+        guard !running, sending == nil, replies.contains(reply) else { return }
+        withAnimation(reduceMotion ? .easeOut(duration: 0.15) : Motion.snappy) {
+            sending = reply.id
             showCaption = false
         }
-        lastReply = reply.id
-        index += 1
-        if index >= segments.count {
-            finished = true
-            Task {
+        Task {
+            try? await Task.sleep(nanoseconds: reduceMotion ? 0 : 160_000_000)
+            withAnimation(reduceMotion ? .easeOut(duration: 0.2) : Motion.mascot) {
+                entries.append(.user(id: takeID(), text: reply.text, replyID: reply.id))
+                replies = []
+            }
+            lastReply = reply.id
+            index += 1
+            if index >= segments.count {
+                finished = true
                 try? await Task.sleep(nanoseconds: 500_000_000)
                 onFinish()
-            }
-        } else {
-            Task {
-                try? await Task.sleep(nanoseconds: 350_000_000)
+            } else {
+                // Let the bubble land before Lockie starts typing.
+                try? await Task.sleep(nanoseconds: 450_000_000)
+                sending = nil
                 await playSegment()
             }
         }
@@ -235,6 +244,7 @@ struct ChatView: View {
                 .matchedGeometryEffect(id: "reply-\(replyID)", in: chips)
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.vertical, 2)
+                .transition(.identity)   // it moves in from the chip via matched geometry
         }
     }
 
@@ -249,21 +259,28 @@ struct ChatView: View {
                 .transition(.opacity)
         }
         ForEach(Array(controller.replies.enumerated()), id: \.element.id) { i, reply in
+            let isSending = controller.sending == reply.id
+            let otherSending = controller.sending != nil && !isSending
             Button {
                 controller.choose(reply)
             } label: {
                 Text(LocalizedStringKey(reply.text))
                     .appFont(16, .semibold)
-                    .foregroundStyle(Color.brandDeep)
+                    .foregroundStyle(isSending ? Color.white : Color.brandDeep)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 10)
-                    .background(Color.brandTint, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .background(isSending ? Color.brand : Color.brandTint,
+                                in: RoundedRectangle(cornerRadius: 18, style: .continuous))
                     .matchedGeometryEffect(id: "reply-\(reply.id)", in: chips)
             }
             .buttonStyle(PressableButtonStyle())
             .frame(maxWidth: .infinity, alignment: .trailing)
+            .opacity(otherSending ? 0 : 1)
+            .scaleEffect(otherSending ? 0.95 : 1, anchor: .trailing)
             .staggeredAppear(i, baseDelay: 0.05)
-            .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity), removal: .opacity))
+            // The tapped chip hands over to the sent bubble (same frame, same look): no fade, no double.
+            .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
+                                    removal: isSending ? .identity : .opacity))
             .accessibilityIdentifier("chat.reply")
         }
     }

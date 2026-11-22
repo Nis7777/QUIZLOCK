@@ -1,8 +1,18 @@
 {
   "images": [
     {
-      "filename": "mascot_wave.png",
-      "idiom": "universal"
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "mascot_wave@2x.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "mascot_wave@3x.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
   "info": {

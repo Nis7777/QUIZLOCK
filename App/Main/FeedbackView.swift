@@ -10,18 +10,38 @@ enum FeedbackType: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
+/// The feedback text, kept out of the tab's own state so a keystroke re-renders only the editor and the
+/// send button (not the whole tab). Saved on this device as it's typed.
+@Observable
+final class FeedbackDraft {
+    private static let key = "feedback.draft"
+    private(set) var text = UserDefaults.standard.string(forKey: FeedbackDraft.key) ?? ""
+    private(set) var hasText = false
+
+    init() { hasText = Self.hasContent(text) }
+
+    func set(_ value: String) {
+        guard value != text else { return }
+        text = value
+        UserDefaults.standard.set(value, forKey: Self.key)
+        let has = Self.hasContent(value)
+        if has != hasText { hasText = has }
+    }
+
+    private static func hasContent(_ s: String) -> Bool { !s.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+}
+
 /// Feedback tab.
 struct FeedbackTab: View {
     @Environment(\.palette) private var palette
     @Environment(\.openURL) private var openURL
-    @AppStorage("feedback.draft") private var draft = ""
+    @State private var draft = FeedbackDraft()
     @AppStorage("feedback.type") private var typeRaw = FeedbackType.suggestion.rawValue
     @State private var showMail = false
     @State private var copied = false
     @FocusState private var editorFocused: Bool
 
     private var type: FeedbackType { FeedbackType(rawValue: typeRaw) ?? .suggestion }
-    private var hasText: Bool { !draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -39,7 +59,7 @@ struct FeedbackTab: View {
                     .appFont(17)
                     .foregroundStyle(palette.textSecondary)
                 formCard
-                PrimaryButton(title: "Continue to email", systemImage: "envelope", isEnabled: hasText) { sendEmail() }
+                PrimaryButton(title: "Continue to email", systemImage: "envelope", isEnabled: draft.hasText) { sendEmail() }
                 Text("Your draft is saved on this device. You'll review and send from your email account, so I can reply.")
                     .appFont(14)
                     .foregroundStyle(palette.textSecondary)
@@ -80,22 +100,7 @@ struct FeedbackTab: View {
                 }
             }
             Divider()
-            ZStack(alignment: .topLeading) {
-                if draft.isEmpty {
-                    Text("Tell me what happened or what you'd like to see…")
-                        .appFont(16)
-                        .foregroundStyle(palette.textSecondary.opacity(0.7))
-                        .padding(.top, 8)
-                        .padding(.leading, 5)
-                        .allowsHitTesting(false)
-                }
-                TextEditor(text: $draft)
-                    .appFont(16)
-                    .foregroundStyle(palette.textPrimary)
-                    .scrollContentBackground(.hidden)
-                    .focused($editorFocused)
-                    .frame(minHeight: 150)
-            }
+            FeedbackEditor(draft: draft, focused: $editorFocused)
         }
         .card()
     }
@@ -129,7 +134,7 @@ struct FeedbackTab: View {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
         let ios = UIDevice.current.systemVersion
-        return "\(draft)\n\n—\n\(Brand.appName) \(version) (\(build)) · iOS \(ios)"
+        return "\(draft.text)\n\n—\n\(Brand.appName) \(version) (\(build)) · iOS \(ios)"
     }
 
     private func sendEmail() {
@@ -143,6 +148,34 @@ struct FeedbackTab: View {
             components.queryItems = [URLQueryItem(name: "subject", value: subject), URLQueryItem(name: "body", value: mailBody)]
             if let url = components.url { openURL(url) }
         }
+    }
+}
+
+/// The text editor and its placeholder: the only part of the tab that re-renders while typing.
+private struct FeedbackEditor: View {
+    let draft: FeedbackDraft
+    var focused: FocusState<Bool>.Binding
+    @Environment(\.palette) private var palette
+
+    var body: some View {
+        let current = draft.text
+        ZStack(alignment: .topLeading) {
+            if current.isEmpty {
+                Text("Tell me what happened or what you'd like to see…")
+                    .appFont(16)
+                    .foregroundStyle(palette.textSecondary.opacity(0.7))
+                    .padding(.top, 8)
+                    .padding(.leading, 5)
+                    .allowsHitTesting(false)
+            }
+            TextEditor(text: Binding(get: { current }, set: { draft.set($0) }))
+                .appFont(16)
+                .foregroundStyle(palette.textPrimary)
+                .scrollContentBackground(.hidden)
+                .focused(focused)
+                .frame(minHeight: 150)
+        }
+        .transaction { $0.animation = nil }
     }
 }
 

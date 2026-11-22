@@ -257,11 +257,37 @@ def main():
             if os.path.isdir(d):
                 shutil.rmtree(d)
             os.makedirs(d)
+            if asset.startswith("mascot_") and scaled_variants(os.path.join(ART, name), d, asset):
+                # Exact @2x/@3x so each device decodes only the pixels it draws (MOTION.md performance).
+                print(f"Image: {asset} (@2x 520px, @3x 780px)")
+                continue
             dst = os.path.join(d, name)
             how = downscale(os.path.join(ART, name), dst, max_dimension(asset))
             write_json(os.path.join(d, "Contents.json"), {
                 "images": [{"filename": name, "idiom": "universal"}], "info": INFO})
             print(f"Image: {asset} ({how})")
+
+
+def scaled_variants(src, d, asset, size_3x=780):
+    """Writes asset@2x.png and asset@3x.png (a square canvas, @3x = size_3x px). False without Pillow."""
+    try:
+        from PIL import Image
+    except ImportError:
+        return False
+    with Image.open(src) as im:
+        im = im.convert("RGBA")
+        side = max(im.size)
+        if im.size[0] != im.size[1]:
+            square = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+            square.alpha_composite(im, ((side - im.size[0]) // 2, (side - im.size[1]) // 2))
+            im = square
+        im.resize((size_3x, size_3x), Image.LANCZOS).save(os.path.join(d, f"{asset}@3x.png"), optimize=True)
+        im.resize((size_3x * 2 // 3, size_3x * 2 // 3), Image.LANCZOS).save(os.path.join(d, f"{asset}@2x.png"), optimize=True)
+    write_json(os.path.join(d, "Contents.json"), {"images": [
+        {"idiom": "universal", "scale": "1x"},
+        {"filename": f"{asset}@2x.png", "idiom": "universal", "scale": "2x"},
+        {"filename": f"{asset}@3x.png", "idiom": "universal", "scale": "3x"}], "info": INFO})
+    return True
 
 
 def max_dimension(asset):

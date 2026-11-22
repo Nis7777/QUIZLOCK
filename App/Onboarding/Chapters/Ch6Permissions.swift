@@ -180,31 +180,40 @@ private extension View {
     func popIn(index: Int) -> some View { modifier(PopIn(index: index)) }
 }
 
-/// 6.2 "I'll send you gentle reminders…" — Lockie points up to where the system alert appears.
+/// 6.2 Notifications, with the reason up front: "so I can hand you your puzzle instantly". A preview of
+/// the real "Tap to solve" notification slides in. After the system prompt, if Time Sensitive is off,
+/// a second step shows the switch and opens Settings (Time Sensitive lets the puzzle through Focus
+/// and Sleep). Declining is fine: Settings offers it again later, and the shield tells people to open
+/// Lockie themselves.
 struct NotificationsStepView: View {
     let onContinue: () -> Void
     @Environment(AppModel.self) private var model
+    @Environment(\.openURL) private var openURL
     @State private var asking = false
+    @State private var showTimeSensitive = false
+    @State private var bannerIn = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        OnboardingPage(title: "I'll send you gentle reminders to keep your streak alive") {
-            VStack(spacing: 8) {
-                // A faint outline where the system alert will appear.
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .strokeBorder(Color.brand.opacity(0.35), style: StrokeStyle(lineWidth: 2, dash: [7, 6]))
-                    .frame(height: 130)
-                    .overlay(
-                        Image(systemName: "bell.badge.fill")
-                            .font(.system(size: 40, weight: .semibold))
-                            .foregroundStyle(Color.brand)
-                            .symbolEffect(.bounce, options: .repeat(2), value: asking)
-                    )
-                    .padding(.horizontal, 30)
-                    .staggeredAppear(1)
+        Group {
+            if showTimeSensitive { timeSensitiveStep.transition(Motion.stepTransition(forward: true, reduceMotion: reduceMotion)) }
+            else { askStep.transition(Motion.stepTransition(forward: false, reduceMotion: reduceMotion)) }
+        }
+        .animation(Motion.respecting(reduceMotion, Motion.smooth), value: showTimeSensitive)
+    }
+
+    private var askStep: some View {
+        OnboardingPage(title: "Let me hand you your puzzle instantly",
+                       subtitle: "When you open a locked app, I'll send one notification. Tap it and your puzzle is open.") {
+            VStack(spacing: 14) {
+                NotificationPreview()
+                    .offset(y: bannerIn || reduceMotion ? 0 : -24)
+                    .opacity(bannerIn ? 1 : 0)
                     .accessibilityHidden(true)
-                MascotSlot(expression: .pointing, size: 190)
-                    .offset(x: 50)
+                MascotSlot(expression: .pointing, size: 170)
+                    .offset(x: 40)
             }
+            .padding(.top, 6)
         } footer: {
             VStack(spacing: 4) {
                 ChunkyButton(title: "Allow notifications", isLoading: asking) {
@@ -212,54 +221,139 @@ struct NotificationsStepView: View {
                         asking = true
                         await model.requestNotificationPermission()
                         asking = false
-                        onContinue()
+                        if model.timeSensitiveOff { showTimeSensitive = true } else { onContinue() }
                     }
                 }
                 .accessibilityIdentifier("onboarding.notifications")
                 OnboardingLink(title: "Not now", action: onContinue)
             }
         }
+        .task {
+            try? await Task.sleep(nanoseconds: 450_000_000)
+            withAnimation(Motion.respecting(reduceMotion, Motion.landing)) { bannerIn = true }
+        }
+    }
+
+    private var timeSensitiveStep: some View {
+        OnboardingPage(title: "One more switch",
+                       subtitle: "Turn on Time Sensitive so your puzzle still reaches you in Focus and Sleep.") {
+            TimeSensitiveIllustration()
+                .padding(.top, 12)
+                .staggeredAppear(1)
+                .accessibilityHidden(true)
+        } footer: {
+            VStack(spacing: 4) {
+                ChunkyButton(title: "Open Settings") {
+                    if let url = URL(string: UIApplication.openNotificationSettingsURLString) { openURL(url) }
+                    onContinue()
+                }
+                OnboardingLink(title: "Not now", action: onContinue)
+            }
+        }
     }
 }
 
-/// 6.3 "Help more people unlock their time": requestReview once. No fake reviews or numbers.
+/// What the "Tap to solve" notification looks like (illustration).
+private struct NotificationPreview: View {
+    var body: some View {
+        HStack(spacing: 10) {
+            MascotView(expression: .happy, size: 38, isLive: false, popsIn: false)
+                .background(Color.brandTint, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+            VStack(alignment: .leading, spacing: 1) {
+                Text("Tap to solve 🧩").appFont(15, .semibold).foregroundStyle(Color.textPrimary)
+                Text("Instagram unlocks as soon as you solve it.").appFont(14).foregroundStyle(Color.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            Spacer(minLength: 0)
+            Text("now").appFont(12).foregroundStyle(Color.textSecondary)
+        }
+        .padding(12)
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        .padding(.horizontal, 4)
+    }
+}
+
+/// The two switches in Settings → Notifications → Lockie, with Time Sensitive highlighted.
+private struct TimeSensitiveIllustration: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            row("Allow Notifications", highlighted: false)
+            Divider().padding(.leading, 16)
+            row("Time Sensitive Notifications", highlighted: true)
+        }
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(alignment: .bottom) {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .strokeBorder(Color.brand, lineWidth: 2)
+                .frame(height: 50)
+                .padding(4)
+        }
+    }
+
+    private func row(_ title: LocalizedStringKey, highlighted: Bool) -> some View {
+        HStack {
+            Text(title).appFont(16, highlighted ? .semibold : .regular).foregroundStyle(Color.textPrimary)
+            Spacer()
+            Capsule().fill(Color.correctGreen).frame(width: 46, height: 28)
+                .overlay(alignment: .trailing) { Circle().fill(.white).padding(2) }
+        }
+        .padding(.horizontal, 16)
+        .frame(height: 54)
+    }
+}
+
+/// 6.3 "Help more people unlock their time". Lockie rises from below and lands (offset + opacity on
+/// Motion.landing, a tiny bounce, a light haptic), then the system rating prompt appears once.
+/// This screen has its own Lockie instead of the shared one, so the arrival is one clean move. Its art is
+/// already decoded (MascotArtCache), so nothing is decoded mid-animation.
 struct RatingStepView: View {
     let onContinue: () -> Void
     @Environment(AppModel.self) private var model
     @Environment(\.requestReview) private var requestReview
-    @State private var celebrate = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var landed = false
+    @State private var landTick = 0
 
     var body: some View {
         OnboardingPage {
             VStack(spacing: 16) {
-                MascotSlot(expression: .celebrate, size: 230)
+                MascotView(expression: .celebrate, size: 230, popsIn: false)
+                    .offset(y: landed || reduceMotion ? 0 : 160)
+                    .opacity(landed ? 1 : 0)
                     .padding(.top, 20)
                 Text("Help more people unlock their time")
                     .appFont(30, .heavy, design: .rounded)
                     .foregroundStyle(Color.textPrimary)
                     .multilineTextAlignment(.center)
                     .accessibilityAddTraits(.isHeader)
-                    .staggeredAppear(1)
+                    .staggeredAppear(0)
                 Text("A quick rating helps others find \(Brand.appName).")
                     .appFont(17)
                     .foregroundStyle(Color.textSecondary)
                     .multilineTextAlignment(.center)
-                    .staggeredAppear(2)
+                    .staggeredAppear(1)
             }
         } footer: {
-            ChunkyButton(title: "Continue") {
-                if !model.settings.ratingRequested {
-                    model.updateSettings { $0.ratingRequested = true }
-                    requestReview()
-                }
-                onContinue()
-            }
-            .accessibilityIdentifier("onboarding.continue")
+            ChunkyButton(title: "Continue", action: onContinue)
+                .accessibilityIdentifier("onboarding.continue")
         }
-        .confetti(celebrate)
+        .sensoryFeedback(.impact(weight: .light), trigger: landTick)
+        .confetti(landTick > 0, haptic: false)   // the landing already has its light haptic
         .task {
-            try? await Task.sleep(nanoseconds: 400_000_000)
-            celebrate = true
+            // After the screen's push, Lockie rises in.
+            try? await Task.sleep(nanoseconds: 250_000_000)
+            withAnimation(Motion.respecting(reduceMotion, Motion.landing)) { landed = true }
+            // He touches down ~0.45s into the spring.
+            try? await Task.sleep(nanoseconds: 450_000_000)
+            guard !Task.isCancelled else { return }
+            landTick += 1
+            try? await Task.sleep(nanoseconds: 350_000_000)
+            guard !Task.isCancelled, !model.settings.ratingRequested,
+                  !ProcessInfo.processInfo.arguments.contains("-uiTestFreshInstall") else { return }
+            model.updateSettings { $0.ratingRequested = true }
+            requestReview()
         }
     }
 }

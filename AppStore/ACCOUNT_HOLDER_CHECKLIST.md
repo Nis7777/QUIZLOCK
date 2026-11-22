@@ -40,6 +40,9 @@ For each one: **Identifiers → (+) → App IDs → App → Continue**, choose *
 | 5 | `app.lockie.ios.ScreenTimeReport` | Lockie Report | ✅ | ✅ |
 | 6 | `app.lockie.ios.Widgets` | Lockie Widgets | ❌ | ✅ |
 
+On `app.lockie.ios` **and** `app.lockie.ios.ShieldAction`, also tick **Time Sensitive Notifications** (it lets
+"Tap to solve 🧩" through Focus and Sleep).
+
 On the main app ID (`app.lockie.ios`) **only**, also tick **iCloud** (it's used for key-value storage, which syncs streaks and stats; no container needed).
 
 After registering each one, open it → next to **App Groups** click **Configure** → tick `group.app.lockie.ios` → **Save**.

@@ -182,7 +182,7 @@ struct MilestoneView: View {
         .confetti(appeared)
         .onAppear {
             Haptics.success()
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) { appeared = true }
+            withAnimation(Motion.bouncy) { appeared = true }
         }
     }
 }

@@ -144,16 +144,12 @@ struct UnlockSuccessView: View {
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
-            ZStack {
-                Circle().fill(palette.tint).frame(width: 120, height: 120)
-                Image(systemName: "lock.open.fill")
-                    .appFont(50, .semibold)
-                    .foregroundStyle(palette.accent)
-            }
-            .scaleEffect(appeared ? 1 : 0.6)
-            .opacity(appeared ? 1 : 0)
-            ScreenTitle(title: "You unlocked the app!",
-                        subtitle: String(localized: "Go back to \(appName) — it's unlocked for \(duration.localizedSentenceLabel)."))
+            // Lockie celebrates: a jump with arms up (MascotView's celebrate), with the confetti and the
+            // success haptic below. The shield is already lifted when this appears.
+            MascotView(animation: .celebrate, size: 200)
+                .accessibilityHidden(true)
+            ScreenTitle(title: String(localized: "Unlocked for \(duration.localizedSentenceLabel)"),
+                        subtitle: String(localized: "Go back to \(appName). It's ready for you."))
             Spacer()
             PrimaryButton(title: "Done", action: onDone)
                 .padding(.horizontal, 20)
@@ -163,7 +159,7 @@ struct UnlockSuccessView: View {
         .confetti(appeared)
         .onAppear {
             Haptics.success()
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) { appeared = true }
+            withAnimation(Motion.bouncy) { appeared = true }
         }
     }
 }

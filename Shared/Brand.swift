@@ -31,10 +31,10 @@ public enum Brand {
     public static let urlScheme = "lockie"
     public static let unlockDeepLink = URL(string: "lockie://unlock") ?? URL(fileURLWithPath: "/")
     /// After "Solve to unlock" on the shield, how long the shield shows "Your puzzle is ready" instead.
-    public static let shieldReadyWindow: TimeInterval = 10 * 60
-    /// How recent a shield tap must be for Lockie to open straight into the puzzle when the user
-    /// opens it from the Home Screen. Older ones don't pop up out of nowhere; the notification still works.
-    public static let autoResumeWindow: TimeInterval = 30 * 60
+    public static let shieldReadyWindow: TimeInterval = 5 * 60
+    /// How recent a shield tap must be for Lockie to open straight into that puzzle when it's opened or
+    /// brought to the front by any route (notification, app icon, widget, Spotlight, Shortcuts).
+    public static let autoResumeWindow: TimeInterval = 5 * 60
     public static let credits = "Chess puzzles from the Lichess puzzle database (CC0)."
 
     /// Brand colours as 0xRRGGBB. SwiftUI / UIKit wrappers live in the App target.
@@ -62,5 +62,37 @@ public enum Brand {
         public static let paywallCream: UInt32 = 0xFFF3DC
         /// Launch screen + splash background.
         public static let peach: UInt32 = 0xFFF1EC
+    }
+}
+
+/// A plain note of the puzzle waiting after "Solve to unlock": the app's name and when it was asked.
+/// Written by the shield, cleared when the unlock is earned. Plain values (no Screen Time tokens), so the
+/// widget can read it too.
+public enum PendingPuzzleNote {
+    private static let key = "pendingPuzzleNote.v1"
+    private static var defaults: UserDefaults { UserDefaults(suiteName: Brand.appGroup) ?? .standard }
+
+    public static func set(appName: String?, at date: Date = Date()) {
+        defaults.set(["name": appName ?? "", "at": date.timeIntervalSince1970], forKey: key)
+    }
+
+    public static func clear() {
+        defaults.removeObject(forKey: key)
+    }
+
+    /// The waiting puzzle, if it was asked for within `Brand.autoResumeWindow`.
+    public static func current(now: Date = Date()) -> (appName: String?, at: Date)? {
+        guard let note = defaults.dictionary(forKey: key), let t = note["at"] as? Double else { return nil }
+        let at = Date(timeIntervalSince1970: t)
+        guard now.timeIntervalSince(at) < Brand.autoResumeWindow else { return nil }
+        let name = note["name"] as? String
+        return (name?.isEmpty == false ? name : nil, at)
+    }
+
+    /// Lockie's picture for the "Tap to solve" notification, written into the App Group by the app
+    /// (an extension can only attach a file, and the shield-action extension has no image assets).
+    public static var notificationArtURL: URL? {
+        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Brand.appGroup)?
+            .appendingPathComponent("notification_lockie_v1.png")
     }
 }
