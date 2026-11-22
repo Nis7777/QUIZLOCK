@@ -53,6 +53,10 @@ final class ChatController {
 
     init(segments: [ChatSegment]) { self.segments = segments }
 
+    /// Every change in the chat (dots, bubbles, chips) and the scroll that follows it ride this one
+    /// curve, so they move as a single glide instead of separate jumps.
+    static let flow = Animation.spring(response: 0.42, dampingFraction: 0.9)
+
     func start() {
         guard !running, entries.isEmpty else { return }
         Task { await playSegment() }
@@ -77,14 +81,20 @@ final class ChatController {
                 append(.lockie(id: takeID(), line: line), animation: .easeOut(duration: 0.2))
                 continue
             }
-            withAnimation(Motion.snappy) { typing = true }
+            withAnimation(Self.flow) { typing = true }
             try? await Task.sleep(nanoseconds: UInt64(Self.typingDuration(for: line) * 1_000_000_000))
-            typing = false
-            append(.lockie(id: takeID(), line: line), animation: Motion.snappy)
+            // The dots turn into the message in ONE change, so the chat never shrinks then grows.
+            let entry = ChatEntry.lockie(id: takeID(), line: line)
+            withAnimation(Self.flow) {
+                typing = false
+                entries.append(entry)
+            }
             try? await Task.sleep(nanoseconds: 250_000_000)
         }
-        withAnimation(Motion.smooth) { showCaption = true }
-        withAnimation(Motion.smooth) { replies = segment.replies }
+        withAnimation(Self.flow) {
+            showCaption = true
+            replies = segment.replies
+        }
         running = false
     }
 
@@ -99,7 +109,7 @@ final class ChatController {
         }
         Task {
             try? await Task.sleep(nanoseconds: reduceMotion ? 0 : 160_000_000)
-            withAnimation(reduceMotion ? .easeOut(duration: 0.2) : Motion.mascot) {
+            withAnimation(reduceMotion ? .easeOut(duration: 0.2) : Self.flow) {
                 entries.append(.user(id: takeID(), text: reply.text, replyID: reply.id))
                 replies = []
             }
@@ -157,6 +167,7 @@ struct ChatView: View {
             // everything above slides up in the same animation. There's no separate scroll afterwards (that
             // used to show the new bubble half cut off, then jump).
             GeometryReader { viewport in
+            ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(controller.entries) { entry in
@@ -164,10 +175,10 @@ struct ChatView: View {
                     }
                     if controller.typing {
                         TypingBubble()
-                            .transition(.scale(scale: 0.9, anchor: .bottomLeading).combined(with: .opacity))
+                            .transition(.scale(scale: 0.85, anchor: .bottomLeading).combined(with: .opacity))
                     }
                     repliesArea
-                    Color.clear.frame(height: 8)
+                    Color.clear.frame(height: 8).id("bottom")
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 14)
@@ -176,6 +187,11 @@ struct ChatView: View {
                 .frame(minHeight: viewport.size.height, alignment: .top)
             }
             .modifier(PinnedToBottom())
+            // Glide to the newest item on the same curve as its arrival (same frame, same spring).
+            .onChange(of: controller.entries.count) { _, _ in glide(proxy) }
+            .onChange(of: controller.typing) { _, _ in glide(proxy) }
+            .onChange(of: controller.replies.count) { _, _ in glide(proxy) }
+            }
             }
         }
         .background(Color.white.ignoresSafeArea())
@@ -183,6 +199,12 @@ struct ChatView: View {
         .onAppear {
             controller.reduceMotion = reduceMotion
             controller.start()
+        }
+    }
+
+    private func glide(_ proxy: ScrollViewProxy) {
+        withAnimation(reduceMotion ? .easeOut(duration: 0.2) : ChatController.flow) {
+            proxy.scrollTo("bottom", anchor: .bottom)
         }
     }
 
@@ -234,7 +256,7 @@ struct ChatView: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .transition(.scale(scale: 0.9, anchor: .bottomLeading).combined(with: .opacity))
+            .transition(.scale(scale: 0.85, anchor: .bottomLeading).combined(with: .opacity))
         case .user(_, let text, let replyID):
             Text(LocalizedStringKey(text))
                 .appFont(16, .semibold)
