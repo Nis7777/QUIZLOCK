@@ -1,5 +1,4 @@
 import Foundation
-import ManagedSettings
 import Observation
 import SwiftUI
 import UIKit
@@ -14,116 +13,6 @@ enum PaywallReason { case onboarding, settings, unlockLimit, practice }
 struct UnlockResult: Equatable {
     let appName: String
     let duration: UnlockDuration
-    /// Opens the app (or website) they were trying to use, when we know how. nil = just "Done".
-    var openURL: URL?
-    /// The locked item, so the person can tell Lockie which app it is ("Which app was this?").
-    var itemKey: String?
-    var appToken: ApplicationToken?
-}
-
-/// How to open the app someone was trying to use. iOS can't launch another app by its bundle ID, only by
-/// a link the app publishes, so for the common apps this knows (1) their app link (`instagram://`) and
-/// (2) their official web link (`https://www.instagram.com`), which iOS hands straight to the app when it's
-/// installed. Websites open in Safari. Anything else can't be opened, and the success screen says
-/// "Go back to …" instead.
-enum AppLauncher {
-    private struct Known {
-        let scheme: String
-        let web: String?
-    }
-
-    private static let byBundleID: [String: Known] = [
-        "com.burbn.instagram": Known(scheme: "instagram://app", web: "https://www.instagram.com"),
-        "com.zhiliaoapp.musically": Known(scheme: "snssdk1233://", web: "https://www.tiktok.com"),
-        "com.google.ios.youtube": Known(scheme: "youtube://", web: "https://www.youtube.com"),
-        "com.atebits.Tweetie2": Known(scheme: "twitter://", web: "https://x.com"),
-        "com.facebook.Facebook": Known(scheme: "fb://", web: "https://www.facebook.com"),
-        "com.toyopagroup.picaboo": Known(scheme: "snapchat://", web: "https://www.snapchat.com"),
-        "com.reddit.Reddit": Known(scheme: "reddit://", web: "https://www.reddit.com"),
-        "com.burbn.barcelona": Known(scheme: "barcelona://", web: "https://www.threads.net"),
-        "com.netflix.Netflix": Known(scheme: "nflx://", web: "https://www.netflix.com"),
-        "pinterest": Known(scheme: "pinterest://", web: "https://www.pinterest.com"),
-        "com.spotify.client": Known(scheme: "spotify://", web: "https://open.spotify.com"),
-        "net.whatsapp.WhatsApp": Known(scheme: "whatsapp://", web: "https://wa.me"),
-        "ph.telegra.Telegraph": Known(scheme: "tg://", web: "https://t.me"),
-        "com.hammerandchisel.discord": Known(scheme: "discord://", web: "https://discord.com/app"),
-        "tv.twitch": Known(scheme: "twitch://", web: "https://www.twitch.tv"),
-        "com.linkedin.LinkedIn": Known(scheme: "linkedin://", web: "https://www.linkedin.com"),
-        "com.tumblr.tumblr": Known(scheme: "tumblr://", web: "https://www.tumblr.com"),
-        "com.9gag.ios.mobile": Known(scheme: "ninegag://", web: "https://9gag.com"),
-    ]
-
-    /// By display name (letters only, lowercased), for when the bundle ID wasn't seen.
-    private static let byName: [String: String] = [
-        "instagram": "com.burbn.instagram", "tiktok": "com.zhiliaoapp.musically", "youtube": "com.google.ios.youtube",
-        "x": "com.atebits.Tweetie2", "twitter": "com.atebits.Tweetie2", "facebook": "com.facebook.Facebook",
-        "snapchat": "com.toyopagroup.picaboo", "reddit": "com.reddit.Reddit", "threads": "com.burbn.barcelona",
-        "netflix": "com.netflix.Netflix", "pinterest": "pinterest", "spotify": "com.spotify.client",
-        "whatsapp": "net.whatsapp.WhatsApp", "telegram": "ph.telegra.Telegraph", "discord": "com.hammerandchisel.discord",
-        "twitch": "tv.twitch", "linkedin": "com.linkedin.LinkedIn", "tumblr": "com.tumblr.tumblr", "gag": "com.9gag.ios.mobile",
-    ]
-
-    /// Why the last unlock couldn't open the app (shown in debug builds).
-    static var lastProblem: String?
-
-    /// The apps offered on "Which app was this?" (name, BrandAppIcon name, bundle ID).
-    static let pickable: [(name: String, icon: String, bundleID: String)] = [
-        ("Instagram", "instagram", "com.burbn.instagram"), ("TikTok", "tiktok", "com.zhiliaoapp.musically"),
-        ("YouTube", "youtube", "com.google.ios.youtube"), ("X", "x", "com.atebits.Tweetie2"),
-        ("Snapchat", "snapchat", "com.toyopagroup.picaboo"), ("Facebook", "facebook", "com.facebook.Facebook"),
-        ("Reddit", "reddit", "com.reddit.Reddit"), ("Threads", "threads", "com.burbn.barcelona"),
-    ]
-
-    /// How to open a known app by its bundle ID.
-    static func targets(forBundleID id: String) -> [(url: URL, universalOnly: Bool)] {
-        guard let known = byBundleID[id] else { return [] }
-        var list: [(URL, Bool)] = []
-        if let scheme = URL(string: known.scheme) { list.append((scheme, false)) }
-        if let web = known.web.flatMap(URL.init(string:)) { list.append((web, true)) }
-        return list
-    }
-
-    /// What to try, in order. Empty = we don't know how to open it.
-    static func targets(for pending: PendingUnlock, name: String?) -> [(url: URL, universalOnly: Bool)] {
-        // The shield that was on screen in the last 15 minutes, as a fallback for any missing piece.
-        let shown = SharedStore.lastShieldedApp.flatMap { $0.isRecent(15 * 60) ? $0 : nil }
-        if pending.webToken != nil || (pending.appToken == nil && shown?.isWebsite == true) {
-            guard let domain = (name ?? shown?.name)?.trimmingCharacters(in: .whitespaces), domain.contains("."),
-                  let url = URL(string: "https://\(domain)") else {
-                lastProblem = "website with no domain saved"
-                return []
-            }
-            return [(url, false)]
-        }
-        let anyName = name ?? shown?.name
-        let key = anyName.map { String($0.lowercased().filter(\.isLetter)) } ?? ""
-        let bundleID = pending.bundleID
-            ?? SharedStore.tokenBundleIDs[pending.itemKey]
-            ?? shown?.bundleID
-            ?? byName[key]
-            ?? byName.first { !key.isEmpty && key.hasPrefix($0.key) && $0.key.count > 2 }?.value
-        if bundleID == nil {
-            lastProblem = "no app saved by the shield (name: \(anyName ?? "none"), last shield: \(shown == nil ? "none" : "yes"))"
-        } else if byBundleID[bundleID!] == nil {
-            lastProblem = "\(bundleID!) has no known link"
-        }
-        guard let bundleID, let known = byBundleID[bundleID] else { return [] }
-        var list: [(URL, Bool)] = []
-        if let scheme = URL(string: known.scheme) { list.append((scheme, false)) }
-        // Universal link only: opens the app if it's installed, never Safari.
-        if let web = known.web.flatMap(URL.init(string:)) { list.append((web, true)) }
-        return list
-    }
-
-    /// Tries each target until one opens; reports whether anything did.
-    @MainActor
-    static func open(_ targets: [(url: URL, universalOnly: Bool)], completion: @escaping (Bool) -> Void) {
-        guard let first = targets.first else { completion(false); return }
-        let options: [UIApplication.OpenExternalURLOptionsKey: Any] = first.universalOnly ? [.universalLinksOnly: true] : [:]
-        UIApplication.shared.open(first.url, options: options) { opened in
-            if opened { completion(true) } else { open(Array(targets.dropFirst()), completion: completion) }
-        }
-    }
 }
 
 /// Root state: settings, lock state, routing and the unlock flow.
@@ -608,69 +497,21 @@ final class AppModel {
         returnToApp(pending, duration: duration)
     }
 
-    /// After an unlock (a solved puzzle or an emergency unlock), go straight back into the app they were
-    /// trying to use; its shield is already lifted. Only if it can't be opened, show the success screen.
+    /// After an unlock (a solved puzzle or an emergency unlock): the shield is already lifted; show the
+    /// success screen. (iOS never tells Lockie which app a locked item is, so it can't reopen it; the
+    /// screen points to the system's swipe-back gesture instead.)
     func returnToApp(_ pending: PendingUnlock, duration: UnlockDuration) {
         PendingPuzzleNote.clear()
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["lockie.unlock"])
-        let shown = SharedStore.lastShieldedApp.flatMap { $0.isRecent(15 * 60) ? $0 : nil }
-        let knownName = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? shown?.name
-        let name = knownName ?? String(localized: "your app")
-        AppLauncher.lastProblem = nil
-        let showScreen = {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                self.unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil,
-                                                 itemKey: pending.itemKey, appToken: pending.appToken)
-            }
-            #if DEBUG
-            if let problem = AppLauncher.lastProblem { self.showToast("Couldn't open the app: \(problem)") }
-            #endif
-        }
-        let targets = AppLauncher.targets(for: pending, name: knownName)
-        guard !targets.isEmpty else { showScreen(); return }
-        AppLauncher.open(targets) { [weak self] opened in
-            guard let self else { return }
-            if opened {
-                var t = Transaction()
-                t.disablesAnimations = true
-                withTransaction(t) { self.unlockSession = nil }
-                self.showToast(String(localized: "\(name) unlocked for \(duration.localizedSentenceLabel)"))
-            } else {
-                AppLauncher.lastProblem = "iOS refused \(targets.map(\.url.absoluteString).joined(separator: ", "))"
-                showScreen()
-            }
+        let name = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? String(localized: "your app")
+        withAnimation(.easeInOut(duration: 0.3)) {
+            unlockResult = UnlockResult(appName: name, duration: duration)
         }
     }
 
-    /// "Which app was this?": remember it for this locked item (so every later unlock opens it by itself),
-    /// then open it now.
-    func pickUnlockedApp(name: String, bundleID: String) {
-        if let key = unlockResult?.itemKey {
-            var ids = SharedStore.tokenBundleIDs
-            ids[key] = bundleID
-            SharedStore.tokenBundleIDs = ids
-            var names = SharedStore.tokenNames
-            names[key] = name
-            SharedStore.tokenNames = names
-        }
-        let targets = AppLauncher.targets(forBundleID: bundleID)
-        AppLauncher.open(targets) { [weak self] _ in
-            var t = Transaction()
-            t.disablesAnimations = true
-            withTransaction(t) {
-                self?.unlockResult = nil
-                self?.unlockSession = nil
-            }
-        }
-    }
-
-    /// Done / Open Instagram: closes the success screen and, when we know how, opens the app they were
-    /// trying to use (its shield is already lifted).
     func finishUnlockResult() {
-        let open = unlockResult?.openURL
         unlockResult = nil
         unlockSession = nil
-        if let open { UIApplication.shared.open(open) }
     }
 
     // MARK: Reset all data

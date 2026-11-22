@@ -53,26 +53,18 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
 
     override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
         if let token = webDomain.token { SharedStore.rememberName(webDomain.domain, forKey: TokenKey.key(token)) }
-        SharedStore.lastShieldedApp = ShieldedApp(name: webDomain.domain, bundleID: nil, isWebsite: true)
         return makeConfiguration(name: webDomain.domain, keys: [webDomain.token.map(TokenKey.key)])
     }
 
     override func configuration(shielding webDomain: WebDomain, in category: ActivityCategory) -> ShieldConfiguration {
         if let token = webDomain.token { SharedStore.rememberName(webDomain.domain, forKey: TokenKey.key(token)) }
-        SharedStore.lastShieldedApp = ShieldedApp(name: webDomain.domain, bundleID: nil, isWebsite: true)
         return makeConfiguration(name: webDomain.domain ?? category.localizedDisplayName,
                                  keys: [webDomain.token.map(TokenKey.key), category.token.map(TokenKey.key)])
     }
 
     private func remember(_ application: Application) {
-        // Whatever happens next (an app or a category tap), this is the app on screen right now.
-        SharedStore.lastShieldedApp = ShieldedApp(name: application.localizedDisplayName,
-                                                  bundleID: application.bundleIdentifier)
         guard let token = application.token else { return }
-        let key = TokenKey.key(token)
-        SharedStore.rememberName(application.localizedDisplayName, forKey: key)
-        // So that, once unlocked, Lockie can open this app straight away.
-        SharedStore.rememberBundleID(application.bundleIdentifier, forKey: key)
+        SharedStore.rememberName(application.localizedDisplayName, forKey: TokenKey.key(token))
     }
 
     /// Two states:

@@ -39,13 +39,6 @@ final class ShieldActionExtension: ShieldActionDelegate {
             return
         }
         if case .primaryButtonPressed = action {
-            // Fill in which app this is from the shield that's on screen (a category tap carries no app).
-            var pending = pending
-            if let shown = SharedStore.lastShieldedApp, shown.isRecent(120) {
-                if pending.appName == nil { pending.appName = shown.name }
-                if pending.bundleID == nil { pending.bundleID = shown.bundleID }
-            }
-            if pending.bundleID == nil { pending.bundleID = SharedStore.tokenBundleIDs[pending.itemKey] }
             SharedStore.pendingUnlock = pending
             // Any route into Lockie in the next 5 minutes (notification, icon, widget, Spotlight,
             // Shortcuts) opens straight into this puzzle; the widget shows it too.
