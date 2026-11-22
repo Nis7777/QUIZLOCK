@@ -7,22 +7,17 @@ import UIKit
 struct Wordmark: View {
     var size: CGFloat = 34
     @Environment(\.palette) private var palette
-    /// True while the launch intro is flying its Lockie and title into this spot: hide ours until it lands.
-    @Environment(\.launchIntroCovering) private var introCovering
 
     var body: some View {
         HStack(spacing: size * 0.14) {
             // Lockie himself, standing beside his name (a still picture: this header is on every tab).
             MascotView(expression: .happy, size: size * 1.35, isLive: false, popsIn: false)
                 .accessibilityHidden(true)
-                .anchorPreference(key: LaunchIntroTargetKey.self, value: .bounds) { LaunchIntroTarget(mascot: $0) }
             Text(Brand.appName)
                 .font(.system(size: size, weight: .black, design: .rounded))
                 .foregroundStyle(palette.wordmark)
                 .tracking(-0.5)
-                .anchorPreference(key: LaunchIntroTargetKey.self, value: .bounds) { LaunchIntroTarget(word: $0) }
         }
-        .opacity(introCovering ? 0 : 1)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Brand.appName)
         .accessibilityAddTraits(.isHeader)
