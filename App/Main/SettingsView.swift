@@ -514,7 +514,7 @@ struct SettingsView: View {
         .padding(.top, 10)
     }
 
-    /// Not subscribed: "3 of 5 free unlocks left · Start free trial". Subscribed: "Active · renews 21 Nov 2027".
+    /// Not subscribed: "Not active · Start free trial". Subscribed: "Active · renews 21 Nov 2027".
     private var proSubtitle: String {
         let store = model.store
         if model.settings.isPro {
@@ -524,9 +524,7 @@ struct SettingsView: View {
             return store.willAutoRenew ? String(localized: "Active · renews \(date)")
                                        : String(localized: "Active · ends \(date)")
         }
-        let left = String(localized: "\(model.settings.freeUnlocksRemaining) of \(Brand.freeUnlocks) free unlocks left")
-        let action = store.showsTrial ? String(localized: "Start free trial") : String(localized: "See plans")
-        return left + " · " + action
+        return store.showsTrial ? String(localized: "Not active · Start free trial") : String(localized: "Not active · See plans")
     }
 
     private var footerCard: some View {

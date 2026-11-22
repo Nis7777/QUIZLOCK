@@ -82,9 +82,8 @@ No accounts: the subscription is tied to the Apple ID, and progress syncs throug
 ## 7. TestFlight first
 
 - [ ] Add yourself as an internal tester and install the build.
-- [ ] Test on a real iPhone: onboarding (tap-only, paywall right after Turn On Locks, closable, discount screen
-      once), Screen Time permission, block screen, Solve to unlock → notification → puzzle → unlock → automatic
-      re-lock, the "You've used your 5 free unlocks" card after 5 unlocks, the 7-day trial, monthly and the
+- [ ] Test on a real iPhone: onboarding (tap-only, paywall right after Turn On Locks, no close button), Screen Time permission, block screen, Solve to unlock → notification → puzzle → unlock → automatic
+      re-lock, the 7-day trial, monthly and the
       offer (sandbox), Restore Purchases, Settings → Lockie Pro (Active · renews…, Manage subscription),
       iCloud restore on a second device ("Welcome back!"), Settings → Data → Reset all data, the lock
       schedule, strict mode and widgets.

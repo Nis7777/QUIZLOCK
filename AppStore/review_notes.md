@@ -8,8 +8,8 @@ or a 5-letter word game).
 
 **No login is needed and there are no accounts.** Everything runs on the device; progress (streaks,
 stats, settings) syncs through the user's own iCloud key-value storage. The subscription is tied to the Apple ID
-(Restore Purchases). The first 5 unlocks are free, so you can test the full flow without paying, and Screen Time
-setup and app use are never blocked behind payment before those 5 free unlocks are used.
+(Restore Purchases). Lockie uses a subscription paywall: onboarding and Screen Time setup are free, then
+Lockie Pro is required (the yearly plan has a 7-day free trial). Please subscribe with a Sandbox account to test.
 
 ## How to test (about 3 minutes)
 
@@ -21,8 +21,7 @@ setup and app use are never blocked behind payment before those 5 free unlocks a
 3. On **Lock your apps.**, tap **Add Apps to Lock** and choose any app (for example Safari or News), then
    tap **Done** and **Continue**.
 4. Choose an unlock time (for example **5 minutes**) and tap **Turn On Locks**. The Lockie Pro paywall
-   appears; it's optional. Close it with the **×** at the top right. A discount screen appears (only the first time);
-   close it with the **×** too. You land on the dashboard with 5 free unlocks.
+   appears. Start the free trial with your Sandbox account (no real money is charged). You land on the dashboard.
 5. Go to the Home Screen and open the app you chose. Lockie's block screen appears.
 6. Tap **Solve to unlock**. The block screen changes to "Your puzzle is ready". Tap the "Your puzzle is ready 🧩" notification, or open Lockie. The puzzle
    opens.
@@ -52,14 +51,13 @@ Subscription group **Lockie Pro**:
 
 Any active subscription in the group unlocks Lockie Pro (unlimited puzzle-earned unlocks and standalone puzzle
 practice). Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.
-Cancel anytime in Settings.", **Restore Purchases**, **Terms of Use**, **Privacy Policy** and a visible close button.
+Cancel anytime in Settings.", **Restore Purchases**, **Terms of Use**, **Privacy Policy** and Restore Purchases. Without a subscription the × shows the one-time discount and then returns to the plans.
 Prices, periods and the trial length are read from StoreKit. Restore Purchases is also in Settings → Support, and
 subscribers see **Manage subscription** in Settings.
 
 **Testing purchases:** sign in with a **Sandbox Apple Account** (Settings → Developer → Sandbox Apple Account on
 the device, or when the purchase sheet asks) and buy any plan; no real money is charged and sandbox renewals are
-accelerated. To see the paywall again after closing it: Settings tab → **Lockie Pro** card. To reach the
-"You've used your 5 free unlocks" screen, earn 5 unlocks (one solved puzzle each by default).
+accelerated.
 
 ## Privacy
 

@@ -11,7 +11,7 @@ Lockie: Puzzle App Blocker
 Solve a puzzle to unlock apps
 
 **Promotional text** (170)
-Scroll less, think more. Lock distracting apps and earn a few minutes back by solving a chess, Sudoku, math or word puzzle. Your first 5 unlocks are free.
+Scroll less, think more. Lock distracting apps and earn a few minutes back by solving a chess, Sudoku, math or word puzzle. Start with a free trial.
 
 **Keywords** (100)
 screen time,app blocker,focus,brain training,chess,sudoku,word game,math,limit apps,detox,habit
@@ -44,7 +44,7 @@ NEW PHONE? NO PROBLEM
 Your progress syncs through your own iCloud, so your streak and stats come with you to a new iPhone. Use Restore Purchases to bring your subscription along.
 
 PRICING
-Lockie is free to download and your first 5 unlocks are free. After that, unlimited unlocks and standalone puzzle practice need Lockie Pro, an optional auto-renewable subscription:
+Lockie is free to download. Using it needs Lockie Pro, an auto-renewable subscription:
 • Lockie Pro Yearly: 1 year, with a 7-day free trial for new subscribers
 • Lockie Pro Monthly: 1 month
 Prices are shown in the app before you subscribe and may vary by country.

@@ -56,7 +56,6 @@ struct AppSettings: Codable, Equatable {
 
     func isEnabled(_ game: GameID) -> Bool { enabledGames.contains(game) }
 
-    var freeUnlocksRemaining: Int { max(0, Brand.freeUnlocks - freeUnlocksUsed) }
 }
 
 /// Progress through an unlock (persisted so leaving the app doesn't lose it).

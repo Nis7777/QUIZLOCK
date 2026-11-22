@@ -136,13 +136,13 @@ struct RootView: View {
     }
 
     private var unlockPresented: Binding<Bool> {
-        Binding(get: { model.unlockSession != nil || model.unlockResult != nil },
+        Binding(get: { !model.requiresSubscription && (model.unlockSession != nil || model.unlockResult != nil) },
                 set: { if !$0 { model.closeUnlockFlow() } })
     }
 
     private var paywallPresented: Binding<Bool> {
-        Binding(get: { model.paywallReason != nil && model.paywallReason != .unlockLimit },
-                set: { if !$0 { model.closePaywall() } })
+        Binding(get: { model.requiresSubscription || (model.paywallReason != nil && model.paywallReason != .unlockLimit) },
+                set: { if !$0 && !model.requiresSubscription { model.closePaywall() } })
     }
 
     private var practiceGame: Binding<GameID?> {

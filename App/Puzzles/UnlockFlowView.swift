@@ -83,7 +83,7 @@ struct UnlockFlowView: View {
     }
 }
 
-/// Shown instead of a puzzle once the free unlocks are used up (no subscription).
+/// Shown instead of a puzzle when there's no active subscription (e.g. it lapsed).
 struct OutOfFreeUnlocksView: View {
     let onStartTrial: () -> Void
     let onClose: () -> Void
@@ -101,12 +101,12 @@ struct OutOfFreeUnlocksView: View {
             VStack(spacing: 14) {
                 MascotView(expression: .pointing, size: 150)
                     .accessibilityHidden(true)
-                Text("You've used your \(Brand.freeUnlocks) free unlocks")
+                Text("Unlocking needs \(Brand.subscriptionGroupName)")
                     .appFont(26, .bold)
                     .foregroundStyle(palette.textPrimary)
                     .multilineTextAlignment(.center)
                     .accessibilityIdentifier("unlock.outOfFreeUnlocks")
-                Text("Keep earning unlocks with puzzles with \(Brand.subscriptionGroupName).")
+                Text("Your subscription isn't active. Subscribe to keep earning unlocks with puzzles.")
                     .appFont(17)
                     .foregroundStyle(palette.textSecondary)
                     .multilineTextAlignment(.center)

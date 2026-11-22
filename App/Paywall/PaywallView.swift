@@ -2,7 +2,7 @@ import StoreKit
 import SwiftUI
 
 /// Lockie Pro paywall (auto-renewable subscriptions).
-/// Main screen: yearly (pre-selected, free trial when eligible) or monthly → on close, the exit offer (shown once).
+/// Main screen: yearly (pre-selected, free trial when eligible) or monthly → on close, the exit offer (shown once). Hard paywall: no way into the app without a subscription.
 /// Every screen shows price + period, "Auto-renews. Cancel anytime in Settings.", Restore Purchases,
 /// Terms of Use, Privacy Policy and a visible close button. Prices, periods and the trial come from StoreKit.
 struct PaywallView: View {
@@ -18,7 +18,7 @@ struct PaywallView: View {
                 ExitOfferScreen(link: $link,
                                 onBuy: { buy(model.store.yearlyOffer) },
                                 onRestore: { restore() },
-                                onClose: { close() })
+                                onClose: { closeOffer() })
                     .transition(reduceMotion ? .opacity : .push(forward: true))
             } else {
                 PlansScreen(link: $link,
@@ -50,6 +50,15 @@ struct PaywallView: View {
            model.store.offerDiscountPercent != nil {
             model.updateSettings { $0.exitOfferShown = true }
             withAnimation(.easeInOut(duration: 0.35)) { showOffer = true }
+        } else if !model.requiresSubscription {
+            close()
+        }
+    }
+
+    /// Hard paywall: closing the discount goes back to the plans, not into the app.
+    private func closeOffer() {
+        if model.requiresSubscription {
+            withAnimation(.easeInOut(duration: 0.35)) { showOffer = false }
         } else {
             close()
         }
@@ -170,14 +179,21 @@ private struct PlansScreen: View {
 
     private var store: Store { model.store }
     private var selectedProduct: Product? { plan == .yearly ? store.yearly : store.monthly }
+    private var canShowOffer: Bool {
+        !model.settings.exitOfferShown && model.store.yearlyOffer != nil && model.store.offerDiscountPercent != nil
+    }
     private var trialOnSelected: Bool { plan == .yearly && store.showsTrial }
 
     var body: some View {
         VStack(spacing: 0) {
             HStack {
                 Spacer()
-                PaywallCloseButton(action: onClose)
+                // Hard paywall: without a subscription the × only leads to the one-time discount, never into the app.
+                if !model.requiresSubscription || canShowOffer {
+                    PaywallCloseButton(action: onClose)
+                }
             }
+            .frame(minHeight: 44)
             .padding(.horizontal, 12)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
@@ -188,9 +204,8 @@ private struct PlansScreen: View {
                         .foregroundStyle(palette.textPrimary)
                         .multilineTextAlignment(.center)
                         .accessibilityIdentifier("paywall.title")
-                    if model.paywallReason == .onboarding {
-                        // The free-unlocks info lives here only (not in onboarding).
-                        Text("Your first \(Brand.freeUnlocks) app unlocks are free. After that, unlimited unlocks and puzzle practice need \(Brand.subscriptionGroupName), an optional subscription.")
+                    if model.requiresSubscription {
+                        Text("\(Brand.appName) needs \(Brand.subscriptionGroupName) to lock your apps and unlock them with puzzles.")
                             .appFont(15)
                             .foregroundStyle(palette.textSecondary)
                             .multilineTextAlignment(.center)
@@ -236,11 +251,11 @@ private struct PlansScreen: View {
             let name = model.profile.trimmedName
             return name.isEmpty ? String(localized: "Your plan is ready") : String(localized: "Your plan is ready, \(name)")
         case .unlockLimit?:
-            return String(localized: "You've used your \(Brand.freeUnlocks) free unlocks")
+            return String(localized: "Unlocking needs \(Brand.subscriptionGroupName)")
         case .practice?:
             return String(localized: "Practice anytime with \(Brand.subscriptionGroupName)")
         default:
-            return Brand.subscriptionGroupName
+            return model.requiresSubscription ? String(localized: "Your plan is waiting") : Brand.subscriptionGroupName
         }
     }
 

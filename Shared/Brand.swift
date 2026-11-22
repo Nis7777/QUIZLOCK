@@ -7,7 +7,7 @@ public enum Brand {
     public static let tagline = "Get smarter before scrolling"
     public static let bundleID = "app.lockie.ios"
     public static let appGroup = "group.app.lockie.ios"
-    public static let supportEmail = "nismagina@gmail.com"
+    public static let supportEmail = "lockie.support@gmail.com"
     public static let termsURL = URL(string: "https://nis7777.github.io/lockie/terms.html") ?? URL(fileURLWithPath: "/")
     public static let supportURL = URL(string: "https://nis7777.github.io/lockie/") ?? URL(fileURLWithPath: "/")
     public static let privacyURL = URL(string: "https://nis7777.github.io/lockie/privacy.html") ?? URL(fileURLWithPath: "/")
@@ -20,7 +20,6 @@ public enum Brand {
     public static let proProductIDs = [iapProYearly, iapProMonthly, iapProYearlyOffer]
     /// The trial reminder fires this many days before the trial ends (day 5 of a 7-day trial).
     public static let trialReminderDaysBeforeEnd = 2
-    public static let freeUnlocks = 5
     /// Your app's numeric Apple ID from App Store Connect (App Information → Apple ID). Used by "Rate Lockie".
     public static let appStoreID = "0000000000"
     public static var reviewURL: URL? {

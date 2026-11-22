@@ -76,25 +76,14 @@ final class OnboardingUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Terms of Use"].exists)
         XCTAssertTrue(app.buttons["Privacy Policy"].exists)
 
-        // Close → exit offer (once, only if StoreKit prices loaded) → dashboard.
-        tap(app.buttons["paywall.close"])
-        if app.staticTexts["paywall.offer.title"].waitForExistence(timeout: 3) {
-            XCTAssertTrue(app.staticTexts["Auto-renews. Cancel anytime in Settings."].exists)
+        // Hard paywall: × shows the discount once, then back to the plans; never into the app.
+        if app.buttons["paywall.close"].exists {
             tap(app.buttons["paywall.close"])
+            if app.staticTexts["paywall.offer.title"].waitForExistence(timeout: 3) { tap(app.buttons["paywall.close"]) }
         }
-        let proCard = app.buttons["settings.proCard"]
-        XCTAssertTrue(proCard.waitForExistence(timeout: 8))
-        scrollUntilHittable(proCard)
-        // Nothing was paid: all 5 free unlocks are still there.
-        let freeUnlocks = app.descendants(matching: .any)
-            .matching(NSPredicate(format: "label CONTAINS %@", "5 of 5 free unlocks left")).firstMatch
-        XCTAssertTrue(freeUnlocks.exists)
-
-        // The exit offer shows only once: reopening the paywall and closing it goes straight back.
-        tap(proCard)
         XCTAssertTrue(app.staticTexts["paywall.title"].waitForExistence(timeout: 5))
-        tap(app.buttons["paywall.close"])
-        XCTAssertFalse(app.staticTexts["paywall.offer.title"].waitForExistence(timeout: 2))
+        XCTAssertFalse(app.buttons["paywall.close"].exists)
+        XCTAssertFalse(app.buttons["settings.proCard"].exists)
     }
 
     // MARK: Helpers

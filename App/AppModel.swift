@@ -87,6 +87,15 @@ final class AppModel {
 
     var palette: Palette { Palette.forTheme(settings.theme) }
 
+    /// Hard paywall: once onboarding is done, Lockie needs an active Lockie Pro subscription (free trial
+    /// included). Without one the paywall covers the app and can't be closed; Restore Purchases stays on it.
+    var requiresSubscription: Bool {
+        #if DEBUG
+        if DemoData.isEnabled { return false }
+        #endif
+        return phase == .main && !settings.isPro
+    }
+
     // MARK: Lifecycle
 
     func bootstrap() {
@@ -334,9 +343,8 @@ final class AppModel {
         }
     }
 
-    /// Free unlocks are used up and there's no active subscription: the unlock screen shows the
-    /// "You've used your 5 free unlocks" card instead of a puzzle.
-    var needsProForUnlock: Bool { !settings.isPro && settings.freeUnlocksUsed >= Brand.freeUnlocks }
+    /// No active subscription (e.g. it lapsed): unlocking needs Lockie Pro.
+    var needsProForUnlock: Bool { !settings.isPro }
 
     func tryPractice(_ game: GameID) {
         if settings.isPro {
@@ -466,7 +474,7 @@ final class AppModel {
     }
 
     private func completeUnlock() {
-        if !settings.isPro && settings.freeUnlocksUsed >= Brand.freeUnlocks {
+        if !settings.isPro {
             awaitingEntitlementForUnlock = true
             paywallReason = .unlockLimit
             return
@@ -477,7 +485,6 @@ final class AppModel {
     private func grantUnlock() {
         guard let session = unlockSession else { return }
         let pending = session.pending
-        if !settings.isPro { updateSettings { $0.freeUnlocksUsed += 1 } }
         let duration = lock.duration(for: pending.itemKey)
         let unlock = ActiveUnlock(itemKey: pending.itemKey, appToken: pending.appToken, webToken: pending.webToken,
                                   expiresAt: duration.endDate(from: Date()))

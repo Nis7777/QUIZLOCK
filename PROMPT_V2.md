@@ -32,7 +32,7 @@ Work through the parts below in order. Keep the existing design system (coral #F
 9. **App Review notes.** Create `AppStore/review_notes.md` explaining:
    - The app uses the FamilyControls *individual* authorization to let users block their own distracting apps.
    - Step-by-step how a reviewer can test it: complete onboarding, pick any app, open it, see the shield, tap START PUZZLE, solve it, and the app unlocks.
-   - No login is needed, and the 5 free unlocks let the reviewer test the full flow without paying.
+   - No login is needed, and the reviewer tests with a Sandbox account (7-day free trial).
 
 ---
 
