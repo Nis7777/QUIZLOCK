@@ -76,37 +76,6 @@ struct CheckerIcon: View {
     }
 }
 
-/// Big coral game icon used on the "Try your first puzzle" cards and sheets.
-struct GameIcon: View {
-    let game: GameID
-    var size: CGFloat = 44
-    var color: Color = .brand
-
-    var body: some View {
-        Group {
-            switch game {
-            case .math:
-                Text("f(x)")
-                    .font(.system(size: size * 0.78, weight: .bold, design: .serif))
-                    .italic()
-                    .foregroundStyle(color)
-            case .word:
-                Text("Abc")
-                    .font(.system(size: size * 0.74, weight: .heavy, design: .rounded))
-                    .foregroundStyle(color)
-            case .sudoku:
-                Image(systemName: "square.grid.3x3.fill")
-                    .font(.system(size: size * 0.9, weight: .semibold))
-                    .foregroundStyle(color)
-            case .chess:
-                CheckerIcon(color: color, size: size * 0.9)
-            }
-        }
-        .frame(height: size, alignment: .leading)
-        .accessibilityHidden(true)
-    }
-}
-
 extension GameID {
     var systemIcon: String {
         switch self {
