@@ -39,12 +39,22 @@ struct RootView: View {
                     .transition(.opacity)
                     .zIndex(10)
             }
+        }
+        .environment(\.launchIntroCovering, intro != .done)
+        // The intro sits above everything and knows where the header's Lockie and title are, so it can
+        // fly its own into exactly that spot.
+        .overlayPreferenceValue(LaunchIntroTargetKey.self) { target in
             if intro != .done {
-                LaunchIntroView(
-                    onReveal: { withAnimation(Motion.smooth) { intro = .revealing } },
-                    onFinished: { intro = .done }
-                )
-                .zIndex(100)
+                GeometryReader { proxy in
+                    LaunchIntroView(
+                        screen: proxy.size,
+                        mascotTarget: target.mascot.map { proxy[$0] },
+                        wordTarget: target.word.map { proxy[$0] },
+                        onReveal: { withAnimation(Motion.smooth) { intro = .revealing } },
+                        onFinished: { intro = .done }
+                    )
+                }
+                .ignoresSafeArea()
             }
         }
         .animation(.easeInOut(duration: 0.35), value: model.phase)
@@ -141,53 +151,148 @@ struct RootView: View {
 
 // MARK: - Launch intro
 
-/// The "opening the app" moment, played once per cold launch.
+/// Where the header's Lockie and title are (reported by `Wordmark`), so the intro can land on them.
+struct LaunchIntroTarget {
+    var mascot: Anchor<CGRect>?
+    var word: Anchor<CGRect>?
+}
+
+struct LaunchIntroTargetKey: PreferenceKey {
+    static let defaultValue = LaunchIntroTarget()
+    static func reduce(value: inout LaunchIntroTarget, nextValue: () -> LaunchIntroTarget) {
+        let next = nextValue()
+        value.mascot = value.mascot ?? next.mascot
+        value.word = value.word ?? next.word
+    }
+}
+
+private struct LaunchIntroCoveringKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    /// True while the launch intro is still on screen.
+    var launchIntroCovering: Bool {
+        get { self[LaunchIntroCoveringKey.self] }
+        set { self[LaunchIntroCoveringKey.self] = newValue }
+    }
+}
+
+/// The "opening the app" moment, once per cold launch (~1.4s).
 ///
-/// iOS's static launch screen shows Lockie waving (`LaunchMascot`: the wave art at 180pt, centred on
-/// `LaunchBackground`). This starts on exactly that frame, with the same art at the same size and
-/// place, so there's no jump. Then "Lockie" pops in under him, he does a happy hop (light haptic on
-/// take-off), and both lean in toward you and fade while the background fades to reveal the app.
-/// About 1.45s. With Reduce Motion on, it's a plain 0.25s fade.
+/// 1. It starts on exactly the system launch screen: Lockie waving (`LaunchMascot`, 180pt, centred).
+/// 2. "Lockie" writes itself on under him, left to right, rising 10pt.
+/// 3. He does one happy hop: crouch, stretch, jump, squash on landing (light haptic on take-off).
+/// 4. The app comes in underneath and Lockie + his name fly up and shrink into the header's Lockie and
+///    title (same art, size, font and place), while the background fades. They land as the header, so
+///    nothing is left fading over the app. With no header yet (first launch, onboarding) they rise and
+///    fade instead.
+/// Transforms and opacity only; Lockie is a still image here (no per-frame redraws). Reduce Motion: a fade.
 struct LaunchIntroView: View {
-    /// Called as the zoom starts, so the app can bring its content in underneath.
+    let screen: CGSize
+    let mascotTarget: CGRect?
+    let wordTarget: CGRect?
     var onReveal: () -> Void
-    /// Called when the intro is fully gone.
     var onFinished: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var wordmarkShown = false
-    @State private var groupScale: CGFloat = 1
-    @State private var groupOpacity = 1.0
-    @State private var backgroundOpacity = 1.0
-    @State private var takeOff = false
 
-    /// The launch image's size in points (LaunchMascot.imageset is 180pt).
-    private static let mascotSize: CGFloat = 180
+    private static let mascotSize: CGFloat = 180    // the launch image's size
+    private static let wordSize: CGFloat = 40
+    private static let wordGap: CGFloat = 34          // title centre below Lockie's bottom edge
+
+    @State private var art = MascotExpression.wave
+    @State private var writeOn: CGFloat = 0
+    @State private var wordRise: CGFloat = 10
+    @State private var hopTick = 0
+    @State private var takeOff = false
+    @State private var mascotCenter: CGPoint?
+    @State private var mascotScale: CGFloat = 1
+    @State private var wordCenter: CGPoint?
+    @State private var wordScale: CGFloat = 1
+    @State private var groupOpacity: Double = 1
+    @State private var groupLift: CGFloat = 0
+    @State private var backgroundOpacity: Double = 1
+    @State private var measuredWord: CGSize = .zero
+    /// The latest header positions (props are captured once by `.task`, these stay current).
+    @State private var liveMascotTarget: CGRect?
+    @State private var liveWordTarget: CGRect?
+
+    private var startMascot: CGPoint { CGPoint(x: screen.width / 2, y: screen.height / 2) }
+    private var startWord: CGPoint {
+        CGPoint(x: screen.width / 2, y: screen.height / 2 + Self.mascotSize / 2 + Self.wordGap)
+    }
 
     var body: some View {
         ZStack {
             Color("LaunchBackground")
                 .opacity(backgroundOpacity)
-            ZStack {
-                // The hop is MascotView's own entrance (`.happy`, keeping the wave art), 0.3s in.
-                MascotView(expression: .wave, size: Self.mascotSize, entrance: .happy, popsIn: false)
-                Text(verbatim: Brand.appName)
-                    .font(.system(size: 40, weight: .black, design: .rounded))
-                    .foregroundStyle(Color.brand)
-                    .scaleEffect(wordmarkShown ? 1 : 0.85)
-                    .opacity(wordmarkShown ? 1 : 0)
-                    .offset(y: Self.mascotSize / 2 + 34)
-            }
-            .scaleEffect(groupScale)
-            .opacity(groupOpacity)
+            MascotView(expression: art, size: Self.mascotSize, isLive: false, popsIn: false)
+                .keyframeAnimator(initialValue: Hop(), trigger: hopTick) { view, hop in
+                    view.scaleEffect(x: hop.sx, y: hop.sy, anchor: .bottom).offset(y: hop.y)
+                } keyframes: { _ in
+                    KeyframeTrack(\.sy) {
+                        CubicKeyframe(0.9, duration: 0.12)      // crouch
+                        CubicKeyframe(1.07, duration: 0.1)      // stretch off the ground
+                        CubicKeyframe(1.0, duration: 0.2)       // round at the top
+                        CubicKeyframe(0.92, duration: 0.08)     // squash on landing
+                        SpringKeyframe(1.0, duration: 0.3, spring: .bouncy)
+                    }
+                    KeyframeTrack(\.sx) {
+                        CubicKeyframe(1.06, duration: 0.12)
+                        CubicKeyframe(0.96, duration: 0.1)
+                        CubicKeyframe(1.0, duration: 0.2)
+                        CubicKeyframe(1.05, duration: 0.08)
+                        SpringKeyframe(1.0, duration: 0.3, spring: .bouncy)
+                    }
+                    KeyframeTrack(\.y) {
+                        LinearKeyframe(0, duration: 0.12)
+                        CubicKeyframe(-30, duration: 0.2)       // up, slowing at the top
+                        CubicKeyframe(0, duration: 0.18)        // down, speeding up
+                        LinearKeyframe(0, duration: 0.3)
+                    }
+                }
+                .scaleEffect(mascotScale)
+                .position(mascotCenter ?? startMascot)
+            Text(verbatim: Brand.appName)
+                .font(.system(size: Self.wordSize, weight: .black, design: .rounded))
+                .tracking(-0.5 * Self.wordSize / 34)
+                .foregroundStyle(Color.brand)
+                .lineLimit(1)
+                .fixedSize()   // always the whole word (it used to be cut to "Loc…")
+                .background(GeometryReader { g in Color.clear.preference(key: WordSizeKey.self, value: g.size) })
+                .mask(alignment: .leading) {
+                    Rectangle().scaleEffect(x: writeOn, y: 1, anchor: .leading)
+                }
+                .offset(y: wordRise)
+                .scaleEffect(wordScale)
+                .position(wordCenter ?? startWord)
         }
-        // Centred on the whole screen, like the system launch screen (it ignores the safe area).
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .ignoresSafeArea()
+        .opacity(groupOpacity)
+        .offset(y: groupLift)
+        .frame(width: screen.width, height: screen.height)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
         .sensoryFeedback(.impact(weight: .light), trigger: takeOff)
+        .onPreferenceChange(WordSizeKey.self) { measuredWord = $0 }
+        .onAppear {
+            liveMascotTarget = mascotTarget
+            liveWordTarget = wordTarget
+        }
+        .onChange(of: mascotTarget) { _, new in liveMascotTarget = new }
+        .onChange(of: wordTarget) { _, new in liveWordTarget = new }
         .task { await play() }
+    }
+
+    private struct Hop {
+        var sx: CGFloat = 1
+        var sy: CGFloat = 1
+        var y: CGFloat = 0
+    }
+
+    private struct WordSizeKey: PreferenceKey {
+        static let defaultValue: CGSize = .zero
+        static func reduce(value: inout CGSize, nextValue: () -> CGSize) { value = nextValue() }
     }
 
     private func pause(_ ms: Int) async {
@@ -197,6 +302,8 @@ struct LaunchIntroView: View {
     @MainActor
     private func play() async {
         if reduceMotion {
+            writeOn = 1
+            wordRise = 0
             await pause(150)
             onReveal()
             withAnimation(.easeOut(duration: 0.25)) {
@@ -208,31 +315,46 @@ struct LaunchIntroView: View {
             return
         }
 
-        // 1. "Lockie" pops in under him.
+        // A beat on the launch screen, so the hand-off from iOS is invisible.
         await pause(150)
-        withAnimation(Motion.bouncy) { wordmarkShown = true }
-
-        // 2. The hop leaves the ground at ~0.43s (0.3s entrance delay + 130ms crouch) and lands at ~0.81s.
-        await pause(280)
+        // 1. "Lockie" writes itself on.
+        withAnimation(.easeOut(duration: 0.45)) { writeOn = 1 }
+        withAnimation(Motion.smooth) { wordRise = 0 }
+        // 2. One happy hop (keyframes above); the haptic lands with the take-off.
+        await pause(150)
+        hopTick += 1
+        await pause(130)
         takeOff.toggle()
         await pause(470)
-
-        // 3. A small squeeze, then both lean in toward you and fade as the app comes in underneath.
-        withAnimation(Motion.snappy) { groupScale = 0.96 }
-        await pause(110)
+        // 3. The app comes in underneath; give it a frame to report where the header is.
         onReveal()
-        withAnimation(.spring(response: 0.45, dampingFraction: 1)) {
-            groupScale = 1.6
-            groupOpacity = 0
+        await pause(60)
+        if let m = liveMascotTarget, let w = liveWordTarget, measuredWord.height > 0 {
+            // 4. Fly into the header: same art, shrink to its size, land on its spot.
+            art = .happy
+            withAnimation(Motion.mascot) {
+                mascotCenter = CGPoint(x: m.midX, y: m.midY)
+                mascotScale = m.width / Self.mascotSize
+                wordCenter = CGPoint(x: w.midX, y: w.midY)
+                wordScale = w.height / measuredWord.height
+            }
+            withAnimation(.easeInOut(duration: 0.35)) { backgroundOpacity = 0 }
+            await pause(560)
+        } else {
+            // No header on screen (onboarding): rise a little and fade.
+            withAnimation(.easeOut(duration: 0.3)) {
+                groupOpacity = 0
+                groupLift = -16
+            }
+            withAnimation(.easeInOut(duration: 0.35)) { backgroundOpacity = 0 }
+            await pause(380)
         }
-        withAnimation(.spring(response: 0.45, dampingFraction: 1).delay(0.05)) {
-            backgroundOpacity = 0
-        }
-        await pause(450)
         onFinished()
     }
 }
 
 #Preview("Launch intro") {
-    LaunchIntroView(onReveal: {}, onFinished: {})
+    GeometryReader { proxy in
+        LaunchIntroView(screen: proxy.size, mascotTarget: nil, wordTarget: nil, onReveal: {}, onFinished: {})
+    }
 }
