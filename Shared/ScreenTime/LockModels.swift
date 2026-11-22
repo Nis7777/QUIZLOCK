@@ -85,12 +85,14 @@ public struct PendingUnlock: Codable, Hashable {
     public var categoryToken: ActivityCategoryToken?
     public var itemKey: String
     public var appName: String?
+    /// The blocked app's bundle ID ("com.burbn.instagram"), so it can be opened after the unlock.
+    public var bundleID: String?
     public var createdAt: Date
 
     public init(appToken: ApplicationToken? = nil, webToken: WebDomainToken? = nil, categoryToken: ActivityCategoryToken? = nil,
-                itemKey: String, appName: String?, createdAt: Date = Date()) {
+                itemKey: String, appName: String?, bundleID: String? = nil, createdAt: Date = Date()) {
         self.appToken = appToken; self.webToken = webToken; self.categoryToken = categoryToken
-        self.itemKey = itemKey; self.appName = appName; self.createdAt = createdAt
+        self.itemKey = itemKey; self.appName = appName; self.bundleID = bundleID; self.createdAt = createdAt
     }
 }
 

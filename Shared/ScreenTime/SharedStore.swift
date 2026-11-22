@@ -9,6 +9,7 @@ public enum SharedStore {
         case unlockSession = "unlockSession.v1"
         case tokenNames = "tokenNames.v1"
         case tokenBundleIDs = "tokenBundleIDs.v1"
+        case lastShieldedApp = "lastShieldedApp.v1"
         case usedWordAnswers = "usedWordAnswers.v1"
         case userProfile = "userProfile.v1"
         case stats = "stats.v1"
@@ -73,6 +74,14 @@ public enum SharedStore {
         tokenBundleIDs = ids
     }
 
+    /// The app (or site) whose shield was drawn most recently, written by the shield configuration
+    /// extension. When an app is locked through a category, "Solve to unlock" arrives as the category, so
+    /// this is how Lockie still knows it was Instagram.
+    public static var lastShieldedApp: ShieldedApp? {
+        get { load(ShieldedApp.self, .lastShieldedApp) }
+        set { save(newValue, .lastShieldedApp) }
+    }
+
     public static func rememberName(_ name: String?, forKey key: String) {
         guard let name, !name.isEmpty else { return }
         var names = tokenNames
@@ -80,4 +89,19 @@ public enum SharedStore {
         names[key] = name
         tokenNames = names
     }
+}
+
+/// What the shield last showed: enough to open it again after an unlock.
+public struct ShieldedApp: Codable, Equatable {
+    public var name: String?
+    public var bundleID: String?
+    public var isWebsite: Bool
+    public var at: Date
+
+    public init(name: String?, bundleID: String?, isWebsite: Bool = false, at: Date = Date()) {
+        self.name = name; self.bundleID = bundleID; self.isWebsite = isWebsite; self.at = at
+    }
+
+    /// Shown within the last `seconds`.
+    public func isRecent(_ seconds: TimeInterval, now: Date = Date()) -> Bool { now.timeIntervalSince(at) < seconds }
 }

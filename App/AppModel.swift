@@ -59,17 +59,33 @@ enum AppLauncher {
         "twitch": "tv.twitch", "linkedin": "com.linkedin.LinkedIn", "tumblr": "com.tumblr.tumblr", "gag": "com.9gag.ios.mobile",
     ]
 
+    /// Why the last unlock couldn't open the app (shown in debug builds).
+    static var lastProblem: String?
+
     /// What to try, in order. Empty = we don't know how to open it.
     static func targets(for pending: PendingUnlock, name: String?) -> [(url: URL, universalOnly: Bool)] {
-        if pending.webToken != nil {
-            guard let domain = name?.trimmingCharacters(in: .whitespaces), domain.contains("."),
-                  let url = URL(string: "https://\(domain)") else { return [] }
+        // The shield that was on screen in the last 15 minutes, as a fallback for any missing piece.
+        let shown = SharedStore.lastShieldedApp.flatMap { $0.isRecent(15 * 60) ? $0 : nil }
+        if pending.webToken != nil || (pending.appToken == nil && shown?.isWebsite == true) {
+            guard let domain = (name ?? shown?.name)?.trimmingCharacters(in: .whitespaces), domain.contains("."),
+                  let url = URL(string: "https://\(domain)") else {
+                lastProblem = "website with no domain saved"
+                return []
+            }
             return [(url, false)]
         }
-        let key = name.map { String($0.lowercased().filter(\.isLetter)) } ?? ""
-        let bundleID = SharedStore.tokenBundleIDs[pending.itemKey]
+        let anyName = name ?? shown?.name
+        let key = anyName.map { String($0.lowercased().filter(\.isLetter)) } ?? ""
+        let bundleID = pending.bundleID
+            ?? SharedStore.tokenBundleIDs[pending.itemKey]
+            ?? shown?.bundleID
             ?? byName[key]
             ?? byName.first { !key.isEmpty && key.hasPrefix($0.key) && $0.key.count > 2 }?.value
+        if bundleID == nil {
+            lastProblem = "no app saved by the shield (name: \(anyName ?? "none"), last shield: \(shown == nil ? "none" : "yes"))"
+        } else if byBundleID[bundleID!] == nil {
+            lastProblem = "\(bundleID!) has no known link"
+        }
         guard let bundleID, let known = byBundleID[bundleID] else { return [] }
         var list: [(URL, Bool)] = []
         if let scheme = URL(string: known.scheme) { list.append((scheme, false)) }
@@ -576,12 +592,17 @@ final class AppModel {
     func returnToApp(_ pending: PendingUnlock, duration: UnlockDuration) {
         PendingPuzzleNote.clear()
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["lockie.unlock"])
-        let knownName = pending.appName ?? SharedStore.tokenNames[pending.itemKey]
+        let shown = SharedStore.lastShieldedApp.flatMap { $0.isRecent(15 * 60) ? $0 : nil }
+        let knownName = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? shown?.name
         let name = knownName ?? String(localized: "your app")
+        AppLauncher.lastProblem = nil
         let showScreen = {
             withAnimation(.easeInOut(duration: 0.3)) {
                 self.unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil)
             }
+            #if DEBUG
+            if let problem = AppLauncher.lastProblem { self.showToast("Couldn't open the app: \(problem)") }
+            #endif
         }
         let targets = AppLauncher.targets(for: pending, name: knownName)
         guard !targets.isEmpty else { showScreen(); return }
@@ -593,6 +614,7 @@ final class AppModel {
                 withTransaction(t) { self.unlockSession = nil }
                 self.showToast(String(localized: "\(name) unlocked for \(duration.localizedSentenceLabel)"))
             } else {
+                AppLauncher.lastProblem = "iOS refused \(targets.map(\.url.absoluteString).joined(separator: ", "))"
                 showScreen()
             }
         }
