@@ -119,13 +119,16 @@ final class Store {
         isPurchasing = true
         defer { isPurchasing = false }
         do {
-            switch try await product.purchase() {
+            let result = try await product.purchase()
+            switch result {
             case .success(let verification):
                 guard case .verified(let transaction) = verification else {
                     lastError = String(localized: "The purchase couldn't be verified.")
                     return false
                 }
                 await transaction.finish()
+                // Tell RevenueCat (its dashboard: revenue, trials, conversions).
+                await RevenueCatBridge.record(result)
                 if Self.isIntroductory(transaction) {
                     // The trial timeline promises a reminder; ask for notifications now if we haven't yet.
                     _ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
@@ -149,6 +152,7 @@ final class Store {
         } catch {
             lastError = error.localizedDescription
         }
+        await RevenueCatBridge.syncRestore()
         await refreshEntitlements()
     }
 

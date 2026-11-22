@@ -1,4 +1,10 @@
 name: Lockie
+packages:
+  # RevenueCat: subscription analytics (Lockie still completes purchases itself with StoreKit 2).
+  RevenueCat:
+    url: https://github.com/RevenueCat/purchases-ios-spm.git
+    from: 5.0.0
+
 options:
   bundleIdPrefix: app.lockie
   deploymentTarget:
@@ -53,6 +59,8 @@ targets:
       - path: Products.storekit
         buildPhase: none
     dependencies:
+      - package: RevenueCat
+        product: RevenueCat
       - target: ShieldConfigurationExt
       - target: ShieldActionExt
       - target: DeviceActivityMonitorExt

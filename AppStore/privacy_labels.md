@@ -1,8 +1,17 @@
 # App Privacy questionnaire (App Store Connect → App Privacy)
 
-## Answer: **Data Not Collected**
+## Answer (with RevenueCat): **Data Not Linked to You → Purchases → Purchase History**
 
-"Do you or your third-party partners collect data from this app?" → **No, we do not collect data from this app.**
+RevenueCat receives purchase details under an anonymous ID, so "Data Not Collected" is no longer accurate.
+In App Store Connect → App Privacy:
+
+- "Do you or your third-party partners collect data from this app?" → **Yes**.
+- **Purchases → Purchase History**: purposes **Analytics** and **App Functionality**; **not linked** to the user's
+  identity (anonymous RevenueCat ID, no accounts); **not used for tracking**.
+- Everything else stays "not collected". Check RevenueCat's own App Privacy guide before submitting, in case
+  your RevenueCat settings send more (for example, custom attributes).
+
+Everything else below still holds:
 
 Why that's accurate:
 

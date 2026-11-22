@@ -28,6 +28,9 @@ public enum Brand {
     }
     public static let minIOS = "17.0"
 
+    /// RevenueCat's public Apple SDK key (made to ship inside the app; never put the secret `sk_` key here).
+    public static let revenueCatAPIKey = "appl_wszUHhzGeHrGJbtxpxMBUjoKwor"
+
     public static let urlScheme = "lockie"
     public static let unlockDeepLink = URL(string: "lockie://unlock") ?? URL(fileURLWithPath: "/")
     /// After "Solve to unlock" on the shield, how long the shield shows "Your puzzle is ready" instead.

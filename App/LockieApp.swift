@@ -1,4 +1,6 @@
 import AppIntents
+import RevenueCat
+import StoreKit
 import SwiftUI
 import UIKit
 import UserNotifications
@@ -28,6 +30,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().delegate = notificationDelegate
+        // RevenueCat sees every purchase for its dashboard; Lockie still completes purchases itself
+        // (StoreKit 2), so the paywall, trial and Pro logic work exactly as before.
+        RevenueCatBridge.configure()
         // Decode Lockie's art off the main thread now, so no animation ever waits for a PNG.
         MascotArtCache.preload()
         NotificationArt.prepare()
@@ -94,5 +99,30 @@ struct LockieShortcuts: AppShortcutsProvider {
                     phrases: ["Solve my puzzle in \(.applicationName)", "Unlock with \(.applicationName)"],
                     shortTitle: "Solve my puzzle",
                     systemImageName: "puzzlepiece.fill")
+    }
+}
+
+/// The only place that talks to RevenueCat (kept apart from Store.swift, whose StoreKit names would clash
+/// with RevenueCat's). Lockie completes purchases itself with StoreKit 2; RevenueCat records them for its
+/// dashboard (revenue, trials, conversions, churn). No accounts: RevenueCat only sees an anonymous ID.
+enum RevenueCatBridge {
+    static func configure() {
+        RevenueCat.Purchases.logLevel = .warn
+        RevenueCat.Purchases.configure(
+            with: RevenueCat.Configuration.Builder(withAPIKey: Brand.revenueCatAPIKey)
+                .with(purchasesAreCompletedBy: .myApp, storeKitVersion: .storeKit2)
+                .build())
+    }
+
+    /// After a successful StoreKit 2 purchase.
+    static func record(_ result: StoreKit.Product.PurchaseResult) async {
+        guard RevenueCat.Purchases.isConfigured else { return }
+        _ = try? await RevenueCat.Purchases.shared.recordPurchase(result)
+    }
+
+    /// After Restore Purchases.
+    static func syncRestore() async {
+        guard RevenueCat.Purchases.isConfigured else { return }
+        _ = try? await RevenueCat.Purchases.shared.syncPurchases()
     }
 }

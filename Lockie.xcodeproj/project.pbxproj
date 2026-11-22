@@ -207,6 +207,7 @@
 		FC51D9E5785C220F119C2AAF /* wordle_answers.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F8E05A65F2A357D4ABFF70F /* wordle_answers.txt */; };
 		FCACF990E7878F394544121B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B1D4BC2599FE30394A90BA /* UserNotifications.framework */; };
 		FF81F1D74CFE2D7FD7458AB1 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E678101B14D6229656C5E03A /* Localizable.xcstrings */; };
+		5BC65889A470C222C3891011 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = E2882EC4BCCDDACB8273A0DA /* RevenueCat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -455,6 +456,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BC65889A470C222C3891011 /* RevenueCat in Frameworks */,
 				A0B75C977FB2B7D0315C7008 /* FamilyControls.framework in Frameworks */,
 				32CEFCAB918F732F3E12F9BB /* ManagedSettings.framework in Frameworks */,
 				A47DA22F503980E0046A4404 /* DeviceActivity.framework in Frameworks */,
@@ -886,6 +888,9 @@
 				25A790C257D892E834D8DA7F /* PBXTargetDependency */,
 				059E0E9F82B854912B8A1CD7 /* PBXTargetDependency */,
 			);
+			packageProductDependencies = (
+				E2882EC4BCCDDACB8273A0DA /* RevenueCat */,
+			);
 			name = App;
 			productName = App;
 			productReference = 1D8C110D22D06933F3F78C5B /* App.app */;
@@ -1042,6 +1047,9 @@
 			knownRegions = (
 				Base,
 				en,
+			);
+			packageReferences = (
+				A18E82C1E631D7F2A6BFEAEB /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			mainGroup = CD158353536E90323A7F7CE6;
 			projectDirPath = "";
@@ -1909,6 +1917,24 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+/* Begin XCRemoteSwiftPackageReference section */
+		A18E82C1E631D7F2A6BFEAEB /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E2882EC4BCCDDACB8273A0DA /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A18E82C1E631D7F2A6BFEAEB /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FCC7BE61B085E67E2453F9E4 /* Project object */;
 }
