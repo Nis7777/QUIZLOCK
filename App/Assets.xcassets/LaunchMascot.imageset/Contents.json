@@ -1,17 +1,17 @@
 {
   "images": [
     {
-      "filename": "LaunchShackle.png",
+      "filename": "LaunchMascot.png",
       "idiom": "universal",
       "scale": "1x"
     },
     {
-      "filename": "LaunchShackle@2x.png",
+      "filename": "LaunchMascot@2x.png",
       "idiom": "universal",
       "scale": "2x"
     },
     {
-      "filename": "LaunchShackle@3x.png",
+      "filename": "LaunchMascot@3x.png",
       "idiom": "universal",
       "scale": "3x"
     }

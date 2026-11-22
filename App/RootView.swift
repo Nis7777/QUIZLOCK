@@ -142,11 +142,11 @@ struct RootView: View {
 
 /// The "opening the app" moment, played once per cold launch.
 ///
-/// It starts pixel-for-pixel where iOS's static launch screen ends (the same `LaunchBackground`
-/// colour and the same logo, split into three aligned layers of `LaunchLogo`), so there's no jump.
-/// Then: the padlock gets two quick test wiggles, the shackle clicks open (light haptic), and the
-/// logo zooms through the open lock while the background fades to reveal the app. About 1.1s.
-/// With Reduce Motion on, it's a plain 0.25s fade.
+/// iOS's static launch screen shows Lockie waving (`LaunchMascot`: the wave art at 180pt, centred on
+/// `LaunchBackground`). This starts on exactly that frame, with the same art at the same size and
+/// place, so there's no jump. Then "Lockie" pops in under him, he does a happy hop (light haptic on
+/// take-off), and both lean in toward you and fade while the background fades to reveal the app.
+/// About 1.45s. With Reduce Motion on, it's a plain 0.25s fade.
 struct LaunchIntroView: View {
     /// Called as the zoom starts, so the app can bring its content in underneath.
     var onReveal: () -> Void
@@ -154,45 +154,38 @@ struct LaunchIntroView: View {
     var onFinished: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var jiggle = 0.0
-    @State private var shackleLift: CGFloat = 0
-    @State private var shackleAngle = 0.0
-    @State private var logoScale: CGFloat = 1
-    @State private var logoOpacity = 1.0
+    @State private var wordmarkShown = false
+    @State private var groupScale: CGFloat = 1
+    @State private var groupOpacity = 1.0
     @State private var backgroundOpacity = 1.0
-    @State private var unlockClick = false
+    @State private var takeOff = false
 
-    // Points inside the logo image, as fractions of its size (measured on LaunchLogo@3x.png, 577×166).
-    /// Bottom of the shackle's right leg, where it meets the lock body: the shackle swings open around it.
-    private static let shackleHinge = UnitPoint(x: 0.1265, y: 0.4398)
-    /// Bottom centre of the lock body: the lock wiggles around it.
-    private static let lockBase = UnitPoint(x: 0.10, y: 0.84)
-    /// The middle of the lock: the zoom flies through here.
-    private static let lockCentre = UnitPoint(x: 0.10, y: 0.64)
+    /// The launch image's size in points (LaunchMascot.imageset is 180pt).
+    private static let mascotSize: CGFloat = 180
 
     var body: some View {
         ZStack {
             Color("LaunchBackground")
                 .opacity(backgroundOpacity)
             ZStack {
-                ZStack {
-                    Image("LaunchShackle")
-                        .rotationEffect(.degrees(shackleAngle), anchor: Self.shackleHinge)
-                        .offset(y: -shackleLift)
-                    Image("LaunchLockBody")
-                }
-                .rotationEffect(.degrees(jiggle), anchor: Self.lockBase)
-                Image("LaunchWordmark")
+                // The hop is MascotView's own entrance (`.happy`, keeping the wave art), 0.3s in.
+                MascotView(expression: .wave, size: Self.mascotSize, entrance: .happy, popsIn: false)
+                Text(verbatim: Brand.appName)
+                    .font(.system(size: 40, weight: .black, design: .rounded))
+                    .foregroundStyle(Color.brand)
+                    .scaleEffect(wordmarkShown ? 1 : 0.85)
+                    .opacity(wordmarkShown ? 1 : 0)
+                    .offset(y: Self.mascotSize / 2 + 34)
             }
-            .scaleEffect(logoScale, anchor: Self.lockCentre)
-            .opacity(logoOpacity)
+            .scaleEffect(groupScale)
+            .opacity(groupOpacity)
         }
         // Centred on the whole screen, like the system launch screen (it ignores the safe area).
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
         .allowsHitTesting(false)
         .accessibilityHidden(true)
-        .sensoryFeedback(.impact(weight: .light), trigger: unlockClick)
+        .sensoryFeedback(.impact(weight: .light), trigger: takeOff)
         .task { await play() }
     }
 
@@ -206,7 +199,7 @@ struct LaunchIntroView: View {
             await pause(150)
             onReveal()
             withAnimation(.easeOut(duration: 0.25)) {
-                logoOpacity = 0
+                groupOpacity = 0
                 backgroundOpacity = 0
             }
             await pause(260)
@@ -214,37 +207,27 @@ struct LaunchIntroView: View {
             return
         }
 
-        // A beat on the launch screen, so the handoff from iOS is invisible.
-        await pause(120)
+        // 1. "Lockie" pops in under him.
+        await pause(150)
+        withAnimation(Motion.bouncy) { wordmarkShown = true }
 
-        // 1. Test the lock: two quick wiggles.
-        withAnimation(.spring(response: 0.12, dampingFraction: 0.5)) { jiggle = -7 }
-        await pause(90)
-        withAnimation(.spring(response: 0.12, dampingFraction: 0.5)) { jiggle = 6 }
-        await pause(90)
-        withAnimation(Motion.snappy) { jiggle = 0 }
-        await pause(60)
+        // 2. The hop leaves the ground at ~0.43s (0.3s entrance delay + 130ms crouch) and lands at ~0.81s.
+        await pause(280)
+        takeOff.toggle()
+        await pause(470)
 
-        // 2. Click: the shackle pops up and swings open.
-        unlockClick.toggle()
-        withAnimation(Motion.bouncy) {
-            shackleLift = 6
-            shackleAngle = -22
-        }
-        await pause(300)
-
-        // 3. A small squeeze, then zoom through the open lock into the app.
-        withAnimation(Motion.snappy) { logoScale = 0.94 }
+        // 3. A small squeeze, then both lean in toward you and fade as the app comes in underneath.
+        withAnimation(Motion.snappy) { groupScale = 0.96 }
         await pause(110)
         onReveal()
-        withAnimation(.spring(response: 0.42, dampingFraction: 1)) {
-            logoScale = 6
-            logoOpacity = 0
+        withAnimation(.spring(response: 0.45, dampingFraction: 1)) {
+            groupScale = 1.6
+            groupOpacity = 0
         }
-        withAnimation(.spring(response: 0.45, dampingFraction: 1).delay(0.06)) {
+        withAnimation(.spring(response: 0.45, dampingFraction: 1).delay(0.05)) {
             backgroundOpacity = 0
         }
-        await pause(420)
+        await pause(450)
         onFinished()
     }
 }

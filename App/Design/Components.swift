@@ -10,7 +10,9 @@ struct Wordmark: View {
 
     var body: some View {
         HStack(spacing: size * 0.14) {
-            PuzzleLockGlyph(color: palette.wordmark, size: size * 0.82)
+            // Lockie himself, standing beside his name (a still picture: this header is on every tab).
+            MascotView(expression: .happy, size: size * 1.35, isLive: false, popsIn: false)
+                .accessibilityHidden(true)
             Text(Brand.appName)
                 .font(.system(size: size, weight: .black, design: .rounded))
                 .foregroundStyle(palette.wordmark)
@@ -19,55 +21,6 @@ struct Wordmark: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Brand.appName)
         .accessibilityAddTraits(.isHeader)
-    }
-}
-
-/// Small puzzle-padlock glyph: a rounded padlock whose body has a jigsaw tab on the right.
-struct PuzzleLockGlyph: View {
-    var color: Color = .brand
-    var size: CGFloat = 28
-
-    var body: some View {
-        let bodyW = size * 0.74
-        let bodyH = size * 0.58
-        ZStack(alignment: .bottomLeading) {
-            // Shackle
-            ShackleShape()
-                .stroke(color.opacity(0.55), style: StrokeStyle(lineWidth: size * 0.11, lineCap: .round))
-                .frame(width: bodyW * 0.62, height: size * 0.5)
-                .offset(x: bodyW * 0.19, y: -bodyH * 0.55)
-            // Body with a jigsaw tab on the right
-            ZStack {
-                RoundedRectangle(cornerRadius: size * 0.16, style: .continuous)
-                    .fill(color)
-                    .frame(width: bodyW, height: bodyH)
-                Circle()
-                    .fill(color)
-                    .frame(width: size * 0.26, height: size * 0.26)
-                    .offset(x: bodyW / 2 + size * 0.06)
-                Circle()
-                    .fill(Color.white.opacity(0.9))
-                    .frame(width: size * 0.12, height: size * 0.12)
-                    .offset(y: -size * 0.02)
-            }
-            .frame(width: bodyW, height: bodyH)
-        }
-        .frame(width: size, height: size, alignment: .bottomLeading)
-        .accessibilityHidden(true)
-    }
-}
-
-/// An upside-down U: the padlock's shackle.
-private struct ShackleShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        let r = rect.width / 2
-        var p = Path()
-        p.move(to: CGPoint(x: rect.minX, y: rect.maxY))
-        p.addLine(to: CGPoint(x: rect.minX, y: rect.minY + r))
-        p.addArc(tangent1End: CGPoint(x: rect.minX, y: rect.minY), tangent2End: CGPoint(x: rect.midX, y: rect.minY), radius: r)
-        p.addArc(tangent1End: CGPoint(x: rect.maxX, y: rect.minY), tangent2End: CGPoint(x: rect.maxX, y: rect.minY + r), radius: r)
-        p.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        return p
     }
 }
 
