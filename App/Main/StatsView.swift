@@ -136,8 +136,7 @@ struct MascotEmptyState: View {
 
     var body: some View {
         VStack(spacing: 10) {
-            AssetImage(name: "mascot_pointing", placeholderSymbol: "face.smiling", contentMode: .fit)
-                .frame(height: 140)
+            MascotView(expression: .pointing, size: 140)
                 .accessibilityHidden(true)
             Text(title).appFont(19, .bold).foregroundStyle(palette.textPrimary)
             Text(message).appFont(15).foregroundStyle(palette.textSecondary).multilineTextAlignment(.center)
@@ -157,8 +156,8 @@ struct MilestoneView: View {
     var body: some View {
         VStack(spacing: 18) {
             Spacer()
-            AssetImage(name: "mascot_pointing", placeholderSymbol: "flame.fill", contentMode: .fit)
-                .frame(height: 230)
+            // Pops in with the screen (below), then jumps for the streak.
+            MascotView(expression: .pointing, size: 230, entrance: .celebrate, popsIn: false)
                 .scaleEffect(appeared ? 1 : 0.6)
                 .accessibilityHidden(true)
             HStack(spacing: 8) {

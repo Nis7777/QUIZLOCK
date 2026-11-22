@@ -11,8 +11,7 @@ struct WelcomeBackView: View {
     var body: some View {
         VStack(spacing: 18) {
             Spacer()
-            AssetImage(name: "mascot_pointing", placeholderSymbol: "face.smiling", contentMode: .fit)
-                .frame(height: 170)
+            MascotView(expression: .pointing, size: 170, entrance: .happy)
                 .accessibilityHidden(true)
             ScreenTitle(title: "Welcome back!",
                         subtitle: "Your streak and stats are restored. Pick the apps to lock again.")

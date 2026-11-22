@@ -181,8 +181,7 @@ private struct PlansScreen: View {
             .padding(.horizontal, 12)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
-                    AssetImage(name: "mascot_pointing", placeholderSymbol: "face.smiling", contentMode: .fit)
-                        .frame(height: 110)
+                    MascotView(expression: .pointing, size: 110, tag: "paywall")
                         .accessibilityHidden(true)
                     Text(headline)
                         .appFont(30, .bold)
@@ -434,8 +433,7 @@ private struct ExitOfferScreen: View {
                 .padding(.horizontal, 12)
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 14) {
-                        AssetImage(name: "mascot_pointing", placeholderSymbol: "face.smiling", contentMode: .fit)
-                            .frame(height: 120)
+                        MascotView(expression: .pointing, size: 120, tag: "paywall", entrance: .happy)
                             .accessibilityHidden(true)
                         if let percent = store.offerDiscountPercent,
                            let offerPrice = store.pricePerPeriod(store.yearlyOffer),

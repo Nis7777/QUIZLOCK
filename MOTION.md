@@ -80,3 +80,18 @@ Delete any `.easeInOut`, `.linear` or fixed `withAnimation(.default)` in the app
 - No content appears without a spring/stagger.
 - The onboarding progress bar and mascot never "jump".
 - Reduce Motion is respected.
+
+## Mascot (Lockie) animation system — `App/Design/Mascot.swift`
+- **Art is never redrawn.** Lockie is one rendered PNG per pose (`mascot_<pose>`). All motion is whole-body
+  transforms around the feet (float, breathe, squash/stretch with volume kept, tilt), so the design stays exact.
+- **States** (`MascotAnimation`): idle, happy (two hops), celebrate (big jump, arms-up art), sad (slump, slow
+  breaths, a sigh), sleeping (calm art, deep breaths, drifting "z"s). Lasting state: `MascotView(animation:)`.
+  One-off reaction from anywhere: `Mascot.play(.celebrate)` (optionally `tag:`). `LockieView` is the old API on top.
+- **Blinks** on open-eye poses only: the upper lid falls to 62% of the eye and the lower lid rises to meet it,
+  cut from `mascot_<pose>_lids` (the art with the eyes filled in by Lockie's own fitted skin shading, made by
+  `Scripts/make_mascot_lids.py`), with a tapered lash in the calm art's closed-eye style. 2.6–5 s apart, seeded
+  per Lockie, 20% doubles; slower when sad. Happy, celebrate and calm already have closed/squinting eyes.
+- **Celebrate's painted floor shadow** is drawn separately and stays on the floor, shrinking with the height.
+- **Every number** lives in `MascotTuning`. Helpers (`MascotMath`) come from rossark-motion-skill's Motion.swift.
+- One `TimelineView` per Lockie, paused off screen, in the background, and with Reduce Motion (then a still
+  that still reads: slumped when sad). Small chat avatars (`breathing: false`) stay still.

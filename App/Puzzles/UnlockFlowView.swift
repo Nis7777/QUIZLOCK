@@ -99,8 +99,7 @@ struct OutOfFreeUnlocksView: View {
             .padding(.horizontal, 12)
             Spacer(minLength: 12)
             VStack(spacing: 14) {
-                AssetImage(name: "mascot_pointing", placeholderSymbol: "face.smiling", contentMode: .fit)
-                    .frame(height: 150)
+                MascotView(expression: .pointing, size: 150)
                     .accessibilityHidden(true)
                 Text("You've used your \(Brand.freeUnlocks) free unlocks")
                     .appFont(26, .bold)
