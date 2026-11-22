@@ -49,7 +49,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             return ShieldConfiguration(
                 backgroundBlurStyle: nil,
                 backgroundColor: Self.background,
-                icon: Self.shieldIcon,
+                icon: Self.readyIcon,
                 title: ShieldConfiguration.Label(text: String(localized: "Your puzzle is ready"), color: Self.textPrimary),
                 subtitle: ShieldConfiguration.Label(
                     text: String(localized: "Tap the \(Brand.appName) notification, or open \(Brand.appName) from your Home Screen. \(appName) opens as soon as you solve it."),
@@ -65,7 +65,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         return ShieldConfiguration(
             backgroundBlurStyle: nil,
             backgroundColor: Self.background,
-            icon: Self.shieldIcon,
+            icon: Self.lockedIcon,
             title: ShieldConfiguration.Label(text: String(localized: "\(appName) is locked"), color: Self.textPrimary),
             subtitle: ShieldConfiguration.Label(
                 text: String(localized: "Solve \(puzzles) in \(Brand.appName) to use it for \(duration.sentenceLabel)."),
@@ -76,11 +76,15 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         )
     }
 
-    /// Our puzzle-padlock artwork (`shield_icon`, copied from the app icon by Scripts/import_art.py),
-    /// or a coral `lock.fill` if it's missing.
-    private static let shieldIcon: UIImage? = {
+    // Lockie himself on the block screen's own background (iOS draws the icon as a still image).
+    /// "Instagram is locked": Lockie with his clipboard, checking you against your plan.
+    private static let lockedIcon: UIImage? = UIImage(named: "shield_locked") ?? fallbackIcon
+    /// "Your puzzle is ready": Lockie pointing up at the notification that just arrived.
+    private static let readyIcon: UIImage? = UIImage(named: "shield_ready") ?? fallbackIcon
+
+    /// The app icon artwork as a rounded tile, or a coral `lock.fill` if that's missing too.
+    private static let fallbackIcon: UIImage? = {
         if let asset = UIImage(named: "shield_icon") {
-            // Rounded like an app icon.
             let size = CGSize(width: 180, height: 180)
             return UIGraphicsImageRenderer(size: size).image { _ in
                 UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: 40).addClip()

@@ -3,7 +3,8 @@
 Imports every PNG in ArtSource/ into App/Assets.xcassets (asset name = file name).
 
 - ArtSource/AppIcon.png becomes the app icon: resized to exactly 1024×1024 and flattened onto
-  white (no transparency). A copy also goes into the shield extension as `shield_icon`.
+  white (no transparency). A copy also goes into the shield extension as `shield_icon` (only a fallback now:
+  the block screen shows `shield_locked` / `shield_ready`, cut-outs of the clipboard and pointing poses).
   If it's missing, a placeholder icon is generated so the build has no asset warnings.
 - Every other PNG becomes an image set, e.g. game_chess.png → "game_chess".
 - Also writes the AccentColor and LaunchBackground colour sets.
