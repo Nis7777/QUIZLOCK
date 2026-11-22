@@ -18,47 +18,74 @@ struct UnlockResult: Equatable {
 }
 
 /// How to open the app someone was trying to use. iOS can't launch another app by its bundle ID, only by
-/// a link the app itself publishes, so this knows the links of the most common apps; websites open in
-/// Safari. Anything else falls back to "Go back to …".
+/// a link the app publishes, so for the common apps this knows (1) their app link (`instagram://`) and
+/// (2) their official web link (`https://www.instagram.com`), which iOS hands straight to the app when it's
+/// installed. Websites open in Safari. Anything else can't be opened, and the success screen says
+/// "Go back to …" instead.
 enum AppLauncher {
-    private static let schemesByBundleID: [String: String] = [
-        "com.burbn.instagram": "instagram://app",
-        "com.zhiliaoapp.musically": "snssdk1233://",
-        "com.ss.iphone.ugc.Ame": "snssdk1233://",
-        "com.google.ios.youtube": "youtube://",
-        "com.atebits.Tweetie2": "twitter://",
-        "com.facebook.Facebook": "fb://",
-        "com.toyopagroup.picaboo": "snapchat://",
-        "com.reddit.Reddit": "reddit://",
-        "com.burbn.barcelona": "barcelona://",
-        "com.netflix.Netflix": "nflx://",
-        "pinterest": "pinterest://",
-        "com.spotify.client": "spotify://",
-        "net.whatsapp.WhatsApp": "whatsapp://",
-        "ph.telegra.Telegraph": "tg://",
-        "com.hammerandchisel.discord": "discord://",
-        "tv.twitch": "twitch://",
-        "com.linkedin.LinkedIn": "linkedin://",
-        "com.tumblr.tumblr": "tumblr://",
-        "com.9gag.ios.mobile": "ninegag://",
+    private struct Known {
+        let scheme: String
+        let web: String?
+    }
+
+    private static let byBundleID: [String: Known] = [
+        "com.burbn.instagram": Known(scheme: "instagram://app", web: "https://www.instagram.com"),
+        "com.zhiliaoapp.musically": Known(scheme: "snssdk1233://", web: "https://www.tiktok.com"),
+        "com.google.ios.youtube": Known(scheme: "youtube://", web: "https://www.youtube.com"),
+        "com.atebits.Tweetie2": Known(scheme: "twitter://", web: "https://x.com"),
+        "com.facebook.Facebook": Known(scheme: "fb://", web: "https://www.facebook.com"),
+        "com.toyopagroup.picaboo": Known(scheme: "snapchat://", web: "https://www.snapchat.com"),
+        "com.reddit.Reddit": Known(scheme: "reddit://", web: "https://www.reddit.com"),
+        "com.burbn.barcelona": Known(scheme: "barcelona://", web: "https://www.threads.net"),
+        "com.netflix.Netflix": Known(scheme: "nflx://", web: "https://www.netflix.com"),
+        "pinterest": Known(scheme: "pinterest://", web: "https://www.pinterest.com"),
+        "com.spotify.client": Known(scheme: "spotify://", web: "https://open.spotify.com"),
+        "net.whatsapp.WhatsApp": Known(scheme: "whatsapp://", web: "https://wa.me"),
+        "ph.telegra.Telegraph": Known(scheme: "tg://", web: "https://t.me"),
+        "com.hammerandchisel.discord": Known(scheme: "discord://", web: "https://discord.com/app"),
+        "tv.twitch": Known(scheme: "twitch://", web: "https://www.twitch.tv"),
+        "com.linkedin.LinkedIn": Known(scheme: "linkedin://", web: "https://www.linkedin.com"),
+        "com.tumblr.tumblr": Known(scheme: "tumblr://", web: "https://www.tumblr.com"),
+        "com.9gag.ios.mobile": Known(scheme: "ninegag://", web: "https://9gag.com"),
     ]
 
-    /// By display name: the Simulator's sample apps, or when the bundle ID wasn't seen.
-    private static let schemesByName: [String: String] = [
-        "instagram": "instagram://app", "tiktok": "snssdk1233://", "youtube": "youtube://", "x": "twitter://",
-        "twitter": "twitter://", "facebook": "fb://", "snapchat": "snapchat://", "reddit": "reddit://",
-        "threads": "barcelona://", "netflix": "nflx://", "pinterest": "pinterest://", "discord": "discord://",
+    /// By display name (letters only, lowercased), for when the bundle ID wasn't seen.
+    private static let byName: [String: String] = [
+        "instagram": "com.burbn.instagram", "tiktok": "com.zhiliaoapp.musically", "youtube": "com.google.ios.youtube",
+        "x": "com.atebits.Tweetie2", "twitter": "com.atebits.Tweetie2", "facebook": "com.facebook.Facebook",
+        "snapchat": "com.toyopagroup.picaboo", "reddit": "com.reddit.Reddit", "threads": "com.burbn.barcelona",
+        "netflix": "com.netflix.Netflix", "pinterest": "pinterest", "spotify": "com.spotify.client",
+        "whatsapp": "net.whatsapp.WhatsApp", "telegram": "ph.telegra.Telegraph", "discord": "com.hammerandchisel.discord",
+        "twitch": "tv.twitch", "linkedin": "com.linkedin.LinkedIn", "tumblr": "com.tumblr.tumblr", "gag": "com.9gag.ios.mobile",
     ]
 
-    static func url(for pending: PendingUnlock, name: String) -> URL? {
+    /// What to try, in order. Empty = we don't know how to open it.
+    static func targets(for pending: PendingUnlock, name: String?) -> [(url: URL, universalOnly: Bool)] {
         if pending.webToken != nil {
-            let domain = name.trimmingCharacters(in: .whitespaces)
-            return domain.contains(".") ? URL(string: "https://\(domain)") : nil
+            guard let domain = name?.trimmingCharacters(in: .whitespaces), domain.contains("."),
+                  let url = URL(string: "https://\(domain)") else { return [] }
+            return [(url, false)]
         }
-        if let id = SharedStore.tokenBundleIDs[pending.itemKey], let scheme = schemesByBundleID[id] {
-            return URL(string: scheme)
+        let key = name.map { String($0.lowercased().filter(\.isLetter)) } ?? ""
+        let bundleID = SharedStore.tokenBundleIDs[pending.itemKey]
+            ?? byName[key]
+            ?? byName.first { !key.isEmpty && key.hasPrefix($0.key) && $0.key.count > 2 }?.value
+        guard let bundleID, let known = byBundleID[bundleID] else { return [] }
+        var list: [(URL, Bool)] = []
+        if let scheme = URL(string: known.scheme) { list.append((scheme, false)) }
+        // Universal link only: opens the app if it's installed, never Safari.
+        if let web = known.web.flatMap(URL.init(string:)) { list.append((web, true)) }
+        return list
+    }
+
+    /// Tries each target until one opens; reports whether anything did.
+    @MainActor
+    static func open(_ targets: [(url: URL, universalOnly: Bool)], completion: @escaping (Bool) -> Void) {
+        guard let first = targets.first else { completion(false); return }
+        let options: [UIApplication.OpenExternalURLOptionsKey: Any] = first.universalOnly ? [.universalLinksOnly: true] : [:]
+        UIApplication.shared.open(first.url, options: options) { opened in
+            if opened { completion(true) } else { open(Array(targets.dropFirst()), completion: completion) }
         }
-        return schemesByName[name.lowercased()].flatMap(URL.init(string:))
     }
 }
 
@@ -534,10 +561,28 @@ final class AppModel {
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["lockie.unlock"])
         let knownName = pending.appName ?? SharedStore.tokenNames[pending.itemKey]
         let name = knownName ?? String(localized: "your app")
-        let open = knownName.flatMap { AppLauncher.url(for: pending, name: $0) }
+        let targets = AppLauncher.targets(for: pending, name: knownName)
         Haptics.success()
+        if !targets.isEmpty {
+            // Straight back into the app they were trying to use (its shield is already lifted): no
+            // success screen in between. Only if it can't be opened do we show the screen instead.
+            AppLauncher.open(targets) { [weak self] opened in
+                guard let self else { return }
+                if opened {
+                    var t = Transaction()
+                    t.disablesAnimations = true
+                    withTransaction(t) { self.unlockSession = nil }
+                    self.showToast(String(localized: "\(name) unlocked for \(duration.localizedSentenceLabel)"))
+                } else {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        self.unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil)
+                    }
+                }
+            }
+            return
+        }
         withAnimation(.easeInOut(duration: 0.3)) {
-            unlockResult = UnlockResult(appName: name, duration: duration, openURL: open)
+            unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil)
         }
     }
 

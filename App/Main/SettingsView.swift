@@ -94,23 +94,23 @@ struct SettingsView: View {
         .screenBackground()
         .sheet(isPresented: $showPuzzlesPerUnlock) {
             PuzzlesPerUnlockSheet()
+                .fittedSheet()
                 .environment(model)
                 .environment(\.palette, model.palette)
-                .presentationDetents([.medium])
                 .presentationCornerRadius(28)
         }
         .sheet(isPresented: $showStrictSheet) {
             StrictModeSheet()
+                .fittedSheet()
                 .environment(model)
                 .environment(\.palette, model.palette)
-                .presentationDetents([.medium, .large])
                 .presentationCornerRadius(28)
         }
         .sheet(isPresented: $showUnlockPuzzles) {
             UnlockPuzzlesSheet()
+                .fittedSheet()
                 .environment(model)
                 .environment(\.palette, model.palette)
-                .presentationDetents([.medium, .large])
                 .presentationCornerRadius(28)
         }
         .safariSheet($link)

@@ -211,6 +211,37 @@ extension View {
     }
 }
 
+extension View {
+    /// A bottom sheet exactly as tall as its content: nothing cut off at the top or bottom, no empty
+    /// half-sheet, and no resizing once it's open. For sheets whose content is a fixed stack.
+    func fittedSheet() -> some View {
+        modifier(FittedSheet())
+    }
+}
+
+private struct FittedSheet: ViewModifier {
+    @Environment(\.palette) private var palette
+    @State private var height: CGFloat = 420
+
+    func body(content: Content) -> some View {
+        content
+            // Laid out at its natural height (spacers collapse), measured once, and the sheet takes it.
+            .fixedSize(horizontal: false, vertical: true)
+            .background(GeometryReader { g in Color.clear.preference(key: FittedSheetHeightKey.self, value: g.size.height) })
+            .onPreferenceChange(FittedSheetHeightKey.self) { h in
+                if h > 0, abs(h - height) > 1 { height = h }
+            }
+            .frame(maxHeight: .infinity, alignment: .top)
+            .presentationDetents([.height(height)])
+            .presentationBackground(palette.bg)
+    }
+}
+
+private struct FittedSheetHeightKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = max(value, nextValue()) }
+}
+
 private struct ScreenBackground: ViewModifier {
     @Environment(\.palette) private var palette
     func body(content: Content) -> some View {

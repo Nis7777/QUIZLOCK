@@ -70,9 +70,9 @@ struct PuzzlesView: View {
         .screenBackground()
         .sheet(isPresented: $showManage) {
             UnlockPuzzlesSheet()
+                .fittedSheet()
                 .environment(model)
                 .environment(\.palette, model.palette)
-                .presentationDetents([.medium, .large])
                 .presentationCornerRadius(28)
         }
     }
