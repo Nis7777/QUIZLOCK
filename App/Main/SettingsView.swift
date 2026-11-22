@@ -79,7 +79,7 @@ struct SettingsView: View {
                 unlockRulesSection
                 remindersSection
                 appearanceSection
-                if model.notificationsDenied || model.timeSensitiveOff { notificationsOffCard }
+                if model.notificationsDenied || model.notificationsUndecided || model.timeSensitiveOff { notificationsOffCard }
                 proCard
                 dataSection
                 supportSection
@@ -196,17 +196,21 @@ struct SettingsView: View {
                 .frame(width: 34)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 6) {
-                Text(model.notificationsDenied ? "Notifications are off" : "Time Sensitive is off")
+                Text(model.timeSensitiveOff ? "Time Sensitive is off" : "Notifications are off")
                     .appFont(17, .semibold).foregroundStyle(palette.textPrimary)
-                Text(model.notificationsDenied
+                Text(!model.timeSensitiveOff
                      ? "Turn them on so I can hand you your puzzle instantly after “Solve to unlock”. Until then, open \(Brand.appName) yourself after tapping it."
                      : "Turn on Time Sensitive Notifications so your puzzle still reaches you in Focus and Sleep.")
                     .appFont(15)
                     .foregroundStyle(palette.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
-                Button("Open Settings") {
-                    // Straight to Lockie's notification settings (Allow + Time Sensitive switches).
-                    if let url = URL(string: UIApplication.openNotificationSettingsURLString) { openURL(url) }
+                Button(model.notificationsUndecided ? "Turn on notifications" : "Open Settings") {
+                    if model.notificationsUndecided {
+                        Task { await model.requestNotificationPermission() }
+                    } else if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                        // Straight to Lockie's notification settings (Allow + Time Sensitive switches).
+                        openURL(url)
+                    }
                 }
                 .appFont(15, .semibold)
                 .foregroundStyle(palette.accentText)

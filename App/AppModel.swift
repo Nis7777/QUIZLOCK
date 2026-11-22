@@ -356,6 +356,8 @@ final class AppModel {
 
     /// True when the user declined notifications (Settings then explains how to turn them on).
     var notificationsDenied = false
+    /// Never asked yet (e.g. progress restored from iCloud skipped onboarding's notifications step).
+    var notificationsUndecided = false
     /// Notifications are allowed but Time Sensitive is switched off (so Focus / Sleep can hold back
     /// "Tap to solve"). Settings offers a fix.
     var timeSensitiveOff = false
@@ -368,10 +370,16 @@ final class AppModel {
     func refreshNotificationStatus() async {
         let settings = await UNUserNotificationCenter.current().notificationSettings()
         notificationsDenied = settings.authorizationStatus == .denied
+        notificationsUndecided = settings.authorizationStatus == .notDetermined
         let allowed = [.authorized, .provisional, .ephemeral].contains(settings.authorizationStatus)
         timeSensitiveOff = allowed && settings.timeSensitiveSetting == .disabled
         // The shield can't ask the system itself (its callbacks are synchronous), so it reads this.
         SharedStore.notificationsAllowed = allowed
+        // Set up but never asked (a reinstall restored from iCloud skips onboarding's notifications step):
+        // ask now, so "Tap to solve" can reach them. Not over the Welcome back screen; it asks after.
+        if notificationsUndecided, self.settings.onboardingComplete, phase == .main, !welcomeBack {
+            await requestNotificationPermission()
+        }
     }
 
     // MARK: Authorization
@@ -559,30 +567,34 @@ final class AppModel {
         WidgetCenter.shared.reloadAllTimelines()
         SharedStore.save(nil as UnlockSession?, .unlockSession)
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["lockie.unlock"])
+        Haptics.success()
+        returnToApp(pending, duration: duration)
+    }
+
+    /// After an unlock (a solved puzzle or an emergency unlock), go straight back into the app they were
+    /// trying to use; its shield is already lifted. Only if it can't be opened, show the success screen.
+    func returnToApp(_ pending: PendingUnlock, duration: UnlockDuration) {
+        PendingPuzzleNote.clear()
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["lockie.unlock"])
         let knownName = pending.appName ?? SharedStore.tokenNames[pending.itemKey]
         let name = knownName ?? String(localized: "your app")
-        let targets = AppLauncher.targets(for: pending, name: knownName)
-        Haptics.success()
-        if !targets.isEmpty {
-            // Straight back into the app they were trying to use (its shield is already lifted): no
-            // success screen in between. Only if it can't be opened do we show the screen instead.
-            AppLauncher.open(targets) { [weak self] opened in
-                guard let self else { return }
-                if opened {
-                    var t = Transaction()
-                    t.disablesAnimations = true
-                    withTransaction(t) { self.unlockSession = nil }
-                    self.showToast(String(localized: "\(name) unlocked for \(duration.localizedSentenceLabel)"))
-                } else {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        self.unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil)
-                    }
-                }
+        let showScreen = {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                self.unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil)
             }
-            return
         }
-        withAnimation(.easeInOut(duration: 0.3)) {
-            unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil)
+        let targets = AppLauncher.targets(for: pending, name: knownName)
+        guard !targets.isEmpty else { showScreen(); return }
+        AppLauncher.open(targets) { [weak self] opened in
+            guard let self else { return }
+            if opened {
+                var t = Transaction()
+                t.disablesAnimations = true
+                withTransaction(t) { self.unlockSession = nil }
+                self.showToast(String(localized: "\(name) unlocked for \(duration.localizedSentenceLabel)"))
+            } else {
+                showScreen()
+            }
         }
     }
 

@@ -54,5 +54,7 @@ struct WelcomeBackView: View {
         model.turnOnLocksFromOnboarding()
         model.screenTime.registerSchedule(model.lock.schedule)
         withAnimation(.easeInOut(duration: 0.3)) { model.welcomeBack = false }
+        // A restore skips onboarding's notifications step: ask now, so "Tap to solve" can reach them.
+        Task { await model.refreshNotificationStatus() }
     }
 }

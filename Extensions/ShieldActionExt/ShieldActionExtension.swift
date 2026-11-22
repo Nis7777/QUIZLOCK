@@ -76,13 +76,17 @@ final class ShieldActionExtension: ShieldActionDelegate {
         content.body = n == 1 ? String(localized: "\(target) unlocks as soon as you solve it.")
                               : String(localized: "Solve \(n) puzzles and \(target) unlocks.")
         content.sound = .default
-        content.interruptionLevel = .timeSensitive
         content.relevanceScore = 1.0
         content.threadIdentifier = "lockie.unlock"
         content.userInfo = ["deeplink": Brand.unlockDeepLink.absoluteString]
         if let attachment = Self.lockieAttachment() { content.attachments = [attachment] }
-        let request = UNNotificationRequest(identifier: "lockie.unlock", content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request) { _ in done() }
+        let center = UNUserNotificationCenter.current()
+        center.getNotificationSettings { settings in
+            // Time Sensitive when it's available and on; otherwise a normal notification, so it always shows.
+            content.interruptionLevel = settings.timeSensitiveSetting == .enabled ? .timeSensitive : .active
+            let request = UNNotificationRequest(identifier: "lockie.unlock", content: content, trigger: nil)
+            center.add(request) { _ in done() }
+        }
     }
 
     /// A copy of the App Group's Lockie picture (the system moves attachment files, so never the original).

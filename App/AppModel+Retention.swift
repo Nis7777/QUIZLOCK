@@ -163,10 +163,8 @@ extension AppModel {
         SharedStore.pendingUnlock = nil
         SharedStore.save(nil as UnlockSession?, .unlockSession)
         statsChanged()
-        let name = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? String(localized: "your app")
-        withAnimation(.easeInOut(duration: 0.3)) {
-            unlockResult = UnlockResult(appName: name, duration: .minutes(1))
-        }
+        // Same as a solved puzzle: straight back into the app.
+        returnToApp(pending, duration: .minutes(1))
     }
 
     // MARK: Daily puzzle
