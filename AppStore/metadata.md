@@ -20,7 +20,7 @@ screen time,app blocker,focus,brain training,chess,sudoku,word game,math,limit a
 Lockie is an app blocker that makes you smarter. Pick the apps that steal your time, and Lockie locks them with Apple's Screen Time. Want back in? Solve a quick puzzle first.
 
 LOCK THE APPS THAT DISTRACT YOU
-Choose any apps, categories or websites. When you open one, Lockie's block screen appears instead. Tap Start Puzzle, solve it, and the app unlocks for the time you chose: 5 minutes, 15 minutes, for today, or a custom time. When the time is up, it locks again automatically.
+Choose any apps, categories or websites. When you open one, Lockie's block screen appears instead. Tap Solve to unlock, solve the puzzle, and the app unlocks for the time you chose: 5 minutes, 15 minutes, for today, or a custom time. When the time is up, it locks again automatically.
 
 FOUR REAL PUZZLES, NOT BUSYWORK
 • Chess: real mate-in-one and mate-in-two puzzles from the Lichess database
