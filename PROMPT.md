@@ -17,7 +17,6 @@ IAP_PRO_YEARLY      = "app.lockie.ios.pro.yearly"         // $39.99/year, 7-day 
 IAP_PRO_MONTHLY     = "app.lockie.ios.pro.monthly"        // $9.99/month, no trial
 IAP_PRO_OFFER       = "app.lockie.ios.pro.yearly.offer"   // $29.99/year, exit offer only
 // All three are auto-renewable subscriptions in the group "Lockie Pro".
-FREE_UNLOCKS        = 5
 MIN_IOS             = 17.0
 ```
 
