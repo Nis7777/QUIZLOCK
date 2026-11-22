@@ -2,11 +2,9 @@
 
 *Every step needs the paid Apple Developer account login. Go in order and tick each box.*
 
-> **Renamed from QuizLock to Lockie (Nov 2026).** The name "QuizLock" was taken on the App Store, so
-> every ID now uses `lockie`. If you already registered the old `app.quizlock.ios…` IDs or the
-> `group.app.quizlock.ios` App Group, leave them alone (or delete them under Identifiers): they're
-> unused and do no harm. Do steps 4 and 5 again with the **new** IDs below. The Screen Time request
-> (step 6) is for the whole account, so it carries over and doesn't need sending again.
+> **Old IDs:** delete any App IDs or App Groups from before the rename to Lockie under
+> Identifiers. Only the `lockie` IDs below are used. The Screen Time request (step 6) is for the whole
+> account, so it doesn't need sending again.
 
 ## PART 1: Do first (the slow approval starts here)
 
