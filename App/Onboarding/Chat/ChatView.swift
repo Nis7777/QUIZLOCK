@@ -152,26 +152,26 @@ struct ChatView: View {
         VStack(spacing: 0) {
             header
             Divider()
-            ScrollViewReader { proxy in
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        ForEach(controller.entries) { entry in
-                            row(entry)
-                        }
-                        if controller.typing {
-                            TypingBubble()
-                                .transition(.scale(scale: 0.9, anchor: .bottomLeading).combined(with: .opacity))
-                        }
-                        repliesArea
-                        Color.clear.frame(height: 8).id("bottom")
+            // Pinned to the bottom like Messages: when a bubble, the typing dots or the reply chips arrive,
+            // the scroll view keeps its bottom edge in place, so the new item appears fully at the bottom and
+            // everything above slides up in the same animation. There's no separate scroll afterwards (that
+            // used to show the new bubble half cut off, then jump).
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(controller.entries) { entry in
+                        row(entry)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 14)
+                    if controller.typing {
+                        TypingBubble()
+                            .transition(.scale(scale: 0.9, anchor: .bottomLeading).combined(with: .opacity))
+                    }
+                    repliesArea
+                    Color.clear.frame(height: 8)
                 }
-                .onChange(of: controller.entries.count) { _, _ in scrollDown(proxy) }
-                .onChange(of: controller.typing) { _, _ in scrollDown(proxy) }
-                .onChange(of: controller.replies.count) { _, _ in scrollDown(proxy) }
+                .padding(.horizontal, 16)
+                .padding(.top, 14)
             }
+            .modifier(PinnedToBottom())
         }
         .background(Color.white.ignoresSafeArea())
         .sensoryFeedback(.impact(flexibility: .soft, intensity: 0.6), trigger: controller.entries.count)
@@ -179,10 +179,6 @@ struct ChatView: View {
             controller.reduceMotion = reduceMotion
             controller.start()
         }
-    }
-
-    private func scrollDown(_ proxy: ScrollViewProxy) {
-        withAnimation(Motion.smooth) { proxy.scrollTo("bottom", anchor: .bottom) }
     }
 
     private var header: some View {
@@ -370,5 +366,18 @@ struct AppGridBubble: View {
         .padding(12)
         .background(Color(hex: 0xEFEFF2), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         .accessibilityLabel(Text("TikTok, YouTube, Instagram, X, Facebook, Threads, Reddit and Snapchat"))
+    }
+}
+
+/// Keeps a scroll view's bottom edge in place: where it starts, and whenever its content grows.
+private struct PinnedToBottom: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 18.0, *) {
+            content
+                .defaultScrollAnchor(.bottom)
+                .defaultScrollAnchor(.bottom, for: .sizeChanges)
+        } else {
+            content.defaultScrollAnchor(.bottom)
+        }
     }
 }
