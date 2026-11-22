@@ -14,7 +14,7 @@ struct UnlockFlowView: View {
                 }
                 .transition(.opacity)
             } else if model.unlockSession != nil, model.needsProForUnlock {
-                OutOfFreeUnlocksView(onStartTrial: { model.presentPaywall(.unlockLimit) },
+                SubscriptionNeededView(onStartTrial: { model.presentPaywall(.unlockLimit) },
                                      onClose: { model.closeUnlockFlow() })
                     .transition(.opacity)
             } else if let session = model.unlockSession {
@@ -84,7 +84,7 @@ struct UnlockFlowView: View {
 }
 
 /// Shown instead of a puzzle when there's no active subscription (e.g. it lapsed).
-struct OutOfFreeUnlocksView: View {
+struct SubscriptionNeededView: View {
     let onStartTrial: () -> Void
     let onClose: () -> Void
     @Environment(AppModel.self) private var model
@@ -105,7 +105,7 @@ struct OutOfFreeUnlocksView: View {
                     .appFont(26, .bold)
                     .foregroundStyle(palette.textPrimary)
                     .multilineTextAlignment(.center)
-                    .accessibilityIdentifier("unlock.outOfFreeUnlocks")
+                    .accessibilityIdentifier("unlock.subscriptionNeeded")
                 Text("Your subscription isn't active. Subscribe to keep earning unlocks with puzzles.")
                     .appFont(17)
                     .foregroundStyle(palette.textSecondary)

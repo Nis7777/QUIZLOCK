@@ -142,7 +142,7 @@ Scrolling list on bg, top to bottom:
   - Red `shuffle`, "Unlock puzzles", subtitle listing the enabled game names ("Chess, Word"), trailing "2 selected". Opens the **Unlock puzzles** sheet.
   - Footer: "Your puzzles take turns in a shuffled order."
 - Section "Appearance": two side-by-side selectable cards, each with a mini drawing of the UI. "Classic · Light & coral" (selected: red border and red check) and "Dark · Black & white". Footer: "Puzzle boards keep their original colors."
-- A "Lockie Pro" card. Not subscribed: "X of 5 free unlocks left · Start free trial" and a chevron that opens the paywall. Subscribed: "Active · renews {date}" plus "Manage subscription" (`AppStore.showManageSubscriptions`).
+- A "Lockie Pro" card. Not subscribed: "Not active · Start free trial" and a chevron that opens the paywall. Subscribed: "Active · renews {date}" plus "Manage subscription" (`AppStore.showManageSubscriptions`).
 - Section "Analytics": a card with "Share app analytics" and an off toggle. Body: "Help improve {APP_NAME} with anonymous analytics, including purchases, changes to your selected puzzles, and puzzle starts/completions during app unlocks. App identities, Screen Time reports, unlock times and typed answers stay on-device. Optional; turn off anytime." Only store the setting. Don't add any analytics SDK; leave a `// TODO: analytics` hook.
 - Section "Ad measurement": a card with "Share ad measurement" and an off toggle. Body: "Optionally share app opens and purchases to measure our ads. Protected apps, Screen Time activity and puzzle data are never included. Turning this off stops future events; it doesn't delete data already sent." Then a red link "Manage Apple tracking permission" that opens the app's page in Settings. Store the setting only.
 - A footer card with the "Terms of Service" and "Privacy Policy" links, plus the Credits line.
@@ -222,7 +222,7 @@ Scrolling list on bg, top to bottom:
   - It picks games round-robin, in shuffled order, from the enabled games at each game's chosen difficulty.
   - The user must solve **N puzzles** (Puzzles per unlock). Progress, including the half-finished puzzle state, persists if they leave.
   - On success:
-    1. Check entitlement. If the user has no active Lockie Pro subscription and `freeUnlocksUsed >= FREE_UNLOCKS`, show the "You've used your 5 free unlocks" card (which opens the paywall) instead of unlocking. Otherwise increment `freeUnlocksUsed` (unless Pro).
+    1. Check entitlement. If the user has no active Lockie Pro subscription, show the "Unlocking needs Lockie Pro" card (which opens the paywall) instead of unlocking. Hard paywall: after onboarding the app requires Lockie Pro.
     2. Remove that token from the shield.
     3. Schedule the re-lock: `DeviceActivityCenter().startMonitoring(DeviceActivityName("unlock.<id>"), during: schedule)`. **DeviceActivity needs schedules of at least 15 minutes**, so for shorter unlocks set `intervalStart = now − (15min − duration)` and `intervalEnd = now + duration`. "For Today" ends at 23:59:59. Custom uses the chosen h/m.
     4. Show the S06-style screen "You unlocked the app!" with the open-lock icon and the line "Go back to {app} — it's unlocked for 15 minutes."
