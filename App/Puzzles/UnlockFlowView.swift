@@ -1,3 +1,5 @@
+import FamilyControls
+import ManagedSettings
 import SwiftUI
 
 /// Full-screen unlock puzzle (S05 chrome without "PRACTICE", plus "1 of N").
@@ -10,7 +12,9 @@ struct UnlockFlowView: View {
         ZStack {
             if let result = model.unlockResult {
                 UnlockSuccessView(appName: result.appName, duration: result.duration,
-                                  opensApp: result.openURL != nil) {
+                                  opensApp: result.openURL != nil,
+                                  askWhichApp: result.itemKey != nil, appToken: result.appToken,
+                                  onPick: { model.pickUnlockedApp(name: $0, bundleID: $1) }) {
                     model.finishUnlockResult()
                 }
                 .transition(.opacity)
@@ -134,37 +138,85 @@ struct OutOfFreeUnlocksView: View {
     }
 }
 
-/// "You unlocked the app!" (S06 style), shown after a real unlock.
+/// Shown after an unlock only when Lockie can't open the app by itself. iOS never tells Lockie which app
+/// a locked item is (only an anonymous token), so the first time it asks "Which app was this?",
+/// showing iOS's own icon and name for the locked app; one tap opens it and is remembered.
 struct UnlockSuccessView: View {
     let appName: String
     let duration: UnlockDuration
     /// The button opens the app itself ("Open Instagram") instead of just closing.
     var opensApp = false
+    /// Lockie couldn't tell which app it was (iOS keeps that private): ask once, then remember.
+    var askWhichApp = false
+    var appToken: ApplicationToken?
+    var onPick: (String, String) -> Void = { _, _ in }
     let onDone: () -> Void
     @Environment(\.palette) private var palette
     @State private var appeared = false
 
     var body: some View {
-        VStack(spacing: 24) {
-            Spacer()
+        VStack(spacing: 20) {
+            Spacer(minLength: 8)
             // Lockie celebrates: a jump with arms up (MascotView's celebrate), with the confetti and the
             // success haptic below. The shield is already lifted when this appears.
-            MascotView(animation: .celebrate, size: 200)
+            MascotView(animation: .celebrate, size: askWhichApp ? 130 : 200)
                 .accessibilityHidden(true)
             ScreenTitle(title: String(localized: "Unlocked for \(duration.localizedSentenceLabel)"),
-                        subtitle: opensApp ? String(localized: "\(appName) is ready for you.")
-                                           : String(localized: "Go back to \(appName). It's ready for you."))
-            Spacer()
-            PrimaryButton(title: opensApp ? String(localized: "Open \(appName)") : String(localized: "Done"),
-                          action: onDone)
-                .padding(.horizontal, 20)
-                .padding(.bottom, 12)
+                        subtitle: askWhichApp ? String(localized: "Which app was this? Tap it to jump back in. I'll remember it next time.")
+                                  : opensApp ? String(localized: "\(appName) is ready for you.")
+                                             : String(localized: "Go back to \(appName). It's ready for you."))
+            if askWhichApp { whichApp }
+            Spacer(minLength: 8)
+            if askWhichApp {
+                Button("Not in the list") { onDone() }
+                    .appFont(16, .semibold)
+                    .foregroundStyle(palette.textSecondary)
+                    .tapTarget()
+                    .padding(.bottom, 12)
+            } else {
+                PrimaryButton(title: opensApp ? String(localized: "Open \(appName)") : String(localized: "Done"),
+                              action: onDone)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 12)
+            }
         }
         .screenBackground()
         .confetti(appeared)
         .onAppear {
             Haptics.success()
             withAnimation(Motion.bouncy) { appeared = true }
+        }
+    }
+
+    private var whichApp: some View {
+        VStack(spacing: 14) {
+            if let appToken {
+                // iOS draws this (Lockie itself can't read it): the locked app's real icon and name.
+                Label(appToken)
+                    .labelStyle(.titleAndIcon)
+                    .appFont(17, .semibold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(palette.tint, in: Capsule())
+            }
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 14) {
+                ForEach(AppLauncher.pickable, id: \.bundleID) { app in
+                    Button {
+                        Haptics.tap()
+                        onPick(app.name, app.bundleID)
+                    } label: {
+                        VStack(spacing: 6) {
+                            BrandAppIcon(name: app.icon, size: 54)
+                            Text(verbatim: app.name)
+                                .appFont(12, .semibold)
+                                .foregroundStyle(palette.textPrimary)
+                                .lineLimit(1)
+                        }
+                    }
+                    .buttonStyle(PressableButtonStyle())
+                }
+            }
+            .padding(.horizontal, 20)
         }
     }
 }

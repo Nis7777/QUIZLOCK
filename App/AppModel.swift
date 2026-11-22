@@ -1,4 +1,5 @@
 import Foundation
+import ManagedSettings
 import Observation
 import SwiftUI
 import UIKit
@@ -15,6 +16,9 @@ struct UnlockResult: Equatable {
     let duration: UnlockDuration
     /// Opens the app (or website) they were trying to use, when we know how. nil = just "Done".
     var openURL: URL?
+    /// The locked item, so the person can tell Lockie which app it is ("Which app was this?").
+    var itemKey: String?
+    var appToken: ApplicationToken?
 }
 
 /// How to open the app someone was trying to use. iOS can't launch another app by its bundle ID, only by
@@ -61,6 +65,23 @@ enum AppLauncher {
 
     /// Why the last unlock couldn't open the app (shown in debug builds).
     static var lastProblem: String?
+
+    /// The apps offered on "Which app was this?" (name, BrandAppIcon name, bundle ID).
+    static let pickable: [(name: String, icon: String, bundleID: String)] = [
+        ("Instagram", "instagram", "com.burbn.instagram"), ("TikTok", "tiktok", "com.zhiliaoapp.musically"),
+        ("YouTube", "youtube", "com.google.ios.youtube"), ("X", "x", "com.atebits.Tweetie2"),
+        ("Snapchat", "snapchat", "com.toyopagroup.picaboo"), ("Facebook", "facebook", "com.facebook.Facebook"),
+        ("Reddit", "reddit", "com.reddit.Reddit"), ("Threads", "threads", "com.burbn.barcelona"),
+    ]
+
+    /// How to open a known app by its bundle ID.
+    static func targets(forBundleID id: String) -> [(url: URL, universalOnly: Bool)] {
+        guard let known = byBundleID[id] else { return [] }
+        var list: [(URL, Bool)] = []
+        if let scheme = URL(string: known.scheme) { list.append((scheme, false)) }
+        if let web = known.web.flatMap(URL.init(string:)) { list.append((web, true)) }
+        return list
+    }
 
     /// What to try, in order. Empty = we don't know how to open it.
     static func targets(for pending: PendingUnlock, name: String?) -> [(url: URL, universalOnly: Bool)] {
@@ -598,7 +619,8 @@ final class AppModel {
         AppLauncher.lastProblem = nil
         let showScreen = {
             withAnimation(.easeInOut(duration: 0.3)) {
-                self.unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil)
+                self.unlockResult = UnlockResult(appName: name, duration: duration, openURL: nil,
+                                                 itemKey: pending.itemKey, appToken: pending.appToken)
             }
             #if DEBUG
             if let problem = AppLauncher.lastProblem { self.showToast("Couldn't open the app: \(problem)") }
@@ -616,6 +638,28 @@ final class AppModel {
             } else {
                 AppLauncher.lastProblem = "iOS refused \(targets.map(\.url.absoluteString).joined(separator: ", "))"
                 showScreen()
+            }
+        }
+    }
+
+    /// "Which app was this?": remember it for this locked item (so every later unlock opens it by itself),
+    /// then open it now.
+    func pickUnlockedApp(name: String, bundleID: String) {
+        if let key = unlockResult?.itemKey {
+            var ids = SharedStore.tokenBundleIDs
+            ids[key] = bundleID
+            SharedStore.tokenBundleIDs = ids
+            var names = SharedStore.tokenNames
+            names[key] = name
+            SharedStore.tokenNames = names
+        }
+        let targets = AppLauncher.targets(forBundleID: bundleID)
+        AppLauncher.open(targets) { [weak self] _ in
+            var t = Transaction()
+            t.disablesAnimations = true
+            withTransaction(t) {
+                self?.unlockResult = nil
+                self?.unlockSession = nil
             }
         }
     }
