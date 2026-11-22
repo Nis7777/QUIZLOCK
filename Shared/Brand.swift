@@ -30,6 +30,11 @@ public enum Brand {
 
     public static let urlScheme = "lockie"
     public static let unlockDeepLink = URL(string: "lockie://unlock") ?? URL(fileURLWithPath: "/")
+    /// After "Solve to unlock" on the shield, how long the shield shows "Your puzzle is ready" instead.
+    public static let shieldReadyWindow: TimeInterval = 10 * 60
+    /// How recent a shield tap must be for Lockie to open straight into the puzzle when the user
+    /// opens it from the Home Screen. Older ones don't pop up out of nowhere; the notification still works.
+    public static let autoResumeWindow: TimeInterval = 30 * 60
     public static let credits = "Chess puzzles from the Lichess puzzle database (CC0)."
 
     /// Brand colours as 0xRRGGBB. SwiftUI / UIKit wrappers live in the App target.

@@ -22,6 +22,7 @@ struct UnlockFlowView: View {
                              subLabel: session.current?.subLabel ?? "",
                              progress: "\(min(session.solved + 1, session.required)) of \(session.required)",
                              isPractice: false,
+                             eyebrow: eyebrow(for: session),
                              onClose: { model.closeUnlockFlow() },
                              headerAccessory: AnyView(emergencyButton)) {
                     if let round = session.current {
@@ -45,6 +46,13 @@ struct UnlockFlowView: View {
                 .environment(model)
                 .environment(\.palette, model.palette)
         }
+    }
+
+    /// "UNLOCK INSTAGRAM" (or "UNLOCK YOUR APP" when the name isn't known).
+    private func eyebrow(for session: UnlockSession) -> String {
+        let name = session.pending.appName ?? SharedStore.tokenNames[session.pending.itemKey]
+            ?? String(localized: "your app")
+        return String(localized: "Unlock \(name)").uppercased()
     }
 
     private var emergencyButton: some View {

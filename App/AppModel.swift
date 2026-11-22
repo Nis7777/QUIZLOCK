@@ -344,8 +344,15 @@ final class AppModel {
            (SharedStore.pendingUnlock?.createdAt ?? dismissed) <= dismissed {
             return
         }
+        let saved = SharedStore.load(UnlockSession.self, .unlockSession)
+        // Opening Lockie by itself only jumps into a puzzle for a recent shield tap, so an old
+        // unlock request doesn't appear out of nowhere hours later.
+        if !userInitiated {
+            guard let latest = SharedStore.pendingUnlock ?? saved?.pending,
+                  Date().timeIntervalSince(latest.createdAt) < Brand.autoResumeWindow else { return }
+        }
         dismissedPendingDate = nil
-        if let saved = SharedStore.load(UnlockSession.self, .unlockSession) {
+        if let saved {
             if let pending = SharedStore.pendingUnlock, pending.itemKey != saved.pending.itemKey {
                 startSession(for: pending)
             } else {
@@ -368,7 +375,7 @@ final class AppModel {
         Task { await loadRoundForSession() }
     }
 
-    /// Simulator only: pretend a shielded app's START PUZZLE was tapped.
+    /// Simulator only: pretend a shielded app's "Solve to unlock" was tapped.
     func simulateShieldTap() {
         let item = lockItems.first
         let name: String

@@ -6,6 +6,9 @@ struct PuzzleChrome<Content: View>: View {
     let subLabel: String
     var progress: String?
     var isPractice = false
+    /// Small caps line above the game name; defaults to the app name. The unlock flow shows
+    /// "UNLOCK INSTAGRAM" so it's clear what the puzzle is for.
+    var eyebrow: String?
     var onClose: (() -> Void)?
     /// Small extra control shown next to the close button (e.g. "Emergency unlock").
     var headerAccessory: AnyView?
@@ -16,7 +19,7 @@ struct PuzzleChrome<Content: View>: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(Brand.appNameCaps)
+                    Text(verbatim: eyebrow ?? Brand.appNameCaps)
                         .appFont(12, .bold)
                         .tracking(3)
                         .foregroundStyle(palette.accentText)

@@ -197,7 +197,7 @@ struct SettingsView: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 6) {
                 Text("Notifications are off").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
-                Text("Turn them on in Settings so START PUZZLE can take you straight to your puzzle. Without them, open \(Brand.appName) after tapping START PUZZLE.")
+                Text("Turn them on in Settings so “Solve to unlock” can take you straight to your puzzle. Without them, open \(Brand.appName) after tapping “Solve to unlock”.")
                     .appFont(15)
                     .foregroundStyle(palette.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -556,7 +556,7 @@ struct SettingsView: View {
                 model.simulateShieldTap()
             } label: {
                 InfoRow(icon: AnyView(Image(systemName: "hand.tap.fill").foregroundStyle(palette.accent)),
-                        title: "Simulate START PUZZLE", subtitle: "Pretend a locked app's shield button was tapped")
+                        title: "Simulate Solve to unlock", subtitle: "Pretend a locked app's shield button was tapped")
             }
             .buttonStyle(.plain)
             .card()

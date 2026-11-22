@@ -31,7 +31,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
-/// Opens the unlock flow when the "Tap to start your puzzle" notification is tapped.
+/// Opens the unlock flow when the "Your puzzle is ready" notification is tapped.
 final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,

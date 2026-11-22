@@ -24,7 +24,7 @@ setup and app use are never blocked behind payment before those 5 free unlocks a
    appears; it's optional. Close it with the **×** at the top right. A discount screen appears (only the first time);
    close it with the **×** too. You land on the dashboard with 5 free unlocks.
 5. Go to the Home Screen and open the app you chose. Lockie's block screen appears.
-6. Tap **START PUZZLE**. Tap the "Tap to start your puzzle 🧩" notification, or open Lockie. The puzzle
+6. Tap **Solve to unlock**. The block screen changes to "Your puzzle is ready". Tap the "Your puzzle is ready 🧩" notification, or open Lockie. The puzzle
    opens.
 7. Solve the puzzle. The app is unlocked for the time you chose, and it locks again automatically when
    the time is up.
