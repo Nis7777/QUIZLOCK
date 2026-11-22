@@ -8,6 +8,7 @@ public enum SharedStore {
         case pendingUnlock = "pendingUnlock.v1"
         case unlockSession = "unlockSession.v1"
         case tokenNames = "tokenNames.v1"
+        case tokenBundleIDs = "tokenBundleIDs.v1"
         case usedWordAnswers = "usedWordAnswers.v1"
         case userProfile = "userProfile.v1"
         case stats = "stats.v1"
@@ -55,6 +56,21 @@ public enum SharedStore {
     public static var tokenNames: [String: String] {
         get { load([String: String].self, .tokenNames) ?? [:] }
         set { save(newValue, .tokenNames) }
+    }
+
+    /// Bundle identifiers remembered by the shield configuration extension (token key → "com.burbn.instagram"),
+    /// so after an unlock Lockie can open the app the person was trying to use.
+    public static var tokenBundleIDs: [String: String] {
+        get { load([String: String].self, .tokenBundleIDs) ?? [:] }
+        set { save(newValue, .tokenBundleIDs) }
+    }
+
+    public static func rememberBundleID(_ bundleID: String?, forKey key: String) {
+        guard let bundleID, !bundleID.isEmpty else { return }
+        var ids = tokenBundleIDs
+        guard ids[key] != bundleID else { return }
+        ids[key] = bundleID
+        tokenBundleIDs = ids
     }
 
     public static func rememberName(_ name: String?, forKey key: String) {

@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import SwiftUI
+import UIKit
 import UserNotifications
 import WidgetKit
 
@@ -12,6 +13,53 @@ enum PaywallReason { case onboarding, settings, unlockLimit, practice }
 struct UnlockResult: Equatable {
     let appName: String
     let duration: UnlockDuration
+    /// Opens the app (or website) they were trying to use, when we know how. nil = just "Done".
+    var openURL: URL?
+}
+
+/// How to open the app someone was trying to use. iOS can't launch another app by its bundle ID, only by
+/// a link the app itself publishes, so this knows the links of the most common apps; websites open in
+/// Safari. Anything else falls back to "Go back to …".
+enum AppLauncher {
+    private static let schemesByBundleID: [String: String] = [
+        "com.burbn.instagram": "instagram://app",
+        "com.zhiliaoapp.musically": "snssdk1233://",
+        "com.ss.iphone.ugc.Ame": "snssdk1233://",
+        "com.google.ios.youtube": "youtube://",
+        "com.atebits.Tweetie2": "twitter://",
+        "com.facebook.Facebook": "fb://",
+        "com.toyopagroup.picaboo": "snapchat://",
+        "com.reddit.Reddit": "reddit://",
+        "com.burbn.barcelona": "barcelona://",
+        "com.netflix.Netflix": "nflx://",
+        "pinterest": "pinterest://",
+        "com.spotify.client": "spotify://",
+        "net.whatsapp.WhatsApp": "whatsapp://",
+        "ph.telegra.Telegraph": "tg://",
+        "com.hammerandchisel.discord": "discord://",
+        "tv.twitch": "twitch://",
+        "com.linkedin.LinkedIn": "linkedin://",
+        "com.tumblr.tumblr": "tumblr://",
+        "com.9gag.ios.mobile": "ninegag://",
+    ]
+
+    /// By display name: the Simulator's sample apps, or when the bundle ID wasn't seen.
+    private static let schemesByName: [String: String] = [
+        "instagram": "instagram://app", "tiktok": "snssdk1233://", "youtube": "youtube://", "x": "twitter://",
+        "twitter": "twitter://", "facebook": "fb://", "snapchat": "snapchat://", "reddit": "reddit://",
+        "threads": "barcelona://", "netflix": "nflx://", "pinterest": "pinterest://", "discord": "discord://",
+    ]
+
+    static func url(for pending: PendingUnlock, name: String) -> URL? {
+        if pending.webToken != nil {
+            let domain = name.trimmingCharacters(in: .whitespaces)
+            return domain.contains(".") ? URL(string: "https://\(domain)") : nil
+        }
+        if let id = SharedStore.tokenBundleIDs[pending.itemKey], let scheme = schemesByBundleID[id] {
+            return URL(string: scheme)
+        }
+        return schemesByName[name.lowercased()].flatMap(URL.init(string:))
+    }
 }
 
 /// Root state: settings, lock state, routing and the unlock flow.
@@ -484,16 +532,22 @@ final class AppModel {
         WidgetCenter.shared.reloadAllTimelines()
         SharedStore.save(nil as UnlockSession?, .unlockSession)
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["lockie.unlock"])
-        let name = pending.appName ?? SharedStore.tokenNames[pending.itemKey] ?? String(localized: "your app")
+        let knownName = pending.appName ?? SharedStore.tokenNames[pending.itemKey]
+        let name = knownName ?? String(localized: "your app")
+        let open = knownName.flatMap { AppLauncher.url(for: pending, name: $0) }
         Haptics.success()
         withAnimation(.easeInOut(duration: 0.3)) {
-            unlockResult = UnlockResult(appName: name, duration: duration)
+            unlockResult = UnlockResult(appName: name, duration: duration, openURL: open)
         }
     }
 
+    /// Done / Open Instagram: closes the success screen and, when we know how, opens the app they were
+    /// trying to use (its shield is already lifted).
     func finishUnlockResult() {
+        let open = unlockResult?.openURL
         unlockResult = nil
         unlockSession = nil
+        if let open { UIApplication.shared.open(open) }
     }
 
     // MARK: Reset all data

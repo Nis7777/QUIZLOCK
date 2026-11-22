@@ -9,7 +9,8 @@ struct UnlockFlowView: View {
     var body: some View {
         ZStack {
             if let result = model.unlockResult {
-                UnlockSuccessView(appName: result.appName, duration: result.duration) {
+                UnlockSuccessView(appName: result.appName, duration: result.duration,
+                                  opensApp: result.openURL != nil) {
                     model.finishUnlockResult()
                 }
                 .transition(.opacity)
@@ -137,6 +138,8 @@ struct OutOfFreeUnlocksView: View {
 struct UnlockSuccessView: View {
     let appName: String
     let duration: UnlockDuration
+    /// The button opens the app itself ("Open Instagram") instead of just closing.
+    var opensApp = false
     let onDone: () -> Void
     @Environment(\.palette) private var palette
     @State private var appeared = false
@@ -149,9 +152,11 @@ struct UnlockSuccessView: View {
             MascotView(animation: .celebrate, size: 200)
                 .accessibilityHidden(true)
             ScreenTitle(title: String(localized: "Unlocked for \(duration.localizedSentenceLabel)"),
-                        subtitle: String(localized: "Go back to \(appName). It's ready for you."))
+                        subtitle: opensApp ? String(localized: "\(appName) is ready for you.")
+                                           : String(localized: "Go back to \(appName). It's ready for you."))
             Spacer()
-            PrimaryButton(title: "Done", action: onDone)
+            PrimaryButton(title: opensApp ? String(localized: "Open \(appName)") : String(localized: "Done"),
+                          action: onDone)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 12)
         }

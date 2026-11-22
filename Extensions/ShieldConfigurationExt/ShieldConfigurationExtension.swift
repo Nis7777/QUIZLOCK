@@ -64,7 +64,10 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
 
     private func remember(_ application: Application) {
         guard let token = application.token else { return }
-        SharedStore.rememberName(application.localizedDisplayName, forKey: TokenKey.key(token))
+        let key = TokenKey.key(token)
+        SharedStore.rememberName(application.localizedDisplayName, forKey: key)
+        // So that, once unlocked, Lockie can open this app straight away.
+        SharedStore.rememberBundleID(application.bundleIdentifier, forKey: key)
     }
 
     /// Two states:
