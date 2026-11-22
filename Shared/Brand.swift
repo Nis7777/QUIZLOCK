@@ -22,8 +22,10 @@ public enum Brand {
     public static let trialReminderDaysBeforeEnd = 2
     /// Your app's numeric Apple ID from App Store Connect (App Information → Apple ID). Used by "Rate Lockie".
     public static let appStoreID = "0000000000"
+    /// nil until `appStoreID` is filled in; "Rate Lockie" then uses Apple's in-app rating prompt instead.
     public static var reviewURL: URL? {
-        URL(string: "itms-apps://itunes.apple.com/app/id\(appStoreID)?action=write-review")
+        guard appStoreID.allSatisfy(\.isNumber), appStoreID != "0000000000" else { return nil }
+        return URL(string: "itms-apps://itunes.apple.com/app/id\(appStoreID)?action=write-review")
     }
     public static let minIOS = "17.0"
 

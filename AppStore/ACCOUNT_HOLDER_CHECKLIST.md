@@ -8,11 +8,11 @@
 
 ## PART 1: Do first (the slow approval starts here)
 
-### ☐ 1. Add Dinis to the team
+### ☐ 1. Add the developer to the team
 1. Go to **appstoreconnect.apple.com → Users and Access → (+)**.
-2. Enter Dinis's Apple ID email.
+2. Enter the developer's Apple ID email.
 3. Tick the roles **Developer** and **App Manager** → **Invite**.
-4. Dinis accepts the email invite.
+4. The developer accepts the email invite.
 
 ### ☐ 2. Accept the paid apps contract
 1. App Store Connect → **Business** (Agreements, Tax, and Banking).
@@ -62,7 +62,7 @@ After registering each one, open it → next to **App Groups** click **Configure
 1. App Store Connect → **Apps → (+) → New App**.
 2. Platform **iOS**, Name **Lockie**, Primary language **English (U.S.)**.
 3. Bundle ID `app.lockie.ios`, SKU `lockie-001`, User Access **Full Access** → **Create**.
-4. Open **App Information**, copy the **Apple ID** number, and send it to Dinis (it goes into the app's "Rate" button).
+4. Open **App Information**, copy the **Apple ID** number, and send it to the developer (it goes into the app's "Rate" button).
 
 ### ☐ 8. Create the subscription group
 1. In the app → **Monetization → Subscriptions → Create** a subscription group.

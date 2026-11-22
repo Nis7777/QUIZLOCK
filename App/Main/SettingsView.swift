@@ -65,6 +65,7 @@ struct SettingsView: View {
     @State private var showManageSubscriptions = false
     @State private var showResetSheet = false
     @Environment(\.openURL) private var openURL
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -284,7 +285,7 @@ struct SettingsView: View {
                 .buttonStyle(.plain)
                 Divider().padding(.leading, 44)
                 Button {
-                    if let url = Brand.reviewURL { openURL(url) }
+                    if let url = Brand.reviewURL { openURL(url) } else { requestReview() }
                 } label: {
                     InfoRow(icon: AnyView(Image(systemName: "star").appFont(20).foregroundStyle(palette.accent)),
                             title: "Rate \(Brand.appName)", subtitle: "It really helps")

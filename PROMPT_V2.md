@@ -47,7 +47,7 @@ Insert these screens **between** the current "Try your first puzzle" / "Enjoy yo
 
 Store all answers in a `UserProfile` model (App Group, Codable). Use them later for personalisation.
 
-1. **Name:** "What should we call you?" A text field with an optional Skip. Use the name in later titles ("Nice to meet you, Dinis").
+1. **Name:** "What should we call you?" A text field with an optional Skip. Use the name in later titles ("Nice to meet you, Alex").
 2. **Age range:** Under 18 / 18–24 / 25–34 / 35–44 / 45+.
 3. **Daily screen time:** "How much time do you spend on your phone each day?" 1–2h / 3–4h / 5–6h / 7h+ / "I don't know". If they pick "I don't know", show a hint: "Check Settings → Screen Time". Optionally, in Part C, read the real value from the DeviceActivityReport.
 4. **Biggest time-waster:** a multi-select grid of generic categories with SF Symbols: Short videos, Social media, Games, News, Messaging, Shopping, YouTube-style videos, Other. Use a Continue button.
