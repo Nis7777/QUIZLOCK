@@ -3,7 +3,7 @@
 # App/Assets.xcassets/mascot_<pose>_lids.imageset and paste the printed eye boxes into
 # MascotExpression.eyes (App/Design/Mascot.swift). Needs opencv-python-headless and numpy.
 # Builds, per open-eye mascot pose, a full-canvas "skin" layer: the eyes painted over with Lockie's
-# own surrounding orange (OpenCV inpainting), alpha only around the eyes. Prints each eye's box.
+# own skin shading (a smooth fit to the orange around each eye), alpha only around the eyes. Prints each eye box.
 import cv2, numpy as np, os, json, sys
 root, outdir = sys.argv[1], sys.argv[2]
 poses = ['wave','worried','sad','thinking','clipboard','pointing']
