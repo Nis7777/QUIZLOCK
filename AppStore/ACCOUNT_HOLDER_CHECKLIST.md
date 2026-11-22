@@ -2,6 +2,12 @@
 
 *Every step needs the paid Apple Developer account login. Go in order and tick each box.*
 
+> **Renamed from QuizLock to Lockie (Nov 2026).** The name "QuizLock" was taken on the App Store, so
+> every ID now uses `lockie`. If you already registered the old `app.quizlock.ios…` IDs or the
+> `group.app.quizlock.ios` App Group, leave them alone (or delete them under Identifiers): they're
+> unused and do no harm. Do steps 4 and 5 again with the **new** IDs below. The Screen Time request
+> (step 6) is for the whole account, so it carries over and doesn't need sending again.
+
 ## PART 1: Do first (the slow approval starts here)
 
 ### ☐ 1. Add Dinis to the team
@@ -40,7 +46,8 @@ On the main app ID (`app.lockie.ios`) **only**, also tick **iCloud** (it's used 
 
 After registering each one, open it → next to **App Groups** click **Configure** → tick `group.app.lockie.ios` → **Save**.
 
-⚠️ **Never change these IDs after this step.** Apple's approval is tied to them.
+⚠️ **Never change these IDs after step 7.** Once the app is created in App Store Connect with
+`app.lockie.ios`, that bundle ID belongs to the app for good.
 
 ### ☐ 6. Request the Screen Time permission (the slow one) ✅ submitted 21 Nov 2026
 1. While logged in as the Account Holder, go to **developer.apple.com/contact/request/family-controls-distribution**.
@@ -53,7 +60,7 @@ After registering each one, open it → next to **App Groups** click **Configure
 ### ☐ 7. Create the app
 1. App Store Connect → **Apps → (+) → New App**.
 2. Platform **iOS**, Name **Lockie**, Primary language **English (U.S.)**.
-3. Bundle ID `app.lockie.ios`, SKU `lockie001`, User Access **Full Access** → **Create**.
+3. Bundle ID `app.lockie.ios`, SKU `lockie-001`, User Access **Full Access** → **Create**.
 4. Open **App Information**, copy the **Apple ID** number, and send it to Dinis (it goes into the app's "Rate" button).
 
 ### ☐ 8. Create the subscription group

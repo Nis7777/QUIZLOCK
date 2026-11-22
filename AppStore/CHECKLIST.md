@@ -5,15 +5,18 @@ role in App Store Connect you can do the rest.
 
 ## 1. Entitlements and identifiers (developer.apple.com)
 
-- [ ] **[Holder]** Request **Family Controls (Distribution)** for **every** target that uses Screen Time.
-      Submit the form once per bundle ID: https://developer.apple.com/contact/request/family-controls-distribution
+- [x] **[Holder]** Request **Family Controls (Distribution)**: one request for the whole developer account
+      (submitted 21 Nov 2026, under the old QuizLock IDs; it carries over). Once approved it applies to every
+      App ID with the Family Controls capability, which these targets need:
+      https://developer.apple.com/contact/request/family-controls-distribution
   - `app.lockie.ios` (app)
   - `app.lockie.ios.ShieldConfiguration`
   - `app.lockie.ios.ShieldAction`
   - `app.lockie.ios.DeviceActivityMonitor`
   - `app.lockie.ios.ScreenTimeReport`
   - (The widget, `app.lockie.ios.Widgets`, doesn't use Family Controls.)
-- [ ] Register all 6 bundle IDs (automatic signing in Xcode usually does this).
+- [ ] Register all 6 **new** `app.lockie.ios…` bundle IDs (automatic signing in Xcode usually does this).
+      Any old `app.quizlock.ios…` IDs and `group.app.quizlock.ios` are unused now: leave or delete them.
 - [ ] Register the App Group `group.app.lockie.ios` and enable it on all 6 App IDs.
 - [ ] On the main App ID `app.lockie.ios` **only**, enable **iCloud** (Key-value storage; no container
       needed). The app's entitlement `com.apple.developer.ubiquity-kvstore-identifier` is already in `project.yml`.
