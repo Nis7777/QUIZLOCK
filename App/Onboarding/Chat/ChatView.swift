@@ -156,6 +156,7 @@ struct ChatView: View {
             // the scroll view keeps its bottom edge in place, so the new item appears fully at the bottom and
             // everything above slides up in the same animation. There's no separate scroll afterwards (that
             // used to show the new bubble half cut off, then jump).
+            GeometryReader { viewport in
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(controller.entries) { entry in
@@ -170,8 +171,12 @@ struct ChatView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 14)
+                // At least as tall as the screen, top-aligned: the first messages start at the top, and
+                // once the chat fills the screen it stays pinned to the bottom as new ones arrive.
+                .frame(minHeight: viewport.size.height, alignment: .top)
             }
             .modifier(PinnedToBottom())
+            }
         }
         .background(Color.white.ignoresSafeArea())
         .sensoryFeedback(.impact(flexibility: .soft, intensity: 0.6), trigger: controller.entries.count)
