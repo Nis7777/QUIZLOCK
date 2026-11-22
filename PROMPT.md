@@ -327,7 +327,7 @@ Subscription group "Lockie Pro" with IAP_PRO_YEARLY (pre-selected, 7-day free tr
 
 **Main screen**: the mascot at the top, the headline ("Your plan is ready, {name}" after onboarding), two plan cards (Yearly with the badge "BEST VALUE · {yearly ÷ 12}/month · Save {x}%", and Monthly), 3 benefit rows with icons ("Unlimited unlocks", "All 4 puzzle games + daily puzzle", "Streaks, stats and widgets"), and, for the trial, a timeline "Today: full access" → "Day 5: we'll remind you" → "Day 7: you're billed {price}/year, cancel anytime before". The button reads "Start 7-day free trial" with "then {price}/year" under it, or "Subscribe for {price}/month" for monthly (and "Subscribe for {price}/year" when the user isn't eligible for the trial).
 
-**Exit offer** (shown once, when the main paywall is closed): "{x}% off your first year" with IAP_PRO_OFFER's price.
+**Exit offer** (shown once, when the main paywall is closed): "{x}% off Lockie Pro" (one line; the offer price renews every year) with IAP_PRO_OFFER's price.
 
 Every screen shows the price and period, "Auto-renews. Cancel anytime in Settings.", Restore Purchases, Terms of Use, Privacy Policy and a visible ×. Prices, periods and the trial length come from StoreKit (`displayPrice`, `subscription.introductoryOffer`, `isEligibleForIntroOffer`); percentages are computed from the real prices. If products fail to load: "Couldn't load prices" + Retry. A local notification on day 5 of the trial says "Your free trial ends in 2 days".
 

@@ -454,11 +454,13 @@ private struct ExitOfferScreen: View {
                            let offerPrice = store.pricePerPeriod(store.yearlyOffer),
                            let regular = store.pricePerPeriod(store.yearly) {
                             CountingText(value: Double(percent) * count.progress, final: Double(percent),
-                                         format: { String(localized: "\(Int($0.rounded()))% off your first year") },
+                                         format: { String(localized: "\(Int($0.rounded()))% off \(Brand.subscriptionGroupName)") },
                                          landed: count.landed)
+                                // The offer price renews every year, so the headline makes no "first year" claim.
                                 .appFont(34, .black, design: .rounded)
                                 .foregroundStyle(Color.brandDeep)
-                                .multilineTextAlignment(.center)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
                                 .accessibilityIdentifier("paywall.offer.title")
                             Text("This offer is only shown once.")
                                 .appFont(17)
