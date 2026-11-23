@@ -125,7 +125,7 @@ extension GameID {
         case .word:
             return ["Guess the hidden 5-letter word. Each guess must be a real word.",
                     "Green: right letter, right spot. Yellow: in the word, wrong spot. Grey: not in the word.",
-                    "Medium and Hard use hard mode: revealed hints must be used in later guesses."]
+                    "You have 6 tries. Any real word counts, even one that ignores your earlier hints."]
         }
     }
 

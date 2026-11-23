@@ -109,14 +109,10 @@ public struct WordRound: PuzzleRound, Equatable {
     public init(answer: String, difficulty: Difficulty) {
         self.answer = answer.lowercased()
         self.difficulty = difficulty
-        switch difficulty {
-        case .quick, .easy:
-            maxTries = 6; hardMode = false
-        case .medium:
-            maxTries = 6; hardMode = true
-        case .hard:
-            maxTries = 5; hardMode = true
-        }
+        // Classic rules at every difficulty: 6 tries, and any real word can be guessed (revealed hints
+        // don't have to be reused).
+        maxTries = 6
+        hardMode = false
     }
 
     public var triesLeft: Int { maxTries - guesses.count }

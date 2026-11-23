@@ -66,21 +66,25 @@ final class WordEngineTests: XCTestCase {
         XCTAssertEqual(win.status, .solved)
 
         var lose = WordRound(answer: "plant", difficulty: .hard)
-        XCTAssertEqual(lose.maxTries, 5)
-        for _ in 0..<5 {
+        XCTAssertEqual(lose.maxTries, 6)
+        for _ in 0..<6 {
             for ch in "crane" { lose.type(ch) }
             _ = lose.submit(dictionary: dict)
         }
         XCTAssertEqual(lose.status, .failed)
     }
 
-    func testHardModeRequiresHints() throws {
+    /// Classic rules: a guess may ignore revealed hints at every difficulty.
+    /// Classic rules: a guess may ignore revealed hints at every difficulty.
+    func testGuessesMayIgnoreHints() throws {
         let dict = try XCTUnwrap(TestResources.dictionary)
-        var round = WordRound(answer: "plant", difficulty: .medium)
-        for ch in "crane" { round.type(ch) }
-        _ = round.submit(dictionary: dict)
-        for ch in "moist" { round.type(ch) }
-        if case .hardMode = round.submit(dictionary: dict) {} else { XCTFail("hard mode should reject") }
+        for difficulty in [Difficulty.easy, .medium, .hard] {
+            var round = WordRound(answer: "plant", difficulty: difficulty)
+            for ch in "crane" { round.type(ch) }
+            _ = round.submit(dictionary: dict)
+            for ch in "moist" { round.type(ch) }   // no A, N: still allowed
+            if case .accepted = round.submit(dictionary: dict) {} else { XCTFail("\(difficulty) should accept") }
+        }
     }
 
     func testAnswerPickerNoRepeats() throws {

@@ -259,7 +259,7 @@ Never call it "Wordle" anywhere in the UI or metadata; Wordle is a New York Time
   - Support a physical keyboard too (via `onKeyPress`).
 - **Scoring (must handle duplicate letters correctly):** a two-pass algorithm. First mark exact matches green and count the remaining answer letters. Then mark yellow only while that letter's remaining count is above 0; everything else is grey.
 - Win: the row bounces, then success. Lose after 6 guesses: show the toast with the answer in caps, mark the round failed, and serve a new word.
-- Difficulty: Easy = 6 tries, Medium = 6 tries + hard mode (revealed hints must be used), Hard = 5 tries + hard mode.
+- Classic rules at every difficulty: 6 tries, any valid word (revealed hints do not have to be reused).
 - Unit tests:
   - Scoring cases: answer ABBEY with guess BABES; answer SPEED with guess EERIE; answer CRANE with guess CRANE.
   - "Not in word list" rejection, e.g. "abcde", "qwert" and "xyzzy".
