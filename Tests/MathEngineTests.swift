@@ -109,6 +109,19 @@ final class MathEngineTests: XCTestCase {
         XCTAssertEqual(failing.status, .failed)
     }
 
+    /// The ± key flips the sign whenever it's pressed, before or after the digits.
+    func testSignToggle() {
+        let q = MathQuestion(topic: "ARITHMETIC", text: "3 − 7 = ?", expression: "3-7", answer: -4)
+        var round = MathRound(question: q, difficulty: .easy)
+        round.type("4")
+        round.type(MathEngine.minus)
+        XCTAssertEqual(round.input, "\u{2212}4")
+        round.type(MathEngine.minus)
+        XCTAssertEqual(round.input, "4")
+        round.type(MathEngine.minus)
+        XCTAssertEqual(round.check(), .correct)
+    }
+
     func testParsingAndFormatting() {
         XCTAssertEqual(MathEngine.parse("\u{2212}12"), -12)
         XCTAssertEqual(MathEngine.parse("0.75"), 0.75)
