@@ -137,7 +137,7 @@ struct MathGameView: View {
     }
 }
 
-/// Custom numeric keypad: 1–9, ".", 0, "±" (flips the sign), ⌫ and a full-width Check button.
+/// Custom numeric keypad: 1–9, ".", 0, "−", ⌫ and a full-width Check button.
 struct MathKeypad: View {
     let onKey: (String) -> Void
     let onCheck: () -> Void
@@ -171,8 +171,7 @@ struct MathKeypad: View {
                 if key == "⌫" {
                     Image(systemName: "delete.left").appFont(22, .semibold)
                 } else {
-                    // The minus key flips the sign of the answer, so it reads "±".
-                    Text(key == MathEngine.minus ? "±" : key).appFont(26, .semibold, design: .rounded)
+                    Text(key).appFont(26, .semibold, design: .rounded)
                 }
             }
             .foregroundStyle(palette.textPrimary)
@@ -182,6 +181,6 @@ struct MathKeypad: View {
             .shadow(color: .black.opacity(0.04), radius: 6, y: 2)
         }
         .buttonStyle(PressableStyle())
-        .accessibilityLabel(key == "⌫" ? "Delete" : key == MathEngine.minus ? "Plus or minus" : key == "." ? "Point" : key)
+        .accessibilityLabel(key == "⌫" ? "Delete" : key == MathEngine.minus ? "Minus" : key == "." ? "Point" : key)
     }
 }

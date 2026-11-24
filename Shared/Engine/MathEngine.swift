@@ -209,13 +209,12 @@ public struct MathRound: PuzzleRound, Equatable {
     public enum CheckResult: Equatable { case correct, wrong(triesLeft: Int), failed, empty }
 
     public mutating func type(_ key: String) {
-        guard status == .playing, input.count < 9 || key == MathEngine.minus || key == "-" else { return }
+        guard status == .playing, input.count < 9 else { return }
         switch key {
         case ".":
             if !input.contains(".") { input += input.isEmpty || input == MathEngine.minus ? "0." : "." }
         case MathEngine.minus, "-":
-            // Toggles the sign at any point, like a calculator's ± key.
-            if input.hasPrefix(MathEngine.minus) { input.removeFirst() } else { input = MathEngine.minus + input }
+            if input.isEmpty { input = MathEngine.minus }
         default:
             if key.count == 1, key.first?.isNumber == true { input += key }
         }
