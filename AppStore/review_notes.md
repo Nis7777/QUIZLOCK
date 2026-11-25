@@ -49,10 +49,6 @@ Subscription group **Lockie Pro**:
 - `app.lockie.ios.pro.yearly`: 1 year, with a **7-day free trial** (introductory offer, new subscribers).
   Pre-selected on the paywall.
 - `app.lockie.ios.pro.monthly`: 1 month, no trial.
-- `app.lockie.ios.pro.yearly.offer`: 1 year at a lower price, no trial. If someone closes the paywall without
-  subscribing, this offer appears once, as its own screen, the next time they open Lockie (at least a minute
-  later). It is never shown as a result of tapping ×, its own × closes it, and it has no countdown or urgency
-  claims. To see it: close the paywall, wait a minute, leave Lockie and open it again.
 
 Any active subscription in the group unlocks Lockie Pro: locking the chosen apps, unlocking them with puzzles,
 and standalone puzzle practice. The daily puzzle, stats, streaks and widgets are free. Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.

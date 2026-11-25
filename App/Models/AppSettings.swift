@@ -16,8 +16,6 @@ struct AppSettings: Codable, Equatable {
     var isPro = false
     /// The exit offer has been shown (it appears once, when the main paywall is closed).
     var exitOfferShown = false
-    /// When the plans paywall was first closed without subscribing (the offer comes on a later visit).
-    var paywallDismissedAt: Date?
     var simulatorAuthorized = false
     /// Where onboarding was left (so killing the app mid-onboarding resumes there).
     var onboardingStep: String?
@@ -42,7 +40,6 @@ struct AppSettings: Codable, Equatable {
         freeUnlocksUsed = (try? c.decodeIfPresent(Int.self, forKey: .freeUnlocksUsed)) ?? d.freeUnlocksUsed
         isPro = (try? c.decodeIfPresent(Bool.self, forKey: .isPro)) ?? d.isPro
         exitOfferShown = (try? c.decodeIfPresent(Bool.self, forKey: .exitOfferShown)) ?? d.exitOfferShown
-        paywallDismissedAt = try? c.decodeIfPresent(Date.self, forKey: .paywallDismissedAt)
         simulatorAuthorized = (try? c.decodeIfPresent(Bool.self, forKey: .simulatorAuthorized)) ?? d.simulatorAuthorized
         onboardingStep = try? c.decodeIfPresent(String.self, forKey: .onboardingStep)
         ratingRequested = (try? c.decodeIfPresent(Bool.self, forKey: .ratingRequested)) ?? d.ratingRequested

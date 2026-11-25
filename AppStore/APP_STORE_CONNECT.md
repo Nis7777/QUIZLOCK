@@ -7,8 +7,8 @@ higher (Xcode → raise the build number before every upload).
 
 ## 1. Before you resubmit
 
-- [ ] **Keep all 3 subscriptions in the submission**, including `app.lockie.ios.pro.yearly.offer` (the app shows
-      it once, on a later visit). Its review screenshot is the offer screen.
+- [ ] **Remove `app.lockie.ios.pro.yearly.offer` from this submission** (Monetization → Subscriptions → Lockie Pro).
+      The app doesn't use it anymore. If it was never approved you can delete it. Submit only Yearly and Monthly.
 - [ ] **Open these 3 links in a browser** and make sure each one loads (not a 404):
   - Privacy Policy: https://nis7777.github.io/lockie/privacy.html
   - Terms of Use: https://nis7777.github.io/lockie/terms.html
@@ -24,17 +24,18 @@ higher (Xcode → raise the build number before every upload).
 > Thank you for the feedback. In this build we addressed guideline 5.6:
 >
 > - The paywall's close button now closes it immediately and takes you into the app. It no longer leads to a
->   discount screen, and there are no countdowns or "only shown once" claims.
-> - The discounted yearly plan now appears only once, as its own screen, the next time the user opens the app
->   after closing the paywall. Its close button closes it.
+>   discount screen, and the discounted product and its "only shown once" screen have been removed. There are
+>   no countdowns or urgency claims.
 > - No app is ever blocked without an active subscription: the locks only take effect after the user starts
 >   Lockie Pro or its free trial, and they're removed automatically if the subscription ends. Without a
 >   subscription the app clearly says the apps aren't locked yet.
+> - The paywall lists only what the subscription adds; free features aren't presented as paid.
 > - The App Store rating prompt is no longer shown during onboarding; it's asked once, after the user has
 >   earned a few unlocks.
-> - Screens shown before Apple's permission prompts now use "Continue" and always lead to the system prompt.
+> - Screens shown before Apple's permission prompts now use "Continue" and always lead to the system prompt,
+>   and declining Screen Time access no longer blocks onboarding.
 >
-> The updated review notes explain how to test, including how to see the offer. Thank you!
+> The updated review notes explain how to test with a Sandbox account. Thank you!
 
 ---
 
@@ -172,10 +173,6 @@ Subscription group **Lockie Pro**:
 - `app.lockie.ios.pro.yearly`: 1 year, with a **7-day free trial** (introductory offer, new subscribers).
   Pre-selected on the paywall.
 - `app.lockie.ios.pro.monthly`: 1 month, no trial.
-- `app.lockie.ios.pro.yearly.offer`: 1 year at a lower price, no trial. If someone closes the paywall without
-  subscribing, this offer appears once, as its own screen, the next time they open Lockie (at least a minute
-  later). It is never shown as a result of tapping ×, its own × closes it, and it has no countdown or urgency
-  claims. To see it: close the paywall, wait a minute, leave Lockie and open it again.
 
 Any active subscription in the group unlocks Lockie Pro: locking the chosen apps, unlocking them with puzzles,
 and standalone puzzle practice. The daily puzzle, stats, streaks and widgets are free. Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.
@@ -259,9 +256,8 @@ Expected result: **4+**.
 
 - Review screenshot for each: a screenshot of the paywall with that plan selected.
 - Both are submitted together with the app version.
-- Pro Yearly Offer: `app.lockie.ios.pro.yearly.offer`, 1 Year, $29.99, no introductory offer, display name
-  "Lockie Pro Yearly (Offer)", same description. Levels: Yearly and Yearly Offer on the same level, Monthly below.
-  Its review screenshot is the offer screen.
+- Levels: Yearly above Monthly.
+- Don't submit `app.lockie.ios.pro.yearly.offer` (section 1).
 
 ---
 
@@ -272,3 +268,25 @@ Expected result: **4+**.
 - **Encryption:** "Does your app use encryption?" → only standard HTTPS (exempt). The build already says
   `ITSAppUsesNonExemptEncryption = NO`, so App Store Connect shouldn't ask.
 - **Devices:** iPhone only. (Apple still reviews it on an iPad, running the iPhone version.)
+
+---
+
+## 10. After launch: Apple win-back offers (the discount for people who cancelled)
+
+Instead of an exit offer, use Apple's own **win-back offers**. Apple shows them to people who cancelled, in the
+App Store and as a message when they open Lockie (iOS 18 and later). Lockie needs no code for this: StoreKit
+shows the offer sheet automatically, and purchases go through the same products, so Lockie Pro turns on by itself.
+
+When the app is live and the subscriptions are approved:
+
+1. Monetization → Subscriptions → Lockie Pro → **Pro Yearly** → **Win-Back Offers** → **(+)**.
+2. Reference name: `Win back yearly`. Offer: **Pay up front** or **Pay as you go** at a lower price (for example
+   $29.99 for the first year), or a free period (for example 1 month free).
+3. Eligibility: people who **subscribed for at least 1 month** and **stopped at least 1 month ago** (Apple's
+   defaults are a good start). Wait time between offers: 6 months or more.
+4. Turn on **promotion in the App Store** (Apple then shows it on the product page and in Search for lapsed
+   subscribers). Add the promotional image if App Store Connect asks for one.
+5. Countries: all. Start date: now. Save. No new app version or review of the app is needed.
+
+Optional later: the same on **Pro Monthly** (for example 50% off for 2 months).
+

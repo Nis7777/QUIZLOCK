@@ -3,8 +3,8 @@ import SwiftUI
 
 /// Lockie Pro paywall (auto-renewable subscriptions).
 /// Yearly (pre-selected, free trial when eligible) or monthly. The × always closes, straight away (it never
-/// leads to another purchase screen). The discounted yearly plan is a separate screen (reason `.offer`),
-/// shown once on a later visit. No countdowns or urgency claims.
+/// leads to another purchase screen). No discounts, countdowns or urgency claims in the app: discounts for
+/// people who cancelled come from Apple's own win-back offers (set up in App Store Connect, shown by iOS).
 /// Every screen shows price + period, "Auto-renews. Cancel anytime in Settings.", Restore Purchases,
 /// Terms of Use, Privacy Policy and a visible close button. Prices, periods and the trial come from StoreKit.
 struct PaywallView: View {
@@ -13,14 +13,7 @@ struct PaywallView: View {
     @State private var link: URL?
 
     var body: some View {
-        Group {
-            if model.paywallReason == .offer {
-                OfferScreen(link: $link, onBuy: { buy(model.store.yearlyOffer) }, onRestore: { restore() },
-                            onClose: { close() })
-            } else {
-                PlansScreen(link: $link, onBuy: { buy($0) }, onRestore: { restore() }, onClose: { close() })
-            }
-        }
+        PlansScreen(link: $link, onBuy: { buy($0) }, onRestore: { restore() }, onClose: { close() })
         .safariSheet($link)
         .alert("Purchase", isPresented: errorBinding) {
             Button("OK", role: .cancel) { model.store.lastError = nil }
@@ -393,148 +386,6 @@ private struct TrialTimeline: View {
                 .foregroundStyle(palette.textPrimary)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 5)
-        }
-    }
-}
-
-// MARK: - Offer (shown once, on a later visit)
-
-/// The discounted yearly plan. It appears on its own, once, the next time someone opens Lockie after
-/// closing the paywall without subscribing; never as the result of tapping ×. Its × closes, and it makes
-/// no urgency claims (no countdown, no "only now").
-
-private struct OfferScreen: View {
-    @Environment(AppModel.self) private var model
-    @Environment(\.palette) private var palette
-    @Binding var link: URL?
-    let onBuy: () -> Void
-    let onRestore: () -> Void
-    let onClose: () -> Void
-
-    private var store: Store { model.store }
-    @State private var count = CountUpState()
-
-    var body: some View {
-        ZStack {
-            Color.paywallCream.ignoresSafeArea()
-            Starburst().ignoresSafeArea()
-            VStack(spacing: 0) {
-                HStack {
-                    Spacer()
-                    PaywallCloseButton(action: onClose)
-                }
-                .padding(.horizontal, 12)
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 14) {
-                        MascotView(expression: .pointing, size: 120, tag: "paywall", entrance: .happy)
-                            .accessibilityHidden(true)
-                        if let percent = store.offerDiscountPercent,
-                           let offerPrice = store.pricePerPeriod(store.yearlyOffer),
-                           let regular = store.pricePerPeriod(store.yearly) {
-                            CountingText(value: Double(percent) * count.progress, final: Double(percent),
-                                         format: { String(localized: "\(Int($0.rounded()))% off \(Brand.subscriptionGroupName)") },
-                                         landed: count.landed)
-                                // The offer price renews every year, so the headline makes no "first year" claim.
-                                .appFont(34, .black, design: .rounded)
-                                .foregroundStyle(Color.brandDeep)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-                                .accessibilityIdentifier("paywall.offer.title")
-                            Text("A lower yearly price for \(Brand.subscriptionGroupName).")
-                                .appFont(17)
-                                .foregroundStyle(Color.textSecondary)
-                                .multilineTextAlignment(.center)
-                            VStack(spacing: 6) {
-                                Text(regular)
-                                    .appFont(17)
-                                    .strikethrough()
-                                    .foregroundStyle(Color.textSecondary)
-                                    .accessibilityLabel(String(localized: "Regular price \(regular)"))
-                                Group {
-                                    if let counting = store.countingPrice(store.yearlyOffer) {
-                                        CountingText(value: counting.value * count.progress, final: counting.value,
-                                                     format: counting.format, landed: count.landed)
-                                    } else {
-                                        Text(offerPrice)
-                                    }
-                                }
-                                    .appFont(36, .bold)
-                                    .foregroundStyle(Color.textPrimary)
-                                    .minimumScaleFactor(0.6)
-                                    .lineLimit(1)
-                                Text(Brand.subscriptionGroupName + " · " + String(localized: "Yearly"))
-                                    .appFont(15, .semibold)
-                                    .foregroundStyle(Color.textSecondary)
-                            }
-                            .padding(.vertical, 18)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.white.opacity(0.7), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                    .strokeBorder(Color.brand.opacity(0.4), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
-                            )
-                            Text("Billed \(store.yearlyOffer?.displayPrice ?? offerPrice) today, then \(offerPrice). No free trial with this offer.")
-                                .appFont(15)
-                                .foregroundStyle(Color.textSecondary)
-                                .multilineTextAlignment(.center)
-                        } else {
-                            PricesUnavailable()
-                        }
-                    }
-                    .padding(.horizontal, 24)
-                }
-                VStack(spacing: 6) {
-                    PrimaryButton(title: String(localized: "Claim my discount"), isLoading: store.isPurchasing,
-                                  isEnabled: store.yearlyOffer != nil && !store.isPurchasing, action: onBuy)
-                        .accessibilityIdentifier("paywall.offer.buy")
-                    if let offerPrice = store.pricePerPeriod(store.yearlyOffer) {
-                        Text(offerPrice).appFont(17, .semibold).foregroundStyle(Color.textPrimary)
-                    }
-                    PaywallFooter(link: $link, onRestore: onRestore)
-                }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 8)
-            }
-        }
-        .environment(\.colorScheme, .light)
-        .environment(\.palette, .classic)
-        .countUp($count, after: 0.3)
-    }
-}
-
-/// Subtle radial light rays. Rotates slowly unless Reduce Motion is on.
-private struct Starburst: View {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var rotation: Double = 0
-
-    var body: some View {
-        GeometryReader { geo in
-            let radius = max(geo.size.width, geo.size.height) * 1.2
-            Canvas { context, size in
-                let center = CGPoint(x: size.width / 2, y: size.height / 2)
-                let rays = 18
-                for i in 0..<rays {
-                    let a = Double(i) / Double(rays) * 2 * .pi
-                    let half = Double.pi / Double(rays) * 0.45
-                    var path = Path()
-                    path.move(to: center)
-                    path.addLine(to: CGPoint(x: center.x + radius * cos(a - half), y: center.y + radius * sin(a - half)))
-                    path.addLine(to: CGPoint(x: center.x + radius * cos(a + half), y: center.y + radius * sin(a + half)))
-                    path.closeSubpath()
-                    context.fill(path, with: .color(Color.white.opacity(0.45)))
-                }
-            }
-            .frame(width: radius * 2, height: radius * 2)
-            .position(x: geo.size.width / 2, y: geo.size.height * 0.42)
-            .rotationEffect(.degrees(rotation), anchor: UnitPoint(x: 0.5, y: 0.42))
-            .mask(RadialGradient(colors: [.white, .white.opacity(0)], center: UnitPoint(x: 0.5, y: 0.42),
-                                 startRadius: 0, endRadius: radius * 0.6))
-        }
-        .allowsHitTesting(false)
-        .accessibilityHidden(true)
-        .onAppear {
-            guard !reduceMotion else { return }
-            withAnimation(.linear(duration: 90).repeatForever(autoreverses: false)) { rotation = 360 }
         }
     }
 }
