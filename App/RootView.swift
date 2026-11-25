@@ -3,6 +3,7 @@ import SwiftUI
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.requestReview) private var requestReview
     /// The launch intro (LaunchIntroView) plays once per cold launch; UI tests and screenshots skip it.
     @State private var intro: IntroStage = RootView.skipsIntro ? .done : .playing
 
@@ -128,6 +129,19 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active { model.refreshFromStore() }
         }
+        .task(id: scenePhase) { await askForRatingIfEarned() }
+    }
+
+    /// The App Store rating prompt, asked once and only after Lockie has proved itself (3 puzzle-earned
+    /// unlocks), never during onboarding, and only on a calm dashboard (no puzzle, paywall or sheet open).
+    private func askForRatingIfEarned() async {
+        guard scenePhase == .active else { return }
+        try? await Task.sleep(nanoseconds: 2_000_000_000)
+        guard !Task.isCancelled, scenePhase == .active, model.phase == .main, !model.settings.ratingRequested,
+              model.stats.totalUnlocksEarned >= 3, model.unlockSession == nil, model.unlockResult == nil,
+              model.paywallReason == nil, !model.requiresSubscription else { return }
+        model.updateSettings { $0.ratingRequested = true }
+        requestReview()
     }
 
     private var progressionTitle: String {

@@ -14,7 +14,7 @@ enum OnboardingStep: String, CaseIterable {
     // 5. The turn
     case turnIntro, realityCheck, getBack, projection
     // 6. Permissions
-    case connectScreenTime, reward, notifications, rating
+    case connectScreenTime, reward, notifications
     // 7. Commitment
     case commit, settingUp, planReady
 
@@ -56,8 +56,8 @@ final class OnboardingModel {
     @ObservationIgnored var onStepChange: (OnboardingStep) -> Void = { _ in }
 
     func restore(_ saved: String?) {
-        // "aboutTo" was removed: resume at the commitment screen.
-        let name = saved == "aboutTo" ? OnboardingStep.commit.rawValue : saved
+        // "aboutTo" and "rating" were removed: resume at the commitment screen.
+        let name = (saved == "aboutTo" || saved == "rating") ? OnboardingStep.commit.rawValue : saved
         guard let name, let s = OnboardingStep(rawValue: name) else { return }
         step = s.resumeStep
     }
@@ -194,7 +194,6 @@ struct OnboardingFlowView: View {
                 next()
             }
         case .notifications: NotificationsStepView(onContinue: next)
-        case .rating: RatingStepView(onContinue: next)
         // 7. Commitment
         case .commit: CommitView(onCommitted: next)
         case .settingUp: SettingUpView(onDone: next)

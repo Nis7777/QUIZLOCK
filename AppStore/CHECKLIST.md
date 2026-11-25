@@ -45,24 +45,23 @@ role in App Store Connect you can do the rest.
 No accounts: the subscription is tied to the Apple ID, and progress syncs through iCloud.
 
 - [ ] Create the subscription group **Lockie Pro** (group display name "Lockie Pro" in English).
-- [ ] Create the 3 auto-renewable subscriptions in that group:
+- [ ] Create the 2 auto-renewable subscriptions in that group:
 
 | Reference name | Product ID | Duration | Price (USA) | Introductory offer |
 |---|---|---|---|---|
 | Pro Yearly | `app.lockie.ios.pro.yearly` | 1 Year | $39.99 | **Free trial · 1 Week · New subscribers** |
 | Pro Monthly | `app.lockie.ios.pro.monthly` | 1 Month | $9.99 | None |
-| Pro Yearly Offer | `app.lockie.ios.pro.yearly.offer` | 1 Year | $29.99 | None |
 
 - [ ] Prices: set the USA price, let Apple fill in the other countries. The app always shows the StoreKit price, and
-      computes "Save 67%" (yearly vs 12 × monthly) and "25% off" (offer vs yearly) from the real prices.
+      computes "Save 67%" (yearly vs 12 × monthly) from the real prices.
 - [ ] Display name + description for each, in English (e.g. "Lockie Pro Yearly" / "Unlimited
       unlocks, all 4 puzzle games and the daily puzzle").
-- [ ] **Review screenshot** for each: the main paywall for Yearly and Monthly. (The yearly offer product is no longer used in the app: remove it from the submission.)
+- [ ] **Review screenshot** for each: the main paywall for Yearly and Monthly.
 - [ ] Only on Pro Yearly: **Introductory Offers → (+)** → **Free**, **1 Week**, **New subscribers**, all countries.
-- [ ] Subscription levels: Yearly and Yearly Offer on the same level, Monthly below them.
+- [ ] Subscription levels: Yearly above Monthly.
 - [ ] The first subscriptions must be submitted **with the app version** (step 8).
 - [ ] Local testing needs no App Store Connect: `Products.storekit` (set on the App scheme's Run action) has the
-      same 3 products, the group and the 7-day free trial. In Xcode use **Debug → StoreKit → Manage Transactions**
+      same 2 products, the group and the 7-day free trial. In Xcode use **Debug → StoreKit → Manage Transactions**
       to refund, expire or reset trial eligibility.
 - [ ] Sandbox testing on a device: App Store Connect → **Users and Access → Sandbox → Test Accounts (+)**, then on the
       iPhone **Settings → Developer → Sandbox Apple Account**. Sandbox renewals are accelerated (1 year ≈ 1 hour,
@@ -70,7 +69,7 @@ No accounts: the subscription is tied to the Apple ID, and progress syncs throug
 
 ## 5. Privacy and age rating
 
-- [ ] App Privacy: answer as in `privacy_labels.md` (**Data Not Collected**).
+- [ ] App Privacy: answer as in `privacy_labels.md` (**Purchase History**, not linked, not used for tracking, because of RevenueCat).
 - [ ] Age Rating: answer as in `age_rating.md` (expected **4+**).
 
 ## 6. Build and upload
@@ -82,9 +81,8 @@ No accounts: the subscription is tied to the Apple ID, and progress syncs throug
 ## 7. TestFlight first
 
 - [ ] Add yourself as an internal tester and install the build.
-- [ ] Test on a real iPhone: onboarding (tap-only, paywall right after Turn On Locks, no close button), Screen Time permission, block screen, Solve to unlock → notification → puzzle → unlock → automatic
-      re-lock, the 7-day trial, monthly and the
-      offer (sandbox), Restore Purchases, Settings → Lockie Pro (Active · renews…, Manage subscription),
+- [ ] Test on a real iPhone: onboarding (tap-only, paywall after "Start my plan", no close button), Screen Time permission, block screen, Solve to unlock → notification → puzzle → unlock → automatic
+      re-lock, the 7-day trial and monthly (sandbox), Restore Purchases, Settings → Lockie Pro (Active · renews…, Manage subscription),
       iCloud restore on a second device ("Welcome back!"), Settings → Data → Reset all data, the lock
       schedule, strict mode and widgets.
 

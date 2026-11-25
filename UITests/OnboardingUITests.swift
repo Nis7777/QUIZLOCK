@@ -49,7 +49,7 @@ final class OnboardingUITests: XCTestCase {
         // 5. The turn
         tapContinue(); tapContinue(); tapContinue(); tapContinue()
 
-        // 6. Permissions: connect (mocked) → pick a mock app → confirmation → reward → notifications → rating
+        // 6. Permissions: connect (mocked) → pick a mock app → confirmation → reward → notifications
         tap(app.buttons["onboarding.connect"], timeout: 5)
         let mockApp = app.buttons.matching(NSPredicate(format: "label CONTAINS 'TikTok'")).firstMatch
         tap(mockApp, timeout: 5)
@@ -58,7 +58,6 @@ final class OnboardingUITests: XCTestCase {
         tap(app.buttons["onboarding.turnOn"], timeout: 5)
         tap(app.buttons["onboarding.notifications"], timeout: 5)
         allowSystemAlertIfShown()
-        tapContinue(timeout: 8)               // rating
 
         // 7. Commitment: press and hold → setup → plan ready → paywall
         let hold = app.buttons["onboarding.commit"]

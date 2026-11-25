@@ -129,12 +129,8 @@ Open with a transition screen: `mascot_clipboard` + "Let's set you up, {name}!" 
    - Then "Choose your reward" (unlock time, existing screen).
 2. **Notifications:**
    - "I'll send you gentle reminders to keep your streak alive" with `mascot_pointing`, placed so it points at where the system alert appears.
-   - ChunkyButton "Allow notifications" → the system prompt.
-   - "Not now" link.
-3. **Rating:**
-   - "Help more people unlock their time" with `mascot_celebrate` and confetti.
-   - ChunkyButton "Continue" → requestReview once.
-   - NO fake reviews, NO fake rating numbers.
+   - ChunkyButton "Continue" → the system prompt (App Review 5.1.1(iv): no "Allow" wording and no way to skip before the system alert).
+(The App Store rating prompt is not part of onboarding: it is asked once, after the third puzzle-earned unlock.)
 
 ## 7. Chapter 7: Commitment (cinematic)
 1. **"Are you ready to take your time back, {name}?"** with `mascot_thinking`. At the bottom: "Hold your finger on the button to commit" and a coral circular button with a tap icon (SF Symbol `hand.tap.fill`; never use the Touch ID / Face ID glyphs for non-biometric actions).

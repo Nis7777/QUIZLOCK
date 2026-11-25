@@ -10,7 +10,6 @@ import UserNotifications
 final class Store {
     private(set) var yearly: Product?
     private(set) var monthly: Product?
-    private(set) var yearlyOffer: Product?
     private(set) var isPurchasing = false
     /// The user can still get the yearly plan's introductory offer (free trial).
     private(set) var isEligibleForTrial = false
@@ -53,7 +52,6 @@ final class Store {
             let products = try await Product.products(for: Self.productIDs)
             yearly = products.first { $0.id == Brand.iapProYearly }
             monthly = products.first { $0.id == Brand.iapProMonthly }
-            yearlyOffer = products.first { $0.id == Brand.iapProYearlyOffer }
             loadState = (yearly != nil && monthly != nil) ? .loaded : .failed
             await refreshTrialEligibility()
         } catch {
@@ -100,7 +98,7 @@ final class Store {
     }
 
     private func autoRenewStatus(for transaction: Transaction?) async -> Bool {
-        guard let transaction, let product = [yearly, monthly, yearlyOffer].compactMap({ $0 }).first,
+        guard let transaction, let product = [yearly, monthly].compactMap({ $0 }).first,
               let statuses = try? await product.subscription?.status else { return true }
         for status in statuses {
             guard case .verified(let t) = status.transaction, t.originalID == transaction.originalID,
@@ -232,12 +230,6 @@ final class Store {
         let monthlyPerMonth = monthly.price / Self.months(in: mp)
         let yearlyPerMonth = yearly.price / Self.months(in: yp)
         return Self.percentOff(yearlyPerMonth, from: monthlyPerMonth)
-    }
-
-    /// Exit offer discount vs the regular yearly price (25% with $29.99 vs $39.99).
-    var offerDiscountPercent: Int? {
-        guard let yearly, let yearlyOffer else { return nil }
-        return Self.percentOff(yearlyOffer.price, from: yearly.price)
     }
 
     static func percentOff(_ price: Decimal, from reference: Decimal) -> Int? {
