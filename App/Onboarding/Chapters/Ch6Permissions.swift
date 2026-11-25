@@ -94,7 +94,7 @@ struct ConnectScreenTimeStepView: View {
     }
 
     private var confirmation: some View {
-        OnboardingPage(title: "Locked and loaded", subtitle: model.selectedCountText) {
+        OnboardingPage(title: "Ready to lock", subtitle: model.selectedCountText) {
             VStack(spacing: 20) {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 16) {
                     ForEach(Array(model.lockItems.prefix(16).enumerated()), id: \.element.id) { i, item in

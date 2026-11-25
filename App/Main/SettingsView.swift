@@ -393,7 +393,8 @@ struct SettingsView: View {
                     .frame(width: 34)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Enable locks").appFont(17, .semibold).foregroundStyle(palette.textPrimary)
-                    Text(LocalizedStringKey(model.lock.locksEnabled ? "All apps protected" : "Locks paused"))
+                    Text(LocalizedStringKey(!model.settings.isPro ? "Not locked yet: needs \(Brand.subscriptionGroupName)"
+                                            : model.lock.locksEnabled ? "All apps protected" : "Locks paused"))
                         .appFont(15).foregroundStyle(palette.textSecondary)
                 }
                 Spacer()
@@ -416,7 +417,7 @@ struct SettingsView: View {
                             PillToggle(isOn: model.itemEnabledBinding(item.key), label: "Lock")
                         }
                         .padding(.vertical, 8)
-                        .opacity(model.lock.locksEnabled ? 1 : 0.5)
+                        .opacity(model.lock.locksEnabled && model.settings.isPro ? 1 : 0.5)
                     }
                 }
                 .card()

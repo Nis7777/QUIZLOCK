@@ -280,7 +280,7 @@ struct PlanReadyView: View {
                     .foregroundStyle(Color.textPrimary)
             }
             Divider()
-            planRow(symbol: "lock.fill", title: "Locked", value: categories)
+            planRow(symbol: "lock.fill", title: "Apps to lock", value: categories)
             planRow(symbol: "puzzlepiece.extension.fill", title: "Daily puzzle mix",
                     value: "\(model.enabledGamesText) · \(String(localized: String.LocalizationValue(challenge.label)))")
             planRow(symbol: "timer", title: "Unlock time",

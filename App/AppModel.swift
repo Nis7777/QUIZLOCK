@@ -280,13 +280,9 @@ final class AppModel {
 
     /// Locks only take effect with an active Lockie Pro subscription (or free trial). Without one, every
     /// shield is removed: apps are never held locked to push a purchase (App Review 5.6).
-    var locksAllowed: Bool {
-        #if DEBUG
-        return true // development builds lock without a purchase, for testing
-        #else
-        return settings.isPro
-        #endif
-    }
+    /// The same in every build: to test locking from Xcode, "buy" Lockie Pro with the free local StoreKit
+    /// test purchases (Products.storekit) or a Sandbox account.
+    var locksAllowed: Bool { settings.isPro }
 
     func syncLocksWithSubscription() {
         guard lock.subscriptionActive != locksAllowed else { return }
