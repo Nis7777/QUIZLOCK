@@ -96,7 +96,11 @@ public enum PendingPuzzleNote {
     /// Lockie's picture for the "Tap to solve" notification, written into the App Group by the app
     /// (an extension can only attach a file, and the shield-action extension has no image assets).
     public static var notificationArtURL: URL? {
-        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Brand.appGroup)?
+        #if os(Linux)
+        return nil // App Groups don't exist on Linux (engine test harness only)
+        #else
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Brand.appGroup)?
             .appendingPathComponent("notification_lockie_v1.png")
+        #endif
     }
 }

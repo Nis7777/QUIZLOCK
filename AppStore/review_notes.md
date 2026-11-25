@@ -16,21 +16,19 @@ account to test.
 
 ## How to test (about 3 minutes)
 
-1. Launch Lockie and go through onboarding (tap-only; typing your name is optional and can be skipped):
-   tap **Get Started**, keep the 4 puzzles selected on **Which puzzles sound fun?** and tap **Continue**.
-   **Here's how it works** plays by itself (or tap **Skip**). Answer the short questions.
-2. On **Connect Lockie to Screen Time**, tap **Continue** and allow access in Apple's system sheet.
-   Then tap **Continue** on the notifications screen and allow notifications.
-3. On **Lock your apps.**, tap **Add Apps to Lock** and choose any app (for example Safari or News), then
-   tap **Done** and **Continue**.
-4. Choose an unlock time (for example **5 minutes**) and tap **Continue**. The Lockie Pro paywall
-   appears. Start the free trial with your Sandbox account (no real money is charged). The locks turn on and you
-   land on the dashboard.
-5. Go to the Home Screen and open the app you chose. Lockie's block screen appears.
-6. Tap **Solve to unlock**. The block screen changes to "Your puzzle is ready". Tap the "Your puzzle is ready 🧩" notification, or open Lockie. The puzzle
-   opens.
-7. Solve the puzzle. The app is unlocked for the time you chose, and it locks again automatically when
-   the time is up.
+1. Launch Lockie and tap **Get started**. Lockie (our mascot) introduces itself; typing a name is optional
+   (**Skip**). A short chat follows: tap the reply bubbles, or tap **Skip chat** at the top right.
+2. **How it works** shows 3 cards; tap **Continue**. Answer the short questions (tap an answer, then
+   **Continue**), then tap **Continue** through the next few screens.
+3. On **Let's lock your first apps**, tap **Continue** and allow access in Apple's system sheet. In
+   Apple's app picker choose any app (for example Safari or News), tap **Done**, then **Continue**.
+4. Choose an unlock time (for example **5 minutes**) and tap **Continue**. Tap **Continue** again and allow or decline
+   notifications in Apple's alert, then tap **Continue** on the next screen.
+5. Hold the round button to commit, then tap **Start my plan**. The Lockie Pro paywall appears. Start the free
+   trial with your Sandbox account (no real money is charged). The locks turn on and you land on the dashboard.
+6. Go to the Home Screen and open the app you chose. Lockie's block screen appears.
+7. Tap **Solve to unlock**. The block screen changes to "Your puzzle is ready 🧩". Tap the notification, or open
+   Lockie. Solve the puzzle: the app opens unlocked for the time you chose, and locks again when the time is up.
 
 If you decline Screen Time access or notifications, the app keeps working and explains how to turn them
 on later (Settings tab).

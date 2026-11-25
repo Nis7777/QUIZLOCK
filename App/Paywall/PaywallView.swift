@@ -352,13 +352,18 @@ private struct TrialTimeline: View {
     let trialDays: Int
     let price: String
     @Environment(\.palette) private var palette
+    @Environment(AppModel.self) private var model
 
     private var reminderDay: Int { max(1, trialDays - Brand.trialReminderDaysBeforeEnd) }
+    /// Only promise a reminder that can actually arrive (it's a local notification).
+    private var canRemind: Bool { !model.notificationsDenied && !model.notificationsUndecided }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             row("lock.open.fill", String(localized: "Today: full access"), last: false)
-            row("bell.fill", String(localized: "Day \(reminderDay): we'll remind you"), last: false)
+            row("bell.fill", canRemind ? String(localized: "Day \(reminderDay): we'll remind you")
+                                       : String(localized: "Day \(reminderDay): cancel anytime in Settings → Apple ID → Subscriptions"),
+                last: false)
             row("creditcard.fill", String(localized: "Day \(trialDays): you're billed \(price), cancel anytime before"), last: true)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

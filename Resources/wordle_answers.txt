@@ -161,7 +161,6 @@ bijou
 biker
 bilge
 billy
-bimbo
 binge
 bingo
 birch
@@ -206,7 +205,6 @@ bogus
 boner
 bongo
 bonus
-booby
 boost
 booth
 booty
@@ -608,7 +606,6 @@ envoy
 epoxy
 equal
 erase
-erect
 erica
 erode
 error
@@ -639,7 +636,6 @@ fanny
 farce
 fatal
 fatso
-fatty
 fault
 fauna
 favor
@@ -860,7 +856,6 @@ gulag
 gulch
 gushy
 gusto
-gypsy
 habit
 hairy
 hallo
@@ -868,7 +863,6 @@ handy
 hanky
 happy
 hardy
-harem
 harpy
 harry
 harsh
@@ -910,7 +904,6 @@ honda
 honey
 honky
 honor
-hooch
 hooky
 hoppy
 horde
@@ -940,7 +933,6 @@ hyper
 icing
 ideal
 idiom
-idiot
 igloo
 iliad
 image
@@ -1112,7 +1104,6 @@ lupus
 lurch
 lying
 lymph
-lynch
 mache
 macho
 madam
@@ -1199,7 +1190,6 @@ moola
 moose
 mopey
 moral
-moron
 morph
 morse
 mosey
@@ -1286,7 +1276,6 @@ omega
 onion
 oomph
 opera
-opium
 optic
 orbit
 order
@@ -1311,7 +1300,6 @@ palsy
 panda
 panel
 panic
-pansy
 panty
 paper
 pappy
@@ -1674,7 +1662,6 @@ singe
 sinus
 siree
 siren
-sissy
 sixth
 sixty
 skate
@@ -1691,7 +1678,6 @@ slang
 slant
 slash
 slate
-slave
 sleek
 sleep
 sleet
@@ -1994,7 +1980,6 @@ trade
 trail
 train
 trait
-tramp
 trans
 trash
 tread
@@ -2129,7 +2114,6 @@ weigh
 weird
 welch
 welsh
-wench
 whack
 whale
 wharf

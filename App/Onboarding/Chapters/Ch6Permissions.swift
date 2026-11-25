@@ -78,7 +78,7 @@ struct ConnectScreenTimeStepView: View {
             }
         } footer: {
             VStack(spacing: 4) {
-                ChunkyButton(title: model.isAuthorized ? "Choose apps" : "Connect Screen Time", isLoading: requesting) {
+                ChunkyButton(title: model.isAuthorized ? "Choose apps" : "Continue", isLoading: requesting) {
                     Task { await connect() }
                 }
                 .accessibilityIdentifier("onboarding.connect")
@@ -215,8 +215,10 @@ struct NotificationsStepView: View {
             }
             .padding(.top, 6)
         } footer: {
+            // App Review 5.1.1(iv): before a system permission prompt, the button says "Continue" (not
+            // "Allow") and there's no way to skip the prompt; people decide in Apple's own alert.
             VStack(spacing: 4) {
-                ChunkyButton(title: "Allow notifications", isLoading: asking) {
+                ChunkyButton(title: "Continue", isLoading: asking) {
                     Task {
                         asking = true
                         await model.requestNotificationPermission()
@@ -225,7 +227,6 @@ struct NotificationsStepView: View {
                     }
                 }
                 .accessibilityIdentifier("onboarding.notifications")
-                OnboardingLink(title: "Not now", action: onContinue)
             }
         }
         .task {

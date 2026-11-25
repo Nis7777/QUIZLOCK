@@ -49,7 +49,7 @@ final class WordEngineTests: XCTestCase {
 
     func testAnswersAreAllowedAndWellFormed() throws {
         let dict = try XCTUnwrap(TestResources.dictionary)
-        XCTAssertEqual(dict.answers.count, 2203)
+        XCTAssertEqual(dict.answers.count, 2187) // 16 offensive or loaded words removed from the answer pool (still accepted as guesses)
         XCTAssertGreaterThanOrEqual(dict.allowed.count, 8647)
         for a in dict.answers {
             XCTAssertEqual(a.count, 5, a)
