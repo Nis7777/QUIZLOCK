@@ -65,7 +65,6 @@ struct SettingsView: View {
     @State private var showManageSubscriptions = false
     @State private var showResetSheet = false
     @Environment(\.openURL) private var openURL
-    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -285,15 +284,17 @@ struct SettingsView: View {
                         .padding(.vertical, 12)
                 }
                 .buttonStyle(.plain)
-                Divider().padding(.leading, 44)
-                Button {
-                    if let url = Brand.reviewURL { openURL(url) } else { requestReview() }
-                } label: {
-                    InfoRow(icon: AnyView(Image(systemName: "star").appFont(20).foregroundStyle(palette.accent)),
-                            title: "Rate \(Brand.appName)", subtitle: "It really helps")
-                        .padding(.vertical, 12)
+                // Only with the App Store ID set: it opens the App Store review page, which always works.
+                // (Apple's rating pop-up often doesn't appear from a button, which looks broken.)
+                if let url = Brand.reviewURL {
+                    Divider().padding(.leading, 44)
+                    Button { openURL(url) } label: {
+                        InfoRow(icon: AnyView(Image(systemName: "star").appFont(20).foregroundStyle(palette.accent)),
+                                title: "Rate \(Brand.appName)", subtitle: "It really helps")
+                            .padding(.vertical, 12)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
             .padding(.horizontal, 16)
             .background(palette.card, in: RoundedRectangle(cornerRadius: 22, style: .continuous))

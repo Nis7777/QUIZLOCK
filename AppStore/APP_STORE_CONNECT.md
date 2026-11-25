@@ -93,7 +93,7 @@ NEW PHONE? NO PROBLEM
 Your progress syncs through your own iCloud, so your streak and stats come with you to a new iPhone. Use Restore Purchases to bring your subscription along.
 
 PRICING
-Lockie is free to download. Using it needs Lockie Pro, an auto-renewable subscription:
+Lockie is free to download, and the daily puzzle, stats and streaks are free. Locking apps (and unlocking them with puzzles) and puzzle practice need Lockie Pro, an auto-renewable subscription:
 • Lockie Pro Yearly: 1 year, with a 7-day free trial for new subscribers
 • Lockie Pro Monthly: 1 month
 Prices are shown in the app before you subscribe and may vary by country.
@@ -177,8 +177,8 @@ Subscription group **Lockie Pro**:
   later). It is never shown as a result of tapping ×, its own × closes it, and it has no countdown or urgency
   claims. To see it: close the paywall, wait a minute, leave Lockie and open it again.
 
-Any active subscription in the group unlocks Lockie Pro (unlimited puzzle-earned unlocks and standalone puzzle
-practice). Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.
+Any active subscription in the group unlocks Lockie Pro: locking the chosen apps, unlocking them with puzzles,
+and standalone puzzle practice. The daily puzzle, stats, streaks and widgets are free. Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.
 Cancel anytime in Settings.", **Restore Purchases**, **Terms of Use** and **Privacy Policy**, and a × that closes right away.
 Prices, periods and the trial length are read from StoreKit. Restore Purchases is also in Settings → Support, and
 subscribers see **Manage subscription** in Settings.
@@ -254,8 +254,8 @@ Expected result: **4+**.
 
 | Reference name | Product ID | Duration | Price (USA) | Introductory offer | Display name | Description |
 |---|---|---|---|---|---|---|
-| Pro Yearly | `app.lockie.ios.pro.yearly` | 1 Year | $39.99 | Free trial, 1 Week, new subscribers | Lockie Pro Yearly | Unlimited unlocks, all 4 puzzle games and the daily puzzle |
-| Pro Monthly | `app.lockie.ios.pro.monthly` | 1 Month | $9.99 | None | Lockie Pro Monthly | Unlimited unlocks, all 4 puzzle games and the daily puzzle |
+| Pro Yearly | `app.lockie.ios.pro.yearly` | 1 Year | $39.99 | Free trial, 1 Week, new subscribers | Lockie Pro Yearly | Lock distracting apps and unlock them with puzzles, plus puzzle practice |
+| Pro Monthly | `app.lockie.ios.pro.monthly` | 1 Month | $9.99 | None | Lockie Pro Monthly | Lock distracting apps and unlock them with puzzles, plus puzzle practice |
 
 - Review screenshot for each: a screenshot of the paywall with that plan selected.
 - Both are submitted together with the app version.

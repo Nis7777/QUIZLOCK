@@ -265,9 +265,10 @@ private struct PlansScreen: View {
 
     private var benefits: some View {
         VStack(alignment: .leading, spacing: 14) {
-            benefit("lock.open.fill", "Unlimited unlocks")
-            benefit("puzzlepiece.fill", "All 4 puzzle games + daily puzzle")
-            benefit("flame.fill", "Streaks, stats and widgets")
+            // Only what actually needs Lockie Pro (the daily puzzle, stats, streaks and widgets are free).
+            benefit("lock.fill", "Lock the apps that steal your time")
+            benefit("puzzlepiece.fill", "Unlock them with a quick puzzle")
+            benefit("figure.mind.and.body", "Practice any puzzle, anytime")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .card(padding: 18)

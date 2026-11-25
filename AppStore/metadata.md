@@ -44,7 +44,7 @@ NEW PHONE? NO PROBLEM
 Your progress syncs through your own iCloud, so your streak and stats come with you to a new iPhone. Use Restore Purchases to bring your subscription along.
 
 PRICING
-Lockie is free to download. Using it needs Lockie Pro, an auto-renewable subscription:
+Lockie is free to download, and the daily puzzle, stats and streaks are free. Locking apps (and unlocking them with puzzles) and puzzle practice need Lockie Pro, an auto-renewable subscription:
 • Lockie Pro Yearly: 1 year, with a 7-day free trial for new subscribers
 • Lockie Pro Monthly: 1 month
 Prices are shown in the app before you subscribe and may vary by country.

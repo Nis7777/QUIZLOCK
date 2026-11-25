@@ -285,9 +285,19 @@ final class AppModel {
     var locksAllowed: Bool { settings.isPro }
 
     func syncLocksWithSubscription() {
-        guard lock.subscriptionActive != locksAllowed else { return }
-        updateLock(applyShield: false) { $0.subscriptionActive = locksAllowed }
+        // When the subscription will end: its expiry, plus a week while it's set to renew (so a renewal that
+        // happens while Lockie stays closed never drops the locks). A cancelled one ends exactly on time.
+        var until: Date?
+        if locksAllowed, let end = store.expirationDate {
+            until = store.willAutoRenew ? end.addingTimeInterval(7 * 24 * 3600) : end
+        }
+        guard lock.subscriptionActive != locksAllowed || lock.proUntil != until else { return }
+        updateLock(applyShield: false) {
+            $0.subscriptionActive = locksAllowed
+            $0.proUntil = until
+        }
         screenTime.apply(lock)
+        screenTime.scheduleSubscriptionEnd(until)
     }
 
     func finishOnboarding() {

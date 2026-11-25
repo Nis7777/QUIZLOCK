@@ -61,9 +61,14 @@ struct RewardView: View {
                 ChunkyButton(title: "Continue", action: onTurnOn)
                     .accessibilityIdentifier("onboarding.turnOn")
             } else {
-                // Nothing to lock yet: go back to the picker instead of turning on empty locks.
-                ChunkyButton(title: "Pick apps to lock", systemImage: "plus", action: onChangeApps)
-                    .accessibilityIdentifier("onboarding.pickApps")
+                // Nothing to lock yet: offer the picker, but never trap anyone who declined Screen Time
+                // access (App Review 5.1.1(iv)): they can carry on and pick apps later in Settings.
+                VStack(spacing: 4) {
+                    ChunkyButton(title: "Pick apps to lock", systemImage: "plus", action: onChangeApps)
+                        .accessibilityIdentifier("onboarding.pickApps")
+                    OnboardingLink(title: "Skip for now", action: onTurnOn)
+                        .accessibilityIdentifier("onboarding.skipApps")
+                }
             }
         }
         .sheet(isPresented: $showCustom) {

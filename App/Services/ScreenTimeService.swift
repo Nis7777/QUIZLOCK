@@ -65,6 +65,28 @@ final class ScreenTimeService {
         DeviceActivityCenter().stopMonitoring()
     }
 
+    /// Wakes the monitor extension when the subscription ends, so the locks are lifted even if Lockie
+    /// isn't opened ("schedule.*" activities make it re-evaluate the shield). nil cancels it.
+    func scheduleSubscriptionEnd(_ end: Date?, now: Date = Date()) {
+        if Self.isMock { return }
+        let center = DeviceActivityCenter()
+        let name = DeviceActivityName("schedule.subscriptionEnd")
+        center.stopMonitoring([name])
+        guard let end, end > now else { return }
+        let start = max(now, end.addingTimeInterval(-20 * 60))
+        let calendar = Calendar.current
+        let parts: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
+        let schedule = DeviceActivitySchedule(
+            intervalStart: calendar.dateComponents(parts, from: start),
+            intervalEnd: calendar.dateComponents(parts, from: end.addingTimeInterval(60)),
+            repeats: false)
+        do {
+            try center.startMonitoring(name, during: schedule)
+        } catch {
+            print("Subscription-end schedule failed: \(error)")
+        }
+    }
+
     /// Schedules the re-lock. DeviceActivity needs schedules of at least 15 minutes, so for
     /// shorter unlocks the interval starts in the past: start = end − 15 min.
     func scheduleRelock(_ unlock: ActiveUnlock, now: Date = Date()) {

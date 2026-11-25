@@ -111,6 +111,10 @@ public struct LockState: Codable {
     /// Lockie Pro is active (trial included). Without it nothing is ever shielded, so apps are never held
     /// locked behind a purchase (App Review 5.6). The app keeps this in sync with the entitlement.
     public var subscriptionActive = true
+    /// After this moment the locks stop even if Lockie isn't opened (the subscription's end, plus a grace
+    /// period while it's set to renew). nil = no end known. Checked by every shield update, including the
+    /// background extension's, so a lapsed subscription never leaves apps locked.
+    public var proUntil: Date?
 
     public init() {}
 
@@ -126,6 +130,7 @@ public struct LockState: Codable {
         schedule = try? c.decodeIfPresent(LockSchedule.self, forKey: .schedule)
         strictUntil = try? c.decodeIfPresent(Date.self, forKey: .strictUntil)
         subscriptionActive = (try? c.decodeIfPresent(Bool.self, forKey: .subscriptionActive)) ?? true
+        proUntil = try? c.decodeIfPresent(Date.self, forKey: .proUntil)
     }
 
     public func config(for key: String) -> ItemConfig { items[key] ?? ItemConfig() }
@@ -141,7 +146,7 @@ public struct LockState: Codable {
 
     /// Locks are on now (master switch and schedule).
     public func locksActive(now: Date = Date()) -> Bool {
-        subscriptionActive && locksEnabled && (schedule?.isActive(at: now) ?? true)
+        subscriptionActive && (proUntil.map { $0 > now } ?? true) && locksEnabled && (schedule?.isActive(at: now) ?? true)
     }
 
     public func isUnlocked(_ key: String, now: Date = Date()) -> Bool {

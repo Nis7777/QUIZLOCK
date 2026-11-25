@@ -54,8 +54,8 @@ Subscription group **Lockie Pro**:
   later). It is never shown as a result of tapping ×, its own × closes it, and it has no countdown or urgency
   claims. To see it: close the paywall, wait a minute, leave Lockie and open it again.
 
-Any active subscription in the group unlocks Lockie Pro (unlimited puzzle-earned unlocks and standalone puzzle
-practice). Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.
+Any active subscription in the group unlocks Lockie Pro: locking the chosen apps, unlocking them with puzzles,
+and standalone puzzle practice. The daily puzzle, stats, streaks and widgets are free. Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.
 Cancel anytime in Settings.", **Restore Purchases**, **Terms of Use** and **Privacy Policy**, and a × that closes right away.
 Prices, periods and the trial length are read from StoreKit. Restore Purchases is also in Settings → Support, and
 subscribers see **Manage subscription** in Settings.

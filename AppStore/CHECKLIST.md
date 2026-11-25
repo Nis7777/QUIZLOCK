@@ -55,8 +55,8 @@ No accounts: the subscription is tied to the Apple ID, and progress syncs throug
 
 - [ ] Prices: set the USA price, let Apple fill in the other countries. The app always shows the StoreKit price, and
       computes "Save 67%" (yearly vs 12 × monthly) and "25% off" (offer vs yearly) from the real prices.
-- [ ] Display name + description for each, in English (e.g. "Lockie Pro Yearly" / "Unlimited
-      unlocks, all 4 puzzle games and the daily puzzle").
+- [ ] Display name + description for each, in English (e.g. "Lockie Pro Yearly" / "Lock distracting
+      apps and unlock them with puzzles, plus puzzle practice").
 - [ ] **Review screenshot** for each: the main paywall for Yearly and Monthly, the offer screen for the Offer.
 - [ ] Only on Pro Yearly: **Introductory Offers → (+)** → **Free**, **1 Week**, **New subscribers**, all countries.
 - [ ] Subscription levels: Yearly and Yearly Offer on the same level, Monthly below them.
