@@ -76,13 +76,9 @@ final class OnboardingUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Terms of Use"].exists)
         XCTAssertTrue(app.buttons["Privacy Policy"].exists)
 
-        // Hard paywall: × shows the discount once, then back to the plans; never into the app.
-        if app.buttons["paywall.close"].exists {
-            tap(app.buttons["paywall.close"])
-            if app.staticTexts["paywall.offer.title"].waitForExistence(timeout: 3) { tap(app.buttons["paywall.close"]) }
-        }
-        XCTAssertTrue(app.staticTexts["paywall.title"].waitForExistence(timeout: 5))
+        // Hard paywall: no × at all (never a close button that doesn't close), and no discount pop-up.
         XCTAssertFalse(app.buttons["paywall.close"].exists)
+        XCTAssertFalse(app.staticTexts["paywall.offer.title"].exists)
         XCTAssertFalse(app.buttons["settings.proCard"].exists)
     }
 

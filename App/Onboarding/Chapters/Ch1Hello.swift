@@ -41,6 +41,14 @@ struct HeroView: View {
                     .accessibilityIdentifier("onboarding.start")
                     .padding(.horizontal, 20)
                     .staggeredAppear(2)
+                // Said up front, before any setup: the app needs a subscription.
+                Text("Requires \(Brand.subscriptionGroupName), a subscription with a free trial for new subscribers.")
+                    .appFont(13)
+                    .foregroundStyle(.white.opacity(0.9))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 28)
+                    .padding(.top, 12)
+                    .staggeredAppear(3)
                 HStack(spacing: 6) {
                     Button("Terms") { openURL(Brand.termsURL) }
                     Text(verbatim: "·").accessibilityHidden(true)

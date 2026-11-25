@@ -108,6 +108,9 @@ public struct LockState: Codable {
     public var schedule: LockSchedule?
     /// Strict mode: locks can't be weakened until this time (without solving 3 hard puzzles).
     public var strictUntil: Date?
+    /// Lockie Pro is active (trial included). Without it nothing is ever shielded, so apps are never held
+    /// locked behind a purchase (App Review 5.6). The app keeps this in sync with the entitlement.
+    public var subscriptionActive = true
 
     public init() {}
 
@@ -122,6 +125,7 @@ public struct LockState: Codable {
         mockApps = (try? c.decodeIfPresent([String].self, forKey: .mockApps)) ?? []
         schedule = try? c.decodeIfPresent(LockSchedule.self, forKey: .schedule)
         strictUntil = try? c.decodeIfPresent(Date.self, forKey: .strictUntil)
+        subscriptionActive = (try? c.decodeIfPresent(Bool.self, forKey: .subscriptionActive)) ?? true
     }
 
     public func config(for key: String) -> ItemConfig { items[key] ?? ItemConfig() }
@@ -137,7 +141,7 @@ public struct LockState: Codable {
 
     /// Locks are on now (master switch and schedule).
     public func locksActive(now: Date = Date()) -> Bool {
-        locksEnabled && (schedule?.isActive(at: now) ?? true)
+        subscriptionActive && locksEnabled && (schedule?.isActive(at: now) ?? true)
     }
 
     public func isUnlocked(_ key: String, now: Date = Date()) -> Bool {

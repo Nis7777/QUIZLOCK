@@ -57,7 +57,7 @@ No accounts: the subscription is tied to the Apple ID, and progress syncs throug
       computes "Save 67%" (yearly vs 12 × monthly) and "25% off" (offer vs yearly) from the real prices.
 - [ ] Display name + description for each, in English (e.g. "Lockie Pro Yearly" / "Unlimited
       unlocks, all 4 puzzle games and the daily puzzle").
-- [ ] **Review screenshot** for each: the main paywall for Yearly and Monthly, the discount screen for the Offer.
+- [ ] **Review screenshot** for each: the main paywall for Yearly and Monthly. (The yearly offer product is no longer used in the app: remove it from the submission.)
 - [ ] Only on Pro Yearly: **Introductory Offers → (+)** → **Free**, **1 Week**, **New subscribers**, all countries.
 - [ ] Subscription levels: Yearly and Yearly Offer on the same level, Monthly below them.
 - [ ] The first subscriptions must be submitted **with the app version** (step 8).

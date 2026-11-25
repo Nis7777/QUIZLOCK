@@ -8,8 +8,12 @@ or a 5-letter word game).
 
 **No login is needed and there are no accounts.** Everything runs on the device; progress (streaks,
 stats, settings) syncs through the user's own iCloud key-value storage. The subscription is tied to the Apple ID
-(Restore Purchases). Lockie uses a subscription paywall: onboarding and Screen Time setup are free, then
-Lockie Pro is required (the yearly plan has a 7-day free trial). Please subscribe with a Sandbox account to test.
+(Restore Purchases). Lockie requires a subscription, and says so on the first screen ("Requires Lockie Pro, a
+subscription with a free trial for new subscribers"). Onboarding and Screen Time setup are free, then the
+Lockie Pro paywall appears (the yearly plan has a 7-day free trial). **No app is ever blocked without an active
+subscription:** the locks only take effect once Lockie Pro or its free trial starts, and they are removed
+automatically if it ends, so apps are never held locked to push a purchase. Please subscribe with a Sandbox
+account to test.
 
 ## How to test (about 3 minutes)
 
@@ -20,8 +24,9 @@ Lockie Pro is required (the yearly plan has a 7-day free trial). Please subscrib
    Then tap **Continue** on the notifications screen and allow notifications.
 3. On **Lock your apps.**, tap **Add Apps to Lock** and choose any app (for example Safari or News), then
    tap **Done** and **Continue**.
-4. Choose an unlock time (for example **5 minutes**) and tap **Turn On Locks**. The Lockie Pro paywall
-   appears. Start the free trial with your Sandbox account (no real money is charged). You land on the dashboard.
+4. Choose an unlock time (for example **5 minutes**) and tap **Continue**. The Lockie Pro paywall
+   appears. Start the free trial with your Sandbox account (no real money is charged). The locks turn on and you
+   land on the dashboard.
 5. Go to the Home Screen and open the app you chose. Lockie's block screen appears.
 6. Tap **Solve to unlock**. The block screen changes to "Your puzzle is ready". Tap the "Your puzzle is ready 🧩" notification, or open Lockie. The puzzle
    opens.
@@ -46,12 +51,12 @@ Subscription group **Lockie Pro**:
 - `app.lockie.ios.pro.yearly`: 1 year, with a **7-day free trial** (introductory offer, new subscribers).
   Pre-selected on the paywall.
 - `app.lockie.ios.pro.monthly`: 1 month, no trial.
-- `app.lockie.ios.pro.yearly.offer`: 1 year at a lower price, no trial. Shown only once, on the
-  discount screen that appears after the main paywall is closed.
 
 Any active subscription in the group unlocks Lockie Pro (unlimited puzzle-earned unlocks and standalone puzzle
 practice). Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.
-Cancel anytime in Settings.", **Restore Purchases**, **Terms of Use**, **Privacy Policy** and Restore Purchases. Without a subscription the × shows the one-time discount and then returns to the plans.
+Cancel anytime in Settings.", **Restore Purchases**, **Terms of Use** and **Privacy Policy**. Because the app requires a subscription, the paywall
+has no close button (there is no close button that doesn't close), and there are no discount pop-ups, countdowns
+or "one-time" offers.
 Prices, periods and the trial length are read from StoreKit. Restore Purchases is also in Settings → Support, and
 subscribers see **Manage subscription** in Settings.
 

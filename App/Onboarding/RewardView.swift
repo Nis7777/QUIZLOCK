@@ -57,7 +57,8 @@ struct RewardView: View {
             }
         } footer: {
             if hasApps {
-                ChunkyButton(title: "Turn On Locks", systemImage: "checkmark", action: onTurnOn)
+                // Locks take effect once Lockie Pro (or its free trial) starts, so this doesn't claim they're on.
+                ChunkyButton(title: "Continue", action: onTurnOn)
                     .accessibilityIdentifier("onboarding.turnOn")
             } else {
                 // Nothing to lock yet: go back to the picker instead of turning on empty locks.

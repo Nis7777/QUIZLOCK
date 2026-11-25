@@ -77,6 +77,7 @@ final class AppModel {
         store.onEntitlementChange = { [weak self] owned in
             guard let self else { return }
             if owned != self.settings.isPro { self.updateSettings { $0.isPro = owned } }
+            self.syncLocksWithSubscription()
             if owned, self.awaitingEntitlementForUnlock {
                 self.awaitingEntitlementForUnlock = false
                 self.paywallReason = nil
@@ -109,6 +110,7 @@ final class AppModel {
         }
         warmUpRounds()
         if settings.onboardingComplete { screenTime.registerSchedule(lock.schedule) }
+        syncLocksWithSubscription()
         sweepTimer?.invalidate()
         sweepTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { _ in
             Task { @MainActor in AppModel.shared.sweepExpiredUnlocks() }
@@ -273,7 +275,26 @@ final class AppModel {
 
     /// "Turn On Locks" (S11): applies the shield right away.
     func turnOnLocksFromOnboarding() {
-        updateLock(applyShield: false) { $0.locksEnabled = true }
+        updateLock(applyShield: false) {
+            $0.locksEnabled = true
+            $0.subscriptionActive = locksAllowed
+        }
+        screenTime.apply(lock)
+    }
+
+    /// Locks only take effect with an active Lockie Pro subscription (or free trial). Without one, every
+    /// shield is removed: apps are never held locked to push a purchase (App Review 5.6).
+    var locksAllowed: Bool {
+        #if DEBUG
+        return true // development builds lock without a purchase, for testing
+        #else
+        return settings.isPro
+        #endif
+    }
+
+    func syncLocksWithSubscription() {
+        guard lock.subscriptionActive != locksAllowed else { return }
+        updateLock(applyShield: false) { $0.subscriptionActive = locksAllowed }
         screenTime.apply(lock)
     }
 
