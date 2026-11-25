@@ -75,9 +75,11 @@ final class OnboardingUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Terms of Use"].exists)
         XCTAssertTrue(app.buttons["Privacy Policy"].exists)
 
-        // Hard paywall: no × at all (never a close button that doesn't close), and no discount pop-up.
-        XCTAssertFalse(app.buttons["paywall.close"].exists)
-        XCTAssertFalse(app.staticTexts["paywall.offer.title"].exists)
+        // The × closes straight to the app (no discount screen in between); without a subscription the
+        // dashboard says the apps aren't locked yet.
+        tap(app.buttons["paywall.close"])
+        XCTAssertFalse(app.staticTexts["paywall.offer.title"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["settings.startPro"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.buttons["settings.proCard"].exists)
     }
 

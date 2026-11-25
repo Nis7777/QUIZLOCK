@@ -1,14 +1,20 @@
 {
   "identifier" : "6F1E2C3A",
-  "nonRenewingSubscriptions" : [],
-  "products" : [],
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
   "settings" : {
     "_applicationInternalID" : "6740000000",
     "_developerTeamID" : "",
     "_failTransactionsEnabled" : false,
     "_locale" : "en_US",
     "_storefront" : "USA",
-    "_storeKitErrors" : []
+    "_storeKitErrors" : [
+
+    ]
   },
   "subscriptionGroups" : [
     {
@@ -23,8 +29,12 @@
       "name" : "Lockie Pro",
       "subscriptions" : [
         {
-          "adHocOffers" : [],
-          "codeOffers" : [],
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
           "displayPrice" : "39.99",
           "familyShareable" : false,
           "groupNumber" : 1,
@@ -47,11 +57,44 @@
           "referenceName" : "Lockie Pro Yearly",
           "subscriptionGroupID" : "21500001",
           "type" : "RecurringSubscription",
-          "winbackOffers" : []
+          "winbackOffers" : [
+
+          ]
         },
         {
-          "adHocOffers" : [],
-          "codeOffers" : [],
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "29.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6740000013",
+          "localizations" : [
+            {
+              "description" : "Lockie Pro yearly at a special price.",
+              "displayName" : "Lockie Pro Yearly (Offer)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "app.lockie.ios.pro.yearly.offer",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Lockie Pro Yearly Offer",
+          "subscriptionGroupID" : "21500001",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
           "displayPrice" : "9.99",
           "familyShareable" : false,
           "groupNumber" : 2,
@@ -68,7 +111,9 @@
           "referenceName" : "Lockie Pro Monthly",
           "subscriptionGroupID" : "21500001",
           "type" : "RecurringSubscription",
-          "winbackOffers" : []
+          "winbackOffers" : [
+
+          ]
         }
       ]
     }

@@ -7,7 +7,7 @@ import WidgetKit
 
 enum MainTab: Hashable { case settings, puzzles, feedback }
 
-enum PaywallReason { case onboarding, settings, unlockLimit, practice }
+enum PaywallReason { case onboarding, settings, unlockLimit, practice, offer }
 
 /// Result shown after an unlock is granted.
 struct UnlockResult: Equatable {
@@ -88,14 +88,6 @@ final class AppModel {
 
     var palette: Palette { Palette.forTheme(settings.theme) }
 
-    /// Hard paywall: once onboarding is done, Lockie needs an active Lockie Pro subscription (free trial
-    /// included). Without one the paywall covers the app and can't be closed; Restore Purchases stays on it.
-    var requiresSubscription: Bool {
-        #if DEBUG
-        if DemoData.isEnabled { return false }
-        #endif
-        return phase == .main && !settings.isPro
-    }
 
     // MARK: Lifecycle
 
@@ -127,6 +119,10 @@ final class AppModel {
         Task { await refreshNotificationStatus() }
         if settings.onboardingComplete, phase == .main {
             resumeUnlockIfNeeded()
+            Task {
+                await store.loadProductsIfNeeded() // the offer needs its StoreKit price first
+                showOfferIfDue()
+            }
         }
     }
 
@@ -362,6 +358,21 @@ final class AppModel {
         if reason == .unlockLimit, !settings.isPro {
             awaitingEntitlementForUnlock = false
         }
+        // Remember the first time someone left the plans without subscribing (for the later offer).
+        if !settings.isPro, reason != .offer, settings.paywallDismissedAt == nil {
+            updateSettings { $0.paywallDismissedAt = Date() }
+        }
+    }
+
+    /// The discounted yearly plan, shown once on a later visit: at least a minute after the plans were
+    /// closed without subscribing, when Lockie is opened again and nothing else is on screen.
+    func showOfferIfDue(now: Date = Date()) {
+        guard phase == .main, !settings.isPro, !settings.exitOfferShown, paywallReason == nil,
+              unlockSession == nil, unlockResult == nil,
+              let dismissed = settings.paywallDismissedAt, now.timeIntervalSince(dismissed) > 60,
+              store.yearlyOffer != nil, store.offerDiscountPercent != nil else { return }
+        updateSettings { $0.exitOfferShown = true }
+        paywallReason = .offer
     }
 
     /// No active subscription (e.g. it lapsed): unlocking needs Lockie Pro.

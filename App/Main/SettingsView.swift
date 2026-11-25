@@ -71,7 +71,9 @@ struct SettingsView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 12) {
                 TabHeader()
-                if model.settings.showAllSetBanner {
+                if !model.settings.isPro {
+                    proOffBanner
+                } else if model.settings.showAllSetBanner {
                     allSetBanner.transition(.opacity.combined(with: .move(edge: .top)))
                 }
                 if model.isStrict { strictBanner }
@@ -322,6 +324,35 @@ struct SettingsView: View {
     }
 
     // MARK: Banner
+
+    /// No subscription: say plainly that nothing is locked, and how to turn locks on.
+    private var proOffBanner: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 14) {
+                Image(systemName: "lock.open.fill")
+                    .appFont(22, .semibold)
+                    .foregroundStyle(palette.accent)
+                    .frame(width: 50, height: 50)
+                    .background(palette.tint, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Your apps aren't locked yet").appFont(19, .heavy).foregroundStyle(palette.textPrimary)
+                    Text("Locks turn on when you start \(Brand.subscriptionGroupName).")
+                        .appFont(16)
+                        .foregroundStyle(palette.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            PrimaryButton(title: model.store.showsTrial ? String(localized: "Start free trial") : String(localized: "See plans")) {
+                model.presentPaywall(.settings)
+            }
+            .accessibilityIdentifier("settings.startPro")
+        }
+        .padding(18)
+        .background(palette.tint, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).strokeBorder(palette.accent.opacity(0.18), lineWidth: 1))
+        .padding(.horizontal, 16)
+    }
 
     private var allSetBanner: some View {
         HStack(alignment: .top, spacing: 14) {

@@ -16,7 +16,8 @@ public enum Brand {
     public static let subscriptionGroupName = "Lockie Pro"
     public static let iapProYearly = "app.lockie.ios.pro.yearly"            // yearly, 7-day free trial (intro offer)
     public static let iapProMonthly = "app.lockie.ios.pro.monthly"          // monthly, no trial
-    public static let proProductIDs = [iapProYearly, iapProMonthly]
+    public static let iapProYearlyOffer = "app.lockie.ios.pro.yearly.offer" // yearly at a discount, no trial (shown once, on a later visit)
+    public static let proProductIDs = [iapProYearly, iapProMonthly, iapProYearlyOffer]
     /// The trial reminder fires this many days before the trial ends (day 5 of a 7-day trial).
     public static let trialReminderDaysBeforeEnd = 2
     /// Your app's numeric Apple ID from App Store Connect (App Information → Apple ID). Used by "Rate Lockie".

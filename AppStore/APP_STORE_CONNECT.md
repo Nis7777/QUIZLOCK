@@ -7,8 +7,8 @@ higher (Xcode → raise the build number before every upload).
 
 ## 1. Before you resubmit
 
-- [ ] **Remove the yearly offer.** Monetization → Subscriptions → Lockie Pro → `app.lockie.ios.pro.yearly.offer`:
-      take it out of this submission (the app no longer uses it). If it was never approved you can delete it.
+- [ ] **Keep all 3 subscriptions in the submission**, including `app.lockie.ios.pro.yearly.offer` (the app shows
+      it once, on a later visit). Its review screenshot is the offer screen.
 - [ ] **Open these 3 links in a browser** and make sure each one loads (not a 404):
   - Privacy Policy: https://nis7777.github.io/lockie/privacy.html
   - Terms of Use: https://nis7777.github.io/lockie/terms.html
@@ -23,16 +23,18 @@ higher (Xcode → raise the build number before every upload).
 
 > Thank you for the feedback. In this build we addressed guideline 5.6:
 >
-> - The paywall no longer has a close button that led to a discount offer. Because Lockie requires a
->   subscription, the paywall has no close button at all, and there are no discount pop-ups, countdowns or
->   "one-time" offers. The discounted yearly product has been removed.
+> - The paywall's close button now closes it immediately and takes you into the app. It no longer leads to a
+>   discount screen, and there are no countdowns or "only shown once" claims.
+> - The discounted yearly plan now appears only once, as its own screen, the next time the user opens the app
+>   after closing the paywall. Its close button closes it.
 > - No app is ever blocked without an active subscription: the locks only take effect after the user starts
->   Lockie Pro or its free trial, and they're removed automatically if the subscription ends.
+>   Lockie Pro or its free trial, and they're removed automatically if the subscription ends. Without a
+>   subscription the app clearly says the apps aren't locked yet.
 > - The App Store rating prompt is no longer shown during onboarding; it's asked once, after the user has
 >   earned a few unlocks.
 > - Screens shown before Apple's permission prompts now use "Continue" and always lead to the system prompt.
 >
-> The updated review notes explain how to test with a Sandbox account. Thank you!
+> The updated review notes explain how to test, including how to see the offer. Thank you!
 
 ---
 
@@ -129,11 +131,12 @@ or a 5-letter word game).
 
 **No login is needed and there are no accounts.** Everything runs on the device; progress (streaks,
 stats, settings) syncs through the user's own iCloud key-value storage. The subscription is tied to the Apple ID
-(Restore Purchases). Lockie requires a subscription. Onboarding and Screen Time setup are free, then the
-Lockie Pro paywall appears (the yearly plan has a 7-day free trial). **No app is ever blocked without an active
-subscription:** the locks only take effect once Lockie Pro or its free trial starts, and they are removed
-automatically if it ends, so apps are never held locked to push a purchase. Please subscribe with a Sandbox
-account to test.
+(Restore Purchases). Blocking apps needs a Lockie Pro subscription. Onboarding and Screen Time setup are free,
+then the Lockie Pro paywall appears (the yearly plan has a 7-day free trial). Its **×** closes it straight away
+and you can use the app without subscribing; the dashboard then says "Your apps aren't locked yet". **No app is
+ever blocked without an active subscription:** the locks only take effect once Lockie Pro or its free trial
+starts, and they are removed automatically if it ends, so apps are never held locked to push a purchase. Please
+subscribe with a Sandbox account to test blocking.
 
 ## How to test (about 3 minutes)
 
@@ -169,12 +172,14 @@ Subscription group **Lockie Pro**:
 - `app.lockie.ios.pro.yearly`: 1 year, with a **7-day free trial** (introductory offer, new subscribers).
   Pre-selected on the paywall.
 - `app.lockie.ios.pro.monthly`: 1 month, no trial.
+- `app.lockie.ios.pro.yearly.offer`: 1 year at a lower price, no trial. If someone closes the paywall without
+  subscribing, this offer appears once, as its own screen, the next time they open Lockie (at least a minute
+  later). It is never shown as a result of tapping ×, its own × closes it, and it has no countdown or urgency
+  claims. To see it: close the paywall, wait a minute, leave Lockie and open it again.
 
 Any active subscription in the group unlocks Lockie Pro (unlimited puzzle-earned unlocks and standalone puzzle
 practice). Every paywall screen shows the price and billing period, the amount billed after the trial, "Auto-renews.
-Cancel anytime in Settings.", **Restore Purchases**, **Terms of Use** and **Privacy Policy**. Because the app requires a subscription, the paywall
-has no close button (there is no close button that doesn't close), and there are no discount pop-ups, countdowns
-or "one-time" offers.
+Cancel anytime in Settings.", **Restore Purchases**, **Terms of Use** and **Privacy Policy**, and a × that closes right away.
 Prices, periods and the trial length are read from StoreKit. Restore Purchases is also in Settings → Support, and
 subscribers see **Manage subscription** in Settings.
 
@@ -252,10 +257,11 @@ Expected result: **4+**.
 | Pro Yearly | `app.lockie.ios.pro.yearly` | 1 Year | $39.99 | Free trial, 1 Week, new subscribers | Lockie Pro Yearly | Unlimited unlocks, all 4 puzzle games and the daily puzzle |
 | Pro Monthly | `app.lockie.ios.pro.monthly` | 1 Month | $9.99 | None | Lockie Pro Monthly | Unlimited unlocks, all 4 puzzle games and the daily puzzle |
 
-- Levels: Yearly above Monthly.
 - Review screenshot for each: a screenshot of the paywall with that plan selected.
 - Both are submitted together with the app version.
-- Remove `app.lockie.ios.pro.yearly.offer` (section 1).
+- Pro Yearly Offer: `app.lockie.ios.pro.yearly.offer`, 1 Year, $29.99, no introductory offer, display name
+  "Lockie Pro Yearly (Offer)", same description. Levels: Yearly and Yearly Offer on the same level, Monthly below.
+  Its review screenshot is the offer screen.
 
 ---
 

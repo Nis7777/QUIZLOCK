@@ -75,6 +75,7 @@ After registering each one, open it → next to **App Groups** click **Configure
 |---|---|---|---|---|
 | Pro Yearly | `app.lockie.ios.pro.yearly` | 1 Year | $39.99 | Free · 1 Week · New subscribers |
 | Pro Monthly | `app.lockie.ios.pro.monthly` | 1 Month | $9.99 | None |
+| Pro Yearly Offer | `app.lockie.ios.pro.yearly.offer` | 1 Year | $29.99 | None |
 
 For each subscription:
 1. **Subscription Prices → Add pricing**: set the USA price and let Apple fill in the other countries automatically.
