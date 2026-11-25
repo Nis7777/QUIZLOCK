@@ -8,8 +8,7 @@ or a 5-letter word game).
 
 **No login is needed and there are no accounts.** Everything runs on the device; progress (streaks,
 stats, settings) syncs through the user's own iCloud key-value storage. The subscription is tied to the Apple ID
-(Restore Purchases). Lockie requires a subscription, and says so on the first screen ("Requires Lockie Pro, a
-subscription with a free trial for new subscribers"). Onboarding and Screen Time setup are free, then the
+(Restore Purchases). Lockie requires a subscription. Onboarding and Screen Time setup are free, then the
 Lockie Pro paywall appears (the yearly plan has a 7-day free trial). **No app is ever blocked without an active
 subscription:** the locks only take effect once Lockie Pro or its free trial starts, and they are removed
 automatically if it ends, so apps are never held locked to push a purchase. Please subscribe with a Sandbox
